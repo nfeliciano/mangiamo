@@ -1,4 +1,4 @@
-Milestone 1 - Live End to End Demo
+**Milestone 1 - Live End to End Demo**
 
 - Working Google Map API
 - Be able to schedule meals
@@ -6,7 +6,7 @@ Milestone 1 - Live End to End Demo
 - Confirm that you're attending
 - See attendees of a meaafafefaaal + their features
 
-Milestone 2 - Release Candidate
+**Milestone 2 - Release Candidate**
 
 - Authentication using Facebook
 - Including Yelp API for restaurant reviews and such
@@ -14,7 +14,7 @@ Milestone 2 - Release Candidate
 - Show friends on map
 - Have it working on mobile
 
-Milestone 3 - Live Beta
+**Milestone 3 - Live Beta**
 
 - UI Overhaul
 - Helping people in the same meal meet (notifications)
