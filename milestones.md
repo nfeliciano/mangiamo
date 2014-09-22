@@ -32,17 +32,55 @@ Time Estimation:
 
 **Milestone 2 - Release Candidate**
 
-- Authentication using Facebook
-- Including Yelp API for restaurant reviews and such
-- Be able toafa add 'meal buddies', be able to import from Facebook and add in-app
-- Show friends on map
-- Have it working on mobile
+Feature Name: Facebook Authentication
+Description: Be able to sign-in using Facebook API
+Requires: Interaction with Facebook API, back-end logic for storing when user logs in through Facebook?
+Status: Not Started
+Time Estimation:
+
+Feature Name: Yelp!
+Description: Be able to see Yelp reviews on the front end of restaurants
+Requires: Interaction with Yelp API, display on the front end
+Status: Not Started
+Time Estimation:
+
+Feature Name: Meal Buddies
+Description: Be able to add 'meal buddies', be able to import from Facebook and add buddies in-app
+Requires: Backend work for relations
+Status: Not Started
+Time Estimation:
+
+Feature Name: Buddies on Map
+Description: If a buddy is eating somewhere and has checked in, display his face
+Requires: Get from backend if a person is your buddy, display face if so
+Status: Not Started
+Time Estimation:
+
+Feature Name: Mobile
+Description: Have it working on mobile
+Requires: Either native development (objc and such) or PhoneGap or something similar
+Status: Not Started
+Time Estimation:
 
 **Milestone 3 - Live Beta**
 
-- UI Overhaul
-- Helping people in the same meal meet (notifications)
-- Include authentication using Google and LinkedIn
+Feature Name: UI Overhaul
+Description: Fine tune the UI to make it as usable and easy to use as possible
+Requires: Front end work
+Status: Not Started
+Time Estimation:
+
+Feature Name: Notify
+Description: Helping people in the same meal meet, likely through either notifications or some kind of display
+Requires: Access notification APIs on mobile
+Status: Not Started
+Time Estimation:
+
+Feature Name: Google and LinkedIn Auth
+Description: Include authentication using Google and LinkedIn
+Requires: Figure out logic for how to tie it in with regular auth and Facebook auth
+Status: Not Started
+Time Estimation:
 
 
 
