@@ -15,7 +15,7 @@ var models = {
 // Connect to the database. We could later store these paramaters
 // in a config file, but for now we can hardcode them
 // Line needs changing for the new database we will connect to.
-mongoose.connect("mongodb://seng299projectapp:projectapppassword@ds048537.mongolab.com:48537/seng299");
+mongoose.connect("mongodb://<dbuser>:<dbpassword>@ds039020.mongolab.com:39020/mangiamoapp");
 
 
 // Here we put the basic CRUD operations, and any other
