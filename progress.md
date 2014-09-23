@@ -8,7 +8,7 @@ Requires: Reading tutorials and installing Node.js, Express.js, and getting Angu
 Developers: Noel, Kevin, Lloyd
 Status: Setting up files and installing
 Time Estimation: 4 Hours
-Time Spent: 0 Hours
+Time Spent: 7 Hours
 ~~~~
 ~~~~
 Feature Name: Display the Restaurants
