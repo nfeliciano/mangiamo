@@ -1,8 +1,6 @@
-# Progress #
+# Milestones / Feature Progress #
 
 ## Milestone 1 - Live End to End Demo ##
-
-#### Features ####
 ~~~~
 Feature Name: Basic Setup
 Description: Put the appropriate skeleton files in place so that features can be added
