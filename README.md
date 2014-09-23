@@ -9,5 +9,3 @@ Necessary Frameworks:
 - node.js (http://nodejs.org)
 - express.js (http://expressjs.com)
 - Angular.js (https://angularjs.org)
-
-Testing
