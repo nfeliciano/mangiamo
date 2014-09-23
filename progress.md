@@ -5,7 +5,7 @@
 ### Basic Setup ###
 * Server setup
 * client setup
-	* * Angular.js basic integration *
+	* *Angular.js basic integration*
 
 
 
