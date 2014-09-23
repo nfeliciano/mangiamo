@@ -1,6 +1,6 @@
 # Milestones / Feature Progress #
 
-##### Milestone 1 - Live End to End Demo #####
+#### Milestone 1 - Live End to End Demo ####
 ~~~~
 Feature Name: Basic Setup
 Description: Put the appropriate skeleton files in place so that features can be added
@@ -55,7 +55,7 @@ Time Estimation:
 Time Spent: 0 Hours
 ~~~~
 
-## Milestone 2 - Release Candidate ##
+#### Milestone 2 - Release Candidate ####
 ~~~~
 Feature Name: Facebook Authentication 
 Description: Be able to sign-in using Facebook API 
@@ -102,7 +102,7 @@ Time Estimation:
 Time Spent: 0 Hours
 ~~~~
 
-##### Milestone 3 - Live Beta #####
+#### Milestone 3 - Live Beta ####
 ~~~~
 Feature Name: UI Overhaul 
 Description: Fine tune the UI to make it as usable and easy to use as possible 
