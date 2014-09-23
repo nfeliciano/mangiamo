@@ -2,14 +2,12 @@
 
 ## Milestone 1 - Live End to End Demo ##
 
-### Basic Setup ###
+#### Basic Setup ####
 * Server setup
 * client setup
-	* **Angular.js basic integration**
+	* Angular.js basic integration
 
-
-
-
+#### Features ####
 Feature Name: Display the Restaurants
 Description: Use a Google Map to display restaurants and food places around town
 Requires: Working with the Google maps API and displaying it on the front end
