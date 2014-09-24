@@ -4,7 +4,8 @@ var express 				= require('express'),
 	mongoose 					= require('mongoose'),
 	meetupsController = require('./server/controllers/meetups-controller');
 
-mongoose.connect('mongodb://localhost:27017/mangiamo');
+//We have to change this to the actual mongodb db
+mongoose.connect('mongodb://mangiamo:MouseDogComputerPhone2014@ds039020.mongolab.com:39020/mangiamoapp');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -15,7 +16,7 @@ app.get('/', function(req,res) {
 	res.sendFile(__dirname + '/client/views/index.html');
 });
 
-//This is a route.
+//This is a route. Basically, if anything calls for a file that starts with '/js', it looks into the /client/js folder
 app.use('/js', express.static(__dirname + '/client/js'));
 
 //REST API
