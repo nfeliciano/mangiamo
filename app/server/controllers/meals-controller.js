@@ -1,4 +1,5 @@
-var Meetup = require('../models/meetup');
+//change this to 'meal' when you can work on the client
+var Meetup = require('../models/meal');
 
 module.exports.create = function (req,res) {
 	// console.log(req.body);
@@ -10,6 +11,7 @@ module.exports.create = function (req,res) {
 }
 
 module.exports.list = function (req,res) {
+	//change to 'meal' when you can work on client
 	Meetup.find({}, function (err, results) {
 		res.json(results);
 	});

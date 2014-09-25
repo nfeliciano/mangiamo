@@ -1,6 +1,6 @@
 app.controller('meetupsController', ['$scope', '$resource', function ($scope, $resource) {
 
-	var Meetup = $resource('/api/meetups');
+	var Meetup = $resource('/api/meals');
 
 	$scope.meetups = [
 		// { name: "Mangiamo Group" },
