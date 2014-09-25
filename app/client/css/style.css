@@ -3,6 +3,23 @@ html
 /*	background: linear-gradient(#A62000, #FF3100);  Standard syntax 
 	min-height: 100%;
 	height: auto;*/
+	background-color: #eaeaea;
+}
+
+.pure-g
+{
+
+}
+
+#loginMainContainer
+{
+	position: relative;
+	height: 600px;
+	top: 50px;
+
+	border-radius: 20px;
+
+	background-color: #A62000;
 }
 
 /*#loginStartEating
