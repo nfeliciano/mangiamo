@@ -21,13 +21,22 @@ Time Estimation: 6 Hours
 Time Spent: 5 Hours
 ~~~~
 ~~~~
+Feature Name: Mock-Ups
+Description: Basic mock-ups for two main screens
+Requires: Photoshop mock-ups, layout and feature decisions
+Developers: Chris
+Status: Mock-ups for initial pitch completed. Mockups in progress for actual web design.
+Time Estimation: 4 Hours
+Time Spent: 2 Hours
+~~~~
+~~~~
 Feature Name: Launch Screen
 Description: Creating HTML and CSS for landing / login / launch page
 Requires: Creating basic markup and style sheets, learning and using purecss.io, adding "launch" functionality (this is, allowing input of user details that can be sent to the server).
 Developers: Chris and Lloyd
 Status: Integrating PureCSS into HTML skeleton file.
 Time Estimation: 14 Hours
-Time Spent: 6 Hours
+Time Spent: 8 Hours
 ~~~~
 ~~~~
 Feature Name: Display the Restaurants
