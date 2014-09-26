@@ -10,8 +10,5 @@ module.exports.create = function (req,res) {
 }
 
 module.exports.list = function (req,res) {
-	// Meetup.find({}, function (err, results) {
-	// 	res.json(results);
-	// });
-
+	
 }

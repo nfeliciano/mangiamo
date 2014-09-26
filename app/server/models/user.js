@@ -13,7 +13,7 @@ module.exports = mongoose.model('User', {
 //example user: 
 // var user = new User();
 // 		user.key = 2;
-// 		user.name = $scope.meetupName;
+// 		user.name = $scope.mealName;
 // 		user.birthDate = new Date();
 // 		user.description = "Outgoing";
 // 		user.profession = "Adventurer";
