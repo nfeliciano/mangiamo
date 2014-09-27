@@ -14,6 +14,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', function(req,res) {
+	res.sendFile(__dirname + '/client/views/index.html');
+});
+
+app.get('/map', function(req,res) {
 	res.sendFile(__dirname + '/client/views/RageGeolocationPlaces.html');
 });
 
