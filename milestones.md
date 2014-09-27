@@ -7,35 +7,62 @@ Feature Name: Basic Setup
 Description: Put the appropriate skeleton files in place so that features can be added
 Requires: Reading tutorials and installing Node.js, Express.js, and getting Angular.js in place
 Developers: Noel, Kevin, Lloyd
-Status: Setting up files and installing
+Status: Done
 Time Estimation: 4 Hours
-Time Spent: 8.5 Hours
+Time Spent: 10 Hours
+~~~~
+~~~~
+Feature Name: Backend Model Setup
+Description: Create server files for meal and user models
+Requires: Coding, using express & node, making sure files are being created in Mongo database
+Developers: Noel, Kevin
+Status: Done until UI comes in
+Time Estimation: 6 Hours
+Time Spent: 5 Hours
+~~~~
+~~~~
+Feature Name: Mock-Ups
+Description: Basic mock-ups for two main screens
+Requires: Photoshop mock-ups, layout and feature decisions
+Developers: Chris
+Status: Mock-ups for initial pitch completed. Mockups in progress for actual web design.
+Time Estimation: 4 Hours
+Time Spent: 2 Hours
+~~~~
+~~~~
+Feature Name: Launch Screen
+Description: Creating HTML and CSS for landing / login / launch page
+Requires: Creating basic markup and style sheets, learning and using purecss.io, adding "launch" functionality (this is, allowing input of user details that can be sent to the server).
+Developers: Chris and Lloyd
+Status: Integrating PureCSS into HTML skeleton file.
+Time Estimation: 14 Hours
+Time Spent: 8 Hours
 ~~~~
 ~~~~
 Feature Name: Display the Restaurants
 Description: Use a Google Map to display restaurants and food places around town
 Requires: Working with the Google maps API and displaying it on the front end
-Developers:
+Developers: Jesper
 Status: Not started
-Time Estimation:
-Time Spent: 0 Hours
+Time Estimation: 7 Hours
+Time Spent: 2 Hours
 ~~~~
 ~~~~
 Feature Name: See scheduled meals
 Description: See any meals scheduled on the map
 Requires: Overlaying on top of Google map, adding logic to database for retrieving meals
-Developers:
+Developers: Lloyd, Chris, Jesper, Kevin, Noel
 Status: Not started
-Time Estimation:
+Time Estimation: 15 Hours
 Time Spent: 0 Hours
 ~~~~
 ~~~~
 Feature Name: Scheduling meals
 Description: Be able to schedule a meal by using the map interface in conjunction with other views
 Requires: Being able to add meals to database, different view for creating a meal
-Developers:
+Developers: Chris, Lloyd
 Status: Not Started
-Time Estimation:
+Time Estimation: 8 Hours
 Time Spent: 0 Hours
 ~~~~
 ~~~~
@@ -43,7 +70,7 @@ Feature Name: Attendance Confirmation
 Description: Be able to say 'I'm going to this meal'
 Requires: Being able to track who's going to the meals in the database, displaying that
 Status & Developers: Not Started
-Time Estimation:
+Time Estimation: 5 Hours
 Time Spent: 0 Hours
 ~~~~
 ~~~~
@@ -52,7 +79,7 @@ Description: Be able to see features of the people attending a meal and how many
 Requires: Allowing a user to change his 'about me' features, temporary users in a database?, displaying those features
 Developers:
 Status: Not Started
-Time Estimation:
+Time Estimation: 8 Hours
 Time Spent: 0 Hours
 ~~~~
 
@@ -153,3 +180,5 @@ Status: Server side ready, other parts are missing.
 Time Estimation: 12 hours
 Time Spent: 8 Hours
 ~~~~
+
+
