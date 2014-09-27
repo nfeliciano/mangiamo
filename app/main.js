@@ -1,8 +1,9 @@
 var express 				= require('express'),
-	app								= express(),
+	app						= express(),
 	bodyParser 				= require('body-parser'),
-	mongoose 					= require('mongoose'),
-	meetupsController = require('./server/controllers/meetups-controller');
+	mongoose 				= require('mongoose'),
+	mealsController 		= require('./server/controllers/meals-controller');
+	userController			= require('./server/controllers/user-controller');
 
 //We have to change this to the actual mongodb db
 mongoose.connect('mongodb://mangiamo:MouseDogComputerPhone2014@ds039020.mongolab.com:39020/mangiamoapp');
@@ -20,8 +21,13 @@ app.get('/', function(req,res) {
 app.use('/js', express.static(__dirname + '/client/js'));
 
 //REST API
-app.get('/api/meetups', meetupsController.list);
-app.post('/api/meetups', meetupsController.create);
+//Meals
+app.get('/api/meals', mealsController.list);
+app.post('/api/meals', mealsController.create);
+
+//Users
+app.get('/api/users', userController.list);
+app.post('/api/users', userController.create);
 
 app.listen(3000, function() {
 	console.log('I\'m listening');
