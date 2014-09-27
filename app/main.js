@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', function(req,res) {
-	res.sendFile(__dirname + '/client/views/index.html');
+	res.sendFile(__dirname + '/client/views/RageGeolocationPlaces.html');
 });
 
 //This is a route. Basically, if anything calls for a file that starts with '/js', it looks into the /client/js folder
