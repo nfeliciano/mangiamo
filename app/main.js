@@ -2,11 +2,18 @@ var express 				= require('express'),
 	app						= express(),
 	bodyParser 				= require('body-parser'),
 	mongoose 				= require('mongoose'),
-	mealsController 		= require('./server/controllers/meals-controller'),
+	config 					= require('./config');
+	mealsController 		= require('./server/controllers/meals-controller');
 	userController			= require('./server/controllers/user-controller');
+	options 				= { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 10000 } }, 
+                				replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 10000 } } };
 
-//We have to change this to the actual mongodb db
-mongoose.connect('mongodb://mangiamo:MouseDogComputerPhone2014@ds039020.mongolab.com:39020/mangiamoapp');
+// set the 'dbUrl' to the mongodb url that corresponds to the environment we are in
+app.set('dbUrl', config.db['development']);
+// connect mongoose to the mongo dbUrl
+mongoose.connect(app.get('dbUrl'), options);
+
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'));  
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

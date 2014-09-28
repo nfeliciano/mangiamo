@@ -13,12 +13,12 @@ Time Spent: 10 Hours
 ~~~~
 ~~~~
 Feature Name: Backend Model Setup
-Description: Create server files for meal and user models
+Description: Create server files for meal and user models, add config file so password is not stored on main.js
 Requires: Coding, using express & node, making sure files are being created in Mongo database
 Developers: Noel, Kevin
 Status: Done until UI comes in
 Time Estimation: 6 Hours
-Time Spent: 5 Hours
+Time Spent: 8 Hours
 ~~~~
 ~~~~
 Feature Name: Mock-Ups
@@ -46,6 +46,42 @@ Developers: Jesper
 Status: Not started
 Time Estimation: 7 Hours
 Time Spent: 2 Hours
+~~~~
+~~~~
+Feature Name: Google Maps Geolocation
+Description: Locate client on the planet
+Requires: Server Connection! Google map api, Might be different for mobile
+Developers: Jesper
+Status: Finished for PC, unknown for mobile
+Time Estimation: 2 Hours
+Time Spent: 1.5 Hours
+~~~~
+~~~~
+Feature Name: Google Maps Place Search
+Description: Locate food vendors
+Requires: Google map api
+Developers: Jesper
+Status: Started
+Time Estimation: 5 Hours
+Time Spent: 1.5 Hours
+~~~~
+~~~~
+Feature Name: Replace Google Maps Pins
+Description: Custom pins displaying current meetups 
+Requires: Images, research, google api.  
+Developers: Jesper
+Status: Started
+Time Estimation: 3 Hours
+Time Spent: 0 Hours
+~~~~
+~~~~
+Feature Name: Remove lots of unneeded Google Maps Place's markers
+Description: Custom markers displaying current meetups 
+Requires: Images, research, google api.  
+Developers: Jesper
+Status: Started
+Time Estimation: 3 Hours
+Time Spent: 0 Hours
 ~~~~
 ~~~~
 Feature Name: See scheduled meals
