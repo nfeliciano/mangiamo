@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="meetupApp">
+<html ng-app="mangiamo">
 	<!-- ng-app meetupApp is the module, see /js/app.js -->
 	<head>
 		<meta charset="utf-8">
@@ -8,12 +8,14 @@
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width", initial-scale=1>
 
+		<link rel="stylesheet" type="text/css" href="/css/home.css">
+
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-resource.js"></script>
 
 		<script type="text/javascript" src="/js/app.js"></script>
 		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-		<link rel="stylesheet" type="text/css" href="../css/style.css">
+		
 
 	</head>
 	<body>
@@ -36,5 +38,28 @@
 				three
 			</div>
 		</div>
+
+		<div class="pure-g">
+			<div class="pure-u-1-5">
+			</div>
+			<div class="pure-u-3-5">
+				<div>
+					Birthdate
+				</div>
+				<div>
+					Field of Work
+				</div>
+				<div>
+					Something Interesting
+				</div>
+			<!-- 	<form ng-submit="createMeal()">
+					<input type="text" placeholder="Meal Name" ng-model="mealName"></input>
+					<button type="submit">Create Meal</button>
+				</form> -->
+			</div>
+			<div class="pure-u-1-5">
+			</div>
+		</div>
+
 	</body>
 </html>
