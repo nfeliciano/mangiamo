@@ -9,3 +9,5 @@ Necessary Frameworks:
 - node.js (http://nodejs.org)
 - express.js (http://expressjs.com)
 - Angular.js (https://angularjs.org)
+
+To start the app, navigate to the main folder and type 'node main', then visit 'localhost:3000'
