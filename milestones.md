@@ -36,7 +36,7 @@ Requires: Creating basic markup and style sheets, learning and using purecss.io,
 Developers: Chris and Lloyd
 Status: Integrating PureCSS into HTML skeleton file.
 Time Estimation: 14 Hours
-Time Spent: 8 Hours
+Time Spent: 12 Hours
 ~~~~
 ~~~~
 Feature Name: Display the Restaurants
