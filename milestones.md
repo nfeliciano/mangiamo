@@ -48,6 +48,42 @@ Time Estimation: 7 Hours
 Time Spent: 2 Hours
 ~~~~
 ~~~~
+Feature Name: Google Maps Geolocation
+Description: Locate client on the planet
+Requires: Server Connection! Google map api, Might be different for mobile
+Developers: Jesper
+Status: Finished for PC, unknown for mobile
+Time Estimation: 2 Hours
+Time Spent: 1.5 Hours
+~~~~
+~~~~
+Feature Name: Google Maps Place Search
+Description: Locate food vendors
+Requires: Google map api
+Developers: Jesper
+Status: Started
+Time Estimation: 5 Hours
+Time Spent: 1.5 Hours
+~~~~
+~~~~
+Feature Name: Replace Google Maps Pins
+Description: Custom pins displaying current meetups 
+Requires: Images, research, google api.  
+Developers: Jesper
+Status: Started
+Time Estimation: 3 Hours
+Time Spent: 0 Hours
+~~~~
+~~~~
+Feature Name: Remove lots of unneeded Google Maps Place's markers
+Description: Custom markers displaying current meetups 
+Requires: Images, research, google api.  
+Developers: Jesper
+Status: Started
+Time Estimation: 3 Hours
+Time Spent: 0 Hours
+~~~~
+~~~~
 Feature Name: See scheduled meals
 Description: See any meals scheduled on the map
 Requires: Overlaying on top of Google map, adding logic to database for retrieving meals
