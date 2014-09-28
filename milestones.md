@@ -13,12 +13,12 @@ Time Spent: 10 Hours
 ~~~~
 ~~~~
 Feature Name: Backend Model Setup
-Description: Create server files for meal and user models
+Description: Create server files for meal and user models, add config file so password is not stored on main.js
 Requires: Coding, using express & node, making sure files are being created in Mongo database
 Developers: Noel, Kevin
 Status: Done until UI comes in
 Time Estimation: 6 Hours
-Time Spent: 5 Hours
+Time Spent: 8 Hours
 ~~~~
 ~~~~
 Feature Name: Mock-Ups
