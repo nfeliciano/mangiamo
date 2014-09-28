@@ -2,7 +2,7 @@ var express 				= require('express'),
 	app						= express(),
 	bodyParser 				= require('body-parser'),
 	mongoose 				= require('mongoose'),
-	mealsController 		= require('./server/controllers/meals-controller');
+	mealsController 		= require('./server/controllers/meals-controller'),
 	userController			= require('./server/controllers/user-controller');
 
 //We have to change this to the actual mongodb db
@@ -14,11 +14,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', function(req,res) {
-	res.sendFile(__dirname + '/client/views/index.html');
+	res.sendFile(__dirname + '/client/views/login.html');
 });
 
 //This is a route. Basically, if anything calls for a file that starts with '/js', it looks into the /client/js folder
 app.use('/js', express.static(__dirname + '/client/js'));
+app.use('/css', express.static(__dirname + '/client/css'));
 
 //REST API
 //Meals
