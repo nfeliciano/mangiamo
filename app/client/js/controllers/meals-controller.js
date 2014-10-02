@@ -1,4 +1,4 @@
-app.controller('mealsController', ['$scope', '$resource', function ($scope, $resource) {
+app.controller('mealsController', ['$scope', '$resource', 'userService', function ($scope, $resource, userService) {
 
 	var Meal = $resource('/api/meals');
 
@@ -8,6 +8,7 @@ app.controller('mealsController', ['$scope', '$resource', function ($scope, $res
 	
 	Meal.query(function (results) {
 		$scope.meals = results;
+		console.log(userService.getAllUsers());
 	});
 
 	$scope.createMeal = function() {
