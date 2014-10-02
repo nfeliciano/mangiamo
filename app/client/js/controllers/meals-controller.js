@@ -8,7 +8,6 @@ app.controller('mealsController', ['$scope', '$resource', 'userService', functio
 	
 	Meal.query(function (results) {
 		$scope.meals = results;
-		console.log(userService.getAllUsers());
 	});
 
 	$scope.createMeal = function() {

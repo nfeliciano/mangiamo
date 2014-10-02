@@ -1,20 +1,26 @@
+//To use this service, make sure you're adding 'userService' to a controller, like so:
+//	app.controller('mealsController', ['$scope', '$resource', 'userService', function ($scope, $resource, userService)
+//This service will provide anything necessary when interacting with the backend for users. Adding, deleting, adding meal buddies, etc.
+
 app.factory('userService', ['$resource', function($resource) {
 	var User = $resource('/api/users');
 
-	
 	return {
+		//
 		getAllUsers: function() {
 			return User.query(function (results) {});
+		},
+
+		addNewUser: function(name, birthDate, description, profession) {
+			var user = new User();
+			user.key = 3;
+			user.name = name;
+			user.birthDate = birthDate;
+			user.description = description;
+			user.profession = profession;
+			user.mealBuddies = [];
+			user.$save(function(result) {});
+			return null;
 		}
 	};
 }]);
-
-
-//example user: 
-// var user = new User();
-// 		user.key = 2;
-// 		user.name = $scope.mealName;
-// 		user.birthDate = new Date();
-// 		user.description = "Outgoing";
-// 		user.profession = "Adventurer";
-// 		user.mealBuddies = [];
