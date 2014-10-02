@@ -6,11 +6,12 @@ app.factory('userService', ['$resource', function($resource) {
 	var User = $resource('/api/users');
 
 	return {
-		//
+		//Gets all the users from the backend. Can parse through them in results.
 		getAllUsers: function() {
 			return User.query(function (results) {});
 		},
 
+		//Creates a new user and adds it onto the backend using $save.
 		addNewUser: function(name, birthDate, description, profession) {
 			var user = new User();
 			user.key = 3;
