@@ -13,15 +13,26 @@ app.factory('userService', ['$resource', function($resource) {
 
 		//Creates a new user and adds it onto the backend using $save.
 		addNewUser: function(name, birthDate, description, profession) {
+			//fill these in with actual values later; this won't work more than once because of the key
 			var user = new User();
-			user.key = 3;
+			user.key = 11;
 			user.name = name;
 			user.birthDate = birthDate;
 			user.description = description;
 			user.profession = profession;
 			user.mealBuddies = [];
-			user.$save(function(result) {});
+			user.$save(function(result) {
+				console.log(result);
+			});
 			return null;
+		},
+
+		updateUser: function(user, name, birthDate, description, profession) {
+
+		},
+
+		deleteUser: function(userID) {
+
 		}
 	};
 }]);

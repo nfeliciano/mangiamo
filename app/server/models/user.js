@@ -1,7 +1,6 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
-//Model is named 'User'
-module.exports = mongoose.model('User', {
+var UserSchema = new Schema({
 	key: { type: "string", unique: true },
 	name: String,
 	birthDate: Date,
@@ -10,12 +9,5 @@ module.exports = mongoose.model('User', {
 	mealBuddies: Array
 });
 
-//example user: 
-// var user = new User();
-// 		user.key = 2;
-// 		user.name = $scope.mealName;
-// 		user.birthDate = new Date();
-// 		user.description = "Outgoing";
-// 		user.profession = "Adventurer";
-// 		user.mealBuddies = [];
-// 		user.$save(function(result) {
+//Model is named 'User'
+module.exports = mongoose.model('User', UserSchema);
