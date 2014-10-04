@@ -27,7 +27,7 @@ Requires: Photoshop mock-ups, layout and feature decisions
 Developers: Chris
 Status: Mock-ups for initial pitch completed. Mockups in progress for actual web design.
 Time Estimation: 4 Hours
-Time Spent: 2 Hours
+Time Spent: 4 Hours
 ~~~~
 ~~~~
 Feature Name: Launch Screen
@@ -36,7 +36,7 @@ Requires: Creating basic markup and style sheets, learning and using purecss.io,
 Developers: Chris and Lloyd
 Status: Integrating PureCSS into HTML skeleton file.
 Time Estimation: 14 Hours
-Time Spent: 12 Hours
+Time Spent: 14 Hours
 ~~~~
 ~~~~
 Feature Name: Display the Restaurants

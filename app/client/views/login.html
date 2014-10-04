@@ -16,56 +16,42 @@
 
 		<script type="text/javascript" src="/js/app.js"></script>
 		<script type="text/javascript" src="/js/controllers/login-controllers.js"></script>
-		
+		<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+
+		<link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 		<link rel="stylesheet" type="text/css" href="../css/login.css">
 		
 
 	</head>
 	<body>
-		<div class="pure-g">
-			<div class="pure-u-1-5">
-				one
-			</div>
-			<div class="pure-u-3-5" id="mainContainer">
-				<div id="logo">
-					LOGO
-				</div>
-				<div id="startEating" ng-controller="loginControllers">
-					START EATING
-					<button type="submit"> Start Eating </button>
-					<p> {{temp}} </p>
-				</div>
-				<div id="authentication">
-					LOGIN AUTHENTICATION
-				</div>
-			</div>
-			<div class="pure-u-1-5">
-				three
-			</div>
-		</div>
+		<!-- Bootstrap NavBar!! -->
+		<nav class="navbar navbar-inverse" role="navigation">
+		  <div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="#">Mangiamo</a>
+		    </div>
 
-		<div class="pure-g">
-			<div class="pure-u-1-5">
-			</div>
-			<div class="pure-u-3-5">
-				<div>
-					Birthdate
-				</div>
-				<div>
-					Field of Work
-				</div>
-				<div>
-					Something Interesting
-				</div>
-			<!-- 	<form ng-submit="createMeal()">
-					<input type="text" placeholder="Meal Name" ng-model="mealName"></input>
-					<button type="submit">Create Meal</button>
-				</form> -->
-			</div>
-			<div class="pure-u-1-5">
-			</div>
-		</div>
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav">
+		        <li class="active"><a href="#">Main</a></li>
+		        <li><a href="#">About</a></li>
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="#">Log In or Sign Up</a></li>
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>		
 
 	</body>
 </html>
