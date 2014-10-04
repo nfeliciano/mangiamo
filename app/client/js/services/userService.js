@@ -27,8 +27,7 @@ app.factory('userService', ['$resource', function($resource) {
 		},
 
 		updateUser: function(user, name, birthDate, description, profession) {
-			var user = new User();
-			user.testMethod();
+			
 		},
 
 		deleteUser: function(userID) {
