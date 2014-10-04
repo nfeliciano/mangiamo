@@ -15,7 +15,6 @@ app.factory('userService', ['$resource', function($resource) {
 		addNewUser: function(name, birthDate, description, profession) {
 			//fill these in with actual values later; this won't work more than once because of the key
 			var user = new User();
-			user.key = 11;
 			user.name = name;
 			user.birthDate = birthDate;
 			user.description = description;
@@ -28,7 +27,8 @@ app.factory('userService', ['$resource', function($resource) {
 		},
 
 		updateUser: function(user, name, birthDate, description, profession) {
-
+			var user = new User();
+			user.testMethod();
 		},
 
 		deleteUser: function(userID) {

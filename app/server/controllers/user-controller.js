@@ -2,7 +2,6 @@ var User = require('../models/user');
 
 module.exports.create = function (req,res) {
 	var user = new User({
-		key: req.body.key,
 		name: req.body.name,
 		birthDate: req.body.birthDate,
 		description: req.body.description,
