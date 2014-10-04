@@ -18,7 +18,7 @@ app.get('/', function(req,res) {
 });
 
 app.get('/map', function(req,res) {
-	res.sendFile(__dirname + '/client/views/RageGeolocationPlaces.html');
+	res.sendFile(__dirname + '/client/views/MainMap.html');
 });
 
 //This is a route. Basically, if anything calls for a file that starts with '/js', it looks into the /client/js folder
