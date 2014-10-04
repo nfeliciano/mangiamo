@@ -22,10 +22,9 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 		<link rel="stylesheet" type="text/css" href="../css/login.css">
-		
-
+	
 	</head>
-	<body>
+	<body ng-controller="loginControllers">
 		<!-- Bootstrap NavBar!! -->
 		<nav class="navbar navbar-inverse" role="navigation">
 		  <div class="container-fluid">
@@ -53,5 +52,234 @@
 		  </div><!-- /.container-fluid -->
 		</nav>		
 
+		<script>
+		// This is called with the results from from FB.getLoginStatus().
+		function statusChangeCallback(response) {
+			console.log('statusChangeCallback');
+			console.log(response);
+			// The response object is returned with a status field that lets the
+    		// app know the current login status of the person.
+    		// Full docs on the response object can be found in the documentation
+    		// for FB.getLoginStatus().
+    		if (response.status === 'connected') {
+    			// Logged into your app and Facebook.
+    			testAPI();
+    		}
+    		else if (response.status === 'not_authorized') {
+    			// The person is logged into Facebook, but not your app.	
+    			document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
+    		} 
+    		else {
+    			// The person is not logged into Facebook, so we're not sure if
+    			// they are logged into this app or not.
+    			document.getElementById('status').innerHTML = 'Please log ' + 'into Facebook.';
+    		}
+    	}
+
+
+	  	// This function is called when someone finishes with the Login
+	  	// Button.  See the onlogin handler attached to it in the sample
+	  	// code below.
+	  	function checkLoginState() {
+	  		FB.getLoginStatus(function(response) {
+	  		statusChangeCallback(response);
+	  		});
+	  	}
+
+	  	window.fbAsyncInit = function() {
+	  		FB.init({
+	  			appId      : '283325225209622',
+	  			cookie     : true,  // enable cookies to allow the server to access  the session
+	  			xfbml      : true,  // parse social plugins on this page
+	  			version    : 'v2.1' // use version 2.1
+	  		});
+
+	  		// Now that we've initialized the JavaScript SDK, we call 
+	  		// FB.getLoginStatus().  This function gets the state of the
+	  		// person visiting this page and can return one of three states to
+	  		// the callback you provide.  They can be:
+	  		//
+	  		// 1. Logged into your app ('connected')
+	  		// 2. Logged into Facebook, but not your app ('not_authorized')
+	  		// 3. Not logged into Facebook and can't tell if they are logged into
+	  		//    your app or not.
+	  		//
+	  		// These three cases are handled in the callback function.
+
+	  		FB.getLoginStatus(function(response) {
+	  			statusChangeCallback(response);
+	  		});
+	  	};
+
+	  	// Load the SDK asynchronously
+	  	(function(d, s, id) {
+	  		var js, fjs = d.getElementsByTagName(s)[0];
+	  		if (d.getElementById(id)) return;
+	  		js = d.createElement(s); js.id = id;
+	  		js.src = "//connect.facebook.net/en_US/sdk.js";
+	  		fjs.parentNode.insertBefore(js, fjs);
+	  	}(document, 'script', 'facebook-jssdk'));
+
+	  	// Here we run a very simple test of the Graph API after login is
+	  	// successful.  See statusChangeCallback() for when this call is made.
+	  	function testAPI() {
+	  		console.log('Welcome!  Fetching your information.... ');
+	  		FB.api('/me', function(response) {
+	  			console.log('Successful login for: ' + response.name);
+	  			document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+	  		});
+	  	}
+	  	</script>		
+		<div class="pure-g">
+			<div class="pure-u-1-5">
+			</div>
+			<div class="pure-u-3-5">
+				<div>
+					<form ng-submit="submitUserData()">
+						<div>
+							Date of Birth:
+							<select name="DOBMonth" ng-model="month">
+								<option> - Month - </option>
+								<option value="January">January</option>
+								<option value="Febuary">Febuary</option>
+								<option value="March">March</option>
+								<option value="April">April</option>
+								<option value="May">May</option>
+								<option value="June">June</option>
+								<option value="July">July</option>
+								<option value="August">August</option>
+								<option value="September">September</option>
+								<option value="October">October</option>
+								<option value="November">November</option>
+								<option value="December">December</option>
+							</select>
+
+							<select name="DOBDay" ng-model="day">
+								<option> - Day - </option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+							</select>
+
+							<select name="DOBYear" ng-model="year">
+								<option> - Year - </option>
+								<option value="1993">1993</option>
+								<option value="1992">1992</option>
+								<option value="1991">1991</option>
+								<option value="1990">1990</option>
+								<option value="1989">1989</option>
+								<option value="1988">1988</option>
+								<option value="1987">1987</option>
+								<option value="1986">1986</option>
+								<option value="1985">1985</option>
+								<option value="1984">1984</option>
+								<option value="1983">1983</option>
+								<option value="1982">1982</option>
+								<option value="1981">1981</option>
+								<option value="1980">1980</option>
+								<option value="1979">1979</option>
+								<option value="1978">1978</option>
+								<option value="1977">1977</option>
+								<option value="1976">1976</option>
+								<option value="1975">1975</option>
+								<option value="1974">1974</option>
+								<option value="1973">1973</option>
+								<option value="1972">1972</option>
+								<option value="1971">1971</option>
+								<option value="1970">1970</option>
+								<option value="1969">1969</option>
+								<option value="1968">1968</option>
+								<option value="1967">1967</option>
+								<option value="1966">1966</option>
+								<option value="1965">1965</option>
+								<option value="1964">1964</option>
+								<option value="1963">1963</option>
+								<option value="1962">1962</option>
+								<option value="1961">1961</option>
+								<option value="1960">1960</option>
+								<option value="1959">1959</option>
+								<option value="1958">1958</option>
+								<option value="1957">1957</option>
+								<option value="1956">1956</option>
+								<option value="1955">1955</option>
+								<option value="1954">1954</option>
+								<option value="1953">1953</option>
+								<option value="1952">1952</option>
+								<option value="1951">1951</option>
+								<option value="1950">1950</option>
+								<option value="1949">1949</option>
+								<option value="1948">1948</option>
+								<option value="1947">1947</option>	
+							</select>
+						</div>
+						
+						
+						<div>
+							Occupation: 
+							<select ng-model="occupation">
+								<option> - Occupation - </option>
+								<option> option 1 </option>
+								<option> option 2 </option>
+							</select>
+						</div>
+						<div>
+							Description: 
+							<select ng-model="description">
+								<option> - Description - </option>
+								<option> option 1 </option>
+								<option> option 2 </option>
+							</select>
+						</div>
+						You selected: {{month}}-{{day}}-{{year}}
+						<button type="submit"> Submit </button>	
+						<p ng-repeat="dob in dates"> {{dob}}</p>		
+					</form>
+					<div id="authentication">
+					<div id="fb-root">
+						<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+					</fb:login-button>
+					</div>
+
+				<div id="status">
+				</div>
+
+				</div>
+				</div>
+			<!-- 	<form ng-submit="createMeal()">
+					<input type="text" placeholder="Meal Name" ng-model="mealName"></input>
+					<button type="submit">Create Meal</button>
+				</form> -->
+			</div>
+			<div class="pure-u-1-5">
+			</div>
+		</div>
 	</body>
 </html>
