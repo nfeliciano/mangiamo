@@ -36,7 +36,7 @@ Requires: Creating basic markup and style sheets, learning and using purecss.io,
 Developers: Chris and Lloyd
 Status: Integrating PureCSS into HTML skeleton file.
 Time Estimation: 14 Hours
-Time Spent: 12 Hours
+Time Spent: 20 Hours
 ~~~~
 ~~~~
 Feature Name: Display the Restaurants
@@ -126,8 +126,8 @@ Description: Be able to sign-in using Facebook API
 Requires: Interaction with Facebook API, back-end logic for storing when user logs in through Facebook? 
 Developers:
 Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
+Time Estimation: 8 Hours
+Time Spent: 4 Hours
 ~~~~
 ~~~~
 Feature Name: Yelp! 
