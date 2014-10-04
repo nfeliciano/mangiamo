@@ -18,16 +18,16 @@ Requires: Coding, using express & node, making sure files are being created in M
 Developers: Noel, Kevin
 Status: Done until UI comes in
 Time Estimation: 6 Hours
-Time Spent: 8 Hours
+Time Spent: 11 Hours
 ~~~~
 ~~~~
 Feature Name: Mock-Ups
 Description: Basic mock-ups for two main screens
 Requires: Photoshop mock-ups, layout and feature decisions
 Developers: Chris
-Status: Mock-ups for initial pitch completed. Mockups in progress for actual web design.
+Status: Complete
 Time Estimation: 4 Hours
-Time Spent: 2 Hours
+Time Spent: 4 Hours
 ~~~~
 ~~~~
 Feature Name: Launch Screen
@@ -90,7 +90,7 @@ Requires: Overlaying on top of Google map, adding logic to database for retrievi
 Developers: Lloyd, Chris, Jesper, Kevin, Noel
 Status: Not started
 Time Estimation: 15 Hours
-Time Spent: 0 Hours
+Time Spent: 1 Hours
 ~~~~
 ~~~~
 Feature Name: Scheduling meals
