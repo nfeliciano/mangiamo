@@ -10,35 +10,6 @@ body{
     background-repeat: no-repeat;
 }
 
-#mainContainer
-{
-/*	position: relative;
-	height: 600px;
-	top: 50px;
-
-	border-radius: 20px;
-	background-color: #A62000;*/
-	/*text-align: center;*/
-}
-
-#mainContainer > #logo
-{
-	position: relative;
-/*	height: 200px;*/
-}
-
-#mainContainer > #startEating
-{
-	position: relative;
-/*	height: 200px;*/
-}
-
-#mainContainer > #authentication
-{
-	position: relative;
-/*	height: 200px;*/
-}
-
 .navbar-brand {
 	font-family: 'Kaushan Script', cursive;
 }
