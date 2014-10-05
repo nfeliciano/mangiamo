@@ -26,6 +26,6 @@ function signinCallback(authResult) {
     	//   "user_signed_out" - User is signed-out
     	//   "access_denied" - User denied access to your app
     	//   "immediate_failed" - Could not automatically log in the user
-    	console.log('Sign-in state: ' + authResult['error']);
+    	// console.log('Sign-in state: ' + authResult['error']);
     }
 }
