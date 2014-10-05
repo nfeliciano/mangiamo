@@ -10,7 +10,9 @@ app.factory('userService', ['$resource', function($resource) {
 		//userService.getAllUsers()
 		//Gets all the users from the backend, no filtering. Can parse through them in results.
 		getAllUsers: function() {
-			return User.query(function (results) {});
+			return User.query(function (results) {
+				console.log(results);
+			});
 		},
 
 		//userService.addNewUser(str, date(), str, str)
