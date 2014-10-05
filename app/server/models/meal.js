@@ -1,7 +1,6 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
-//Model is named 'Meal'
-module.exports = mongoose.model('Meal', {
+var MealSchema = new Schema({
 	key: { type: "string", unique: true },
 	placeID: String,
 	numPeople: Number,
@@ -9,3 +8,6 @@ module.exports = mongoose.model('Meal', {
 	people: Array,
 	active: { type: Boolean, default: true }
 });
+
+//Model is named 'Meal'
+module.exports = mongoose.model('Meal', MealSchema);
