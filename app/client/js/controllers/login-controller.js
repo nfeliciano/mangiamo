@@ -1,4 +1,4 @@
-app.controller('loginControllers', ['$scope', '$resource', 
+app.controller('loginController', ['$scope', '$resource', 
 	function ($scope, $resource) {
 		$scope.dates = []
 
