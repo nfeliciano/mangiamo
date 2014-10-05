@@ -55,15 +55,13 @@
 		</nav>		
 		
 		<div>
-			<div>
-			</div>
-			<div>
+			<div id="mainContainer">
 				<!-- Splash screen with "Start Eating" button -->
-				<div>
-					
+				<div id="startEating" class="ng-hide" ng-hide="hideStartEating">
+					<button ng-click="switchDivs()" type="submit"> Testing </button>
 				</div>
 				<!-- Request user information -->
-				<div>
+				<div id="userInfo" class="ng-hide" ng-hide="hideUserInfo">
 					<form ng-submit="submitUserData()" >
 						<div>
 							Date of Birth:

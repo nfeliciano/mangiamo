@@ -10,6 +10,16 @@ body{
     background-repeat: no-repeat;
 }
 
+#mainContainer > #startEating
+{
+	position: absolute;
+}
+
+#mainContainer > #userInfo
+{
+	position: absolute;
+}
+
 .navbar-brand {
 	font-family: 'Kaushan Script', cursive;
 }
