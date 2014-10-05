@@ -11,13 +11,11 @@ module.exports.create = function (req,res) {
 	
 	user.save(function (err, result) {
 		if (!err) {
-			//sends result back to client
 			return res.json(result);
 		} else {
 			return console.log(err);
 		}
 	});
-	// console.log(req.body);
 }
 
 module.exports.list = function (req,res) {
