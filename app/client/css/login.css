@@ -10,6 +10,14 @@ body{
     background-repeat: no-repeat;
 }
 
+#mainContainer
+{
+	height: 200px;
+	padding: 20px;
+	background-color: black;
+
+}
+
 #mainContainer > #startEating
 {
 	position: absolute;
@@ -22,4 +30,5 @@ body{
 
 .navbar-brand {
 	font-family: 'Kaushan Script', cursive;
+	color: White;
 }
