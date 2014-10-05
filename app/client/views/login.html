@@ -68,9 +68,8 @@
 			<div>
 				<form ng-submit="submitUserData()" >
 					<div>
-						Date of Birth:
 						<select ng-model="month">
-							<option> - Month - </option>
+							<option value="" disabled selected> Birth Month </option>
 							<option value="January">January</option>
 							<option value="Febuary">Febuary</option>
 							<option value="March">March</option>
@@ -86,7 +85,7 @@
 						</select>
 
 						<select ng-model="day">
-							<option> - Day - </option>
+							<option value="" disabled selected> Birth Day </option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -121,7 +120,7 @@
 						</select>
 
 						<select ng-model="year">
-							<option> - Year - </option>
+							<option value="" disabled selected> Birth Year </option>
 							<option value="1996">1996</option>
 							<option value="1995">1995</option>
 							<option value="1994">1994</option>
@@ -176,17 +175,15 @@
 					</div>		
 					
 					<div>
-						Occupation: 
 						<select ng-model="occupation">
-							<option> - Occupation - </option>
+							<option value="" disabled selected> Occupation </option>
 							<option> option 1 </option>
 							<option> option 2 </option>
 						</select>
 					</div>
 					<div>
-						Description: 
 						<select ng-model="description">
-							<option> - Description - </option>
+							<option value="" disabled selected> Description </option>
 							<option> option 1 </option>
 							<option> option 2 </option>
 						</select>
