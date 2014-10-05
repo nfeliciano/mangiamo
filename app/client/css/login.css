@@ -13,3 +13,13 @@ body{
 .navbar-brand {
 	font-family: 'Kaushan Script', cursive;
 }
+
+.fb_iframe_widget iframe {
+    opacity: 0;
+}
+
+.fb_iframe_widget {
+	width: 500%;
+	background-image: url(../img/sign_in_facebook.png);
+	background-repeat: no-repeat; 
+}
