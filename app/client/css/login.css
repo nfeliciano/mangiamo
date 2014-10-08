@@ -12,23 +12,18 @@ body{
 
 #mainContainer
 {
+	position: absolute;
 	height: 200px;
 	padding: 20px;
 	background-color: rgba(0,0,0,0.3);
-
+	width: 100%;
+	border-radius: 20px;
+	margin-top: 20%;
+	padding: 25px;
 }
 
-#mainContainer > #startEating
+.navbar-brand 
 {
-	position: absolute;
-}
-
-#mainContainer > #userInfo
-{
-	position: absolute;
-}
-
-.navbar-brand {
 	font-family: 'Kaushan Script', cursive;
 	color: White;
 }
