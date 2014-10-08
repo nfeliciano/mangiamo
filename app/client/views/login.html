@@ -6,6 +6,11 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="google-signin-clientid" content="531132549575-uki7bfheg6kjssjt3hbu4tlug3d0lbal.apps.googleusercontent.com" />
+		<meta name="google-signin-scope" content="https://www.googleapis.com/auth/plus.login" />
+		<meta name="google-signin-requestvisibleactions" content="http://schema.org/AddAction" />
+		<meta name="google-signin-cookiepolicy" content="single_host_origin" />
+		<meta name="google-signin-callback" content="signinCallback" />
 		<title></title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width", initial-scale=1>
@@ -18,6 +23,7 @@
 		<script type="text/javascript" src="/js/app.js"></script>
 		<script type="text/javascript" src="/js/controllers/login-controller.js"></script>
 		<script type="text/javascript" src="/js/facebookLogin.js"></script>
+		<script type="text/javascript" src="/js/googleLogin.js"></script>
 		<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
 
 		<link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
@@ -194,8 +200,13 @@
 						<p ng-repeat="dob in dates"> {{dob}}</p>		
 					</form>
 					<div id="authentication">
+						<div id="googleLogin">
+							<img src="../img/sign_in_with_google.png" onmouseover="" style="cursor: pointer;"></img>
+						</div>
 						<div id="fb-root">
-							<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+							<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" size="large">
+							Login with Facebook
+						</fb:login-button>
 						</div>
 					</div>
 				</div>
