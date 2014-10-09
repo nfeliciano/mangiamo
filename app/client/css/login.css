@@ -10,16 +10,25 @@ body{
     background-repeat: no-repeat;
 }
 
+.appDescription
+{
+	text-align: center;
+	font-size: 1.4em;
+	padding: 30px;
+	color: White;
+}
+
 #mainContainer
 {
-	position: absolute;
+	position: relative;
+/*	position: absolute;*/
 	height: 200px;
 	padding: 20px;
 	background-color: rgba(0,0,0,0.3);
 	width: 100%;
-	border-radius: 20px;
-	margin-top: 20%;
-	padding: 25px;
+	/*border-radius: 20px;*/
+	margin-top: 10%;
+	/*padding: 25px;*/
 }
 
 .navbar-brand 
