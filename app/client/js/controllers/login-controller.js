@@ -11,8 +11,12 @@ app.controller('loginController', ['$scope', '$resource', 'userService',
 			return new Date(Date.parse(month +" 1, 2012")).getMonth()
 		}
 
-		$scope.temp = function() {
-			console.log(userService.isUserLoggedIn());
-			// console.log(user.birthDate);
+		$scope.isUserLoggedIn = function() {
+			if (userService.isUserLoggedIn()) {
+				var str = "User is logged in with birthdate " + angular.fromJson(sessionStorage.user).birthDate;
+				return str;
+			} else {
+				return "User is not logged in";
+			}
 		}
 }]);

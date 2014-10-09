@@ -10,8 +10,8 @@ app.factory('userService', ['$resource', function($resource) {
 		//userService.getAllUsers()
 		//Gets all the users from the backend, no filtering. Can parse through them in results.
 		getAllUsers: function() {
-			return User.query(function (results) {
-				// console.log(results);
+			return User.query(function(results) {
+				return results;
 			});
 		},
 
@@ -25,7 +25,7 @@ app.factory('userService', ['$resource', function($resource) {
 			user.profession = profession;
 			user.mealBuddies = [];
 			user.$save(function(result) {
-				sessionStorage.userID = angular.toJson(result._id);
+				sessionStorage.user = angular.toJson(result);
 				console.log(result._id);
 			});
 			return null;
@@ -41,22 +41,14 @@ app.factory('userService', ['$resource', function($resource) {
 
 		},
 
+		//userService.isUserLoggedIn()
+		//Returns true or false depending on whether a user is in local storage.
 		isUserLoggedIn: function() {
-			var userID = sessionStorage.userID.replace(/"/g,"");
-			// if (userID.length > 0) {
-			// 	var users = User.query(function (results) {});
-			// 	console.log(users);
-			// 	//this is extremely hacky, but is a temporary solution. traverses through all the users and then returns one that matches the stored id
-			// 	for (var i = 0; i < users.length; i++) {
-			// 		user = users[i];
-			// 		console.log(user);
-			// 		if (user._id === userID) {
-			// 			// console.log(user._id);
-			// 			return user;
-			// 		}
-			// 	}
-			// 	return null; 
-			// }
+			if (sessionStorage.user.length > 0) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	};
 }]);
