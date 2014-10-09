@@ -7,6 +7,10 @@ function statusChangeCallback(response) {
 	// Full docs on the response object can be found in the documentation
 	// for FB.getLoginStatus().
 	if (response.status === 'connected') {
+		FB.api('/me', {fields: 'name'}, function(response) {
+			console.log(response.id);
+			console.log(response.name);
+		});
 		// Logged into your app and Facebook.
 		// This is where the code goes on successfull login,
 		// ie. change the page to the map.

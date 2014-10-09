@@ -1,6 +1,9 @@
 app.controller('loginController', ['$scope', '$resource', 'userService', 
 	function ($scope, $resource, userService) {
 		var User = $resource('/api/users');
+		$scope.dates = [];
+		$scope.hideStartEating = false;
+		$scope.hideUserInfo = true;
 
 		$scope.submitUserData = function() {
 			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
@@ -18,5 +21,10 @@ app.controller('loginController', ['$scope', '$resource', 'userService',
 			} else {
 				return "User is not logged in";
 			}
+		}
+
+		$scope.switchDivs = function() {
+			$scope.hideStartEating = !$scope.hideStartEating
+			$scope.hideUserInfo = !$scope.hideUserInfo
 		}
 }]);
