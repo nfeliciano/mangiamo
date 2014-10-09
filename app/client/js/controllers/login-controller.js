@@ -10,4 +10,9 @@ app.controller('loginController', ['$scope', '$resource', 'userService',
 		getMonthFromString = function(month) {
 			return new Date(Date.parse(month +" 1, 2012")).getMonth()
 		}
+
+		$scope.temp = function() {
+			console.log(userService.isUserLoggedIn());
+			// console.log(user.birthDate);
+		}
 }]);
