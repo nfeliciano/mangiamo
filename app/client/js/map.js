@@ -1,76 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Place searches</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      html, body, #map-canvas {
-        height: 90%;
-        margin: 0px;
-        padding: 0px
-      }
-	   .controls {
-        margin-top: 16px;
-        border: 1px solid transparent;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height: 32px;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      }
-
-      #pac-input {
-        background-color: #fff;
-        padding: 0 11px 0 13px;
-        width: 400px;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        text-overflow: ellipsis;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe;
-        margin-left: -1px;
-        padding-left: 14px;  /* Regular padding-left + 1. */
-        width: 401px;
-      }
-
-      .pac-container {
-        font-family: Roboto;
-      }
-
-      #type-selector {
-        color: #fff;
-        background-color: #4d90fe;
-        padding: 5px 11px 0px 11px;
-      }
-
-      #type-selector label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-	
-		
-
-	.labels {
-		 color: white;
-		 background-color: red;
-		 font-family: "Lucida Grande", "Arial", sans-serif;
-		 font-size: 10px;
-		 text-align: center;
-		 width: 15px;     
-		 white-space: nowrap;
-	   }
-    </style>
-
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-fcT0CmaK1LIRzGpis-y2moQSp10ajNM&v=3.exp&libraries=places"></script>
-	<script src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.9/src/markerwithlabel_packed.js" type="text/javascript"></script>  
-    <script>
 var map;
 var infowindow;
 var textToFile ="Places.place_id \r\n";
@@ -80,15 +7,12 @@ Array.prototype.binaryIndexOf = binaryIndexOf;
 
 
 function initialize() {
-  var mapOptions = {
-    zoom: 15
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+	var mapOptions = { zoom: 15 };
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-  // Try HTML5 geolocation
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
+	// Try HTML5 geolocation
+	if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       infowindow = new google.maps.InfoWindow({
@@ -98,18 +22,6 @@ function initialize() {
       });
 
       map.setCenter(pos); 
-	  
-	  
-	  
-	/* var boundbox = new google.maps.LatLngBounds();
-	for ( var i = 0; i < markers.length; i++ )
-	{
-	  boundbox.extend(new google.maps.LatLng(markers[i][1], markers[i][2]));
-	}
-	map.setCenter(boundbox.getCenter());
-	map.fitBounds(boundbox);
-	boundBox setBounds
-	  */
 	  // Search request 
 	  var request = {
 		//bounds: map.getBounds();
@@ -377,18 +289,3 @@ function handleNoGeolocation(errorFlag) {
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-    </script>
-	
-	    <style>
-		  #target {
-			width: 345px;
-		  }
-		</style>
-  </head>
-  
-  <body>
-	<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <div id="map-canvas"></div>
-  </body>
-</html>
