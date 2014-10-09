@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', function(req,res) {
-	res.sendFile(__dirname + '/client/views/index.html');
+	res.sendFile(__dirname + '/client/views/login.html');
 });
 
 app.get('/map', function(req,res) {
@@ -23,6 +23,8 @@ app.get('/map', function(req,res) {
 
 //This is a route. Basically, if anything calls for a file that starts with '/js', it looks into the /client/js folder
 app.use('/js', express.static(__dirname + '/client/js'));
+app.use('/css', express.static(__dirname + '/client/css'));
+app.use('/img', express.static(__dirname + '/client/img'));
 
 //REST API
 //Meals
