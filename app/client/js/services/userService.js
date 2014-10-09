@@ -44,7 +44,7 @@ app.factory('userService', ['$resource', function($resource) {
 		//userService.isUserLoggedIn()
 		//Returns true or false depending on whether a user is in local storage.
 		isUserLoggedIn: function() {
-			if (sessionStorage.user.length > 0) {
+			if (sessionStorage.user != null) {
 				return true;
 			} else {
 				return false;
