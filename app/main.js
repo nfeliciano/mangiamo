@@ -2,18 +2,11 @@ var express 				= require('express'),
 	app						= express(),
 	bodyParser 				= require('body-parser'),
 	mongoose 				= require('mongoose'),
-	config 					= require('./config');
 	mealsController 		= require('./server/controllers/meals-controller');
 	userController			= require('./server/controllers/user-controller');
-	options 				= { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 10000 } }, 
-                				replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 10000 } } };
 
-// set the 'dbUrl' to the mongodb url that corresponds to the environment we are in
-app.set('dbUrl', config.db['development']);
-// connect mongoose to the mongo dbUrl
-mongoose.connect(app.get('dbUrl'), options);
-
-mongoose.connection.on('error', console.error.bind(console, 'connection error:'));  
+//We have to change this to the actual mongodb db
+mongoose.connect('mongodb://mangiamo:MouseDogComputerPhone2014@ds039020.mongolab.com:39020/mangiamoapp');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -22,6 +15,10 @@ app.use(bodyParser.urlencoded({
 
 app.get('/', function(req,res) {
 	res.sendFile(__dirname + '/client/views/login.html');
+});
+
+app.get('/map', function(req,res) {
+	res.sendFile(__dirname + '/client/views/MainMap.html');
 });
 
 //This is a route. Basically, if anything calls for a file that starts with '/js', it looks into the /client/js folder
