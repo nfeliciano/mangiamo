@@ -22,6 +22,7 @@
 
 		<script type="text/javascript" src="/js/app.js"></script>
 		<script type="text/javascript" src="/js/controllers/login-controller.js"></script>
+		<script type="text/javascript" src="/js/services/userService.js"></script>
 		<script type="text/javascript" src="/js/facebookLogin.js"></script>
 		<script type="text/javascript" src="/js/googleLogin.js"></script>
 		<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
@@ -134,6 +135,7 @@
 							</select>
 							&nbsp;
 							<select ng-model="year">
+								<option> - Year - </option>
 								<option value="" disabled selected> Birth Year </option>
 								<option value="1996">1996</option>
 								<option value="1995">1995</option>
@@ -237,7 +239,9 @@
 								<option> option 2 </option>
 							</select>
 						</div>
+						<p ng-repeat="dob in dates"> {{dob}}</p>	
 						<button type="submit"> Submit </button>		
+						<span>{{isUserLoggedIn()}}</span>
 					</form>
 					<div id="authentication">
 						<div id="googleLogin">

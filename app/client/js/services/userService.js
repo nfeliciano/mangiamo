@@ -10,7 +10,9 @@ app.factory('userService', ['$resource', function($resource) {
 		//userService.getAllUsers()
 		//Gets all the users from the backend, no filtering. Can parse through them in results.
 		getAllUsers: function() {
-			return User.query(function (results) {});
+			return User.query(function(results) {
+				return results;
+			});
 		},
 
 		//userService.addNewUser(str, date(), str, str)
@@ -23,7 +25,7 @@ app.factory('userService', ['$resource', function($resource) {
 			user.profession = profession;
 			user.mealBuddies = [];
 			user.$save(function(result) {
-				console.log(result);
+				localStorage.user = angular.toJson(result);
 			});
 			return null;
 		},
@@ -36,6 +38,16 @@ app.factory('userService', ['$resource', function($resource) {
 		//Empty method. Used to delete a user from the database. Not sure if this is needed.
 		deleteUser: function(userID) {
 
+		},
+
+		//userService.isUserLoggedIn()
+		//Returns true or false depending on whether a user is in local storage.
+		isUserLoggedIn: function() {
+			if (localStorage.user != null) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	};
 }]);
