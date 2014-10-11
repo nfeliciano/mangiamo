@@ -16,7 +16,7 @@ app.controller('loginController', ['$scope', '$resource', 'userService',
 
 		$scope.isUserLoggedIn = function() {
 			if (userService.isUserLoggedIn()) {
-				var str = "User is logged in with birthdate " + angular.fromJson(sessionStorage.user).birthDate;
+				var str = "User is logged in with birthdate " + angular.fromJson(localStorage.user).birthDate;
 				return str;
 			} else {
 				return "User is not logged in";

@@ -25,8 +25,7 @@ app.factory('userService', ['$resource', function($resource) {
 			user.profession = profession;
 			user.mealBuddies = [];
 			user.$save(function(result) {
-				sessionStorage.user = angular.toJson(result);
-				console.log(result._id);
+				localStorage.user = angular.toJson(result);
 			});
 			return null;
 		},
@@ -44,7 +43,7 @@ app.factory('userService', ['$resource', function($resource) {
 		//userService.isUserLoggedIn()
 		//Returns true or false depending on whether a user is in local storage.
 		isUserLoggedIn: function() {
-			if (sessionStorage.user != null) {
+			if (localStorage.user != null) {
 				return true;
 			} else {
 				return false;
