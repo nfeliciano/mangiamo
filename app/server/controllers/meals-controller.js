@@ -20,7 +20,13 @@ module.exports.create = function (req,res) {
 }
 
 module.exports.list = function (req,res) {
-	Meal.find({}, function (err, results) {
-		res.json(results);
-	});
+	if (req.query.placeID != null) {
+		Meal.find({placeID:req.query.placeID}, function(err, results) {
+			res.json(results);
+		});
+	} else {
+		Meal.find({}, function (err, results) {
+			res.json(results);
+		});
+	}
 }

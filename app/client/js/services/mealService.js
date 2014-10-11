@@ -13,6 +13,14 @@ app.factory('mealService', ['$resource', function($resource) {
 			return Meal.query(function(results) {});
 		},
 
+		//mealService.getMealsAtPlaceID(str)
+		//Gets all meals from the backend with the specific place ID.
+		getMealsAtPlaceID: function(placeID) {
+			return Meal.query({ "placeID":placeID}, function(results) {
+				return results;
+			});
+		},
+
 		//mealService.addNewMeal(str, int, date(), [], bool)
 		//Adds a new meal to the database with the key placeID-time
 		addNewMeal: function(placeID, numPeople, time, people, active) {
