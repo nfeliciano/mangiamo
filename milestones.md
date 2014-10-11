@@ -18,7 +18,7 @@ Requires: Coding, using express & node, making sure files are being created in M
 Developers: Noel, Kevin
 Status: Done until UI comes in
 Time Estimation: 6 Hours
-Time Spent: 11 Hours
+Time Spent: 19 Hours
 ~~~~
 ~~~~
 Feature Name: Mock-Ups
@@ -36,7 +36,7 @@ Requires: Creating basic markup and style sheets, learning and using purecss.io,
 Developers: Chris and Lloyd
 Status: Integrating PureCSS into HTML skeleton file.
 Time Estimation: 14 Hours
-Time Spent: 20 Hours
+Time Spent: 30 Hours
 ~~~~
 ~~~~
 Feature Name: Display the Restaurants
@@ -127,7 +127,7 @@ Requires: Interaction with Facebook API, back-end logic for storing when user lo
 Developers:
 Status: Not Started 
 Time Estimation: 8 Hours
-Time Spent: 4 Hours
+Time Spent: 5.5 Hours
 ~~~~
 ~~~~
 Feature Name: Yelp! 
@@ -191,8 +191,8 @@ Description: Include authentication using Google and LinkedIn
 Requires: Figure out logic for how to tie it in with regular auth and Facebook auth
 Developers:
 Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
+Time Estimation: 6
+Time Spent: 6 Hours
 ~~~~
 
 ##### New Feature Template #####
