@@ -68,14 +68,6 @@ function initialize() {
   initializeSearchBar();
 }
 
-function createDoc()
-{
-	var doc=document.open("answer.txt","replace");
-	var txt="<html><body>You clicked Allow</body></html>";
-	doc.write(txt);
-	doc.close();
-}
-
 
 function initializeSearchBar() {
 
