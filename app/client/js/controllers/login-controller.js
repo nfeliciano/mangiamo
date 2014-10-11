@@ -1,10 +1,5 @@
-// Allows for redirects
-app.config(function($locationProvider) {
-	$locationProvider.html5Mode(true);
-});
-
-app.controller('loginController', ['$scope', '$resource', '$location', 'userService',
-	function ($scope, $resource, $location, userService) {
+app.controller('loginController', ['$scope', '$resource', 'userService',
+	function ($scope, $resource, userService) {
 		var User = $resource('/api/users');
 		$scope.dates = [];
 		$scope.hideStartEating = false;
@@ -12,7 +7,7 @@ app.controller('loginController', ['$scope', '$resource', '$location', 'userServ
 
 		$scope.submitUserData = function() {
 			if (userService.isUserLoggedIn()) {
-				$location.path('/index');
+				// Code to switch views
 			}
 			else {
 				var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
