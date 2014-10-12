@@ -4,21 +4,35 @@
 		<title>Mangiamo</title>
 
 		<!-- Standard Meta Information -->
-		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		
-
+		<!-- AngularJS -->
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-resource.js"></script>
 		<script type="text/javascript" src="js/angular-ui-router.min.js"></script>
+
+		<!-- Custom JS files -->
 		<script type="text/javascript" src="/js/app.js"></script>
+		<script type="text/javascript" src="/js/controllers/login-controller.js"></script>
+		<script type="text/javascript" src="/js/controllers/main-controller.js"></script>
+		<script type="text/javascript" src="/js/services/userService.js"></script>
+
+
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="/css/index.css">
+		<link rel="stylesheet" type='text/css' href="/css/login.css">
+		<link rel="stylesheet" type="text/css" href="/css/main.css">
+		<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Kaushan+Script'>
+		<link rel="stylesheet" type='text/css' href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
 	</head>
 
 	<body>
 		<div>
-			<a href="http://localhost:3000/#home">Home</a>
-			<a href="http://localhost:3000/#aboutus">About Us</a>
-			<a href="http://localhost:3000/#contactus">Contact Us</a>
+			<a href="http://localhost:3000/#login"> Login </a>
+			<a href="http://localhost:3000/#main"> Main </a>
 		</div>
 		<div ui-view=""></div>
 	</body>

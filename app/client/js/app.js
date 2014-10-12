@@ -3,36 +3,20 @@ var app = angular.module('mangiamo', ['ngResource', 'ui.router'])
 
 //$stateprovider is the service procided by ui.router
 app.config(['$stateProvider', function ($stateProvider) {
-//create route object
-    var home= {
-        url: '/home',
-        templateUrl: 'views/Home.html',
-        controller: 'HomeCtrl'
+	//create route object
+    var login = {
+        url: '/login',
+        templateUrl: 'views/login.html',
+        controller: 'loginController'
     },
-    aboutUs= {
-        url: '/aboutus',
-        templateUrl: 'views/AboutUs.html',
-        controller: 'AboutUsCtrl'
-    },
-    contactUs= {
-        url: '/contactus',
-        templateUrl: 'views/ContactUs.html',
-        controller: 'ContactUsCtrl'
+    main = {
+        url: '/main',
+        templateUrl: 'views/main.html',
+        controller: 'mainController'
     };
 
-//Now add these route state privider
+	//Now add these route state privider
     $stateProvider
-       .state('home', home)
-       .state('aboutus', aboutUs)
-       .state('contactUs', contactUs);
+       .state('login', login)
+       .state('main', main);
 }]);
-
-app.controller('HomeCtrl', function ($scope) {
-    $scope.message = 'Hello! we are on Home Page';
-})
-.controller('AboutUsCtrl', function ($scope) {
-    $scope.message = 'Hello! we are on About Us Page';
-})
-.controller('ContactUsCtrl', function ($scope) {
-    $scope.message = 'Hello! we are on Contact Us Page';
-});
