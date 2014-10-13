@@ -8,7 +8,7 @@ Array.prototype.binaryIndexOf = binaryIndexOf;
 
 function initialize() {
 	var mapOptions = { zoom: 15 };
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 
 	// Try HTML5 geolocation
 	if (navigator.geolocation) {

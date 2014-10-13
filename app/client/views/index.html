@@ -31,7 +31,10 @@
 
 	<body>
 		<!-- This span allows index-controller.js to execute, which redirects based on user login status -->
-		<span ng-controller="indexController"></span>
+		<div ng-controller="indexController"> 
+			<a href="http://localhost:3000/#/login">login</a>
+			<a href="http://localhost:3000/#/main">main</a>
+		</div>
 		<div ui-view=""></div>
 	</body>
 </html>

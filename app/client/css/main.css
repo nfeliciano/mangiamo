@@ -1,14 +1,13 @@
-html, body, #map-canvas
+#mapCanvas
 {
-	height: 100%;
-	margin: 0px;
-	padding: 0px;
+	height: 300px;
 }
 
 #mapContainer
 {
-	height: 100%
+	margin: 20px;
 }
+
 
 .controls 
 {	
