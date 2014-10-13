@@ -1,17 +1,13 @@
-<div id="mainContainer" ng-controller="mainController">
+<div ng-controller="mainController" ng-init="initialize()">
 	<!-- CODE -->
 	<!-- Map -->
+	<!-- <div id="mapContainer">
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+		<div id="mapCanvas"></div>
+	</div> -->
 	<div id="mapContainer">
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="mapCanvas"></div>
 	</div>
-
-	<!-- SCRIPTS -->
-	<!-- Custom JS files -->
-	<script type="text/javascript" src="/js/map.js"></script>
-
-	<!-- Google Map API -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-fcT0CmaK1LIRzGpis-y2moQSp10ajNM&v=3.exp&libraries=places"></script>
-	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.9/src/markerwithlabel_packed.js" ></script>  
 
 </div>
