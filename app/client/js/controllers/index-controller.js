@@ -1,21 +1,20 @@
-app.controller('indexController', ['$scope', '$resource', '$window', 'userService',
-	function ($scope, $resource, $window, userService) {
+app.controller('indexController', ['$scope', '$resource', '$window', '$location', 'userService',
+	function ($scope, $resource, $window, $location, userService) {
 
 		// This allows the initial redirect when they come to the 
 		// page based on whether or not they are logged in
 		$scope.init = function() {
 			if (userService.isUserLoggedIn()) {
-				$window.location.href="http://localhost:3000/#/main";
+				$location.path('main').replace();
 			}
 			else {
-				$window.location.href="http://localhost:3000/#/login";
+				$location.path('login').replace();
 			}
 		}
 		$scope.init();
 
 		$scope.logout = function() {
 			userService.logoutUser();
-			console.log('logged');
-			$window.location.href="http://localhost:3000/#/login";
+			$location.path('login').replace();
 		}
 }]);
