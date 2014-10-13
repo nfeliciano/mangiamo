@@ -12,4 +12,10 @@ app.controller('indexController', ['$scope', '$resource', '$window', 'userServic
 			}
 		}
 		$scope.init();
+
+		$scope.logout = function() {
+			userService.logoutUser();
+			console.log('logged');
+			$window.location.href="http://localhost:3000/#/login";
+		}
 }]);

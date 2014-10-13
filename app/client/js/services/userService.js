@@ -43,11 +43,17 @@ app.factory('userService', ['$resource', function($resource) {
 		//userService.isUserLoggedIn()
 		//Returns true or false depending on whether a user is in local storage.
 		isUserLoggedIn: function() {
-			if (localStorage.user != null) {
+			if (localStorage.user != 'loggedout') {
 				return true;
 			} else {
 				return false;
 			}
+		},
+
+		//userService.logoutUser()
+		//DOES NOT DEAUTHENTICATE FROM FACEBOOK OR GOOGLE YET, only removes the user from localStorage
+		logoutUser: function() {
+			localStorage.user = 'loggedout';
 		}
 	};
 }]);
