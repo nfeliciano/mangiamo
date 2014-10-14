@@ -270,13 +270,13 @@ function handleNoGeolocation(errorFlag) {
 	}
 
 	var options = {
-		map: map,
+		map: $scope.map,
 		position: new google.maps.LatLng(-33.8665433, 151.1956316),   // This is the position it goes to if the user failed to give permision or, it failed for some other reason
 		content: content
 	};
 	
 	var infowindow = new google.maps.InfoWindow(options);
-	map.setCenter(options.position);
+	$scope.map.setCenter(options.position);
 }
 
 
