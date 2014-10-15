@@ -1,5 +1,5 @@
-app.controller('loginController', ['$scope', '$resource', '$window', 'userService',
-	function ($scope, $resource, $window, userService) {
+app.controller('loginController', ['$scope', '$resource', '$location', 'userService',
+	function ($scope, $resource, $location, userService) {
 		var User = $resource('/api/users');
 		$scope.dates = [];
 		$scope.hideStartEating = false;
@@ -9,7 +9,7 @@ app.controller('loginController', ['$scope', '$resource', '$window', 'userServic
 		$scope.submitUserData = function() {
 			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
 			userService.addNewUser(null, bdate, $scope.description, $scope.occupation);		
-			$window.location.href="http://localhost:3000/#/main";
+			$location.path('main').replace();
 		}
 
 		getMonthFromString = function(month) {
@@ -34,7 +34,7 @@ app.controller('loginController', ['$scope', '$resource', '$window', 'userServic
 		// This redirects back to main if the user tries to navigate here and they are already logged in
 		$scope.init = function() {
 			if (userService.isUserLoggedIn()) {
-				$window.location.href="http://localhost:3000/#/main";
+				$location.path('main').replace();
 			}
 		}
 		$scope.init();
