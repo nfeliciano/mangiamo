@@ -2,9 +2,10 @@ app.controller('mainController', ['$scope', '$resource',
 	function ($scope, $resource) {
 
 		$scope.placedMarkers = [];
-		$scope.placedMarkersInfo = [];
+		$scope.lastPosition = new google.maps.LatLng();
+
 		var mapOptions = {
-			zoom: 15
+			zoom: 14
 		}
 
 		$scope.initialize = function() {
@@ -22,18 +23,24 @@ app.controller('mainController', ['$scope', '$resource',
 				    $scope.map.setCenter(pos);
 
 				    var request = {
-				    	location: pos,
-				    	radius: 4000,
-				    	types: ['food', 'restaurant', 'bar', 'night_club', 'cafe']
-				    };
-
+						location: pos,
+						rankby : google.maps.places.RankBy.DISTANCE,
+						radius: 4000,
+						types: ['restaurant','cafe', 'bar', 'food']
+					};
+					
 				    $scope.infowindow = new google.maps.InfoWindow();
 				    var service = new google.maps.places.PlacesService($scope.map);
-				    service.nearbySearch(request, callback);
+				    service.radarSearch(request, callback);
 
 				    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-				    	request.location=$scope.map.getCenter();
-				    	service.nearbySearch(request, callback);
+				    	if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
+							clearMarkers();
+							//console.log(lastPosition);
+							$scope.lastPosition = $scope.map.getCenter();
+							request.location=$scope.map.getCenter();
+							service.radarSearch(request, callback);
+						}
 
 				    });
 
@@ -49,12 +56,6 @@ app.controller('mainController', ['$scope', '$resource',
 
 		initializeSearchBar = function() {
 			var markers = [];
- 
-			var defaultBounds = new google.maps.LatLngBounds(
-		    	new google.maps.LatLng(-33.8902, 151.1759),
-		    	new google.maps.LatLng(-33.8474, 151.2631));
-			$scope.map.fitBounds(defaultBounds);
-
 			// Create the search box and link it to the UI element.
 			var input = /** @type {HTMLInputElement} */(
 		    	document.getElementById('pac-input'));
@@ -91,7 +92,7 @@ app.controller('mainController', ['$scope', '$resource',
 
 					// Create a marker for each place.
 					var marker = new google.maps.Marker({
-						map: map,
+						map: $scope.map,
 						icon: image,
 						title: place.name,
 						position: place.geometry.location
@@ -115,11 +116,9 @@ app.controller('mainController', ['$scope', '$resource',
 		callback = function(results, status, pagination) {
 			if (status != google.maps.places.PlacesServiceStatus.OK) {
 			//alert(status);
-			return;
+				return;
 			} else {
 				//clearMarkers();
-			
-			
 				var skip = false;
 				for (var i = 0; i < results.length; i++) {
 					skip = false;
@@ -144,23 +143,16 @@ app.controller('mainController', ['$scope', '$resource',
 		//Adds pin to map
 		createMarker = function(place) {
 			var placeLoc = place.geometry.location;
-			//---- This is how we would go about creating a specific PIN IMAGE -----
-		 	/* var goldStar = {
-		    	path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
-			    fillColor: 'blue',
-			    fillOpacity: 0.8,
-			    scale: 0.3,
-			    strokeColor: 'gold',
-			    strokeWeight: 1
-			};*/
+			
 
 			// Marker this is the pin on the map.
 		    var marker =  new MarkerWithLabel({
+				icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
 				map: $scope.map,
 				position: place.geometry.location,
 				draggable: false,    //property that allows user to move marker
 				raiseOnDrag: false,
-				labelContent:randomIntFromInterval(1,15), 
+				//labelContent:randomIntFromInterval(1,15), 
 				labelAnchor: new google.maps.Point(7, 33),    // anchors to
 				labelClass: "labels", // the CSS class for the label
 				
@@ -186,8 +178,14 @@ app.controller('mainController', ['$scope', '$resource',
 		}
 
 		// Removes the markers from the map, but keeps them in the array.
-		function clearMarkers() {
-			setAllMap(null);
+		// Removes the markers from the map,
+		function clearMarkers(){
+			for (var i = 0; i < $scope.placedMarkers.length; i++ ) {
+				$scope.placedMarkers[i].setMap(null);
+			}
+			$scope.placedMarkers.length = 0;
+			$scope.placedMarkers = [];
+			
 		}
 
 		function handleNoGeolocation(errorFlag) {
