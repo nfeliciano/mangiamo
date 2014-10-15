@@ -21,10 +21,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', function(req,res) {
-	res.sendFile(__dirname + '/client/views/login.html');
-});
-
-app.get('/index', function(req,res) {
 	res.sendFile(__dirname + '/client/views/index.html');
 });
 
@@ -32,6 +28,7 @@ app.get('/index', function(req,res) {
 app.use('/js', express.static(__dirname + '/client/js'));
 app.use('/css', express.static(__dirname + '/client/css'));
 app.use('/img', express.static(__dirname + '/client/img'));
+app.use('/views', express.static(__dirname + '/client/views'));
 
 //REST API
 //Meals
