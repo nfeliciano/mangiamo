@@ -28,6 +28,7 @@ app.use('/img', express.static(__dirname + '/client/img'));
 
 //REST API
 //Meals
+app.get('/api/meals/update', mealsController.update);
 app.get('/api/meals', mealsController.list);
 app.post('/api/meals', mealsController.create);
 

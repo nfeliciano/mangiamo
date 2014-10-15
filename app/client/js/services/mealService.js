@@ -5,6 +5,7 @@
 
 app.factory('mealService', ['$resource', function($resource) {
 	var Meal = $resource('/api/meals');
+	var mealUpdate = $resource('/api/meals/update')
 
 	return {
 		//mealService.getAllMeals()
@@ -17,6 +18,12 @@ app.factory('mealService', ['$resource', function($resource) {
 		//Gets all meals from the backend with the specific place ID.
 		getMealsAtPlaceID: function(placeID) {
 			return Meal.query({ "placeID":placeID}, function(results) {
+				return results;
+			});
+		},
+
+		addUserToMeal: function(key, ID) {
+			return mealUpdate.query({ "key":key, "ID": ID }, function(results) {
 				return results;
 			});
 		},

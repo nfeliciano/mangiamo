@@ -19,6 +19,17 @@ module.exports.create = function (req,res) {
 	});
 }
 
+module.exports.update = function (req,res) { // Some issue of adding to the array, maybe the way the model was declared. Changed it.
+
+	var query = {key:req.query.key};
+	var str = req.query.ID.replace(/['"]+/g, '')
+	var update = {people: { "id" : str }};
+	var increment = { numPeople : 1 };
+
+	Meal.findOneAndUpdate(query, { $push : update, $inc: increment }, function(err, results) {
+	});
+}
+
 module.exports.list = function (req,res) {
 	if (req.query.placeID != null) {
 		Meal.find({placeID:req.query.placeID}, function(err, results) {
