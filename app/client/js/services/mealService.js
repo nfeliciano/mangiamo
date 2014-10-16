@@ -22,6 +22,12 @@ app.factory('mealService', ['$resource', function($resource) {
 			});
 		},
 
+		getUsersAtMealByPlaceID: function($scope2, placeID) {
+			console.log("penis");
+			Meal.query({ "placeID":placeID}, function(results) {
+                $scope2.replacePin(placeID, results)
+            });
+        },
 		addUserToMeal: function(key, ID) {
 			return mealUpdate.query({ "key":key, "ID": ID }, function(results) {
 				return results;

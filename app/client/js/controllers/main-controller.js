@@ -38,9 +38,9 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 				    service.radarSearch(request, callback);
 					
 				    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-						console.log("penis");
+						
 				    	if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
-							console.log("vagina");
+						
 							clearMarkers();
 							$scope.lastPosition = $scope.map.getCenter();
 							request.location=$scope.map.getCenter();
@@ -152,45 +152,22 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 		//Adds pin to map
 		createMarker = function(place) {
 			
+			// Marker this is the pin on the map.
+			var marker =  new MarkerWithLabel({
+				icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
+				map: $scope.map,
+				position: place.geometry.location,
+				draggable: false,    //property that allows user to move marker
+				raiseOnDrag: false,
+				//labelContent:randomIntFromInterval(1,15), 
+				labelAnchor: new google.maps.Point(7, 33),    // anchors to
+				labelClass: "labels", // the CSS class for the label
+				
+				// Just me things
+				markerId : place.place_id,
+				name: place.name,
+			});
 		
-			var meal = mealService.getMealsAtPlaceID(place.place_id);
-			if(meal.length  !=0 ){
-			
-				var marker =  new MarkerWithLabel({
-					map: $scope.map,
-					position: place.geometry.location,
-					draggable: false,    //property that allows user to move marker
-					raiseOnDrag: false,
-					labelContent:meal.numPeople, 
-					labelAnchor: new google.maps.Point(7, 33),    // anchors to
-					labelClass: "labels", // the CSS class for the label
-					
-					// Just me things
-					markerId : place.place_id,
-					name: place.name,
-				});
-			
-			
-			}
-			else {
-				// Marker this is the pin on the map.
-				var marker =  new MarkerWithLabel({
-					icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
-					map: $scope.map,
-					position: place.geometry.location,
-					draggable: false,    //property that allows user to move marker
-					raiseOnDrag: false,
-					//labelContent:randomIntFromInterval(1,15), 
-					labelAnchor: new google.maps.Point(7, 33),    // anchors to
-					labelClass: "labels", // the CSS class for the label
-					
-					// Just me things
-					markerId : place.place_id,
-					name: place.name,
-				});
-			
-			}
-			
 
 		    $scope.placedMarkers.push(marker);
 
@@ -208,6 +185,8 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 				$scope.openModal('lg');
 
 			});
+		
+			mealService.getUsersAtMealByPlaceID:($scope, place.place_Id);
 		}
 
 		$scope.openModal = function (size) {
@@ -240,6 +219,46 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 			
 		}
 
+		
+		$scope.replacePin = function(place_id, result) {
+		
+			for (var i = 0; i < $scope.placedMarkers.length; i++ ) {
+					
+					if(place_id == $scope.placedMarkers[i].markerId){
+					
+					
+						var marker =  new MarkerWithLabel({
+							map: $scope.map,
+							position: $scope.placedMarkers[i].position,
+							draggable: false,    //property that allows user to move marker
+							raiseOnDrag: false,
+							labelContent:result[0].numPeople, 
+							labelAnchor: new google.maps.Point(7, 33),    // anchors to
+							labelClass: "labels", // the CSS class for the label
+							
+							// Just me things
+							markerId : place_id,
+							name: place.name,
+						});
+				
+				
+						google.maps.event.addListener(marker, 'click', function() {
+							$scope.openModal('lg');
+						});
+			
+				
+						$scope.placedMarkers[i]= marker;
+			
+				
+					}
+				}
+				
+		
+			console.log(result[0].key);
+		
+		
+		}
+		
 		function handleNoGeolocation(errorFlag) {
 			if (errorFlag) {
 				var content = 'Error: The Geolocation service failed.';
