@@ -22,6 +22,23 @@ app.factory('mealService', ['$resource', function($resource) {
 			});
 		},
 
+		getUsersAtMealByPlaceID: function(placeID) {
+			var SortedArray = [];
+			Meal.query({ "placeID":placeID}, function(results) {
+				var Count = 0;
+				for (e in results){
+					Count++;
+				}
+				for (i=0; i<Count; i++) {
+					SortedArray.push(results[i.toString()]);
+				}
+				console.log(SortedArray[0]);
+				return SortedArray[0];
+			});
+			console.log(SortedArray);
+			return SortedArray;
+		},
+
 		addUserToMeal: function(key, ID) {
 			return mealUpdate.query({ "key":key, "ID": ID }, function(results) {
 				return results;
