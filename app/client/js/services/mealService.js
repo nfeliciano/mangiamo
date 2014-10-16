@@ -25,26 +25,11 @@ app.factory('mealService', ['$http', '$resource', function($http, $resource) {
 		return $http.put(meal, request);
 	};
 
+	// //Adds a new meal to the database with the key placeID-time
 	mealService.addNewMeal = function(placeID, numPeople, time, people, active) {
 		var request = {"key":placeID + "-" + time, "time":time, "numPeople":numPeople, "placeID":placeID, "people":[], "active":active};
 		return $http.post(meal, request);
 	}
-
-	// //mealService.addNewMeal(str, int, date(), [], bool)
-	// //Adds a new meal to the database with the key placeID-time
-	// addNewMeal: function(placeID, numPeople, time, people, active) {
-	// 	var meal = new Meal();
-	// 	meal.key = placeID + "-" + time;
-	// 	meal.time = time; 					//make sure time is limited to year-month-day-hh-mm
-	// 	meal.numPeople = numPeople;
-	// 	meal.placeID = placeID;
-	// 	meal.people = [];
-	// 	meal.active = true;
-	// 	meal.$save(function(result) {
-	// 		console.log(result);
-	// 	})
-	// 	return null;
-	// }
 
 	return mealService;
 }]);
