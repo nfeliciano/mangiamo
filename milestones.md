@@ -87,7 +87,7 @@ Time Spent: 0 Hours
 Feature Name: See scheduled meals
 Description: See any meals scheduled on the map
 Requires: Overlaying on top of Google map, adding logic to database for retrieving meals
-Developers: Lloyd, Chris, Jesper, Kevin, Noel
+Developers: Chris, Jesper, Kevin, Noel
 Status: Not started
 Time Estimation: 15 Hours
 Time Spent: 1 Hours
@@ -96,7 +96,7 @@ Time Spent: 1 Hours
 Feature Name: Scheduling meals
 Description: Be able to schedule a meal by using the map interface in conjunction with other views
 Requires: Being able to add meals to database, different view for creating a meal
-Developers: Chris, Lloyd
+Developers: Chris
 Status: Not Started
 Time Estimation: 8 Hours
 Time Spent: 0 Hours
@@ -117,6 +117,15 @@ Developers:
 Status: Not Started
 Time Estimation: 8 Hours
 Time Spent: 0 Hours
+~~~~
+~~~~
+Feature Name: Proper Redirection
+Description: Redirect the user based on status of being logged in
+Requires: UIRouter research,  an AngularJS module
+Status: Complete
+Developers: Lloyd
+Time Estimation: 8 Hours
+Time Spent: 10 Hours
 ~~~~
 
 #### Milestone 2 - Release Candidate ####

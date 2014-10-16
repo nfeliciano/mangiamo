@@ -15,6 +15,14 @@ app.factory('userService', ['$resource', function($resource) {
 			});
 		},
 
+		//userService.getUserWithID(str). Won't do anything for now.
+		//Gets a user from the backend with the specific ID.
+		getUserWithID: function(userID) {
+			// return User.query({"_id":userID}, function(results) {
+			// 	return results;
+			// });
+		},
+
 		//userService.addNewUser(str, date(), str, str)
 		//Creates a new user and adds it onto the backend using $save. Name can be null (which is an anonymous user)
 		addNewUser: function(name, birthDate, description, profession) {
@@ -25,6 +33,7 @@ app.factory('userService', ['$resource', function($resource) {
 			user.profession = profession;
 			user.mealBuddies = [];
 			user.$save(function(result) {
+				sessionStorage.userID = angular.toJson(result._id);
 				localStorage.user = angular.toJson(result);
 			});
 			return null;
@@ -43,11 +52,17 @@ app.factory('userService', ['$resource', function($resource) {
 		//userService.isUserLoggedIn()
 		//Returns true or false depending on whether a user is in local storage.
 		isUserLoggedIn: function() {
-			if (localStorage.user != null) {
+			if (localStorage.user != 'loggedout') {
 				return true;
 			} else {
 				return false;
 			}
+		},
+
+		//userService.logoutUser()
+		//DOES NOT DEAUTHENTICATE FROM FACEBOOK OR GOOGLE YET, only removes the user from localStorage
+		logoutUser: function() {
+			localStorage.user = 'loggedout';
 		}
 	};
 }]);

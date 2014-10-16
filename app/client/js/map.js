@@ -4,7 +4,7 @@ var textToFile ="Places.place_id \r\n";
 var placedMarkers= [];
 var placedMarkersInfo = [];
 Array.prototype.binaryIndexOf = binaryIndexOf;
-
+var lastPosition = new google.maps.LatLng();
 
 function initialize() {
 	var mapOptions = { zoom: 15 };
@@ -12,60 +12,69 @@ function initialize() {
 
 	// Try HTML5 geolocation
 	if (navigator.geolocation) {
-	navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		navigator.geolocation.getCurrentPosition(function(position) {
+			var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			lastPosition = pos;
+			
+			infowindow = new google.maps.InfoWindow({
+				map: map,
+				position: pos,
+				content: 'Location found using HTML5.'
+			});
 
-      infowindow = new google.maps.InfoWindow({
-        map: map,
-        position: pos,
-        content: 'Location found using HTML5.'
-      });
-
-      map.setCenter(pos); 
-	  // Search request 
-	  var request = {
-		//bounds: map.getBounds();
-		location: pos,
+			map.setCenter(pos); 
+			// Search request 
+			var request = {
+				//bounds: map.getBounds();
+				location: pos,
+				rankby : google.maps.places.RankBy.DISTANCE,
+				//service.setBounds(map.getBounds()),
+				radius: 4000,
+				types: ['restaurant','cafe', 'bar', 'food']
+				//query: 'restaurant',
+			};
+	
+			infowindow = new google.maps.InfoWindow();
+			var service = new google.maps.places.PlacesService(map);
+			//service.nearbySearch(request, callback);
+			service.radarSearch(request, callback);
+			//https://developers.google.com/maps/documentation/javascript/places#TextSearchRequests
+			//service.textSearch(request, callback);
+			// Bias the seach results towards places that are within the bounds of the
+			// current map's viewport.
+			google.maps.event.addListener(map, 'bounds_changed', function() {
 		
-		//service.setBounds(map.getBounds()),
-		radius: 4000,
-		types: ['food', 'restaurant', 'bar', 'night_club', 'cafe']
-	};
+				if(google.maps.geometry.spherical.computeDistanceBetween(lastPosition, map.getCenter()) > 2000){
+					clearMarkers();
+					console.log(lastPosition);
+					lastPosition = map.getCenter();
+					//var bounds = new google.maps.LatLngBounds();
+					//bounds =map.getBounds();
+					//service.setBounds(bounds);
+					//request.setBounds(bounds);
+					//request.setCenter(map.getCenter);
+					//clearMatrix
+					request.location=map.getCenter();
+					
+					//service.nearbySearch(request, callback);
+					service.radarSearch(request, callback);
+				}
+			});
 	
-	infowindow = new google.maps.InfoWindow();
-	var service = new google.maps.places.PlacesService(map);
-	service.nearbySearch(request, callback);
-	
-	// Bias the seach results towards places that are within the bounds of the
-	// current map's viewport.
-	google.maps.event.addListener(map, 'bounds_changed', function() {
-		//var bounds = new google.maps.LatLngBounds();
-		//bounds =map.getBounds();
-		//service.setBounds(bounds);
-		//request.setBounds(bounds);
-		//request.setCenter(map.getCenter);
-		request.location=map.getCenter();
-		//sleep:2;
-		service.nearbySearch(request, callback);
-	});
-	
-	
-	
-	initializeSearchBar();
+			initializeSearchBar();
 	 
-	  
-    }, function() {
-      handleNoGeolocation(true);
-    });
+		}, function() {
+			handleNoGeolocation(true);
+		});
 	
-  } 
+	} 
   
-  else {
-    // Browser doesn't support Geolocation
-    handleNoGeolocation(false);
-  }
+	else {
+		// Browser doesn't support Geolocation
+		handleNoGeolocation(false);
+	}
     
-  initializeSearchBar();
+
 }
 
 function createDoc()
@@ -80,33 +89,27 @@ function createDoc()
 function initializeSearchBar() {
 
 
-  var markers = [];
- 
-  var defaultBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(-33.8902, 151.1759),
-      new google.maps.LatLng(-33.8474, 151.2631));
-  map.fitBounds(defaultBounds);
+	var markers = [];
 
-  // Create the search box and link it to the UI element.
-  var input = /** @type {HTMLInputElement} */(
-      document.getElementById('pac-input'));
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	// Create the search box and link it to the UI element.
+	var input = /** @type {HTMLInputElement} */( document.getElementById('pac-input'));
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-  var searchBox = new google.maps.places.SearchBox(
-    /** @type {HTMLInputElement} */(input));
+	var searchBox = new google.maps.places.SearchBox(
+	/** @type {HTMLInputElement} */(input));
 
-	  // Listen for the event fired when the user selects an item from the
-	  // pick list. Retrieve the matching places for that item.
-	google.maps.event.addListener(searchBox, 'places_changed', function() {
+		// Listen for the event fired when the user selects an item from the
+		// pick list. Retrieve the matching places for that item.
+		google.maps.event.addListener(searchBox, 'places_changed', function() {
 	
 		var places = searchBox.getPlaces();
 
 		if (places.length == 0) {
-		  return;
+			return;
 		}
 		
 		for (var i = 0, marker; marker = markers[i]; i++) {
-		  marker.setMap(null);
+			marker.setMap(null);
 		}
 
 		// For each place, get the icon, place name, and location.
@@ -119,28 +122,28 @@ function initializeSearchBar() {
 				origin: new google.maps.Point(0, 0),
 				anchor: new google.maps.Point(17, 34),
 				scaledSize: new google.maps.Size(25, 25)
-			 };
+			};
 
-		  // Create a marker for each place.
-		  var marker = new google.maps.Marker({
-			map: map,
-			icon: image,
-			title: place.name,
-			position: place.geometry.location
-		  });
+			// Create a marker for each place.
+			var marker = new google.maps.Marker({
+				map: map,
+				icon: image,
+				title: place.name,
+				position: place.geometry.location
+			});
 
-		  markers.push(marker);
-		  bounds.extend(place.geometry.location);
+			markers.push(marker);
+			bounds.extend(place.geometry.location);
 		}
 		map.fitBounds(bounds);
-  });
+	});
 
-  // Bias the SearchBox results towards places that are within the bounds of the
-  // current map's viewport.
-  google.maps.event.addListener(map, 'bounds_changed', function() {
-    var bounds = map.getBounds();
-    searchBox.setBounds(bounds);
-  });
+	// Bias the SearchBox results towards places that are within the bounds of the
+	// current map's viewport.
+	google.maps.event.addListener(map, 'bounds_changed', function() {
+		var bounds = map.getBounds();
+		searchBox.setBounds(bounds);
+	});
 
 }
 
@@ -154,8 +157,6 @@ function callback(results, status, pagination) {
 	}
 	else{
 	//clearMarkers();
-	
-	
 		var skip = false;
 		for (var i = 0; i < results.length; i++) {
 		  
@@ -174,7 +175,7 @@ function callback(results, status, pagination) {
 	}
   
 	if( pagination.hasNextPage){
-		sleep:5;
+		sleep:3;
 		pagination.nextPage();
 	}
  
@@ -219,27 +220,15 @@ function binaryIndexOf(searchElement) {
 //Adds pin to map
 function createMarker(place) {
 
-  //placedMarkers.push(String(place.place_id));
-  var placeLoc = place.geometry.location;
-  
-  
-	//---- This is how we would go about creating a specific PIN IMAGE -----
-   /* var goldStar = {
-    path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
-    fillColor: 'blue',
-    fillOpacity: 0.8,
-    scale: 0.3,
-    strokeColor: 'gold',
-    strokeWeight: 1
-  };*/
-	
 	// Marker this is the pin on the map.
     var marker =  new MarkerWithLabel({
+		//icon: "../img/restaurant.png",		//Square restaurant 
+		icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
 		map: map,
 		position: place.geometry.location,
 		draggable: false,    //property that allows user to move marker
 		raiseOnDrag: false,
-		labelContent:randomIntFromInterval(1,15), 
+		//labelContent:randomIntFromInterval(1,15),	// The labels content 
 		labelAnchor: new google.maps.Point(7, 33),    // anchors to
 		labelClass: "labels", // the CSS class for the label
 		
@@ -265,9 +254,14 @@ function randomIntFromInterval(min,max)
     return Math.floor(Math.random()*(max-min+1)+min);
 }
 
-// Removes the markers from the map, but keeps them in the array.
-function clearMarkers() {
-	setAllMap(null);
+// Removes the markers from the map,
+function clearMarkers(){
+	for (var i = 0; i < placedMarkers.length; i++ ) {
+		placedMarkers[i].setMap(null);
+	}
+	placedMarkers.length = 0;
+	placedMarkers = [];
+	
 }
 
 function handleNoGeolocation(errorFlag) {
