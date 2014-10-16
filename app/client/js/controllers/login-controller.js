@@ -1,5 +1,5 @@
-app.controller('loginController', ['$scope', '$resource', '$location', 'userService',
-	function ($scope, $resource, $location, userService) {
+app.controller('loginController', ['$scope', '$resource', '$location', 'userService', 'mealService',
+	function ($scope, $resource, $location, userService, mealService) {
 		var User = $resource('/api/users');
 		$scope.dates = [];
 		$scope.hideStartEating = false;
@@ -7,9 +7,14 @@ app.controller('loginController', ['$scope', '$resource', '$location', 'userServ
 
 		// This function provides a redirect
 		$scope.submitUserData = function() {
-			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
-			userService.addNewUser(null, bdate, $scope.description, $scope.occupation);		
-			$location.path('main').replace();
+			// var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
+			// userService.addNewUser(null, bdate, $scope.description, $scope.occupation);		
+			// $location.path('main').replace();
+			mealService.addUserToMeal("ChIJQ3I_XnV0j1QRezK5Crksh3k", "hehehehe").success(function(data) {
+				console.log(data[0]);
+			}).error(function(error) {
+				console.log(error);
+			});
 		}
 
 		getMonthFromString = function(month) {
