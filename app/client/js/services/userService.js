@@ -34,7 +34,6 @@ app.factory('userService', ['$resource', function($resource) {
 			user.mealBuddies = [];
 			user.$save(function(result) {
 				sessionStorage.userID = angular.toJson(result._id);
-				console.log('first ' + sessionStorage.userID);
 				localStorage.user = angular.toJson(result);
 			});
 			return null;
