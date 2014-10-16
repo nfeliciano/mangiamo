@@ -144,24 +144,44 @@ app.controller('mainController', ['$scope', '$resource',
 
 		//Adds pin to map
 		createMarker = function(place) {
-			var placeLoc = place.geometry.location;
-			
-
-			// Marker this is the pin on the map.
-		    var marker =  new MarkerWithLabel({
-				icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
-				map: $scope.map,
-				position: place.geometry.location,
-				draggable: false,    //property that allows user to move marker
-				raiseOnDrag: false,
-				//labelContent:randomIntFromInterval(1,15), 
-				labelAnchor: new google.maps.Point(7, 33),    // anchors to
-				labelClass: "labels", // the CSS class for the label
 				
-				// Just me things
-				markerId : place.place_id,
-				name: place.name,
-		    });
+			if( ){
+			
+				var marker =  new MarkerWithLabel({
+					map: $scope.map,
+					position: place.geometry.location,
+					draggable: false,    //property that allows user to move marker
+					raiseOnDrag: false,
+					//labelContent:randomIntFromInterval(1,15), 
+					labelAnchor: new google.maps.Point(7, 33),    // anchors to
+					labelClass: "labels", // the CSS class for the label
+					
+					// Just me things
+					markerId : place.place_id,
+					name: place.name,
+				});
+			
+			
+			}
+			else {
+				// Marker this is the pin on the map.
+				var marker =  new MarkerWithLabel({
+					icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
+					map: $scope.map,
+					position: place.geometry.location,
+					draggable: false,    //property that allows user to move marker
+					raiseOnDrag: false,
+					//labelContent:randomIntFromInterval(1,15), 
+					labelAnchor: new google.maps.Point(7, 33),    // anchors to
+					labelClass: "labels", // the CSS class for the label
+					
+					// Just me things
+					markerId : place.place_id,
+					name: place.name,
+				});
+			
+			}
+			
 
 		    $scope.placedMarkers.push(marker);
 
