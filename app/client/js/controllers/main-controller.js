@@ -1,9 +1,8 @@
-app.controller('mainController', ['$scope', '$resource',
-	function ($scope, $resource) {
+app.controller('mainController', ['$scope', '$resource', 'mealService', 
+	function ($scope, $resource,mealService) {
 
 		$scope.placedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
-
 		var mapOptions = {
 			zoom: 14
 		}
@@ -21,6 +20,7 @@ app.controller('mainController', ['$scope', '$resource',
 				    });*/
 
 				    $scope.map.setCenter(pos);
+					$scope.lastPosition = $scope.map.getCenter();
 
 				    var request = {
 						location: pos,
@@ -28,24 +28,31 @@ app.controller('mainController', ['$scope', '$resource',
 						radius: 4000,
 						types: ['restaurant','cafe', 'bar', 'food']
 					};
-					console.log('sup bitches');
+					
 				    $scope.infowindow = new google.maps.InfoWindow();
 				    var service = new google.maps.places.PlacesService($scope.map);
 				    service.radarSearch(request, callback);
-
+					
 				    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
+						console.log("penis");
 				    	if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
+							console.log("vagina");
 							clearMarkers();
-							console.log(lastPosition);
-							
-							
 							$scope.lastPosition = $scope.map.getCenter();
 							request.location=$scope.map.getCenter();
 							service.radarSearch(request, callback);
 						}
 
 				    });
+					
+					var tempRequest = {
+						placeId: 'ChIJs8FQZ3V0j1QRYwgN-UfyxVQ'
+					};
+					
 
+					service = new google.maps.places.PlacesService(map);
+					service.getDetails(tempRequest, callback);
+					
 				    initializeSearchBar();
 				}, function() {
 					handleNoGeolocation(true);
@@ -135,24 +142,21 @@ app.controller('mainController', ['$scope', '$resource',
 					}
 				}
 			}
-	  
-			if(pagination.hasNextPage) {
-				sleep:5;
-				pagination.nextPage();
-			}
 		}
 
 		//Adds pin to map
 		createMarker = function(place) {
-				
-			if( ){
+			
+		
+			var meal = mealService.getMealsAtPlaceID(place.place_id);
+			if(meal.length  !=0 ){
 			
 				var marker =  new MarkerWithLabel({
 					map: $scope.map,
 					position: place.geometry.location,
 					draggable: false,    //property that allows user to move marker
 					raiseOnDrag: false,
-					//labelContent:randomIntFromInterval(1,15), 
+					labelContent:meal.numPeople, 
 					labelAnchor: new google.maps.Point(7, 33),    // anchors to
 					labelClass: "labels", // the CSS class for the label
 					
@@ -188,6 +192,7 @@ app.controller('mainController', ['$scope', '$resource',
 			google.maps.event.addListener(marker, 'click', function() {
 				$scope.infowindow.setContent(place.name);
 				$scope.infowindow.open($scope.map, this);
+				
 				//alert(this.name );
 				//alert(this.markerId);
 			});
