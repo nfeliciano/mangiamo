@@ -1,5 +1,9 @@
-app.controller('mainController', ['$scope', '$resource', 'mealService', 
-	function ($scope, $resource,mealService) {
+
+app.controller('mainController', ['$scope', '$resource','$modal', 'mealService', 
+	function ($scope, $resource,$modal,mealService) {
+
+		$scope.meals = ['meal1', 'meal2', 'meal3'];
+
 
 		$scope.placedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
@@ -44,15 +48,16 @@ app.controller('mainController', ['$scope', '$resource', 'mealService',
 						}
 
 				    });
-					
+					/*
+					// Testing id that I KNOW is in the data base
 					var tempRequest = {
 						placeId: 'ChIJs8FQZ3V0j1QRYwgN-UfyxVQ'
 					};
 					
 
-					service = new google.maps.places.PlacesService(map);
+					service = new google.maps.places.PlacesService($scope.map);
 					service.getDetails(tempRequest, callback);
-					
+					*/
 				    initializeSearchBar();
 				}, function() {
 					handleNoGeolocation(true);
@@ -189,12 +194,32 @@ app.controller('mainController', ['$scope', '$resource', 'mealService',
 
 		    $scope.placedMarkers.push(marker);
 
+		    // WHAT MODALS LIKELY NEED TO REPLACE:
+
+			// google.maps.event.addListener(marker, 'click', function() {
+			// 	$scope.infowindow.setContent(place.name);
+			// 	$scope.infowindow.open($scope.map, this);
+			// 	//alert(this.name );
+			// 	//alert(this.markerId);
+			// });
+
 			google.maps.event.addListener(marker, 'click', function() {
-				$scope.infowindow.setContent(place.name);
-				$scope.infowindow.open($scope.map, this);
-				
-				//alert(this.name );
-				//alert(this.markerId);
+
+				$scope.openModal('lg');
+
+			});
+		}
+
+		$scope.openModal = function (size) {
+			var modalInstance = $modal.open({
+				templateUrl: 'modalContent.html',
+				conroller: 'ModalInstanceCtrl',
+				size: 'lg',
+				resolve: {
+					meals: function() {
+						return $scope.meals;
+					}
+				}
 			});
 		}
 
@@ -232,3 +257,19 @@ app.controller('mainController', ['$scope', '$resource', 'mealService',
 			$scope.map.setCenter(options.position);
 		}
 }]);
+
+app.controller('ModalInstanceCtrl', function($scope, $modalInstance, meals) {
+	$scope.meals = meals;
+	$scope.selected = {
+		meal: $scope.meals[0]
+	};
+
+	$scope.ok = function () {
+		console.log("YO BUD");
+		$modalInstance.close($scope.selected.meal);
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+});
