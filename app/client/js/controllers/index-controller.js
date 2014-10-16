@@ -1,5 +1,5 @@
-app.controller('indexController', ['$scope', '$resource', '$window', '$location', 'userService',
-	function ($scope, $resource, $window, $location, userService) {
+app.controller('indexController', ['$scope', '$resource', '$location', 'userService',
+	function ($scope, $resource, $location, userService) {
 
 		// This allows the initial redirect when they come to the 
 		// page based on whether or not they are logged in

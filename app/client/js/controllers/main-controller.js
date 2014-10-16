@@ -14,11 +14,11 @@ app.controller('mainController', ['$scope', '$resource',
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-					$scope.infowindow = new google.maps.InfoWindow({
+					/*$scope.infowindow = new google.maps.InfoWindow({
 				    	map: $scope.map,
 				    	position: pos,
 				        content: 'Location found using HTML5.'
-				    });
+				    });*/
 
 				    $scope.map.setCenter(pos);
 
@@ -28,7 +28,7 @@ app.controller('mainController', ['$scope', '$resource',
 						radius: 4000,
 						types: ['restaurant','cafe', 'bar', 'food']
 					};
-					
+					console.log('sup bitches');
 				    $scope.infowindow = new google.maps.InfoWindow();
 				    var service = new google.maps.places.PlacesService($scope.map);
 				    service.radarSearch(request, callback);
@@ -36,7 +36,9 @@ app.controller('mainController', ['$scope', '$resource',
 				    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 				    	if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
 							clearMarkers();
-							//console.log(lastPosition);
+							console.log(lastPosition);
+							
+							
 							$scope.lastPosition = $scope.map.getCenter();
 							request.location=$scope.map.getCenter();
 							service.radarSearch(request, callback);
