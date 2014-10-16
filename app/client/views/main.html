@@ -7,4 +7,22 @@
 		<div id="mapCanvas"></div>
 	</div>
 
+	<script type="text/ng-template" id="modalContent.html">
+		<div class="modal-header">
+			<h1>MODAL YAY</h1>
+		</div>
+		<div class="modal-body">
+            <ul>
+                <li ng-repeat="meal in meals">
+                    <a ng-click="selected.meal = meal">{{ meal }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.meal }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+	</script>
+
 </div>

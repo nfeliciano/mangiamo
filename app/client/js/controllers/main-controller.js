@@ -1,5 +1,7 @@
-app.controller('mainController', ['$scope', '$resource',
-	function ($scope, $resource) {
+app.controller('mainController', ['$scope', '$resource', '$modal',
+	function ($scope, $resource, $modal) {
+
+		$scope.meals = ['meal1', 'meal2', 'meal3'];
 
 		$scope.placedMarkers = [];
 		$scope.placedMarkersInfo = [];
@@ -171,11 +173,42 @@ app.controller('mainController', ['$scope', '$resource',
 
 		    $scope.placedMarkers.push(marker);
 
+		    // WHAT MODALS LIKELY NEED TO REPLACE:
+
+			// google.maps.event.addListener(marker, 'click', function() {
+			// 	$scope.infowindow.setContent(place.name);
+			// 	$scope.infowindow.open($scope.map, this);
+			// 	//alert(this.name );
+			// 	//alert(this.markerId);
+			// });
+
 			google.maps.event.addListener(marker, 'click', function() {
-				$scope.infowindow.setContent(place.name);
-				$scope.infowindow.open($scope.map, this);
-				//alert(this.name );
-				//alert(this.markerId);
+
+				$scope.openModal('lg');
+
+				// var modalInstance = $modal.open({
+				// 	templateUrl: 'modalContent.html',
+				// 	conroller: 'ModalInstanceCtrl',
+				// 	size: 'lg',
+				// 	resolve: {
+				// 		meals: function() {
+				// 			return $scope.meals;
+				// 		}
+				// 	}
+				// });
+			});
+		}
+
+		$scope.openModal = function (size) {
+			var modalInstance = $modal.open({
+				templateUrl: 'modalContent.html',
+				conroller: 'ModalInstanceCtrl',
+				size: 'lg',
+				resolve: {
+					meals: function() {
+						return $scope.meals;
+					}
+				}
 			});
 		}
 
@@ -207,3 +240,19 @@ app.controller('mainController', ['$scope', '$resource',
 			$scope.map.setCenter(options.position);
 		}
 }]);
+
+app.controller('ModalInstanceCtrl', function($scope, $modalInstance, meals) {
+	$scope.meals = meals;
+	$scope.selected = {
+		meal: $scope.meals[0]
+	};
+
+	$scope.ok = function () {
+		console.log("YO BUD");
+		$modalInstance.close($scope.selected.meal);
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+});
