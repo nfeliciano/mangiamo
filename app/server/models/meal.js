@@ -5,7 +5,7 @@ var MealSchema = new Schema({
 	placeID: String,
 	numPeople: Number,
 	time: Date,
-	people: Array,
+	people: [{ id: String }],
 	active: { type: Boolean, default: true }
 });
 

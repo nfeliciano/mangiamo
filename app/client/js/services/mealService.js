@@ -5,12 +5,27 @@
 
 app.factory('mealService', ['$resource', function($resource) {
 	var Meal = $resource('/api/meals');
+	var mealUpdate = $resource('/api/meals/update')
 
 	return {
 		//mealService.getAllMeals()
 		//Gets ALL the meals from the database with no filtering
 		getAllMeals: function() {
 			return Meal.query(function(results) {});
+		},
+
+		//mealService.getMealsAtPlaceID(str)
+		//Gets all meals from the backend with the specific place ID.
+		getMealsAtPlaceID: function(placeID) {
+			return Meal.query({ "placeID":placeID}, function(results) {
+				return results;
+			});
+		},
+
+		addUserToMeal: function(key, ID) {
+			return mealUpdate.query({ "key":key, "ID": ID }, function(results) {
+				return results;
+			});
 		},
 
 		//mealService.addNewMeal(str, int, date(), [], bool)
