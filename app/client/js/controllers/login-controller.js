@@ -11,8 +11,11 @@ app.controller('loginController', ['$scope', '$resource', '$location', 'userServ
 			// var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
 			// userService.addNewUser(null, bdate, $scope.description, $scope.occupation);		
 			// $location.path('main').replace();
-			var test = mealService.getUsersAtMealByPlaceID("ChIJQ3I_XnV0j1QRezK5Crksh3k");
-			console.log(test);
+			mealService.getUsersAtMealByPlaceID($scope, "ChIJQ3I_XnV0j1QRezK5Crksh3k");
+		}
+
+		$scope.replacePin = function(placeID, results) {
+			console.log(results[0]);
 		}
 
 		getMonthFromString = function(month) {
@@ -23,7 +26,7 @@ app.controller('loginController', ['$scope', '$resource', '$location', 'userServ
 			if (userService.isUserLoggedIn()) {
 				var str = "User is logged in with birthdate " + angular.fromJson(localStorage.user).birthDate;
 				return str;
-			} 
+			}
 			else {
 				return "User is not logged in";
 			}
