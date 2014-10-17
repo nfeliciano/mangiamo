@@ -157,8 +157,6 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 	
 			var meal = mealService.getMealsAtPlaceID( place.place_id).success(function(data){
 			
-				
-				console.log(data);
 				if( data.length >0){
 					
 					// This is the Mangiamo Meal marker, ie there is a meal here
@@ -173,7 +171,6 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 						
 						// Just me things
 						markerId : place.place_id,
-						name: place.name,
 					});
 				}
 				else {
@@ -191,22 +188,38 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 						
 						// Just me things
 						markerId : place.place_id,
-						name: place.name,
 					});
 				}
 				
 				$scope.placedMarkers.push(marker); // Array marker
 
 				google.maps.event.addListener(marker, 'click', function() {
-					$scope.openModal('lg');
+					
+					var request = {
+						placeId:marker.markerId,
+					};
+					var service = new google.maps.places.PlacesService($scope.map);
+					service.getDetails(request,$scope.getPlaceDetails);
+			
+					
 				});
 			
 			});
 			
 		}
-
+		
+		// Returns ALL the place details and information 
+		$scope.getPlaceDetails = function(place, status) {
+			  if (status == google.maps.places.PlacesServiceStatus.OK) {
+			  //console.log(place.name);
+				//return place.name;
+				$scope.openModal('lg',place);
+			  }
+			}
+		
 		// Opens a modal when a map pin is clicked.
-		$scope.openModal = function (size) {
+		$scope.openModal = function (size, placeInfo) {
+		
 			var modalInstance = $modal.open({
 				templateUrl: 'modalContent.html',
 				controller: 'ModalInstanceCtrl',
@@ -214,15 +227,14 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 				resolve: {
 					meals: function() {
 						return $scope.meals;
+					},
+					placeInfo: function () {
+						return placeInfo;
 					}
-					// ,
-					// resto: function() {
-					// 	return $scope.resto;
-					// }
 				}
 			});
 		}
-
+		
 		//Temp thing to return random numbers
 		randomIntFromInterval = function(min,max)
 		{
@@ -240,45 +252,6 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 			
 		}
 
-		
-		$scope.replacePin = function(place_id, result) {
-		
-			for (var i = 0; i < $scope.placedMarkers.length; i++ ) {
-					
-					if(place_id == $scope.placedMarkers[i].markerId){
-					
-					
-						var marker =  new MarkerWithLabel({
-							map: $scope.map,
-							position: $scope.placedMarkers[i].position,
-							draggable: false,    //property that allows user to move marker
-							raiseOnDrag: false,
-							labelContent:result[0].numPeople, 
-							labelAnchor: new google.maps.Point(7, 33),    // anchors to
-							labelClass: "labels", // the CSS class for the label
-							
-							// Just me things
-							markerId : place_id,
-							name: place.name,
-						});
-				
-				
-						google.maps.event.addListener(marker, 'click', function() {
-							$scope.openModal('lg');
-						});
-			
-				
-						$scope.placedMarkers[i]= marker;
-			
-				
-					}
-				}
-				
-		
-			console.log(result[0].key);
-		
-		
-		}
 		
 		function handleNoGeolocation(errorFlag) {
 			if (errorFlag) {
@@ -298,10 +271,15 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 		}
 }]);
 
-app.controller('ModalInstanceCtrl', function($scope, $modalInstance, meals) {
+
+
+
+app.controller('ModalInstanceCtrl', function($scope, $modalInstance, placeInfo, meals) {
+	$scope.placeInfo =placeInfo;
+	console.log(placeInfo);
 	$scope.meals = meals;
-	// *add resto to function above if trying again?
-	// $scope.resto = resto;
+	$scope.restName =placeInfo.name;
+	
 	$scope.selected = {
 		meal: $scope.meals[0]
 	};
@@ -314,4 +292,8 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, meals) {
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
 	};
+	
+	
+	
+	
 });
