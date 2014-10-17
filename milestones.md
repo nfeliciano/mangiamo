@@ -45,7 +45,7 @@ Requires: Creating basic markup and style sheets, learning and using purecss.io,
 Developers: Chris and Lloyd
 Status: Integrating PureCSS into HTML skeleton file.
 Time Estimation: 14 Hours
-Time Spent: 30 Hours
+Time Spent: 38 Hours
 ~~~~
 ~~~~
 Feature Name: Display the Restaurants
@@ -99,7 +99,7 @@ Requires: Overlaying on top of Google map, adding logic to database for retrievi
 Developers: Chris, Jesper, Kevin, Noel
 Status: Not started
 Time Estimation: 15 Hours
-Time Spent: 1 Hours
+Time Spent: 4 Hours
 ~~~~
 ~~~~
 Feature Name: Scheduling meals
