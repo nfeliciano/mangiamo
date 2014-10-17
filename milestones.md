@@ -7,7 +7,7 @@ Feature Name: Basic Setup
 Description: Put the appropriate skeleton files in place so that features can be added
 Requires: Reading tutorials and installing Node.js, Express.js, and getting Angular.js in place
 Developers: Noel, Kevin, Lloyd
-Status: Done
+Status: Complete
 Time Estimation: 4 Hours
 Time Spent: 10 Hours
 ~~~~
@@ -16,7 +16,7 @@ Feature Name: Backend Model Setup
 Description: Create server files for meal and user models, add config file so password is not stored on main.js
 Requires: Coding, using express & node, making sure files are being created in Mongo database
 Developers: Noel, Kevin
-Status: Done until UI comes in
+Status: Complete
 Time Estimation: 6 Hours
 Time Spent: 26 Hours
 ~~~~
@@ -32,167 +32,162 @@ Time Spent: 4 Hours
 ~~~~
 Feature Name: Launch Screen
 Description: Creating HTML and CSS for landing / login / launch page
-Requires: Creating basic markup and style sheets, learning and using purecss.io, adding "launch" functionality (this is, allowing input of user details that can be sent to the server).
+Requires: Creating basic markup and style sheets, learning and using bootstrap, adding "launch" functionality (this is, allowing input of user details that can be sent to the server).
 Developers: Chris and Lloyd
-Status: Integrating PureCSS into HTML skeleton file.
+Status: Functionality is finished, just need to make it look nice.
 Time Estimation: 14 Hours
 Time Spent: 30 Hours
 ~~~~
 ~~~~
-
-
-
 Feature Name: Display the Restaurants
 Description: Use a Google Map to display restaurants and food places around town
-Requires: Working with the Google maps API and displaying it on the front end
+Requires: Working with the Google Maps API and displaying it on the front end
 Developers: Jesper
-Status: Not started
+Status: Food places are displayed, and if there is a meal in the database for that place, it is displayed with a custom pin
 Time Estimation: 7 Hours
 Time Spent: 5 Hours
 ~~~~
 ~~~~
 Feature Name: Google Maps Geolocation
-Description: Locate client on the planet
-Requires: Server Connection! Google map api, Might be different for mobile
+Description: Locate client through Geolocation Services
+Requires: Google Maps API
 Developers: Jesper
-Status: Finished for PC, unknown for mobile
+Status: Complete
 Time Estimation: 2 Hours
 Time Spent: 1.5 Hours
 ~~~~
 ~~~~
 Feature Name: Google Maps Place Search
 Description: Locate food vendors
-Requires: Google map api
+Requires: Google Maps API
 Developers: Jesper
-Status: finished
+Status: Complete
 Time Estimation: 5 Hours
 Time Spent: 1.5 Hours
 ~~~~
 ~~~~
 Feature Name: Replace Google Maps Pins
-Description: Custom pins displaying current meetups 
-Requires: Images, research, google api.  
+Description: Create custom pins to display current meals on the map
+Requires: Creating images for custom pins, research, Google API  
 Developers: Jesper
-Status: finished
+Status: Completed
 Time Estimation: 3 Hours
 Time Spent: 3 Hours
 ~~~~
 ~~~~
-Feature Name: Binary Search array of markers
-Description: DISCARDED, was very cool function to binary search markers, turns out to be unfeasible place id's have un number characters 
-Requires: impossible  
+Feature Name: Binary Search Array of Markers
+Description: Was very cool function to binary search markers, turns out to be unfeasible because place id's are not just numbers
+Requires: Not possible  
 Developers: Jesper
-Status: finished
+Status: Discarded
 Time Estimation: 3 Hours
 Time Spent: 3 Hours
-
 ~~~~
 ~~~~
 Feature Name: Radar Search
 Description: Special place search for 200 places 
-Requires: research, google api.  
+Requires: Research, Google API
 Developers: Jesper
-Status: finished
+Status: Complete
 Time Estimation: 3 Hours
 Time Spent: 3 Hours
 ~~~~
 ~~~~
 Feature Name: Text Search
-Description: programatic text based place search 
-Requires: research, google api.  
+Description: Text based place search 
+Requires: Research, Google API  
 Developers: Jesper
-Status: finished
+Status: Complete, but discarded
 Time Estimation: 3 Hours
 Time Spent: 3 Hours
 ~~~~
 ~~~~
 Feature Name: Nearby Search
 Description: Returns 3 pages of 20 locations nearby 
-Requires: Images, research, google api.  
+Requires: Images, research, Google API  
 Developers: Jesper
-Status: finished
+Status: Complete, but discarded
 Time Estimation: 4 Hours
 Time Spent: 3 Hours
 ~~~~
 ~~~~
 Feature Name: Pagination on Nearby search
 Description: sort through the 3 pages from nearby search, try to get more that 60 total results (failed)
-Requires: Images, research, google api.  
+Requires: Images, research, Google API.  
 Developers: Jesper
-Status: finished
+Status: Complete, but discarded
 Time Estimation: 3 Hours
 Time Spent: 7 Hours
 ~~~~
 ~~~~
-Feature Name: Update map as user scrolls
-Description: destroy markers and search for new ones
-Requires: research, google api.  
+Feature Name: Update Map as User Scrolls
+Description: Destroy markers and search for new ones when the user moves to a different location on the map
+Requires: Research, Google API.  
 Developers: Jesper
-Status: finished
+Status: Complete
 Time Estimation: 5 Hours
 Time Spent: 4 Hours
 ~~~~
 ~~~~
-Feature Name: Google api research 
-Description: attemps to find faster, better, more accurate and simply more place results,
-            currently using radar search for 200
-            looking into embeded map to get more default map look / functionality 
-Requires: research, google api, google maps embeded api
+Feature Name: Google API Research 
+Description: Attempt to find more place results efficiently. We currently use radar search to find 200 places. Looking into embedded map to get a more default map look/functionality 
+Requires: Research, Google API, Google Maps Embedded API
 Developers: Jesper
-Status: NOT finished
+Status: In Progress
 Time Estimation: 20 Hours
 Time Spent: 10 Hours
 ~~~~
 ~~~~
-Feature Name: Remove lots of unneeded Google Maps Place's markers
-Description: Custom markers displaying current meetups 
-Requires: Images, research, google api.  
+Feature Name: Remove Unecessary Google Maps Place's Markers
+Description: Custom markers displaying current meals
+Requires: Images, research, Google API.  
 Developers: Jesper
-Status: finished
+Status: Complete
 Time Estimation: 3 Hours
 Time Spent: 3 Hours
 ~~~~
 ~~~~
-Feature Name: See scheduled meals
+Feature Name: See Scheduled Meals
 Description: See any meals scheduled on the map
-Requires: Overlaying on top of Google map, adding logic to database for retrieving meals
+Requires: Overlaying on top of Google map, adding logic to database for retrieving meals (GET requests)
 Developers: Chris, Jesper, Kevin, Noel
-Status: Not started
+Status: Complete
 Time Estimation: 15 Hours
 Time Spent: 17 Hours
 ~~~~
 ~~~~
-Feature Name: Scheduling meals
+Feature Name: Scheduling Meals
 Description: Be able to schedule a meal by using the map interface in conjunction with other views
-Requires: Being able to add meals to database, different view for creating a meal
-Developers: Chris
-Status: Not Started
+Requires: Being able to add meals to database (POST request), different view for creating a meal (modal)
+Developers: Chris, Noel, Kevin
+Status: Created backend function for adding meals to the database
 Time Estimation: 8 Hours
-Time Spent: 0 Hours
+Time Spent: 1 Hours
 ~~~~
 ~~~~
 Feature Name: Attendance Confirmation
 Description: Be able to say 'I'm going to this meal'
 Requires: Pushing to the backend that a user is going to a meal
-Status & Developers: Kevin
+Developers: Kevin
+Status: Complete
 Time Estimation: 5 Hours
 Time Spent: 5 Hours
 ~~~~
 ~~~~
-Feature Name: Who's attending?
-Description: Be able to see features of the people attending a meal and how many
+Feature Name: Who's Attending?
+Description: Be able to see feature of the people attending a meal and return all users attending a meal from the database
 Requires: Being able to track who's going to the meals in the database, temporary users in a database?, displaying those features
 Developers: Kevin
-Status: 
+Status: Complete
 Time Estimation: 8 Hours
 Time Spent: 5 Hours
 ~~~~
 ~~~~
 Feature Name: Proper Redirection
 Description: Redirect the user based on status of being logged in
-Requires: UIRouter research,  an AngularJS module
-Status: Complete
+Requires: UIRouter research, an AngularJS module
 Developers: Lloyd
+Status: Complete
 Time Estimation: 8 Hours
 Time Spent: 14 Hours
 ~~~~
@@ -202,8 +197,8 @@ Time Spent: 14 Hours
 Feature Name: Facebook Authentication 
 Description: Be able to sign-in using Facebook API 
 Requires: Interaction with Facebook API, back-end logic for storing when user logs in through Facebook? 
-Developers:
-Status: Not Started 
+Developers: Kevin
+Status: Buttons have been added and connected to FB API, just need to link to DB.
 Time Estimation: 8 Hours
 Time Spent: 5.5 Hours
 ~~~~
@@ -267,8 +262,8 @@ Time Spent: 0 Hours
 Feature Name: Google and LinkedIn Auth 
 Description: Include authentication using Google and LinkedIn 
 Requires: Figure out logic for how to tie it in with regular auth and Facebook auth
-Developers:
-Status: Not Started 
+Developers: Kevin
+Status: Google button added and connected to Google+ API, just need to connect with our backend
 Time Estimation: 6
 Time Spent: 6 Hours
 ~~~~

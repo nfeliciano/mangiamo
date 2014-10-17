@@ -1,11 +1,12 @@
 #mapCanvas
 {
-	height: 900px;
-	width: 900px;
+	height: 550px;
+	min-width: 100%;
 }
 
 #mapContainer
 {
+	height: 100%;
 	margin: 20px;
 	position: relative;
 }
