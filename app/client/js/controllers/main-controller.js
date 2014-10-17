@@ -1,11 +1,6 @@
 
 app.controller('mainController', ['$scope', '$resource','$modal', 'mealService', 
 	function ($scope, $resource,$modal,mealService) {
-		var Meal  =$resource('/api/meals');
-		$scope.meals = ['meal1', 'meal2', 'meal3'];
-
-		$scope.resto = 'happy place';
-
 		$scope.placedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		var mapOptions = {
@@ -171,6 +166,7 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 						
 						// Just me things
 						markerId : place.place_id,
+						hasMeal: true,
 					});
 				}
 				else {
@@ -188,6 +184,7 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 						
 						// Just me things
 						markerId : place.place_id,
+						hasMeal: false,
 					});
 				}
 				
@@ -199,40 +196,42 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 						placeId:marker.markerId,
 					};
 					var service = new google.maps.places.PlacesService($scope.map);
-					service.getDetails(request,$scope.getPlaceDetails);
+					service.getDetails(request,getPlaceDetails);
 			
-					
+					// Returns ALL the place details and information 
+					function getPlaceDetails(place, status) {
+						  if (status == google.maps.places.PlacesServiceStatus.OK) {
+						  //console.log(place.name);
+							//return place.name;
+							$scope.openModal('lg',place, marker);
+						}
+					}
 				});
 			
 			});
 			
 		}
 		
-		// Returns ALL the place details and information 
-		$scope.getPlaceDetails = function(place, status) {
-			  if (status == google.maps.places.PlacesServiceStatus.OK) {
-			  //console.log(place.name);
-				//return place.name;
-				$scope.openModal('lg',place);
-			  }
-			}
+		
 		
 		// Opens a modal when a map pin is clicked.
-		$scope.openModal = function (size, placeInfo) {
+		$scope.openModal = function (size, placeInfo, marker) {
 		
 			var modalInstance = $modal.open({
 				templateUrl: 'modalContent.html',
 				controller: 'ModalInstanceCtrl',
 				size: size,
 				resolve: {
-					meals: function() {
-						return $scope.meals;
-					},
 					placeInfo: function () {
 						return placeInfo;
+					},
+					marker: function() {
+						return marker;
 					}
 				}
 			});
+			
+			
 		}
 		
 		//Temp thing to return random numbers
@@ -274,18 +273,50 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 
 
 
-app.controller('ModalInstanceCtrl', function($scope, $modalInstance, placeInfo, meals) {
+app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService, placeInfo, marker) {
 	$scope.placeInfo =placeInfo;
-	console.log(placeInfo);
-	$scope.meals = meals;
 	$scope.restName =placeInfo.name;
+	if (marker.hasMeal) {
+		$scope.hasMeal = "Join!";
+	}
+	else {
+		$scope.hasMeal = "Create a Meal";
+	}
 	
 	$scope.selected = {
-		meal: $scope.meals[0]
+		
 	};
+	
+	$scope.join = function() {
+		if (sessionStorage.userID == null) { return; }
+		var usrID = sessionStorage.userID.replace(/['"]+/g, '');
+		if (marker.hasMeal) {
+			mealService.addUserToMeal($scope.placeInfo.place_id, usrID).success(function(data) {
+				console.log('success');
+				//TODO: for some reason this console.log doesn't work yet
+			}).error(function(error) {
+				console.log(error);
+			});
+			marker.labelContent = marker.labelContent+1; 
+			marker.label.setContent();
+		} else {
+			mealService.addNewMeal($scope.placeInfo.place_id, 0, new Date(), [], true);
+			mealService.addUserToMeal($scope.placeInfo.place_id, usrID).success(function(data) {
+				console.log(data);
+			}).error(function(error) {
+				console.log(error);
+			});
+			console.log('created');
+			marker.setIcon('../../img/restaurant.png');
+			marker.hasMeal = true; 
+			marker.labelContent = 1; 
+			marker.label.setContent();
+			
+		}
+		
+	}
 
 	$scope.ok = function () {
-		// console.log($scope.resto);
 		$modalInstance.close($scope.selected.meal);
 	};
 
