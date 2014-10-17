@@ -1,11 +1,19 @@
 
-app.controller('mainController', ['$scope', '$resource','$modal', 'mealService', 
-	function ($scope, $resource,$modal,mealService) {
+app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 'mealService', 'userService',
+	function ($scope, $resource,$location,$modal,mealService,userService) {
 		$scope.placedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		var mapOptions = {
 			zoom: 14
 		}
+
+		$scope.init = function() {
+			if (!userService.isUserLoggedIn()) {
+				$location.path('login').replace();
+				console.log('..');
+			}
+		}
+		$scope.init();
 
 		$scope.initialize = function() {
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
@@ -311,13 +319,11 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 			marker.label.setContent();
 			$scope.hasMeal = 'Joined!';
 		} else {
-			mealService.addNewMeal($scope.placeInfo.place_id, 0, new Date(), [], true);
-			mealService.addUserToMeal($scope.placeInfo.place_id, usrID).success(function(data) {
-				console.log(data);
-			}).error(function(error) {
-				console.log(error);
+			mealService.addNewMeal($scope.placeInfo.place_id, 0, new Date(), [], true).success(function(data) {
+				mealService.addUserToMeal($scope.placeInfo.place_id, usrID).success(function(data) {
+					console.log(data);
+				})
 			});
-			
 			marker.setIcon('../../img/restaurant.png');
 			marker.hasMeal = true; 
 			marker.labelContent = 1; 
