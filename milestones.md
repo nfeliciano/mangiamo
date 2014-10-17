@@ -18,7 +18,7 @@ Requires: Coding, using express & node, making sure files are being created in M
 Developers: Noel, Kevin
 Status: Done until UI comes in
 Time Estimation: 6 Hours
-Time Spent: 19 Hours
+Time Spent: 26 Hours
 ~~~~
 ~~~~
 Feature Name: Mock-Ups
@@ -39,13 +39,16 @@ Time Estimation: 14 Hours
 Time Spent: 30 Hours
 ~~~~
 ~~~~
+
+
+
 Feature Name: Display the Restaurants
 Description: Use a Google Map to display restaurants and food places around town
 Requires: Working with the Google maps API and displaying it on the front end
 Developers: Jesper
 Status: Not started
 Time Estimation: 7 Hours
-Time Spent: 2 Hours
+Time Spent: 5 Hours
 ~~~~
 ~~~~
 Feature Name: Google Maps Geolocation
@@ -61,7 +64,7 @@ Feature Name: Google Maps Place Search
 Description: Locate food vendors
 Requires: Google map api
 Developers: Jesper
-Status: Started
+Status: finished
 Time Estimation: 5 Hours
 Time Spent: 1.5 Hours
 ~~~~
@@ -70,18 +73,84 @@ Feature Name: Replace Google Maps Pins
 Description: Custom pins displaying current meetups 
 Requires: Images, research, google api.  
 Developers: Jesper
-Status: Started
+Status: finished
 Time Estimation: 3 Hours
-Time Spent: 0 Hours
+Time Spent: 3 Hours
+~~~~
+~~~~
+Feature Name: Binary Search array of markers
+Description: DISCARDED, was very cool function to binary search markers, turns out to be unfeasible place id's have un number characters 
+Requires: impossible  
+Developers: Jesper
+Status: finished
+Time Estimation: 3 Hours
+Time Spent: 3 Hours
+
+~~~~
+~~~~
+Feature Name: Radar Search
+Description: Special place search for 200 places 
+Requires: research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 3 Hours
+Time Spent: 3 Hours
+~~~~
+~~~~
+Feature Name: Text Search
+Description: programatic text based place search 
+Requires: research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 3 Hours
+Time Spent: 3 Hours
+~~~~
+~~~~
+Feature Name: Nearby Search
+Description: Returns 3 pages of 20 locations nearby 
+Requires: Images, research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 4 Hours
+Time Spent: 3 Hours
+~~~~
+~~~~
+Feature Name: Pagination on Nearby search
+Description: sort through the 3 pages from nearby search, try to get more that 60 total results (failed)
+Requires: Images, research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 3 Hours
+Time Spent: 7 Hours
+~~~~
+~~~~
+Feature Name: Update map as user scrolls
+Description: destroy markers and search for new ones
+Requires: research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 5 Hours
+Time Spent: 4 Hours
+~~~~
+~~~~
+Feature Name: Google api research 
+Description: attemps to find faster, better, more accurate and simply more place results,
+            currently using radar search for 200
+            looking into embeded map to get more default map look / functionality 
+Requires: research, google api, google maps embeded api
+Developers: Jesper
+Status: NOT finished
+Time Estimation: 20 Hours
+Time Spent: 10 Hours
 ~~~~
 ~~~~
 Feature Name: Remove lots of unneeded Google Maps Place's markers
 Description: Custom markers displaying current meetups 
 Requires: Images, research, google api.  
 Developers: Jesper
-Status: Started
+Status: finished
 Time Estimation: 3 Hours
-Time Spent: 0 Hours
+Time Spent: 3 Hours
 ~~~~
 ~~~~
 Feature Name: See scheduled meals
@@ -90,7 +159,7 @@ Requires: Overlaying on top of Google map, adding logic to database for retrievi
 Developers: Chris, Jesper, Kevin, Noel
 Status: Not started
 Time Estimation: 15 Hours
-Time Spent: 1 Hours
+Time Spent: 17 Hours
 ~~~~
 ~~~~
 Feature Name: Scheduling meals
@@ -104,19 +173,19 @@ Time Spent: 0 Hours
 ~~~~
 Feature Name: Attendance Confirmation
 Description: Be able to say 'I'm going to this meal'
-Requires: Being able to track who's going to the meals in the database, displaying that
-Status & Developers: Not Started
+Requires: Pushing to the backend that a user is going to a meal
+Status & Developers: Kevin
 Time Estimation: 5 Hours
-Time Spent: 0 Hours
+Time Spent: 5 Hours
 ~~~~
 ~~~~
 Feature Name: Who's attending?
 Description: Be able to see features of the people attending a meal and how many
-Requires: Allowing a user to change his 'about me' features, temporary users in a database?, displaying those features
-Developers:
-Status: Not Started
+Requires: Being able to track who's going to the meals in the database, temporary users in a database?, displaying those features
+Developers: Kevin
+Status: 
 Time Estimation: 8 Hours
-Time Spent: 0 Hours
+Time Spent: 5 Hours
 ~~~~
 ~~~~
 Feature Name: Proper Redirection
@@ -125,7 +194,7 @@ Requires: UIRouter research,  an AngularJS module
 Status: Complete
 Developers: Lloyd
 Time Estimation: 8 Hours
-Time Spent: 10 Hours
+Time Spent: 14 Hours
 ~~~~
 
 #### Milestone 2 - Release Candidate ####

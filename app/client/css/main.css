@@ -7,6 +7,7 @@
 #mapContainer
 {
 	margin: 20px;
+	position: relative;
 }
 
 .controls 
