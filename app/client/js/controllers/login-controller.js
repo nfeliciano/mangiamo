@@ -1,5 +1,5 @@
-app.controller('loginController', ['$scope', '$resource', '$location', 'userService',
-	function ($scope, $resource, $location, userService) {
+app.controller('loginController', ['$scope', '$resource', '$location', 'userService', 'mealService',
+	function ($scope, $resource, $location, userService, mealService) {
 		var User = $resource('/api/users');
 		$scope.dates = [];
 		$scope.hideStartEating = false;
@@ -10,6 +10,11 @@ app.controller('loginController', ['$scope', '$resource', '$location', 'userServ
 			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
 			userService.addNewUser(null, bdate, $scope.description, $scope.occupation);		
 			$location.path('main').replace();
+			// mealService.addNewMeal("ChIJs8FQZ3V0j1QRYwgN-UfyxVQ", 0, new Date(), [], true).success(function(data) {
+			// 	console.log(data);
+			// }).error(function(error) {
+			// 	console.log(error);
+			// });
 		}
 
 		getMonthFromString = function(month) {
