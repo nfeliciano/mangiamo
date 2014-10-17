@@ -19,7 +19,14 @@ module.exports.create = function (req,res) {
 }
 
 module.exports.list = function (req,res) {
-	User.find({}, function (err, results) {
-		res.json(results);
-	});
+	if(req.query._id != null){
+		User.find({_id:req.query._id}, function (err, results) {
+			res.json(results);
+		});
+	}
+	else {
+		User.find({}, function (err, results) {
+			res.json(results);
+		});
+	}
 }

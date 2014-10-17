@@ -1,21 +1,20 @@
 app.controller('loginController', ['$scope', '$resource', '$location', 'userService', 'mealService',
 	function ($scope, $resource, $location, userService, mealService) {
 		var User = $resource('/api/users');
-		var Meal  =$resource('/api/meals');
 		$scope.dates = [];
 		$scope.hideStartEating = false;
 		$scope.hideUserInfo = true;
 
 		// This function provides a redirect
 		$scope.submitUserData = function() {
-			// var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
-			// userService.addNewUser(null, bdate, $scope.description, $scope.occupation);		
-			// $location.path('main').replace();
-			mealService.getUsersAtMealByPlaceID($scope, "ChIJQ3I_XnV0j1QRezK5Crksh3k");
-		}
-
-		$scope.replacePin = function(placeID, results) {
-			console.log(results[0]);
+			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
+			userService.addNewUser(null, bdate, $scope.description, $scope.occupation);		
+			$location.path('main').replace();
+			// userService.getUserWithID("5440215055ec0814def0fe94").success(function(data) {
+			// 	console.log(data);
+			// }).error(function(error) {
+			// 	console.log(error);
+			// });
 		}
 
 		getMonthFromString = function(month) {
@@ -26,7 +25,7 @@ app.controller('loginController', ['$scope', '$resource', '$location', 'userServ
 			if (userService.isUserLoggedIn()) {
 				var str = "User is logged in with birthdate " + angular.fromJson(localStorage.user).birthDate;
 				return str;
-			}
+			} 
 			else {
 				return "User is not logged in";
 			}

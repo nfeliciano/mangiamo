@@ -32,8 +32,7 @@ app.use('/views', express.static(__dirname + '/client/views'));
 
 //REST API
 //Meals
-app.get('/api/meals/getpeople', mealsController.getPeople);
-app.get('/api/meals/update', mealsController.update);
+app.put('/api/meals', mealsController.update);
 app.get('/api/meals', mealsController.list);
 app.post('/api/meals', mealsController.create);
 
