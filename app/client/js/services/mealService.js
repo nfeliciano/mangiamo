@@ -5,6 +5,7 @@
 
 app.factory('mealService', ['$http', '$resource', function($http, $resource) {
 	var meal = '/api/meals';
+	var people = '/api/meals/people';
 
 	var mealService = {};
 
@@ -12,6 +13,10 @@ app.factory('mealService', ['$http', '$resource', function($http, $resource) {
 	//Gets ALL the meals from the database with no filtering
 	mealService.getAllMeals = function() {
 		return $http.get(meal);
+	};
+
+	mealService.getPeopleFromMeal = function(placeID) {
+		return $http.get(people + '?placeID=' + placeID);
 	};
 
 	//mealService.getMealsAtPlaceID(str)

@@ -30,7 +30,16 @@ module.exports.update = function (req,res) { // Some issue of adding to the arra
 }
 
 module.exports.getPeople = function (req,res) {
-
+	if (req.query.placeID != null) {
+		Meal.find({placeID:req.query.placeID}, function(err, results) {
+			if(results.length == 0){
+				res.json(results);
+			}
+			else {
+				res.json(results[0].people);
+			}
+		});
+	}
 }
 
 module.exports.list = function (req,res) {

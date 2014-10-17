@@ -34,6 +34,7 @@ app.use('/views', express.static(__dirname + '/client/views'));
 //Meals
 app.put('/api/meals', mealsController.update);
 app.get('/api/meals', mealsController.list);
+app.get('/api/meals/people', mealsController.getPeople);
 app.post('/api/meals', mealsController.create);
 
 //Users
