@@ -39,6 +39,9 @@ Time Estimation: 14 Hours
 Time Spent: 30 Hours
 ~~~~
 ~~~~
+
+
+
 Feature Name: Display the Restaurants
 Description: Use a Google Map to display restaurants and food places around town
 Requires: Working with the Google maps API and displaying it on the front end
@@ -61,7 +64,7 @@ Feature Name: Google Maps Place Search
 Description: Locate food vendors
 Requires: Google map api
 Developers: Jesper
-Status: Started
+Status: finished
 Time Estimation: 5 Hours
 Time Spent: 1.5 Hours
 ~~~~
@@ -70,18 +73,84 @@ Feature Name: Replace Google Maps Pins
 Description: Custom pins displaying current meetups 
 Requires: Images, research, google api.  
 Developers: Jesper
-Status: Started
+Status: finished
 Time Estimation: 3 Hours
-Time Spent: 0 Hours
+Time Spent: 3 Hours
+~~~~
+~~~~
+Feature Name: Binary Search array of markers
+Description: DISCARDED, was very cool function to binary search markers, turns out to be unfeasible place id's have un number characters 
+Requires: impossible  
+Developers: Jesper
+Status: finished
+Time Estimation: 3 Hours
+Time Spent: 3 Hours
+
+~~~~
+~~~~
+Feature Name: Radar Search
+Description: Special place search for 200 places 
+Requires: research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 3 Hours
+Time Spent: 3 Hours
+~~~~
+~~~~
+Feature Name: Text Search
+Description: programatic text based place search 
+Requires: research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 3 Hours
+Time Spent: 3 Hours
+~~~~
+~~~~
+Feature Name: Nearby Search
+Description: Returns 3 pages of 20 locations nearby 
+Requires: Images, research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 4 Hours
+Time Spent: 3 Hours
+~~~~
+~~~~
+Feature Name: Pagination on Nearby search
+Description: sort through the 3 pages from nearby search, try to get more that 60 total results (failed)
+Requires: Images, research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 3 Hours
+Time Spent: 7 Hours
+~~~~
+~~~~
+Feature Name: Update map as user scrolls
+Description: destroy markers and search for new ones
+Requires: research, google api.  
+Developers: Jesper
+Status: finished
+Time Estimation: 5 Hours
+Time Spent: 4 Hours
+~~~~
+~~~~
+Feature Name: Google api research 
+Description: attemps to find faster, better, more accurate and simply more place results,
+            currently using radar search for 200
+            looking into embeded map to get more default map look / functionality 
+Requires: research, google api, google maps embeded api
+Developers: Jesper
+Status: NOT finished
+Time Estimation: 20 Hours
+Time Spent: 10 Hours
 ~~~~
 ~~~~
 Feature Name: Remove lots of unneeded Google Maps Place's markers
 Description: Custom markers displaying current meetups 
 Requires: Images, research, google api.  
 Developers: Jesper
-Status: Started
+Status: finished
 Time Estimation: 3 Hours
-Time Spent: 0 Hours
+Time Spent: 3 Hours
 ~~~~
 ~~~~
 Feature Name: See scheduled meals
@@ -90,7 +159,7 @@ Requires: Overlaying on top of Google map, adding logic to database for retrievi
 Developers: Chris, Jesper, Kevin, Noel
 Status: Not started
 Time Estimation: 15 Hours
-Time Spent: 9 Hours
+Time Spent: 17 Hours
 ~~~~
 ~~~~
 Feature Name: Scheduling meals
