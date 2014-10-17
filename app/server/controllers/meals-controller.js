@@ -26,6 +26,7 @@ module.exports.update = function (req,res) { // Some issue of adding to the arra
 	var increment = { numPeople : 1 };
 
 	Meal.findOneAndUpdate(query, { $push : update, $inc: increment }, function(err, results) {
+		res.json(results);
 	});
 }
 

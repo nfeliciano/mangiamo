@@ -1,11 +1,6 @@
 
 app.controller('mainController', ['$scope', '$resource','$modal', 'mealService', 
 	function ($scope, $resource,$modal,mealService) {
-		var Meal  =$resource('/api/meals');
-		$scope.meals = ['meal1', 'meal2', 'meal3'];
-
-		$scope.resto = 'happy place';
-
 		$scope.placedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		var mapOptions = {
@@ -157,12 +152,11 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 	
 			var meal = mealService.getMealsAtPlaceID( place.place_id).success(function(data){
 			
-				
-				console.log(data);
 				if( data.length >0){
 					
 					// This is the Mangiamo Meal marker, ie there is a meal here
 					var marker =  new MarkerWithLabel({
+						icon: '../../img/restaurant.png',
 						map: $scope.map,
 						position:  place.geometry.location,
 						draggable: false,    //property that allows user to move marker
@@ -173,7 +167,7 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 						
 						// Just me things
 						markerId : place.place_id,
-						name: place.name,
+						hasMeal: true,
 					});
 				}
 				else {
@@ -191,38 +185,56 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 						
 						// Just me things
 						markerId : place.place_id,
-						name: place.name,
+						hasMeal: false,
 					});
 				}
 				
 				$scope.placedMarkers.push(marker); // Array marker
 
 				google.maps.event.addListener(marker, 'click', function() {
-					$scope.openModal('lg');
+					
+					var request = {
+						placeId:marker.markerId,
+					};
+					var service = new google.maps.places.PlacesService($scope.map);
+					service.getDetails(request,getPlaceDetails);
+			
+					// Returns ALL the place details and information 
+					function getPlaceDetails(place, status) {
+						  if (status == google.maps.places.PlacesServiceStatus.OK) {
+						  //console.log(place.name);
+							//return place.name;
+							$scope.openModal('lg',place, marker);
+						}
+					}
 				});
 			
 			});
 			
 		}
-
+		
+		
+		
 		// Opens a modal when a map pin is clicked.
-		$scope.openModal = function (size) {
+		$scope.openModal = function (size, placeInfo, marker) {
+		
 			var modalInstance = $modal.open({
 				templateUrl: 'modalContent.html',
 				controller: 'ModalInstanceCtrl',
 				size: size,
 				resolve: {
-					meals: function() {
-						return $scope.meals;
+					placeInfo: function () {
+						return placeInfo;
+					},
+					marker: function() {
+						return marker;
 					}
-					// ,
-					// resto: function() {
-					// 	return $scope.resto;
-					// }
 				}
 			});
+			
+			
 		}
-
+		
 		//Temp thing to return random numbers
 		randomIntFromInterval = function(min,max)
 		{
@@ -240,45 +252,6 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 			
 		}
 
-		
-		$scope.replacePin = function(place_id, result) {
-		
-			for (var i = 0; i < $scope.placedMarkers.length; i++ ) {
-					
-					if(place_id == $scope.placedMarkers[i].markerId){
-					
-					
-						var marker =  new MarkerWithLabel({
-							map: $scope.map,
-							position: $scope.placedMarkers[i].position,
-							draggable: false,    //property that allows user to move marker
-							raiseOnDrag: false,
-							labelContent:result[0].numPeople, 
-							labelAnchor: new google.maps.Point(7, 33),    // anchors to
-							labelClass: "labels", // the CSS class for the label
-							
-							// Just me things
-							markerId : place_id,
-							name: place.name,
-						});
-				
-				
-						google.maps.event.addListener(marker, 'click', function() {
-							$scope.openModal('lg');
-						});
-			
-				
-						$scope.placedMarkers[i]= marker;
-			
-				
-					}
-				}
-				
-		
-			console.log(result[0].key);
-		
-		
-		}
 		
 		function handleNoGeolocation(errorFlag) {
 			if (errorFlag) {
@@ -298,20 +271,69 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 		}
 }]);
 
-app.controller('ModalInstanceCtrl', function($scope, $modalInstance, meals) {
-	$scope.meals = meals;
-	// *add resto to function above if trying again?
-	// $scope.resto = resto;
-	$scope.selected = {
-		meal: $scope.meals[0]
-	};
+
+
+
+app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService, userService, placeInfo, marker) {
+	$scope.placeInfo =placeInfo;
+	$scope.restName =placeInfo.name;
+	if (marker.hasMeal) {
+		$scope.hasMeal = "Join!";
+	}
+	else {
+		$scope.hasMeal = "Create a Meal";
+	}
+	
+	$scope.users = [];
+	
+	var peopleInMeal = mealService.getPeopleFromMeal($scope.placeInfo.place_id).success(function(data) {
+		for (var i = 0; i < data.length; i++) {
+			var user = data[i];
+			userService.getUserWithID(user.id).success(function(data) {
+				$scope.users.push(data[0]);
+			});
+		}
+	}).error(function(error) {
+		console.log(error);
+	});
+	
+	$scope.join = function() {
+		if (sessionStorage.userID == null) { return; }
+		var usrID = sessionStorage.userID.replace(/['"]+/g, '');
+		if (marker.hasMeal) {
+			mealService.addUserToMeal($scope.placeInfo.place_id, usrID).success(function(data) {
+				console.log('success');
+			}).error(function(error) {
+				console.log(error);
+			});
+			marker.labelContent = marker.labelContent+1; 
+			marker.label.setContent();
+			$scope.hasMeal = 'Joined!';
+		} else {
+			mealService.addNewMeal($scope.placeInfo.place_id, 0, new Date(), [], true);
+			mealService.addUserToMeal($scope.placeInfo.place_id, usrID).success(function(data) {
+				console.log(data);
+			}).error(function(error) {
+				console.log(error);
+			});
+			
+			marker.setIcon('../../img/restaurant.png');
+			marker.hasMeal = true; 
+			marker.labelContent = 1; 
+			marker.label.setContent();
+			
+			$scope.hasMeal = 'Joined!';
+		}
+		userService.getUserWithID(usrID).success(function(data) {
+			$scope.users.push(data[0]);
+		});
+	}
 
 	$scope.ok = function () {
-		// console.log($scope.resto);
-		$modalInstance.close($scope.selected.meal);
+		$modalInstance.close();
 	};
-
-	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
-	};
+	
+	
+	
+	
 });

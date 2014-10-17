@@ -17,7 +17,7 @@ app.factory('userService', ['$http', '$resource', function($http, $resource) {
 	//userService.getUserWithID(str). Won't do anything for now.
 	//Gets a user from the backend with the specific ID.
 	userService.getUserWithID = function(userID) {
-		return $http.get(User + '?_id=' + userID); // Doesn't work
+		return $http.get(User + '?_id=' + userID);
 	};
 
 	//Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
