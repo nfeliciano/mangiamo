@@ -1,7 +1,7 @@
-//To use this service, make sure you're adding 'mealService' to a controller, like so:
+//  To use this service, make sure you're adding 'mealService' to a controller, like so:
 //	app.controller('mealsController', ['$scope', '$resource', 'mealService', function ($scope, $resource, mealService)
 //	and then, make sure that the controller uses: var Meal = $resource('/api/meals');
-//This service will provide anything necessary when interacting with the backend for meals. Viewing meals, adding meals, committing to meals, etc.
+//  This service will provide anything necessary when interacting with the backend for meals. Viewing meals, adding meals, committing to meals, etc.
 
 app.factory('mealService', ['$resource', function($resource) {
 	var Meal = $resource('/api/meals');
@@ -22,12 +22,12 @@ app.factory('mealService', ['$resource', function($resource) {
 			});
 		},
 
-		getUsersAtMealByPlaceID: function($scope2, placeID) {
-			console.log("penis");
+		getUsersAtMealByPlaceID: function($scope, placeID) {
 			Meal.query({ "placeID":placeID}, function(results) {
-                $scope2.replacePin(placeID, results)
-            });
-        },
+				$scope.replacePin(placeID, results);
+			});
+		},
+
 		addUserToMeal: function(key, ID) {
 			return mealUpdate.query({ "key":key, "ID": ID }, function(results) {
 				return results;

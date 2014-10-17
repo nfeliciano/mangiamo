@@ -1,7 +1,7 @@
 
 app.controller('mainController', ['$scope', '$resource','$modal', 'mealService', 
 	function ($scope, $resource,$modal,mealService) {
-
+		var Meal  =$resource('/api/meals');
 		$scope.meals = ['meal1', 'meal2', 'meal3'];
 
 
@@ -48,7 +48,8 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 						}
 
 				    });
-					/*
+					
+				/*	
 					// Testing id that I KNOW is in the data base
 					var tempRequest = {
 						placeId: 'ChIJs8FQZ3V0j1QRYwgN-UfyxVQ'
@@ -152,23 +153,51 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 		//Adds pin to map
 		createMarker = function(place) {
 			
-			// Marker this is the pin on the map.
-			var marker =  new MarkerWithLabel({
-				icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
-				map: $scope.map,
-				position: place.geometry.location,
-				draggable: false,    //property that allows user to move marker
-				raiseOnDrag: false,
-				//labelContent:randomIntFromInterval(1,15), 
-				labelAnchor: new google.maps.Point(7, 33),    // anchors to
-				labelClass: "labels", // the CSS class for the label
+			//var meanl =mealService.getMealsAtPlaceID(place.place_id):
+			
+			var meal = mealService.getMealsAtPlaceID( 'ChIJs8FQZ3V0j1QRYwgN-UfyxVQ');
+			//var meal = mealService.getMealsAtPlaceID(place.place_id);
+			//console.log(meal.length);
+			console.log(meal);
+			//console.log(meal.Resource);
+			
+			if( meal.lenght >0){
 				
-				// Just me things
-				markerId : place.place_id,
-				name: place.name,
-			});
+				// This is the Mangiamo Meal marker, ie there is a meal here
+				var marker =  new MarkerWithLabel({
+					map: $scope.map,
+					position:  place.geometry.location,
+					draggable: false,    //property that allows user to move marker
+					raiseOnDrag: false,
+					//labelContent:meal[0].numPeople, 
+					labelAnchor: new google.maps.Point(7, 33),    // anchors to
+					labelClass: "labels", // the CSS class for the label
+					
+					// Just me things
+					markerId : place.place_id,
+					name: place.name,
+				});
+			}
+			else {
+				
+				// THIS IS THE DOT MARKER, ie no meals here
+				var marker =  new MarkerWithLabel({
+					icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
+					map: $scope.map,
+					position: place.geometry.location,
+					draggable: false,    //property that allows user to move marker
+					raiseOnDrag: false,
+					//labelContent:randomIntFromInterval(1,15), 
+					labelAnchor: new google.maps.Point(7, 33),    // anchors to
+					labelClass: "labels", // the CSS class for the label
+					
+					// Just me things
+					markerId : place.place_id,
+					name: place.name,
+				});
 		
-
+			}
+			
 		    $scope.placedMarkers.push(marker);
 
 		    // WHAT MODALS LIKELY NEED TO REPLACE:
@@ -186,7 +215,7 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 
 			});
 		
-			mealService.getUsersAtMealByPlaceID:($scope, place.place_Id);
+			//mealService.getUsersAtMealByPlaceID:($scope, place.place_Id);
 		}
 
 		$scope.openModal = function (size) {
