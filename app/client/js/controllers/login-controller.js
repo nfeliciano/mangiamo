@@ -10,7 +10,7 @@ app.controller('loginController', ['$scope', '$resource', '$location', 'userServ
 			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
 			userService.addNewUser(null, bdate, $scope.description, $scope.occupation);		
 			$location.path('main').replace();
-			// userService.getUserWithID("5440215055ec0814def0fe94").success(function(data) {
+			// mealService.addNewMeal("ChIJs8FQZ3V0j1QRYwgN-UfyxVQ", 0, new Date(), [], true).success(function(data) {
 			// 	console.log(data);
 			// }).error(function(error) {
 			// 	console.log(error);

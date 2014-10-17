@@ -27,7 +27,7 @@ app.factory('mealService', ['$http', '$resource', function($http, $resource) {
 
 	// //Adds a new meal to the database with the key placeID-time
 	mealService.addNewMeal = function(placeID, numPeople, time, people, active) {
-		var request = {"key":placeID + "-" + time, "time":time, "numPeople":numPeople, "placeID":placeID, "people":[], "active":active};
+		var request = {"key":placeID + "-" + time, "time":time, "numPeople":numPeople, "placeID":placeID, "people":people, "active":active};
 		return $http.post(meal, request);
 	}
 
