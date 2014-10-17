@@ -18,7 +18,7 @@ Requires: Coding, using express & node, making sure files are being created in M
 Developers: Noel, Kevin
 Status: Done until UI comes in
 Time Estimation: 6 Hours
-Time Spent: 27 Hours
+Time Spent: 24 Hours
 ~~~~
 ~~~~
 Feature Name: Mock-Ups
@@ -105,7 +105,7 @@ Time Spent: 0 Hours
 Feature Name: Attendance Confirmation
 Description: Be able to say 'I'm going to this meal'
 Requires: Being able to track who's going to the meals in the database, displaying that
-Status & Developers: Not Kevin
+Status & Developers: Kevin
 Time Estimation: 5 Hours
 Time Spent: 3 Hours
 ~~~~
@@ -114,9 +114,9 @@ Feature Name: Who's attending?
 Description: Be able to see features of the people attending a meal and how many
 Requires: Allowing a user to change his 'about me' features, temporary users in a database?, displaying those features
 Developers:
-Status: Not Started
+Status: Kevin
 Time Estimation: 8 Hours
-Time Spent: 0 Hours
+Time Spent: 3 Hours
 ~~~~
 ~~~~
 Feature Name: Proper Redirection
