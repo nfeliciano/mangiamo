@@ -3,6 +3,15 @@
 
 #### Milestone 1 - Live End to End Demo ####
 ~~~~
+Feature Name: Administrative / Course Work
+Description: Slideshows, presentation preparation, etc.
+Requires: Patience
+Status: Always working
+Developers: Lloyd, Chris, Jesper, Kevin, Noel
+Time Estimation: 40 Hours
+Time Spent: 10 Hours
+~~~~
+~~~~
 Feature Name: Basic Setup
 Description: Put the appropriate skeleton files in place so that features can be added
 Requires: Reading tutorials and installing Node.js, Express.js, and getting Angular.js in place
