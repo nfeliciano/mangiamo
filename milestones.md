@@ -3,15 +3,6 @@
 
 #### Milestone 1 - Live End to End Demo ####
 ~~~~
-Feature Name: Administrative / Course Work
-Description: Slideshows, presentation preparation, etc.
-Requires: Patience
-Status: Always working
-Developers: Lloyd, Chris, Jesper, Kevin, Noel
-Time Estimation: 40 Hours
-Time Spent: 10 Hours
-~~~~
-~~~~
 Feature Name: Basic Setup
 Description: Put the appropriate skeleton files in place so that features can be added
 Requires: Reading tutorials and installing Node.js, Express.js, and getting Angular.js in place
@@ -27,7 +18,7 @@ Requires: Coding, using express & node, making sure files are being created in M
 Developers: Noel, Kevin
 Status: Done until UI comes in
 Time Estimation: 6 Hours
-Time Spent: 19 Hours
+Time Spent: 27 Hours
 ~~~~
 ~~~~
 Feature Name: Mock-Ups
@@ -45,7 +36,7 @@ Requires: Creating basic markup and style sheets, learning and using purecss.io,
 Developers: Chris and Lloyd
 Status: Integrating PureCSS into HTML skeleton file.
 Time Estimation: 14 Hours
-Time Spent: 38 Hours
+Time Spent: 30 Hours
 ~~~~
 ~~~~
 Feature Name: Display the Restaurants
@@ -54,7 +45,7 @@ Requires: Working with the Google maps API and displaying it on the front end
 Developers: Jesper
 Status: Not started
 Time Estimation: 7 Hours
-Time Spent: 2 Hours
+Time Spent: 5 Hours
 ~~~~
 ~~~~
 Feature Name: Google Maps Geolocation
@@ -99,7 +90,7 @@ Requires: Overlaying on top of Google map, adding logic to database for retrievi
 Developers: Chris, Jesper, Kevin, Noel
 Status: Not started
 Time Estimation: 15 Hours
-Time Spent: 4 Hours
+Time Spent: 3 Hours
 ~~~~
 ~~~~
 Feature Name: Scheduling meals
@@ -114,9 +105,9 @@ Time Spent: 0 Hours
 Feature Name: Attendance Confirmation
 Description: Be able to say 'I'm going to this meal'
 Requires: Being able to track who's going to the meals in the database, displaying that
-Status & Developers: Not Started
+Status & Developers: Not Kevin
 Time Estimation: 5 Hours
-Time Spent: 0 Hours
+Time Spent: 3 Hours
 ~~~~
 ~~~~
 Feature Name: Who's attending?
