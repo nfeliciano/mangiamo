@@ -156,6 +156,7 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 					
 					// This is the Mangiamo Meal marker, ie there is a meal here
 					var marker =  new MarkerWithLabel({
+						icon: '../../img/restaurant.png',
 						map: $scope.map,
 						position:  place.geometry.location,
 						draggable: false,    //property that allows user to move marker
@@ -273,7 +274,7 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 
 
 
-app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService, placeInfo, marker) {
+app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService, userService, placeInfo, marker) {
 	$scope.placeInfo =placeInfo;
 	$scope.restName =placeInfo.name;
 	if (marker.hasMeal) {
@@ -283,9 +284,18 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 		$scope.hasMeal = "Create a Meal";
 	}
 	
-	$scope.selected = {
-		
-	};
+	$scope.users = [];
+	
+	var peopleInMeal = mealService.getPeopleFromMeal($scope.placeInfo.place_id).success(function(data) {
+		for (var i = 0; i < data.length; i++) {
+			var user = data[i];
+			userService.getUserWithID(user.id).success(function(data) {
+				$scope.users.push(data[0]);
+			});
+		}
+	}).error(function(error) {
+		console.log(error);
+	});
 	
 	$scope.join = function() {
 		if (sessionStorage.userID == null) { return; }
@@ -293,12 +303,12 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 		if (marker.hasMeal) {
 			mealService.addUserToMeal($scope.placeInfo.place_id, usrID).success(function(data) {
 				console.log('success');
-				//TODO: for some reason this console.log doesn't work yet
 			}).error(function(error) {
 				console.log(error);
 			});
 			marker.labelContent = marker.labelContent+1; 
 			marker.label.setContent();
+			$scope.hasMeal = 'Joined!';
 		} else {
 			mealService.addNewMeal($scope.placeInfo.place_id, 0, new Date(), [], true);
 			mealService.addUserToMeal($scope.placeInfo.place_id, usrID).success(function(data) {
@@ -306,22 +316,21 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 			}).error(function(error) {
 				console.log(error);
 			});
-			console.log('created');
+			
 			marker.setIcon('../../img/restaurant.png');
 			marker.hasMeal = true; 
 			marker.labelContent = 1; 
 			marker.label.setContent();
 			
+			$scope.hasMeal = 'Joined!';
 		}
-		
+		userService.getUserWithID(usrID).success(function(data) {
+			$scope.users.push(data[0]);
+		});
 	}
 
 	$scope.ok = function () {
-		$modalInstance.close($scope.selected.meal);
-	};
-
-	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
+		$modalInstance.close();
 	};
 	
 	
