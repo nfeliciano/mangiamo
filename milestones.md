@@ -18,7 +18,7 @@ Requires: Coding, using express & node, making sure files are being created in M
 Developers: Noel, Kevin
 Status: Done until UI comes in
 Time Estimation: 6 Hours
-Time Spent: 24 Hours
+Time Spent: 26 Hours
 ~~~~
 ~~~~
 Feature Name: Mock-Ups
@@ -90,7 +90,7 @@ Requires: Overlaying on top of Google map, adding logic to database for retrievi
 Developers: Chris, Jesper, Kevin, Noel
 Status: Not started
 Time Estimation: 15 Hours
-Time Spent: 3 Hours
+Time Spent: 9 Hours
 ~~~~
 ~~~~
 Feature Name: Scheduling meals
@@ -104,19 +104,19 @@ Time Spent: 0 Hours
 ~~~~
 Feature Name: Attendance Confirmation
 Description: Be able to say 'I'm going to this meal'
-Requires: Being able to track who's going to the meals in the database, displaying that
+Requires: Pushing to the backend that a user is going to a meal
 Status & Developers: Kevin
 Time Estimation: 5 Hours
-Time Spent: 3 Hours
+Time Spent: 5 Hours
 ~~~~
 ~~~~
 Feature Name: Who's attending?
 Description: Be able to see features of the people attending a meal and how many
-Requires: Allowing a user to change his 'about me' features, temporary users in a database?, displaying those features
+Requires: Being able to track who's going to the meals in the database, temporary users in a database?, displaying those features
 Developers: Kevin
 Status: 
 Time Estimation: 8 Hours
-Time Spent: 3 Hours
+Time Spent: 5 Hours
 ~~~~
 ~~~~
 Feature Name: Proper Redirection
@@ -125,7 +125,7 @@ Requires: UIRouter research,  an AngularJS module
 Status: Complete
 Developers: Lloyd
 Time Estimation: 8 Hours
-Time Spent: 10 Hours
+Time Spent: 14 Hours
 ~~~~
 
 #### Milestone 2 - Release Candidate ####
