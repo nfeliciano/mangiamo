@@ -113,8 +113,8 @@ Time Spent: 3 Hours
 Feature Name: Who's attending?
 Description: Be able to see features of the people attending a meal and how many
 Requires: Allowing a user to change his 'about me' features, temporary users in a database?, displaying those features
-Developers:
-Status: Kevin
+Developers: Kevin
+Status: 
 Time Estimation: 8 Hours
 Time Spent: 3 Hours
 ~~~~
