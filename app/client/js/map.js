@@ -48,12 +48,6 @@ function initialize() {
 					clearMarkers();
 					console.log(lastPosition);
 					lastPosition = map.getCenter();
-					//var bounds = new google.maps.LatLngBounds();
-					//bounds =map.getBounds();
-					//service.setBounds(bounds);
-					//request.setBounds(bounds);
-					//request.setCenter(map.getCenter);
-					//clearMatrix
 					request.location=map.getCenter();
 					
 					//service.nearbySearch(request, callback);
