@@ -4,6 +4,7 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 
 		$scope.meals = ['meal1', 'meal2', 'meal3'];
 
+		$scope.resto = 'happy place';
 
 		$scope.placedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
@@ -38,7 +39,6 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 				    service.radarSearch(request, callback);
 					
 				    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-						console.log("penis");
 				    	if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
 							console.log("vagina");
 							clearMarkers();
@@ -191,34 +191,37 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 			
 			}
 			
-
 		    $scope.placedMarkers.push(marker);
 
-		    // WHAT MODALS LIKELY NEED TO REPLACE:
-
-			// google.maps.event.addListener(marker, 'click', function() {
-			// 	$scope.infowindow.setContent(place.name);
-			// 	$scope.infowindow.open($scope.map, this);
-			// 	//alert(this.name );
-			// 	//alert(this.markerId);
-			// });
-
 			google.maps.event.addListener(marker, 'click', function() {
+				// THIS WAS IN OLD MAP CODE - USED TO WORK, NOW IT DOESN'T
+				// $scope.infowindow.setContent(place.name);
+				// $scope.infowindow.open($scope.map, this);
+				// alert(this.name );
+				// alert(this.markerId);
+
+				// $scope.resto = marker.name;
+				// console.log($scope.resto);
 
 				$scope.openModal('lg');
 
 			});
 		}
 
+		// Opens a modal when a map pin is clicked.
 		$scope.openModal = function (size) {
 			var modalInstance = $modal.open({
 				templateUrl: 'modalContent.html',
-				conroller: 'ModalInstanceCtrl',
-				size: 'lg',
+				controller: 'ModalInstanceCtrl',
+				size: size,
 				resolve: {
 					meals: function() {
 						return $scope.meals;
 					}
+					// ,
+					// resto: function() {
+					// 	return $scope.resto;
+					// }
 				}
 			});
 		}
@@ -260,12 +263,14 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 
 app.controller('ModalInstanceCtrl', function($scope, $modalInstance, meals) {
 	$scope.meals = meals;
+	// *add resto to function above if trying again?
+	// $scope.resto = resto;
 	$scope.selected = {
 		meal: $scope.meals[0]
 	};
 
 	$scope.ok = function () {
-		console.log("YO BUD");
+		// console.log($scope.resto);
 		$modalInstance.close($scope.selected.meal);
 	};
 

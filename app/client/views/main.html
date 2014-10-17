@@ -3,7 +3,7 @@
 	<!-- Map -->
 
 <!-- TEMPORARY -->
-<button class="btn btn-primary" ng-click="openModal('lg')">Large modal</button>
+<!-- <button class="btn btn-primary" ng-click="openModal('lg')">Large modal</button> -->
 
 	<div id="mapContainer">
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -12,7 +12,7 @@
 
 	<script type="text/ng-template" id="modalContent.html">
 		<div class="modal-header">
-			<h1>MODAL YAY</h1>
+			<h1>{{ resto }}</h1>
 		</div>
 		<div class="modal-body">
             <ul>
@@ -21,6 +21,9 @@
                 </li>
             </ul>
             Selected: <b>{{ selected.meal }}</b>
+            <div>
+            	<button class="btn btn-primary btn-large">Join!</button>
+            </div>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
