@@ -3,8 +3,54 @@
 	position: relative;
 	/*height: 200px;*/
 	padding: 20px;
-	background-color: rgba(0,0,0,0.3);
+	background-color: rgba(0,0,0,0.5);
 	width: 100%;
 	border-radius: 5px;
 	margin-top: 10%;
+}
+
+#startEating
+{
+	text-align: center;
+	font-family: 'Kaushan Script', cursive;
+}
+
+#startEating > button
+{
+	background-color: #242451;
+	border-color: #434470;
+}
+
+#userInfo > form > div > div > select
+{
+	width: 100%;
+	padding: 2px;
+	margin: 0px 0px 5px 0px;
+	/*text-align: center;*/
+}
+
+#userInfo > form
+{
+	/*text-align: center;*/
+}
+
+#userInfo > form > span
+{
+	color: white;
+	font-size: 1.2em;
+	padding-left: 5px;
+	/*width: 100%;*/
+	/*background-color: grey;*/
+}
+
+.startEating
+{
+	margin-top: 15px;
+	float: none;
+}
+
+#dob
+{
+	/*background-color: grey;*/
+	/*border: 5px solid white;*/
 }
