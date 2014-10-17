@@ -8,7 +8,8 @@ app.controller('loginController', ['$scope', '$resource', '$location', 'userServ
 		// This function provides a redirect
 		$scope.submitUserData = function() {
 			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
-			userService.addNewUser(null, bdate, $scope.description, $scope.occupation);		
+			var description = $scope.description1.replace(/\s+/g, '') + " " + $scope.description2.replace(/\s+/g, '') + " " + $scope.description3.replace(/\s+/g, '');
+			userService.addNewUser(null, bdate, description, $scope.occupation);		
 			$location.path('main').replace();
 			// mealService.addNewMeal("ChIJs8FQZ3V0j1QRYwgN-UfyxVQ", 0, new Date(), [], true).success(function(data) {
 			// 	console.log(data);

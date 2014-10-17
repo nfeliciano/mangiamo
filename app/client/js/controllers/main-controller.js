@@ -299,6 +299,7 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 	
 	$scope.join = function() {
 		if (sessionStorage.userID == null) { return; }
+		if ($scope.hasMeal == 'Joined!') { return; }
 		var usrID = sessionStorage.userID.replace(/['"]+/g, '');
 		if (marker.hasMeal) {
 			mealService.addUserToMeal($scope.placeInfo.place_id, usrID).success(function(data) {
