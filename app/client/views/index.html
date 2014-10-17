@@ -23,11 +23,11 @@
 		<script type="text/javascript" src="/js/services/mealService.js"></script>
 
 		<!-- CSS -->
+		<link rel="stylesheet" type='text/css' href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/index.css">
 		<link rel="stylesheet" type='text/css' href="/css/login.css">
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
 		<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Kaushan+Script'>
-		<link rel="stylesheet" type='text/css' href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
 		<!-- Google Sign-In API -->
 		<meta name="google-signin-clientid" content="531132549575-uki7bfheg6kjssjt3hbu4tlug3d0lbal.apps.googleusercontent.com" />
@@ -43,13 +43,48 @@
 
 	</head>
 
-	<body>
+	<body ng-controller="indexController">
 		<!-- This span allows index-controller.js to execute, which redirects based on user login status -->
-		<div ng-controller="indexController"> 
+		<!-- <div ng-controller="indexController"> 
 			<a href="http://localhost:3000/#/login">login</a>
 			<a href="http://localhost:3000/#/main">main</a>
 			<a href="#" ng-click="logout()">logout</a>
-		</div>
+		</div> -->
+
+		<!-- Bootstrap NavBar -->
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="col-xs-1">
+			</div>
+			<div class="container-fluid col-xs-10">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Mangiamo</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">Friends</a></li>
+						<li><a href="http://localhost:3000/#/main">main(*temp)</a></li>
+						<li><a href="http://localhost:3000/#/login">login</a></li>
+						<li><a href="#" ng-click="logout()">logout</a></li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>	
+
+		<!-- <div ng-controller="indexController"> 
+			<a href="http://localhost:3000/#/login">login</a>
+			<a href="http://localhost:3000/#/main">main</a>
+			<a href="#" ng-click="logout()">logout</a>
+		</div> -->
+
 		<div ui-view=""></div>
 	</body>
 </html>
