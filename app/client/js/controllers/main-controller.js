@@ -1,7 +1,7 @@
 
 app.controller('mainController', ['$scope', '$resource','$modal', 'mealService', 
 	function ($scope, $resource,$modal,mealService) {
-
+		var Meal  =$resource('/api/meals');
 		$scope.meals = ['meal1', 'meal2', 'meal3'];
 
 		$scope.resto = 'happy place';
@@ -39,8 +39,9 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 				    service.radarSearch(request, callback);
 					
 				    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
+
 				    	if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
-							console.log("vagina");
+						
 							clearMarkers();
 							$scope.lastPosition = $scope.map.getCenter();
 							request.location=$scope.map.getCenter();
@@ -48,7 +49,8 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 						}
 
 				    });
-					/*
+					
+				/*	
 					// Testing id that I KNOW is in the data base
 					var tempRequest = {
 						placeId: 'ChIJs8FQZ3V0j1QRYwgN-UfyxVQ'
@@ -152,60 +154,55 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 		//Adds pin to map
 		createMarker = function(place) {
 			
-		
-			var meal = mealService.getMealsAtPlaceID(place.place_id);
-			if(meal.length  !=0 ){
+	
+			var meal = mealService.getMealsAtPlaceID( place.place_id).success(function(data){
 			
-				var marker =  new MarkerWithLabel({
-					map: $scope.map,
-					position: place.geometry.location,
-					draggable: false,    //property that allows user to move marker
-					raiseOnDrag: false,
-					labelContent:meal.numPeople, 
-					labelAnchor: new google.maps.Point(7, 33),    // anchors to
-					labelClass: "labels", // the CSS class for the label
+				
+				console.log(data);
+				if( data.length >0){
 					
-					// Just me things
-					markerId : place.place_id,
-					name: place.name,
+					// This is the Mangiamo Meal marker, ie there is a meal here
+					var marker =  new MarkerWithLabel({
+						map: $scope.map,
+						position:  place.geometry.location,
+						draggable: false,    //property that allows user to move marker
+						raiseOnDrag: false,
+						labelContent:data[0].numPeople, 
+						labelAnchor: new google.maps.Point(7, 33),    // anchors to
+						labelClass: "labels", // the CSS class for the label
+						
+						// Just me things
+						markerId : place.place_id,
+						name: place.name,
+					});
+				}
+				else {
+					
+					// THIS IS THE DOT MARKER, ie no meals here
+					var marker =  new MarkerWithLabel({
+						icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
+						map: $scope.map,
+						position: place.geometry.location,
+						draggable: false,    //property that allows user to move marker
+						raiseOnDrag: false,
+						//labelContent:randomIntFromInterval(1,15), 
+						labelAnchor: new google.maps.Point(7, 33),    // anchors to
+						labelClass: "labels", // the CSS class for the label
+						
+						// Just me things
+						markerId : place.place_id,
+						name: place.name,
+					});
+				}
+				
+				$scope.placedMarkers.push(marker); // Array marker
+
+				google.maps.event.addListener(marker, 'click', function() {
+					$scope.openModal('lg');
 				});
 			
-			
-			}
-			else {
-				// Marker this is the pin on the map.
-				var marker =  new MarkerWithLabel({
-					icon: "https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0",  //Red dot
-					map: $scope.map,
-					position: place.geometry.location,
-					draggable: false,    //property that allows user to move marker
-					raiseOnDrag: false,
-					//labelContent:randomIntFromInterval(1,15), 
-					labelAnchor: new google.maps.Point(7, 33),    // anchors to
-					labelClass: "labels", // the CSS class for the label
-					
-					// Just me things
-					markerId : place.place_id,
-					name: place.name,
-				});
-			
-			}
-			
-		    $scope.placedMarkers.push(marker);
-
-			google.maps.event.addListener(marker, 'click', function() {
-				// THIS WAS IN OLD MAP CODE - USED TO WORK, NOW IT DOESN'T
-				// $scope.infowindow.setContent(place.name);
-				// $scope.infowindow.open($scope.map, this);
-				// alert(this.name );
-				// alert(this.markerId);
-
-				// $scope.resto = marker.name;
-				// console.log($scope.resto);
-
-				$scope.openModal('lg');
-
 			});
+			
 		}
 
 		// Opens a modal when a map pin is clicked.
@@ -243,6 +240,46 @@ app.controller('mainController', ['$scope', '$resource','$modal', 'mealService',
 			
 		}
 
+		
+		$scope.replacePin = function(place_id, result) {
+		
+			for (var i = 0; i < $scope.placedMarkers.length; i++ ) {
+					
+					if(place_id == $scope.placedMarkers[i].markerId){
+					
+					
+						var marker =  new MarkerWithLabel({
+							map: $scope.map,
+							position: $scope.placedMarkers[i].position,
+							draggable: false,    //property that allows user to move marker
+							raiseOnDrag: false,
+							labelContent:result[0].numPeople, 
+							labelAnchor: new google.maps.Point(7, 33),    // anchors to
+							labelClass: "labels", // the CSS class for the label
+							
+							// Just me things
+							markerId : place_id,
+							name: place.name,
+						});
+				
+				
+						google.maps.event.addListener(marker, 'click', function() {
+							$scope.openModal('lg');
+						});
+			
+				
+						$scope.placedMarkers[i]= marker;
+			
+				
+					}
+				}
+				
+		
+			console.log(result[0].key);
+		
+		
+		}
+		
 		function handleNoGeolocation(errorFlag) {
 			if (errorFlag) {
 				var content = 'Error: The Geolocation service failed.';
