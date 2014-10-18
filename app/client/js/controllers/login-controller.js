@@ -1,37 +1,25 @@
-app.controller('loginController', ['$scope', '$resource', '$location', 'userService', 'mealService',
-	function ($scope, $resource, $location, userService, mealService) {
-		var User = $resource('/api/users');
-		$scope.dates = [];
+app.controller('loginController', ['$scope', '$location', 'userService',
+	function ($scope, $location, userService) {
 		$scope.hideStartEating = false;
 		$scope.hideUserInfo = true;
 
-		// This function provides a redirect
+		// This function submits the user data to the database, and redirects the user
 		$scope.submitUserData = function() {
 			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
-			var description = $scope.description1.replace(/\s+/g, '') + " " + $scope.description2.replace(/\s+/g, '') + " " + $scope.description3.replace(/\s+/g, '');
-			userService.addNewUser(null, bdate, description, $scope.occupation);		
+			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
+			userService.addNewUser(null, bdate, description, $scope.occupation);
 			$location.path('main').replace();
-			// mealService.addNewMeal("ChIJs8FQZ3V0j1QRYwgN-UfyxVQ", 0, new Date(), [], true).success(function(data) {
-			// 	console.log(data);
-			// }).error(function(error) {
-			// 	console.log(error);
-			// });
+		}
+
+		getDescriptionFromStrings = function(stringOne, stringTwo, stringThree) {
+			return stringOne.replace(/\s+/g, '') + " " + stringTwo.replace(/\s+/g, '') + " " + stringThree.replace(/\s+/g, '');
 		}
 
 		getMonthFromString = function(month) {
 			return new Date(Date.parse(month +" 1, 2012")).getMonth()
 		}
 
-		$scope.isUserLoggedIn = function() {
-			if (userService.isUserLoggedIn()) {
-				var str = "User is logged in with birthdate " + angular.fromJson(localStorage.user).birthDate;
-				return str;
-			} 
-			else {
-				return "User is not logged in";
-			}
-		}
-
+		// Switches the divs in the login screen when the user has clicked 'start eating'
 		$scope.switchDivs = function() {
 			$scope.hideStartEating = !$scope.hideStartEating
 			$scope.hideUserInfo = !$scope.hideUserInfo
