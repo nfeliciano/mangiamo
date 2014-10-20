@@ -1,5 +1,6 @@
 var Meal = require('../models/meal');
 
+// Creates a new meal
 module.exports.create = function (req,res) {
 	var meal = new Meal({
 		key: req.body.key,
@@ -20,7 +21,8 @@ module.exports.create = function (req,res) {
 	});
 }
 
-module.exports.update = function (req,res) { // Some issue of adding to the array, maybe the way the model was declared. Changed it.
+// Adds a user to a meal (when the user commits) and increments numPeople
+module.exports.update = function (req,res) {
 	var query = { placeID: req.body.placeID };
 	var update = { people: { "id" : req.body.ID } };
 	var increment = { numPeople : 1 };
@@ -30,6 +32,7 @@ module.exports.update = function (req,res) { // Some issue of adding to the arra
 	});
 }
 
+// Returns an array of the people attending a meal
 module.exports.getPeople = function (req,res) {
 	if (req.query.placeID != null) {
 		Meal.find({placeID:req.query.placeID}, function(err, results) {
@@ -43,6 +46,7 @@ module.exports.getPeople = function (req,res) {
 	}
 }
 
+// Returns an array of meals. If we're not seeking a specific placeID, it returns all meals. If we pass in a placeID, it returns all meals in that location
 module.exports.list = function (req,res) {
 	if (req.query.placeID != null) {
 		Meal.find({placeID:req.query.placeID}, function(err, results) {
