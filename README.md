@@ -1,7 +1,7 @@
 Mangiamo
 ====
 
-Link to the web app: http://mangiamo-app.elasticbeanstalk.com/#/main
+Link to the web app: http://mangiamo-app.elasticbeanstalk.com/
 
 Repository for startup programming, csc485b@UVic
 
