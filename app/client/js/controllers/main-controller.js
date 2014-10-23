@@ -125,11 +125,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		smoothUpdateCallback= function(results, status, pagination) {
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
-				//clearMarkers();
 				var newPlaces = [];		//This is a subset of results that will be added
 				$scope.willBeDeletedMarkers =  $scope.placedMarkers;	//this is the current set of markers, anything that is left in here will be removed from map
 				$scope.placedMarkers = [];	
-			
 				var found =false;
 
 				for (var i = 0; i < results.length; i++) {
@@ -254,12 +252,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 	
 	
 		// Removes the markers from the map,
-		function clearMarkers() {
-			for (var i = 0; i < $scope.placedMarkers.length; i++ ) {
-				$scope.placedMarkers[i].setMap(null);
+		function clearMarkers(){
+			for (var i = 0; i < $scope.willBeDeletedMarkers.length; i++ ) {
+				$scope.willBeDeletedMarkers[i].setMap(null);
 			}
-			$scope.placedMarkers.length = 0;
-			$scope.placedMarkers = [];
+			
+			$scope.willBeDeletedMarkers = [];
+			
 		}
 		
 		// In the event that the browser cannot or user chooses not to support geolocation, this is how that's handled
