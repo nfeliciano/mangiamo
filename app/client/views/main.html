@@ -1,18 +1,14 @@
 <div ng-controller="mainController" ng-init="initialize()">
-	<!-- CODE -->
 	<!-- Map -->
-
-<!-- TEMPORARY -->
-<!-- <button class="btn btn-primary" ng-click="openModal('lg')">Large modal</button> -->
-
 	<div id="mapContainer">
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="mapCanvas"></div>
 	</div>
 
+	<!-- The content for inside a modal when it pops up -->
 	<script type="text/ng-template" id="modalContent.html">
 		<div class="modal-header">
-			<h1>{{ restName }}</h1>
+			<h1>{{ placeName }}</h1>
 		</div>
 		<div class="modal-body">
             <ul>

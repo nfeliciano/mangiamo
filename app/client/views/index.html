@@ -44,13 +44,6 @@
 	</head>
 
 	<body ng-controller="indexController">
-		<!-- This span allows index-controller.js to execute, which redirects based on user login status -->
-		<!-- <div ng-controller="indexController"> 
-			<a href="http://localhost:3000/#/login">login</a>
-			<a href="http://localhost:3000/#/main">main</a>
-			<a href="#" ng-click="logout()">logout</a>
-		</div> -->
-
 		<!-- Bootstrap NavBar -->
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="col-xs-1">
@@ -71,8 +64,6 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#">Friends</a></li>
-						<!-- <li><a href="http://localhost:3000/#/main">main(*temp)</a></li> -->
-						<!-- <li><a href="http://localhost:3000/#/login">login</a></li> -->
 						<li><a href="#" ng-click="logout()">logout</a></li>
 					</ul>
 				</div><!-- /.navbar-collapse -->
