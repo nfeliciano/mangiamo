@@ -3,7 +3,7 @@
 //	and then, make sure that the controller uses: var Meal = $resource('/api/meals');
 //This service will provide anything necessary when interacting with the backend for meals. Viewing meals, adding meals, committing to meals, etc.
 
-app.factory('mealService', ['$http', function($http,) {
+app.factory('mealService', ['$http', function($http) {
 	var meal = '/api/meals';
 	var people = '/api/meals/people';
 
