@@ -203,15 +203,6 @@ Time Estimation: 8 Hours
 Time Spent: 5.5 Hours
 ~~~~
 ~~~~
-Feature Name: Yelp! 
-Description: Be able to see Yelp reviews on the front end of restaurants 
-Requires: Interaction with Yelp API, display on the front end
-Developers:
-Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
-~~~~
-~~~~
 Feature Name: Meal Buddies 
 Description: Be able to add 'meal buddies', be able to import from Facebook and add buddies in-app 
 Requires: Backend work for relations 
@@ -229,21 +220,21 @@ Status: Not Started
 Time Estimation:
 Time Spent: 0 Hours
 ~~~~
-~~~~
-Feature Name: Mobile 
-Description: Have it working on mobile 
-Requires: Either native development (objc and such) or PhoneGap or something similar
-Developers:
-Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
-~~~~
 
 #### Milestone 3 - Live Beta ####
 ~~~~
 Feature Name: UI Overhaul 
 Description: Fine tune the UI to make it as usable and easy to use as possible 
 Requires: Front end work 
+Developers:
+Status: Not Started 
+Time Estimation:
+Time Spent: 0 Hours
+~~~~
+~~~~
+Feature Name: Mobile 
+Description: Have it working on mobile 
+Requires: Either native development (objc and such) or PhoneGap or something similar
 Developers:
 Status: Not Started 
 Time Estimation:
@@ -266,6 +257,15 @@ Developers: Kevin
 Status: Google button added and connected to Google+ API, just need to connect with our backend
 Time Estimation: 6
 Time Spent: 6 Hours
+~~~~
+~~~~
+Feature Name: Yelp! 
+Description: Be able to see Yelp reviews on the front end of restaurants 
+Requires: Interaction with Yelp API, display on the front end
+Developers:
+Status: Not Started 
+Time Estimation:
+Time Spent: 0 Hours
 ~~~~
 
 ##### New Feature Template #####
