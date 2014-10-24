@@ -4,6 +4,7 @@ var User = require('../models/user');
 module.exports.create = function (req,res) {
 	var user = new User({
 		name: req.body.name,
+		key: req.body.key,
 		birthDate: req.body.birthDate,
 		description: req.body.description,
 		profession: req.body.profession,
@@ -13,8 +14,13 @@ module.exports.create = function (req,res) {
 	user.save(function (err, result) {
 		if (!err) {
 			return res.json(result);
-		} else {
-			return console.log(err);
+		} else
+		{
+			return res.format({ 
+				text:function() {
+					res.send('error');
+				}
+			});
 		}
 	});
 }

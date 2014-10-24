@@ -20,12 +20,17 @@ app.factory('userService', ['$http', function($http, $resource) {
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
 	userService.addNewUser = function(name, birthDate, description, profession) {
-		var request = {"name":name, "birthDate":birthDate, "description":description, "profession":profession, "mealBuddies":[]};
+		var userKey = generateUniqueKey();
+		var request = { "name":name, "key":userKey, "birthDate":birthDate, "description":description, "profession":profession, "mealBuddies":[] };
 		var res =  $http.post(User, request);
-		res.success(function(result){
-			sessionStorage.userID = angular.toJson(result._id);
-			localStorage.user = angular.toJson(result);
-		})
+		res.success(function(result) {
+			if (result != 'error') {
+				sessionStorage.userID = angular.toJson(result._id);
+				localStorage.user = angular.toJson(result);
+			} else {
+				userService.addNewUser(name, birthDate, description, profession);
+			}
+		});
 		return res;
 	};
 
@@ -36,6 +41,10 @@ app.factory('userService', ['$http', function($http, $resource) {
 
 	// Empty method. Will be used to delete a user from the database. Not sure if this is needed.
 	userService.deleteUser = function(userID) {
+
+	};
+
+	userService.addMealBuddy = function() {
 
 	};
 
@@ -51,6 +60,16 @@ app.factory('userService', ['$http', function($http, $resource) {
 	// Removes the user from localStorage
 	userService.logoutUser = function() {
 		localStorage.user = 'loggedout';
+	}
+
+	generateUniqueKey = function() {
+	    var text = "";
+	    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+	    for( var i=0; i < 5; i++ )
+	        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+	    return text;
 	}
 
 	return userService;
