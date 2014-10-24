@@ -15,13 +15,18 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			zoom: 14
 		}
 
+		$scope.addFriend = function() {
+			alert('You have added a friend');
+			// Code to add a friend
+		}
+
 		$scope.populateMealBuddies = function() {
 			// $scope.mealBuddies = 
 		}
 		$scope.populateMealBuddies();  // This needs to be called elsewhere as well
 
 		$scope.removeMealBuddy = function(name) {
-			alert(name);
+			alert('You have removed: ' + name);
 		}
 
 		// initializes the google map and populates it with food places
