@@ -17,10 +17,16 @@
 	padding: 10px;
 }
 
+#removeMealBuddy
+{
+	float: right;
+}
+
 .mealBuddy
 {
 	background-color: #eaeaea;
 	margin: 20px;
+	border-radius: 5px;
 	padding: 5px;
 }
 /* END MEAL BUDDIES */

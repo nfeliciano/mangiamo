@@ -15,6 +15,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			zoom: 14
 		}
 
+		$scope.populateMealBuddies = function() {
+			// $scope.mealBuddies = 
+		}
+		$scope.populateMealBuddies();  // This needs to be called elsewhere as well
+
+		$scope.removeMealBuddy = function(name) {
+			alert(name);
+		}
+
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);

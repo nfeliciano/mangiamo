@@ -1,14 +1,15 @@
 <div ng-controller="mainController" ng-init="initialize()">
 	<!-- Map -->
-	<div id="mealBuddiesContainer" class="col-lg-3">
+	<div id="mealBuddiesContainer" class="col-sm-3">
 		<div>
 			<div class="mealBuddy" ng-repeat="mealBuddy in mealBuddies">
 				{{mealBuddy.name}}
 				{{mealBuddy.age}}
+				<button id="removeMealBuddy" ng-click="removeMealBuddy(mealBuddy.name)"> Remove </button>
 			</div>
 		</div>
 	</div>
-	<div id="mapContainer" class="col-lg-9">
+	<div id="mapContainer" class="col-sm-9">
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="mapCanvas"></div>
 	</div>
