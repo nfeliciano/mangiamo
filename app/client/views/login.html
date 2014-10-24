@@ -1,9 +1,5 @@
 <div ng-controller="loginController">
 
-	<!-- Custom JS files -->
-	<script type="text/javascript" src="/js/facebookLogin.js"></script>
-	<script type="text/javascript" src="/js/googleLogin.js"></script>
-
 	<div class="col-xs-0 col-sm-3">
 	</div>
 
@@ -218,15 +214,15 @@
 
 			</div>
 		</div>
-<!-- 		<div id="authentication">
+		<div id="authentication">
 			<div id="googleLogin">
 				<img src="../img/sign_in_with_google.png" onmouseover="" style="cursor: pointer;"></img>
 			</div>
 			<div id="fb-root">
-				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" size="large">
+				<fb:login-button scope="public_profile,email" ng-click="checkLoginState()" size="large">
 					Login with Facebook
 				</fb:login-button>
 			</div>
-		</div> -->
+		</div>
 	</div>
 </div>
