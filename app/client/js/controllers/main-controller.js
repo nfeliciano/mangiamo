@@ -5,6 +5,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 
+		$scope.mealBuddies = [{name: 'Lloyd', age: '22'},
+							  {name: 'Chris', age: '26'},
+							  {name: 'Kevin', age: '22'},
+							  {name: 'Noel',  age: '24'},
+							  {name: 'Jesper',age: '22'}];
+
 		var mapOptions = {
 			zoom: 14
 		}
@@ -162,17 +168,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 			}
 		}
-
-		
-		//Adds pin to map
-		
-		
-		
 		
 		createMarker = function(place) {
 
 			var meal = mealService.getMealsAtPlaceID( place.place_id).success(function(data){
-			
 				if( data.length >0){
 					
 					// This is the Mangiamo Meal marker, ie there is a meal here
@@ -248,8 +247,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		randomIntFromInterval = function(min,max) {
 		    return Math.floor(Math.random()*(max-min+1)+min);
 		}
-
-	
 	
 		// Removes the markers from the map,
 		function clearMarkers(){
