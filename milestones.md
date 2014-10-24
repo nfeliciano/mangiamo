@@ -194,13 +194,22 @@ Time Spent: 14 Hours
 
 #### Milestone 2 - Release Candidate ####
 ~~~~
+Feature Name: AWS
+Description: Get the app deployed onto AWS
+Requires: AWS account, lots of tutorials
+Developers: Kevin, Noel
+Status: Done for the Proof of Concept
+Time Estimation: 8
+Time Spent: 4
+~~~~
+~~~~
 Feature Name: Facebook Authentication 
 Description: Be able to sign-in using Facebook API 
 Requires: Interaction with Facebook API, back-end logic for storing when user logs in through Facebook? 
-Developers: Kevin
+Developers: Kevin, Noel
 Status: Buttons have been added and connected to FB API, just need to link to DB.
 Time Estimation: 8 Hours
-Time Spent: 5.5 Hours
+Time Spent: 6.5 Hours
 ~~~~
 ~~~~
 Feature Name: Meal Buddies 
@@ -256,7 +265,7 @@ Requires: Figure out logic for how to tie it in with regular auth and Facebook a
 Developers: Kevin
 Status: Google button added and connected to Google+ API, just need to connect with our backend
 Time Estimation: 6
-Time Spent: 6 Hours
+Time Spent: 6.5 Hours
 ~~~~
 ~~~~
 Feature Name: Yelp! 
