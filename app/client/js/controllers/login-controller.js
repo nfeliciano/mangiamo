@@ -1,7 +1,6 @@
 app.controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
-		$scope.hideStartEating = false;
-		$scope.hideUserInfo = true;
+		$scope.startEating = true;
 
 		// initForm populates local variables from local JSON files.  This speparates 
 		// a lot of data from html and Angular into appropriate JSON files.  The
@@ -34,12 +33,6 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 
 		getMonthFromString = function(month) {
 			return new Date(Date.parse(month +" 1, 2012")).getMonth()
-		}
-
-		// Switches the divs in the login screen when the user has clicked 'start eating'
-		$scope.switchDivs = function() {
-			$scope.hideStartEating = !$scope.hideStartEating
-			$scope.hideUserInfo = !$scope.hideUserInfo
 		}
 
 		// This redirects back to main if the user tries to navigate here and they are already logged in
