@@ -49,8 +49,8 @@ module.exports.addNewBuddy = function (req,res) {
 
 // Returns an array of users. Either all users, or users with a specific userID.
 module.exports.list = function (req,res) {
-	if(req.query._id != null){
-		User.find({_id:req.query._id}, function (err, results) {
+	if(req.query.key != null){
+		User.find({key:req.query.key}, function (err, results) {
 			res.json(results);
 		});
 	}

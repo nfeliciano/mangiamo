@@ -16,8 +16,8 @@ app.factory('userService', ['$http', function($http, $resource) {
 	};
 
 	// Gets a user from the backend with the specific ID.
-	userService.getUserWithID = function(userID) {
-		return $http.get(user + '?_id=' + userID);
+	userService.getUserWithID = function(key) {
+		return $http.get(user + '?key=' + key);
 	};
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
@@ -51,23 +51,30 @@ app.factory('userService', ['$http', function($http, $resource) {
 	//- If it's a 5 letter string preceded by a '!', that means someone else is waiting for this user's confirmation
 	//- If it's a 5 letter string preceded by a '?', that means this user is waiting for someone else to confirm
 	userService.addMealBuddy = function(buddyKey) {
-		return $http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
-			//check array results to see if meal buddies contains the buddy key
-			var alreadyAdded = false;
-			for (buddy of results) {
-				var keyString = buddy.key.replace(/!?/g,"");
-				if (keyString == buddyKey) {
-					alreadyAdded = true;
-				}
-			}
-			if (!alreadyAdded) {
-				var request = { "userKey": angular.fromJson(localStorage.user).key, "buddyKey": "!"+buddyKey };
-				$http.put(userBuddies, request);
-				var buddyRequest = { "userKey": buddyKey, "buddyKey": "?"+angular.fromJson(localStorage.user).key };
-				$http.put(userBuddies, buddyRequest);
+		userService.getUserWithID(buddyKey).success(function(results) {
+			if (results.length > 0) {
+				$http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
+					//check array results to see if meal buddies contains the buddy key
+					var alreadyAdded = false;
+					for (buddy of results) {
+						var keyString = buddy.key.replace(/!?/g,"");
+						if (keyString == buddyKey) {
+							alreadyAdded = true;
+						}
+					}
+					if (!alreadyAdded) {
+						var request = { "userKey": angular.fromJson(localStorage.user).key, "buddyKey": "!"+buddyKey };
+						$http.put(userBuddies, request);
+						var buddyRequest = { "userKey": buddyKey, "buddyKey": "?"+angular.fromJson(localStorage.user).key };
+						$http.put(userBuddies, buddyRequest);
+					}
+					else {
+						console.log('already added');
+					}
+				})
 			}
 			else {
-				console.log('already added');
+				console.log('no such user for this buddy');
 			}
 		});
 	};
