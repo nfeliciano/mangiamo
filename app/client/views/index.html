@@ -15,6 +15,9 @@
 		<script type="text/javascript" src="js/ui-bootstrap-tpls-0.11.2.js"></script>
 
 		<!-- Custom JS files -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<!-- <script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script> -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>		
 		<script type="text/javascript" src="/js/app.js"></script>
 		<script type="text/javascript" src="/js/controllers/index-controller.js"></script>
 		<script type="text/javascript" src="/js/controllers/login-controller.js"></script>
@@ -24,6 +27,7 @@
 
 		<!-- CSS -->
 		<link rel="stylesheet" type='text/css' href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" /> -->
 		<link rel="stylesheet" type="text/css" href="/css/index.css">
 		<link rel="stylesheet" type='text/css' href="/css/login.css">
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -49,24 +53,31 @@
 			<div class="col-xs-1">
 			</div>
 			<div class="container-fluid col-xs-10">
-				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Mangiamo</a>
-				</div>
+			    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span> 
+			      	</button>
+			      <a class="navbar-brand" href="#">Mangiamo</a>
+			    </div>
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="collapse navbar-collapse" id="myNavbar">
+				      <ul class="nav navbar-nav navbar-right">
+				        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Friends</a></li>
+				        <li><a href="#"><span class="glyphicon glyphicon-log-in" ng-click="logout()"></span> Log Out</a></li>
+				      </ul>
+				    </div>
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Friends</a></li>
-						<li><a href="#" ng-click="logout()">logout</a></li>
-					</ul>
-				</div><!-- /.navbar-collapse -->
+					<!-- Collect the nav links, forms, and other content for toggling -->
+	<!-- 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#">Friends</a></li>
+							<li><a href="#" ng-click="logout()">logout</a></li>
+						</ul>
+					</div> -->
+					<!-- /.navbar-collapse -->
+				<!-- </div> -->
 			</div><!-- /.container-fluid -->
 		</nav>	
 
