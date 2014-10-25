@@ -215,10 +215,10 @@ Time Spent: 6.5 Hours
 Feature Name: Meal Buddies 
 Description: Be able to add 'meal buddies', be able to import from Facebook and add buddies in-app 
 Requires: Backend work for relations 
-Developers: Lloyd
+Developers: Lloyd, Kevin, Noel
 Status: Front end started
 Time Estimation: 40 Hours
-Time Spent: 8 Hours
+Time Spent: 11 Hours
 ~~~~
 ~~~~
 Feature Name: Buddies on Map 
