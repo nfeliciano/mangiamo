@@ -1,7 +1,24 @@
-app.controller('loginController', ['$scope', '$location', 'userService',
-	function ($scope, $location, userService) {
+app.controller('loginController', ['$scope', '$location', '$http', 'userService',
+	function ($scope, $location, $http, userService) {
 		$scope.hideStartEating = false;
 		$scope.hideUserInfo = true;
+
+		// initForm populates local variables from local JSON files.  This speparates 
+		// a lot of data from html and Angular into appropriate JSON files.  The
+		// following "gets" allow angular to access these local JSON files
+		$scope.initForm = function() {
+			$http.get('/json/occupations.json').success( function(data) {
+				$scope.occupations = data.occupations;
+			});
+			$http.get('/json/dateRanges.json').success( function(data) {
+				$scope.dateRanges = data.dateRanges;
+			});
+			$http.get('/json/meFactors.json').success( function(data) {
+				$scope.meFactorAdjs = data.meFactorAdjs;
+				$scope.meFactorVerbs = data.meFactorVerbs;
+				$scope.meFactorNouns = data.meFactorNouns;
+			});
+		};
 
 		// This function submits the user data to the database, and redirects the user
 		$scope.submitUserData = function() {

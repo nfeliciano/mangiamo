@@ -1,0 +1,19 @@
+{
+	"meFactorAdjs": [
+		{"value": "Dubious"},
+		{"value": "Gregarious"},
+		{"value": "Harmonious"}
+	],
+
+	"meFactorVerbs": [
+		{"value": "Biking"},
+		{"value": "Climbing"},
+		{"value": "Coding"}
+	],
+
+	"meFactorNouns": [
+		{"value": "Enthusiast"},
+		{"value": "Connoisseur"},
+		{"value": "Monkey"}
+	]
+}
