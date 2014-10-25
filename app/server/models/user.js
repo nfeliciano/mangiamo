@@ -6,7 +6,7 @@ var UserSchema = new Schema({
 	birthDate: Date,
 	description: String,
 	profession: String,
-	mealBuddies: Array
+	mealBuddies: [{ key: String }]
 });
 
 //Model is named 'User'

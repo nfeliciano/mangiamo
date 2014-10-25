@@ -229,6 +229,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		// Opens a modal when a map pin is clicked.
 		$scope.openModal = function (size, placeInfo, marker) {
+			userService.addMealBuddy('GGp2V');
 			var modalInstance = $modal.open({
 				templateUrl: 'modalContent.html',
 				controller: 'ModalInstanceCtrl',

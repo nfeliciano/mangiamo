@@ -4,28 +4,30 @@
 //This service will provide anything necessary when interacting with the backend for users. Adding, deleting, adding meal buddies, etc.
 
 app.factory('userService', ['$http', function($http, $resource) {
-	var User = '/api/users';
+	var user = '/api/users';
+	var userBuddies = '/api/users/buddies';
+	var confirmBuddies = '/api/users/buddies/confirm';
 
 	var userService = {};
 
 	// Gets all the users from the backend, no filtering. Can parse through them in results.
 	userService.getAllUsers = function() {
-		return $http.get(User);
+		return $http.get(user);
 	};
 
 	// Gets a user from the backend with the specific ID.
 	userService.getUserWithID = function(userID) {
-		return $http.get(User + '?_id=' + userID);
+		return $http.get(user + '?_id=' + userID);
 	};
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
 	userService.addNewUser = function(name, birthDate, description, profession) {
 		var userKey = generateUniqueKey();
 		var request = { "name":name, "key":userKey, "birthDate":birthDate, "description":description, "profession":profession, "mealBuddies":[] };
-		var res =  $http.post(User, request);
+		var res =  $http.post(user, request);
 		res.success(function(result) {
 			if (result != 'error') {
-				sessionStorage.userID = angular.toJson(result._id);
+				sessionStorage.userID = angular.toJson(result.key);
 				localStorage.user = angular.toJson(result);
 			} else {
 				userService.addNewUser(name, birthDate, description, profession);
@@ -44,7 +46,33 @@ app.factory('userService', ['$http', function($http, $resource) {
 
 	};
 
-	userService.addMealBuddy = function() {
+	//Adds new meal buddy for a user. Three states:
+	//- If it's just a 5 letter string, they are confirmed meal buddies
+	//- If it's a 5 letter string preceded by a '!', that means someone else is waiting for this user's confirmation
+	//- If it's a 5 letter string preceded by a '?', that means this user is waiting for someone else to confirm
+	userService.addMealBuddy = function(buddyKey) {
+		return $http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
+			//check array results to see if meal buddies contains the buddy key
+			var alreadyAdded = false;
+			for (buddy of results) {
+				var keyString = buddy.key.replace(/!?/g,"");
+				if (keyString == buddyKey) {
+					alreadyAdded = true;
+				}
+			}
+			if (!alreadyAdded) {
+				var request = { "userKey": angular.fromJson(localStorage.user).key, "buddyKey": "!"+buddyKey };
+				$http.put(userBuddies, request);
+				var buddyRequest = { "userKey": buddyKey, "buddyKey": "?"+angular.fromJson(localStorage.user).key };
+				$http.put(userBuddies, buddyRequest);
+			}
+			else {
+				console.log('already added');
+			}
+		});
+	};
+
+	userService.deleteMealBuddy = function(buddyKey) {
 
 	};
 

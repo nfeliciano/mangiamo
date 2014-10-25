@@ -13,15 +13,37 @@ module.exports.create = function (req,res) {
 	
 	user.save(function (err, result) {
 		if (!err) {
-			return res.json(result);
+			res.json(result);
 		} else
 		{
-			return res.format({ 
+			res.format({ 
 				text:function() {
 					res.send('error');
 				}
 			});
 		}
+	});
+}
+
+module.exports.getMealBuddies = function (req,res) {
+	if (req.query.key != null) {
+		User.find({ key:req.query.key}, function(err, results) {
+			if (results.length == 0) {
+				res.json(results);
+			}
+			else {
+				res.json(results[0].mealBuddies);
+			}
+		});
+	}
+}
+
+module.exports.addNewBuddy = function (req,res) {
+	var query = { key: req.body.userKey };
+	var update = { mealBuddies: { "key" : req.body.buddyKey } };
+
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
+		res.json(results);
 	});
 }
 
