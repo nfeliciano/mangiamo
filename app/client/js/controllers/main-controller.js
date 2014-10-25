@@ -6,7 +6,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
 		var mapOptions = {
-			zoom: 10
+			zoom: 14
 		}
 
 		// initializes the google map and populates it with food places
