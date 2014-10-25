@@ -6,7 +6,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
 		var mapOptions = {
-			zoom: 14
+			zoom: 10
 		}
 
 		// initializes the google map and populates it with food places
@@ -23,7 +23,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				    var request = {
 						location: pos,
 						rankby : google.maps.places.RankBy.DISTANCE,
-						radius: 4000,
+						radius: 3000,
 						types: ['restaurant','cafe', 'bar', 'food']
 					};
 					
@@ -34,7 +34,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// refreshes the map with new food places when the map is moved a certain amount
 				    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 
-				    	if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
+				    	if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
 
 							$scope.lastPosition = $scope.map.getCenter();
 							request.location=$scope.map.getCenter();
@@ -104,6 +104,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					bounds.extend(place.geometry.location);
 				}
 				$scope.map.fitBounds(bounds);
+				$scope.map.setZoom(15);
 			});
 
 			// Bias the SearchBox results towards places that are within the bounds of the
@@ -230,8 +231,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 						
 					}
 			
-						
-					
 						
 					newPlaces = []; //not sure how much javascript clean up is needed
 					results = [];
