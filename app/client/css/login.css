@@ -1,7 +1,27 @@
-#inputContainer
+.startEating
 {
+	transition: all linear 0.5s;
+	opacity: 1;
+	text-align: center;
+	font-family: 'Kaushan Script', cursive;
+}
+
+.startEating.ng-hide
+{
+	opacity: 0;
+}
+
+.startEating > button
+{
+	background-color: #242451;
+	border-color: #434470;
+}
+
+.inputContainer
+{
+	transition: all linear 0.5s;
+	opacity: 1;
 	position: relative;
-	/*height: 200px;*/
 	padding: 20px;
 	background-color: rgba(0,0,0,0.5);
 	width: 100%;
@@ -9,16 +29,9 @@
 	margin-top: 10%;
 }
 
-#startEating
+.inputContainer.ng-hide
 {
-	text-align: center;
-	font-family: 'Kaushan Script', cursive;
-}
-
-#startEating > button
-{
-	background-color: #242451;
-	border-color: #434470;
+	opacity: 0;
 }
 
 #userInfo > form > div > div > select
@@ -26,11 +39,6 @@
 	width: 100%;
 	padding: 2px;
 	margin: 0px 0px 5px 0px;
-	/*text-align: center;*/
-}
-
-#userInfo > form
-{
 	/*text-align: center;*/
 }
 
@@ -43,14 +51,9 @@
 	/*background-color: grey;*/
 }
 
-.startEating
+.submit
 {
 	margin-top: 15px;
 	float: none;
 }
 
-#dob
-{
-	/*background-color: grey;*/
-	/*border: 5px solid white;*/
-}
