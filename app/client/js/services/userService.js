@@ -112,8 +112,22 @@ app.factory('userService', ['$http', function($http, $resource) {
 		})
 	};
 
-	userService.deleteMealBuddy = function(buddyKey) {
-
+	userService.deleteMealBuddy = function(buddyKey, reject) {
+		//reject or delete
+		$http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
+			if (reject) {
+				var deleteRequest = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': '?'+buddyKey };
+				$http.put(deleteBuddies, deleteRequest);
+				var buddyDeleteRequest = { 'userKey': buddyKey, 'buddyKey': '!'+angular.fromJson(localStorage.user).key };
+				$http.put(deleteBuddies, buddyDeleteRequest);
+			} 
+			else {				//delete a user already a friend
+				var deleteRequest = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
+				$http.put(deleteBuddies, deleteRequest);
+				var buddyDeleteRequest = { 'userKey': buddyKey, 'buddyKey': angular.fromJson(localStorage.user).key };
+				$http.put(deleteBuddies, buddyDeleteRequest);
+			}
+		})
 	};
 
 	// Returns true or false depending on whether a user is in local storage.
