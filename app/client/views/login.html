@@ -17,18 +17,19 @@
 	</div>
 
 	<div class="col-xs-12 col-sm-4">
+		<input type="checkbox" ng-model="startEating">
 		<!-- Splash screen with "Start Eating" button -->
-		<div id="startEating" class="ng-hide" ng-hide="hideStartEating">
-			<button ng-click="switchDivs()" type="submit" class="btn btn-primary"><h3>Start Eating!</h3></button>
+		<div id="startEating" ng-show="startEating">
+			<button ng-click="startEating = !startEating" type="submit" class="btn btn-primary"><h3>Start Eating!</h3></button>
 		</div>
-		<div id="inputContainer" class="ng-hide" ng-hide="hideUserInfo">
+		<div id="inputContainer" ng-hide="startEating">
 			<!-- Request user information -->
 			<div id="userInfo">
 				<form ng-init="initForm()" ng-submit="submitUserData()" >
 					<span >Date of Birth</span>
 					<div id="dob">
 						<div class="col-sm-12">
-							<select ng-model="dateRange">
+							<select ng-model="dateRange" ng-init="somethingHere = options[0]">
 								<option value="" disabled selected> Date Range </option>
 								<option ng-repeat="dateRange in dateRanges"> {{dateRange.value}} </option>
 							</select>
@@ -69,7 +70,6 @@
 					<!-- fix float: left -->
 					<button type="submit" class="btn btn-primary btn-block col-xs-6 startEating"> Submit </button>		
 				</form>
-
 			</div>
 		</div>
 <!-- 		<div id="authentication">

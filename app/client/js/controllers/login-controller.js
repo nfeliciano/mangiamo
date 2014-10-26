@@ -1,7 +1,6 @@
 app.controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
-		$scope.hideStartEating = false;
-		$scope.hideUserInfo = true;
+		$scope.startEating = true;
 
 		// initForm populates local variables from local JSON files.  This speparates 
 		// a lot of data from html and Angular into appropriate JSON files.  The
@@ -20,6 +19,11 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 			});
 		};
 
+		// Generates a random integer between 1 and n
+		$scope.getRandomSpan = function(n){
+			return Math.floor((Math.random()*n)+1);
+		}
+
 		// This function submits the user data to the database, and redirects the user
 		$scope.submitUserData = function() {
 			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
@@ -34,12 +38,6 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 
 		getMonthFromString = function(month) {
 			return new Date(Date.parse(month +" 1, 2012")).getMonth()
-		}
-
-		// Switches the divs in the login screen when the user has clicked 'start eating'
-		$scope.switchDivs = function() {
-			$scope.hideStartEating = !$scope.hideStartEating
-			$scope.hideUserInfo = !$scope.hideUserInfo
 		}
 
 		// This redirects back to main if the user tries to navigate here and they are already logged in

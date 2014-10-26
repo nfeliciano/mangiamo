@@ -1,19 +1,19 @@
 {
 	"meFactorAdjs": [
-		{"value": "Dubious"},
-		{"value": "Gregarious"},
-		{"value": "Harmonious"}
+		{"n": "1", "value": "Dubious"},
+		{"n": "2", "value": "Gregarious"},
+		{"n": "3", "value": "Harmonious"}
 	],
 
 	"meFactorVerbs": [
-		{"value": "Biking"},
-		{"value": "Climbing"},
-		{"value": "Coding"}
+		{"n": "1", "value": "Biking"},
+		{"n": "2", "value": "Climbing"},
+		{"n": "3", "value": "Coding"}
 	],
 
 	"meFactorNouns": [
-		{"value": "Enthusiast"},
-		{"value": "Connoisseur"},
-		{"value": "Monkey"}
+		{"n": "1", "value": "Enthusiast"},
+		{"n": "2", "value": "Connoisseur"},
+		{"n": "3", "value": "Monkey"}
 	]
 }

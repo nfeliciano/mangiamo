@@ -11,8 +11,17 @@
 
 #startEating
 {
+/*	-webkit-transition:all linear 0.5s;
+	transition:all linear 2s;*/
 	text-align: center;
 	font-family: 'Kaushan Script', cursive;
+	opacity: 1;
+}
+
+/* Does not work yet...  ANIMATIONS!!! */
+#startEating.ng-hide
+{
+/*	opacity: 0;*/
 }
 
 #startEating > button
