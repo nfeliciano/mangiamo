@@ -1,4 +1,3 @@
-
 app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 'mealService', 'userService',
 	function ($scope, $resource,$location,$modal,mealService,userService) {
 		$scope.placedMarkers = [];
@@ -15,15 +14,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			zoom: 14
 		}
 
-		$scope.addFriend = function() {
-			alert('You have added a friend');
-			// Code to add a friend
+		$scope.addFriend = function(newMealBuddy) {
+			userService.addMealBuddy(newMealBuddy);
 		}
-
-		$scope.populateMealBuddies = function() {
-			// $scope.mealBuddies = 
-		}
-		$scope.populateMealBuddies();  // This needs to be called elsewhere as well
 
 		$scope.removeMealBuddy = function(name) {
 			alert('You have removed: ' + name);
