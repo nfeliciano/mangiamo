@@ -17,7 +17,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-					console.log(pos);
 				    $scope.map.setCenter(pos);
 				
 				}, function() {
@@ -50,7 +49,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
 					$scope.lastPosition = $scope.map.getCenter();
 					request.location=$scope.map.getCenter();
-					console.log(request.location);
 					service.radarSearch(request, fastCallback); 
 					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
 				}
