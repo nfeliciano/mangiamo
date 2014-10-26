@@ -57,10 +57,14 @@ app.factory('userService', ['$http', function($http, $resource) {
 				$http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
 					//check array results to see if meal buddies contains the buddy key
 					var alreadyAdded = false;
+					var buddyPending = '';
 					for (buddy of results) {
 						var keyString = buddy.key.replace(/[!]|[?]/g,'');
 						if (keyString == buddyKey) {
 							alreadyAdded = true;
+							if (buddy.key.substring(0,1) == '?') {
+								buddyPending = keyString;
+							}
 						}
 					}
 					if (!alreadyAdded) {
@@ -70,7 +74,12 @@ app.factory('userService', ['$http', function($http, $resource) {
 						$http.put(userBuddies, buddyRequest);
 					}
 					else {
-						console.log('already added');
+						if (buddyPending.length > 0) {
+							userService.confirmMealBuddy(buddyPending);
+						}
+						else {
+							console.log('already added');
+						}
 					}
 				})
 			}
@@ -85,7 +94,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 		return $http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key);
 	};
 
-	userService.confirmMealBuddy = function(buddyKey, confirm) {
+	userService.confirmMealBuddy = function(buddyKey) {
 		$http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
 			//check array results to see if meal buddies contains the buddy key with a '?'
 			var requestPending = false;
