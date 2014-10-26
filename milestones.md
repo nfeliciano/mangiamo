@@ -230,6 +230,69 @@ Time Estimation:
 Time Spent: 0 Hours
 ~~~~
 
+
+~~~~
+Feature Name: Research other place frameworks
+Description: See if anything other than google maps can be use full
+Requires: Research
+Status: Non seem to offer anythign imediatly helpfull
+Developers: Jesper
+Time Estimation: 2 Hours
+Time Spent: 1 Hours
+~~~~
+
+~~~~
+Feature Name: Yelp Research / setup
+Description: Get yelp api working
+Requires:Yelp account, Yelp api key, understanding yelp api 
+Status: Yelp acount, and yelp api key check...
+Developers: Jesper
+Time Estimation: 6 Hours
+Time Spent: 1 Hours
+~~~~
+
+
+~~~~
+Feature Name: Faster Loading of Map
+Description: faster map loading... faster updating
+Requires:Less calls to Database, no holding for async calls inside pin creation 
+Status: finished..for now
+Developers: Jesper
+Time Estimation: 6 Hours
+Time Spent: 4 Hours
+~~~~
+
+~~~~
+Feature Name: Remove Map Geolocation reliance 
+Description: Enable the map to work regardless of geolocaion is allowed or not
+Requires: Swapping around code scoping, adding checks and defaults, tracing current incorrect pathing 
+Status: finished
+Developers: Jesper
+Time Estimation: 2 Hours
+Time Spent: 1.5 Hours
+~~~~
+
+~~~~
+Feature Name: Remove Map Geolocation reliance 
+Description: Enable the map to work regardless of geolocaion is allowed or not
+Requires: Swapping around code scoping, adding checks and defaults, tracing current incorrect pathing 
+Status: finished
+Developers: Jesper
+Time Estimation: 2 Hours
+Time Spent: 1.5 Hours
+~~~~
+
+~~~~
+Feature Name: Map zoom limit
+Description:  limits zoom
+Requires: 
+Status: finished
+Developers: Jesper
+Time Estimation: 0.1 Hours
+Time Spent: 0.1 Hours
+~~~~
+
+
 #### Milestone 3 - Live Beta ####
 ~~~~
 Feature Name: UI Overhaul 
