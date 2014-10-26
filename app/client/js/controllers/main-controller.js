@@ -5,6 +5,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
+		var minZoomLevel = 13; // as far back as they can go
 		var mapOptions = {
 			zoom: 14
 		}
@@ -12,49 +13,53 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
-
+			$scope.lastPosition = new google.maps.LatLng(-33.8665433, 151.1956316);   // This is the default position if Geolocation is enabled it is overwritten to the users location 
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
 				    $scope.map.setCenter(pos);
-					$scope.lastPosition = $scope.map.getCenter();
-
-				    var request = {
-						location: pos,
-						rankby : google.maps.places.RankBy.DISTANCE,
-						radius: 3000,
-						types: ['restaurant','cafe', 'bar', 'food']
-					};
-					
-				    $scope.infowindow = new google.maps.InfoWindow();
-				    var service = new google.maps.places.PlacesService($scope.map);
-				    service.radarSearch(request, callback);
-					
-					// refreshes the map with new food places when the map is moved a certain amount
-				    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-
-				    	if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
-
-							$scope.lastPosition = $scope.map.getCenter();
-							request.location=$scope.map.getCenter();
-							service.radarSearch(request, fastCallback); 
-							//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
-						}
-
-				    });
-
-					initializeSearchBar();
 				
 				}, function() {
+				console.log("not enabled");
 					handleNoGeolocation(true);
 				});
 			} else {
-				handleNoGeolocation(true);
+				handleNoGeolocation(false); // not compatable with browswer I think
 			}
+				
+			//IF geolocation was succesfull then map center will not be undefined, but if its not then we know they dont have geolocation enabled and mustthen keep the default location
+			if( typeof $scope.map.getCenter() != 'undefined'){
+				$scope.lastPosition = $scope.map.getCenter();
+			}
+		
+			//Form request for location search
+			var request = {
+				location: $scope.lastPosition,
+				rankby : google.maps.places.RankBy.DISTANCE,
+				radius: 3000,
+				types: ['restaurant','cafe', 'bar', 'food']
+			};
+				
+			$scope.infowindow = new google.maps.InfoWindow();
+			var service = new google.maps.places.PlacesService($scope.map);
+			service.radarSearch(request, callback);
+			
+			// refreshes the map with new food places when the map is moved a certain amount
+			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
+				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
+					$scope.lastPosition = $scope.map.getCenter();
+					request.location=$scope.map.getCenter();
+					service.radarSearch(request, fastCallback); 
+					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
+				}
+			});
+		
 			initializeSearchBar();
 		}
 
+		
+		
+		
 		// initializes and adds the search bar on the map
 		initializeSearchBar = function() {
 			var markers = [];
@@ -112,6 +117,14 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 		    	var bounds = $scope.map.getBounds();
 		    	searchBox.setBounds(bounds);
+			});
+			
+			
+		   // Limit the zoom level
+			google.maps.event.addListener($scope.map, 'zoom_changed', function() {
+				if ($scope.map.getZoom() < minZoomLevel){
+					$scope.map.setZoom(minZoomLevel);
+				}
 			});
 		}
 
@@ -421,6 +434,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		// In the event that the browser cannot or user chooses not to support geolocation, this is how that's handled
 		function handleNoGeolocation(errorFlag) {
+		
 			if (errorFlag) {
 				var content = 'Error: The Geolocation service failed.';
 			} else {
