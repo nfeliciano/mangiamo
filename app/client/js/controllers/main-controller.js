@@ -7,20 +7,21 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.dataBase = [];
 		var minZoomLevel = 13; // as far back as they can go
 		var mapOptions = {
-			zoom: 14
+			zoom: 13
 		}
 
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
-			$scope.lastPosition = new google.maps.LatLng(-33.8665433, 151.1956316);   // This is the default position if Geolocation is enabled it is overwritten to the users location 
+			$scope.lastPosition = new google.maps.LatLng(48.4449579, -123.33535710000001);   // This is the default position if Geolocation is enabled it is overwritten to the users location 
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					console.log(pos);
 				    $scope.map.setCenter(pos);
 				
 				}, function() {
-				console.log("not enabled");
+				
 					handleNoGeolocation(true);
 				});
 			} else {
@@ -49,6 +50,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
 					$scope.lastPosition = $scope.map.getCenter();
 					request.location=$scope.map.getCenter();
+					console.log(request.location);
 					service.radarSearch(request, fastCallback); 
 					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
 				}
@@ -443,7 +445,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 			var options = {
 				map: $scope.map,
-				position: new google.maps.LatLng(-33.8665433, 151.1956316),   // This is the position it goes to if the user failed to give permision or, it failed for some other reason
+				position: new google.maps.LatLng(48.4449579, -123.33535710000001),   // This is the position it goes to if the user failed to give permision or, it failed for some other reason
 				content: content
 			};
 			
