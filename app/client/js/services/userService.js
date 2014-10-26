@@ -6,7 +6,6 @@
 app.factory('userService', ['$http', function($http, $resource) {
 	var user = '/api/users';
 	var userBuddies = '/api/users/buddies';
-	var confirmBuddies = '/api/users/buddies/confirm';
 	var deleteBuddies = '/api/users/buddies/delete';
 
 	var userService = {};
@@ -94,6 +93,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 		return $http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key);
 	};
 
+	// Confirms a meal buddy that has a pending request to the user.
 	userService.confirmMealBuddy = function(buddyKey) {
 		$http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
 			//check array results to see if meal buddies contains the buddy key with a '?'
@@ -121,6 +121,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 		})
 	};
 
+	// Deletes or rejects a meal buddy. Up to client, if you're rejecting a request, pass in 'true' to reject.
 	userService.deleteMealBuddy = function(buddyKey, reject) {
 		//reject or delete
 		$http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {

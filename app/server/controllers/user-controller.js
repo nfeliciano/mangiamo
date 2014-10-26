@@ -25,6 +25,7 @@ module.exports.create = function (req,res) {
 	});
 }
 
+// Returns an array of meal buddies. Empty array if no meal buddies.
 module.exports.getMealBuddies = function (req,res) {
 	if (req.query.key != null) {
 		User.find({ key:req.query.key}, function(err, results) {
@@ -38,6 +39,7 @@ module.exports.getMealBuddies = function (req,res) {
 	}
 }
 
+// Adds a new meal buddy to the meal buddies array. Or accepts a pending request.
 module.exports.addNewBuddy = function (req,res) {
 	var query = { key: req.body.userKey };
 	var update = { mealBuddies: { "key" : req.body.buddyKey } };
@@ -47,15 +49,7 @@ module.exports.addNewBuddy = function (req,res) {
 	});
 }
 
-module.exports.confirmBuddy = function (req,res) {
-	var query = { key: req.body.userKey };
-	var update = { mealBuddies: { "key" : req.body.buddyKey } };
-
-	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
-		res.json(results);
-	});
-}
-
+// Deletes a meal buddy or rejects a pending request.
 module.exports.deleteBuddy = function (req,res) {
 	var query = { key: req.body.userKey };
 	var update = { mealBuddies: { "key" : req.body.buddyKey } };

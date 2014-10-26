@@ -43,7 +43,6 @@ app.post('/api/users', userController.create);
 app.get('/api/users/buddies', userController.getMealBuddies);
 app.put('/api/users/buddies', userController.addNewBuddy);
 app.put('/api/users/buddies/delete', userController.deleteBuddy);
-app.put('/api/users/buddies/confirm', userController.confirmBuddy);
 
 app.listen(3000, function() {
 	console.log('I\'m listening');
