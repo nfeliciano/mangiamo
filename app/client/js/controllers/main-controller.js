@@ -296,7 +296,7 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 	mealService.getPeopleFromMeal($scope.placeInfo.place_id).success(function(data) {
 		for (var i = 0; i < data.length; i++) {
 			var user = data[i];
-			userService.getUserWithID(user.id).success(function(data) {
+			userService.getUserWithID(user.key).success(function(data) {
 				$scope.users.push(data[0]);
 			});
 		}
@@ -304,34 +304,34 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 	
 	// Handles when the 'Join!' or 'Create a Meal' button has been clicked. Should maybe be separate methods later.
 	$scope.join = function() {
-		if (sessionStorage.userID == null) {
+		if (sessionStorage.key == null) {
 			return; 
 		}
 		if ($scope.hasMeal == 'Joined!') {
 			return;
 		}
-		var userID = sessionStorage.userID.replace(/['"]+/g, '');
+		var key = angular.fromJson(localStorage.user).key;
 		if (marker.hasMeal) {
-			mealService.addUserToMeal($scope.placeInfo.place_id, userID).success(function(data) {
+			mealService.addUserToMeal($scope.placeInfo.place_id, key).success(function(data) {
 				marker.labelContent = marker.labelContent+1; 
 				marker.label.setContent();
 				$scope.hasMeal = 'Joined!';
 
-				userService.getUserWithID(userID).success(function(data) {
+				userService.getUserWithID(key).success(function(data) {
 					$scope.users.push(data[0]);
 				});
 			})
 		}
 		else {
 			mealService.addNewMeal($scope.placeInfo.place_id, 0, new Date(), [], true).success(function(data) {
-				mealService.addUserToMeal($scope.placeInfo.place_id, userID).success(function(data) {
+				mealService.addUserToMeal($scope.placeInfo.place_id, key).success(function(data) {
 					marker.setIcon('../../img/restaurant.png');
 					marker.hasMeal = true; 
 					marker.labelContent = 1; 
 					marker.label.setContent();
 					$scope.hasMeal = 'Joined!';	
 
-					userService.getUserWithID(userID).success(function(data) {
+					userService.getUserWithID(key).success(function(data) {
 						$scope.users.push(data[0]);
 					});
 				})

@@ -2,10 +2,11 @@ var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
 	name: String,
+	key: { type: "string", unique: true },
 	birthDate: Date,
 	description: String,
 	profession: String,
-	mealBuddies: Array
+	mealBuddies: [{ key: String }]
 });
 
 //Model is named 'User'
