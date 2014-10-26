@@ -4,6 +4,7 @@ var User = require('../models/user');
 module.exports.create = function (req,res) {
 	var user = new User({
 		name: req.body.name,
+		key: req.body.key,
 		birthDate: req.body.birthDate,
 		description: req.body.description,
 		profession: req.body.profession,
@@ -12,17 +13,56 @@ module.exports.create = function (req,res) {
 	
 	user.save(function (err, result) {
 		if (!err) {
-			return res.json(result);
-		} else {
-			return console.log(err);
+			res.json(result);
+		} else
+		{
+			res.format({ 
+				text:function() {
+					res.send('error');
+				}
+			});
 		}
+	});
+}
+
+// Returns an array of meal buddies. Empty array if no meal buddies.
+module.exports.getMealBuddies = function (req,res) {
+	if (req.query.key != null) {
+		User.find({ key:req.query.key}, function(err, results) {
+			if (results.length == 0) {
+				res.json(results);
+			}
+			else {
+				res.json(results[0].mealBuddies);
+			}
+		});
+	}
+}
+
+// Adds a new meal buddy to the meal buddies array. Or accepts a pending request.
+module.exports.addNewBuddy = function (req,res) {
+	var query = { key: req.body.userKey };
+	var update = { mealBuddies: { "key" : req.body.buddyKey } };
+
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
+		res.json(results);
+	});
+}
+
+// Deletes a meal buddy or rejects a pending request.
+module.exports.deleteBuddy = function (req,res) {
+	var query = { key: req.body.userKey };
+	var update = { mealBuddies: { "key" : req.body.buddyKey } };
+
+	User.findOneAndUpdate(query, { $pull : update }, function(err, results) {
+		res.json(results);
 	});
 }
 
 // Returns an array of users. Either all users, or users with a specific userID.
 module.exports.list = function (req,res) {
-	if(req.query._id != null){
-		User.find({_id:req.query._id}, function (err, results) {
+	if(req.query.key != null){
+		User.find({key:req.query.key}, function (err, results) {
 			res.json(results);
 		});
 	}
