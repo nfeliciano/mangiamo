@@ -194,31 +194,31 @@ Time Spent: 14 Hours
 
 #### Milestone 2 - Release Candidate ####
 ~~~~
+Feature Name: AWS
+Description: Get the app deployed onto AWS
+Requires: AWS account, lots of tutorials
+Developers: Kevin, Noel
+Status: Done for the Proof of Concept
+Time Estimation: 8
+Time Spent: 4
+~~~~
+~~~~
 Feature Name: Facebook Authentication 
 Description: Be able to sign-in using Facebook API 
 Requires: Interaction with Facebook API, back-end logic for storing when user logs in through Facebook? 
-Developers: Kevin
+Developers: Kevin, Noel
 Status: Buttons have been added and connected to FB API, just need to link to DB.
 Time Estimation: 8 Hours
-Time Spent: 5.5 Hours
-~~~~
-~~~~
-Feature Name: Yelp! 
-Description: Be able to see Yelp reviews on the front end of restaurants 
-Requires: Interaction with Yelp API, display on the front end
-Developers:
-Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
+Time Spent: 6.5 Hours
 ~~~~
 ~~~~
 Feature Name: Meal Buddies 
 Description: Be able to add 'meal buddies', be able to import from Facebook and add buddies in-app 
 Requires: Backend work for relations 
-Developers:
-Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
+Developers: Lloyd, Kevin, Noel
+Status: Front end started
+Time Estimation: 40 Hours
+Time Spent: 11 Hours
 ~~~~
 ~~~~
 Feature Name: Buddies on Map 
@@ -229,21 +229,84 @@ Status: Not Started
 Time Estimation:
 Time Spent: 0 Hours
 ~~~~
+
+
 ~~~~
-Feature Name: Mobile 
-Description: Have it working on mobile 
-Requires: Either native development (objc and such) or PhoneGap or something similar
-Developers:
-Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
+Feature Name: Research other place frameworks
+Description: See if anything other than google maps can be use full
+Requires: Research
+Status: Non seem to offer anythign imediatly helpfull
+Developers: Jesper
+Time Estimation: 2 Hours
+Time Spent: 1 Hours
 ~~~~
+
+~~~~
+Feature Name: Yelp Research / setup
+Description: Get yelp api working
+Requires:Yelp account, Yelp api key, understanding yelp api 
+Status: Yelp acount, and yelp api key check...
+Developers: Jesper
+Time Estimation: 6 Hours
+Time Spent: 1 Hours
+~~~~
+
+
+~~~~
+Feature Name: Faster Loading of Map
+Description: faster map loading... faster updating
+Requires:Less calls to Database, no holding for async calls inside pin creation 
+Status: finished..for now
+Developers: Jesper
+Time Estimation: 6 Hours
+Time Spent: 4 Hours
+~~~~
+
+~~~~
+Feature Name: Remove Map Geolocation reliance 
+Description: Enable the map to work regardless of geolocaion is allowed or not
+Requires: Swapping around code scoping, adding checks and defaults, tracing current incorrect pathing 
+Status: finished
+Developers: Jesper
+Time Estimation: 2 Hours
+Time Spent: 1.5 Hours
+~~~~
+
+~~~~
+Feature Name: Remove Map Geolocation reliance 
+Description: Enable the map to work regardless of geolocaion is allowed or not
+Requires: Swapping around code scoping, adding checks and defaults, tracing current incorrect pathing 
+Status: finished
+Developers: Jesper
+Time Estimation: 2 Hours
+Time Spent: 1.5 Hours
+~~~~
+
+~~~~
+Feature Name: Map zoom limit
+Description:  limits zoom
+Requires: 
+Status: finished
+Developers: Jesper
+Time Estimation: 0.1 Hours
+Time Spent: 0.1 Hours
+~~~~
+
 
 #### Milestone 3 - Live Beta ####
 ~~~~
 Feature Name: UI Overhaul 
 Description: Fine tune the UI to make it as usable and easy to use as possible 
 Requires: Front end work 
+Developers:
+Status: Not Started 
+Time Estimation:
+Time Spent: 0 Hours
+~~~~
+~~~~
+Feature Name: Mobile 
+Description: Have it working on mobile 
+Requires: Either native development (objc and such) or PhoneGap or something similar
 Developers:
 Status: Not Started 
 Time Estimation:
@@ -265,7 +328,16 @@ Requires: Figure out logic for how to tie it in with regular auth and Facebook a
 Developers: Kevin
 Status: Google button added and connected to Google+ API, just need to connect with our backend
 Time Estimation: 6
-Time Spent: 6 Hours
+Time Spent: 6.5 Hours
+~~~~
+~~~~
+Feature Name: Yelp! 
+Description: Be able to see Yelp reviews on the front end of restaurants 
+Requires: Interaction with Yelp API, display on the front end
+Developers:
+Status: Not Started 
+Time Estimation:
+Time Spent: 0 Hours
 ~~~~
 
 ##### New Feature Template #####
