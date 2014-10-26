@@ -7,8 +7,14 @@
 /* MEAL BUDDIES */
 #mealBuddiesContainer
 {
+	transition:all linear 0.5s;
 	height: 80vh;
 	padding: 0px;
+	opacity: 1;
+}
+#mealBuddiesContainer.ng-hide
+{
+	opacity: 0;
 }
 
 #mealBuddiesContainer > div
@@ -90,7 +96,6 @@
 .labels 
 {
 	color: white;
-	//background-color: red;
 	font-family: "Lucida Grande", "Arial", sans-serif;
 	font-size: 11px;
 	text-align: center;

@@ -9,9 +9,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		
 		<!-- AngularJS -->
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-resource.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-animate.js"></script>
+		<script type="text/javascript" src="https://code.angularjs.org/1.2.16/angular.js"></script>
+		<script type="text/javascript" src="https://code.angularjs.org/1.2.16/angular-resource.js"></script>
+		<script type="text/javascript" src="https://code.angularjs.org/1.2.16/angular-animate.js"></script>
 		<script type="text/javascript" src="js/angular-ui-router.min.js"></script>
 		<script type="text/javascript" src="js/ui-bootstrap-tpls-0.11.2.js"></script>
 
@@ -65,8 +65,8 @@
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="collapse navbar-collapse" id="myNavbar">
 				      <ul class="nav navbar-nav navbar-right">
-				        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Friends</a></li>
-				        <li><a href="#"><span class="glyphicon glyphicon-log-in" ng-click="logout()"></span> Log Out</a></li>
+				        <li><a href="#" ng-click="toggleMealBuddies()"><span class="glyphicon glyphicon-user"></span> Friends</a></li>
+				        <li><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
 				      </ul>
 				    </div>
 

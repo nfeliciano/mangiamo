@@ -1,6 +1,5 @@
 <div ng-controller="mainController" ng-init="initialize()">
-	<!-- Map -->
-	<div id="mealBuddiesContainer" class="col-sm-3">
+	<div id="mealBuddiesContainer" class="col-sm-3" ng-hide="hideMealBuddies">
 		<div>
 			<button ng-click="addFriend()"> Click to add a Friend! </button>
 			<div class="mealBuddy" ng-repeat="mealBuddy in mealBuddies">
@@ -10,7 +9,9 @@
 			</div>
 		</div>
 	</div>
-	<div id="mapContainer" class="col-sm-9">
+
+	<!-- Map -->
+	<div id="mapContainer" ng-class="mapClass">
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="mapCanvas"></div>
 	</div>
