@@ -28,7 +28,10 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 		$scope.submitUserData = function() {
 			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
-			userService.addNewUser(null, bdate, description, $scope.occupation);
+			userService.addNewUser(null, bdate, description, $scope.occupation).success(function(data) {
+				// Grab the users unique ID
+				// Add code here
+			});
 			$location.path('main').replace();
 		}
 
@@ -52,8 +55,8 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 		/* Facebook Integration Stuff */
 		// This is called with the results from from FB.getLoginStatus().
 		statusChangeCallback = function(response) {
-			console.log('statusChangeCallback');
-			console.log(response);
+			//console.log('statusChangeCallback');
+			//console.log(response);
 			// The response object is returned with a status field that lets the
 			// app know the current login status of the person.
 			// Full docs on the response object can be found in the documentation

@@ -5,11 +5,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
-		// $scope.mealBuddies = [{name: 'Lloyd', age: '22'},
-		// 					  {name: 'Chris', age: '26'},
-		// 					  {name: 'Kevin', age: '22'},
-		// 					  {name: 'Noel',  age: '24'},
-		// 					  {name: 'Jesper',age: '22'}];
 
 		$scope.UID = '';
 
@@ -32,10 +27,9 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		// Populate MealBuddies, and MealBuddyRequests to be displayed in the Meal Buddies SideBar
 		$scope.populateMealBuddies = function() {
+			$scope.UID = angular.fromJson(localStorage.user).key;
 			$scope.mealBuddyRequests = [];
 			$scope.mealBuddies = [];
-			// Grab the users unique ID
-			$scope.UID = angular.fromJson(localStorage.user).key;
 			// Grab the users MealBuddies from the database
 			userService.getMealBuddies().success( function(data1) {
 				// Sort through MealBuddies: requests vs actual Meal Buddies
