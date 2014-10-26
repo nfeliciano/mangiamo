@@ -47,6 +47,24 @@ module.exports.addNewBuddy = function (req,res) {
 	});
 }
 
+module.exports.confirmBuddy = function (req,res) {
+	var query = { key: req.body.userKey };
+	var update = { mealBuddies: { "key" : req.body.buddyKey } };
+
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
+		res.json(results);
+	});
+}
+
+module.exports.deleteBuddy = function (req,res) {
+	var query = { key: req.body.userKey };
+	var update = { mealBuddies: { "key" : req.body.buddyKey } };
+
+	User.findOneAndUpdate(query, { $pull : update }, function(err, results) {
+		res.json(results);
+	});
+}
+
 // Returns an array of users. Either all users, or users with a specific userID.
 module.exports.list = function (req,res) {
 	if(req.query.key != null){

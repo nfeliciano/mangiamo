@@ -7,6 +7,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 	var user = '/api/users';
 	var userBuddies = '/api/users/buddies';
 	var confirmBuddies = '/api/users/buddies/confirm';
+	var deleteBuddies = '/api/users/buddies/delete';
 
 	var userService = {};
 
@@ -23,7 +24,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
 	userService.addNewUser = function(name, birthDate, description, profession) {
 		var userKey = generateUniqueKey();
-		var request = { "name":name, "key":userKey, "birthDate":birthDate, "description":description, "profession":profession, "mealBuddies":[] };
+		var request = { 'name':name, 'key':userKey, 'birthDate':birthDate, 'description':description, 'profession':profession, 'mealBuddies':[] };
 		var res =  $http.post(user, request);
 		res.success(function(result) {
 			if (result != 'error') {
@@ -48,24 +49,24 @@ app.factory('userService', ['$http', function($http, $resource) {
 
 	//Adds new meal buddy for a user. Three states:
 	//- If it's just a 5 letter string, they are confirmed meal buddies
-	//- If it's a 5 letter string preceded by a '!', that means someone else is waiting for this user's confirmation
-	//- If it's a 5 letter string preceded by a '?', that means this user is waiting for someone else to confirm
+	//- If it's a 5 letter string preceded by a '?', that means someone else is waiting for this user's confirmation
+	//- If it's a 5 letter string preceded by a '!', that means this user is waiting for someone else to confirm
 	userService.addMealBuddy = function(buddyKey) {
-		userService.getUserWithID(buddyKey).success(function(results) {
-			if (results.length > 0) {
+		userService.getUserWithID(buddyKey).success(function(res) {
+			if (res.length > 0) {
 				$http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
 					//check array results to see if meal buddies contains the buddy key
 					var alreadyAdded = false;
 					for (buddy of results) {
-						var keyString = buddy.key.replace(/!?/g,"");
+						var keyString = buddy.key.replace(/[!]|[?]/g,'');
 						if (keyString == buddyKey) {
 							alreadyAdded = true;
 						}
 					}
 					if (!alreadyAdded) {
-						var request = { "userKey": angular.fromJson(localStorage.user).key, "buddyKey": "!"+buddyKey };
+						var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': '!'+buddyKey };
 						$http.put(userBuddies, request);
-						var buddyRequest = { "userKey": buddyKey, "buddyKey": "?"+angular.fromJson(localStorage.user).key };
+						var buddyRequest = { 'userKey': buddyKey, 'buddyKey': '?'+angular.fromJson(localStorage.user).key };
 						$http.put(userBuddies, buddyRequest);
 					}
 					else {
@@ -77,6 +78,38 @@ app.factory('userService', ['$http', function($http, $resource) {
 				console.log('no such user for this buddy');
 			}
 		});
+	};
+
+	// Returns an array of meal buddies. Empty array if no meal buddies exist.
+	userService.getMealBuddies = function() {
+		return $http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key);
+	};
+
+	userService.confirmMealBuddy = function(buddyKey, confirm) {
+		$http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
+			//check array results to see if meal buddies contains the buddy key with a '?'
+			var requestPending = false;
+			for (buddy of results) {
+				var keyString = '?'+ buddyKey;
+				if (keyString == buddy.key) {
+					requestPending = true;
+				}
+			}
+			if (requestPending) {
+				var deleteRequest = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': '?'+buddyKey };
+				$http.put(deleteBuddies, deleteRequest);
+				var buddyDeleteRequest = { 'userKey': buddyKey, 'buddyKey': '!'+angular.fromJson(localStorage.user).key };
+				$http.put(deleteBuddies, buddyDeleteRequest);
+
+				var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
+				$http.put(userBuddies, request);
+				var buddyRequest = { 'userKey': buddyKey, 'buddyKey': angular.fromJson(localStorage.user).key };
+				$http.put(userBuddies, buddyRequest);
+			}
+			else {
+				console.log('user does not have a pending request');
+			}
+		})
 	};
 
 	userService.deleteMealBuddy = function(buddyKey) {
