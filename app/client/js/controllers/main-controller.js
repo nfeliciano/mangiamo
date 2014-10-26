@@ -4,12 +4,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 
-		$scope.mealBuddies = [{name: 'Lloyd', age: '22'},
-							  {name: 'Chris', age: '26'},
-							  {name: 'Kevin', age: '22'},
-							  {name: 'Noel',  age: '24'},
-							  {name: 'Jesper',age: '22'}];
-
 		var mapOptions = {
 			zoom: 14
 		}
@@ -18,8 +12,19 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			userService.addMealBuddy(newMealBuddy);
 		}
 
-		$scope.removeMealBuddy = function(name) {
-			alert('You have removed: ' + name);
+		/* removeMealBuddy(mealBuddy, rejecting)
+		 * mealBuddy: object containing user data
+		 * rejecting: bool - True:  User is rejecting a request
+		 *					 False: User is deleting an existing friend
+		 */
+		$scope.removeMealBuddy = function(mealBuddy, rejecting) {
+			userService.deleteMealBuddy(mealBuddy[0].key, rejecting);
+			$scope.populateMealBuddies();
+		}
+
+		$scope.confirmMealBuddy = function(mealBuddyRequest) {
+			userService.confirmMealBuddy(mealBuddyRequest[0].key);
+			$scope.populateMealBuddies();
 		}
 
 		// initializes the google map and populates it with food places

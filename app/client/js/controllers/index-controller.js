@@ -4,6 +4,12 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		$scope.hideMealBuddies = true;
 
 		$scope.mealBuddyRequests = [];
+		$scope.mealBuddies = [];
+		// $scope.mealBuddies = [{name: 'Lloyd', age: '22'},
+		// 					  {name: 'Chris', age: '26'},
+		// 					  {name: 'Kevin', age: '22'},
+		// 					  {name: 'Noel',  age: '24'},
+		// 					  {name: 'Jesper',age: '22'}];
 
 		$scope.UID = '';
 
@@ -24,18 +30,28 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			$location.path('login').replace();
 		}
 
+		// Populate MealBuddies, and MealBuddyRequests to be displayed in the Meal Buddies SideBar
 		$scope.populateMealBuddies = function() {
+			$scope.mealBuddyRequests = [];
+			$scope.mealBuddies = [];
+			// Grab the users unique ID
 			$scope.UID = angular.fromJson(localStorage.user).key;
+			// Grab the users MealBuddies from the database
 			userService.getMealBuddies().success( function(data1) {
+				// Sort through MealBuddies: requests vs actual Meal Buddies
 				for (mealBuddy of data1) {
-					if (mealBuddy.key.substring(0, 1) == '!') {
+					if (mealBuddy.key.substring(0, 1) == '!') {  // User has sent request to someone else
 						// Pending Request, do nothing
 					}
-					else if (mealBuddy.key.substring(0, 1) == '?') {
-						userService.getUserWithID(mealBuddy.key.substring(1, 5)).success( function(data2) {
-							console.log(data2);
+					else if (mealBuddy.key.substring(0, 1) == '?') {  // User has a request from someone else
+						userService.getUserWithID(mealBuddy.key.substring(1, 6)).success(function(data2) {
+							$scope.mealBuddyRequests.push(data2);
 						});
-						
+					}
+					else {  // Current Meal Buddies
+						userService.getUserWithID(mealBuddy.key).success(function(data2) {
+							$scope.mealBuddies.push(data2);
+						});
 					}
 
 				}
