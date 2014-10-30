@@ -21,9 +21,9 @@ app.factory('userService', ['$http', function($http, $resource) {
 	};
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
-	userService.addNewUser = function(name, birthDate, description, profession) {
+	userService.addNewUser = function(name, facebookID, googleID, birthDate, description, profession) {
 		var userKey = generateUniqueKey();
-		var request = { 'name':name, 'key':userKey, 'birthDate':birthDate, 'description':description, 'profession':profession, 'mealBuddies':[] };
+		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'birthDate':birthDate, 'description':description, 'profession':profession, 'mealBuddies':[] };
 		var res =  $http.post(user, request);
 		res.success(function(result) {
 			if (result != 'error') {

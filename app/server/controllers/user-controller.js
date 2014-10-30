@@ -3,8 +3,10 @@ var User = require('../models/user');
 // Creates a new user and adds it to the database
 module.exports.create = function (req,res) {
 	var user = new User({
-		name: req.body.name,
 		key: req.body.key,
+		facebookID: req.body.facebookID,
+		googleID: req.body.googleID,
+		name: req.body.name,
 		birthDate: req.body.birthDate,
 		description: req.body.description,
 		profession: req.body.profession,
