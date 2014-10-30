@@ -40,6 +40,7 @@ app.post('/api/meals', mealsController.create);
 //Users
 app.get('/api/users', userController.list);
 app.post('/api/users', userController.create);
+app.put('/api/users', userController.update);
 app.get('/api/users/buddies', userController.getMealBuddies);
 app.put('/api/users/buddies', userController.addNewBuddy);
 app.put('/api/users/buddies/delete', userController.deleteBuddy);

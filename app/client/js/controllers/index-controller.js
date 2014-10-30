@@ -36,13 +36,20 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					$scope.authenticated = true;
 
 					userService.findByFacebook(response.id).success(function(data) {
+
 						if (data.length > 0) {
-							console.log(data[0]);
+							var user = data[0];
+							localStorage.user = angular.toJson(user);
 							$location.path('main').replace();
 						} else {
-							$scope.$broadcast('showUserInfo', null);
-							if (!$scope.$$phase) {
-								$scope.$apply();
+							if ($location.path() == '/login') {
+								$scope.$broadcast('showUserInfo', null);
+								if (!$scope.$$phase) {
+									$scope.$apply();
+								}
+							}
+							else {
+								userService.addIDToUser('fb', sessionStorage.facebookID, sessionStorage.name);
 							}
 						}
 					});
@@ -64,7 +71,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		// This function is called when someone finishes with the Login
 		// Button.  See the onlogin handler attached to it in the code below.
 		checkLoginState = function() {
-			console.log('CHECKING');
 			FB.getLoginStatus(function(response) {
 			statusChangeCallback(response);
 			});
@@ -138,11 +144,18 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 					userService.findByGoogle(resp.result.id).success(function(data) {
 						if (data.length) {
+							var user = data[0];
+							localStorage.user = angular.toJson(user);
 							$location.path('main').replace();
 						} else {
-							$scope.$broadcast('showUserInfo', null);
-							if (!$scope.$$phase) {
-								$scope.$apply();
+							if ($location.path() == '/login') {
+								$scope.$broadcast('showUserInfo', null);
+								if (!$scope.$$phase) {
+									$scope.$apply();
+								}
+							}
+							else {
+								userService.addIDToUser('gg', sessionStorage.googleID, sessionStorage.name);
 							}
 						}
 					});

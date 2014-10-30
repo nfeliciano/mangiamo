@@ -29,7 +29,6 @@ app.factory('userService', ['$http', function($http, $resource) {
 		var res =  $http.post(user, request);
 		res.success(function(result) {
 			if (result != 'error') {
-				sessionStorage.userID = angular.toJson(result.key);
 				localStorage.user = angular.toJson(result);
 			} else {
 				userService.addNewUser(name, birthDate, description, profession);
@@ -38,9 +37,20 @@ app.factory('userService', ['$http', function($http, $resource) {
 		return res;
 	};
 
+	userService.addIDToUser = function(service, id, name) {
+		var user = angular.fromJson(localStorage.user);
+		if (service == 'fb') {
+			userService.updateUser(user.key, name, id, null, user.birthDate, user.description, user.profession, user.mealBuddies);
+		}
+		else if (service == 'gg') {
+			userService.updateUser(user.key, name, null, id, user.birthDate, user.description, user.profession, user.mealBuddies);
+		}
+	};
+
 	// Empty method. Will be used for updating a user's information.
-	userService.updateUser = function(user, name, birthDate, description, profession) {
-			
+	userService.updateUser = function(userKey, name, facebookID, googleID, birthDate, description, profession, mealBuddies) {
+		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'birthDate':birthDate, 'description':description, 'profession':profession, 'mealBuddies':mealBuddies };
+		return $http.put(user, request);
 	};
 
 	// Empty method. Will be used to delete a user from the database. Not sure if this is needed.
@@ -162,6 +172,9 @@ app.factory('userService', ['$http', function($http, $resource) {
 	// Removes the user from localStorage
 	userService.logoutUser = function() {
 		localStorage.user = 'loggedout';
+		sessionStorage.name = null;
+		sessionStorage.facebookID = null;
+		sessionStorage.googleID = null;
 	}
 
 	generateUniqueKey = function() {

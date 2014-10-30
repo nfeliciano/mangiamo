@@ -27,9 +27,24 @@ module.exports.create = function (req,res) {
 	});
 }
 
+module.exports.update = function(req,res) {
+	var query = { key: req.body.key };
+	var update = { 	name: req.body.name,
+					facebookID: req.body.facebookID, 
+					googleID: req.body.googleID,
+					birthDate: req.body.birthDate,
+					description: req.body.description,
+					profession: req.body.profession,
+					mealBuddies: req.body.mealBuddies,
+				};
+	User.findOneAndUpdate(query, { $set : update }, function(err, results) {
+		res.json(results);
+		console.log(results);
+	});
+}
+
 module.exports.findByFacebook = function (req,res) {
 	User.find({facebookID:req.query.facebookID}, function (err, results) {
-		console.log(results);
 		res.json(results);
 	});
 }
