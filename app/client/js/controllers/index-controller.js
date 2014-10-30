@@ -25,21 +25,27 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		/* Facebook Integration Stuff */
 		// This is called with the results from from FB.getLoginStatus().
 		statusChangeCallback = function(response) {
-			console.log('statusChangeCallback');
-			console.log(response);
 			// The response object is returned with a status field that lets the
 			// app know the current login status of the person.
 			// Full docs on the response object can be found in the documentation
 			// for FB.getLoginStatus().
 			if (response.status === 'connected') {
 				FB.api('/me', {fields: 'name'}, function(response) {
-					console.log(response.id);
-					console.log(response.name);
 					sessionStorage.facebookID = response.id;
 					sessionStorage.name  =response.name;
 					$scope.authenticated = true;
-					$scope.$broadcast('showUserInfo', null);
-					$scope.$apply();
+
+					userService.findByFacebook(response.id).success(function(data) {
+						if (data.length > 0) {
+							console.log(data[0]);
+							$location.path('main').replace();
+						} else {
+							$scope.$broadcast('showUserInfo', null);
+							if (!$scope.$$phase) {
+								$scope.$apply();
+							}
+						}
+					});
 				});
 
 				// Logged into your app and Facebook.
@@ -127,10 +133,19 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 				});
 				// Step 6: Execute the API request
 				request.then(function(resp) {
-					console.log(resp.result.id);
-					console.log(resp.result.displayName);
 					sessionStorage.googleID = resp.result.id;
 					sessionStorage.name = resp.result.displayName;
+
+					userService.findByGoogle(resp.result.id).success(function(data) {
+						if (data.length) {
+							$location.path('main').replace();
+						} else {
+							$scope.$broadcast('showUserInfo', null);
+							if (!$scope.$$phase) {
+								$scope.$apply();
+							}
+						}
+					});
 				},
 				function(reason) {
 					console.log('Error: ' + reason.result.error.message);
@@ -145,8 +160,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 				if(authResult['status']['method'] == 'PROMPT'){
 					getUserInfo();
 					$scope.authenticated = true;
-					$scope.$broadcast('showUserInfo', null);
-					$scope.$apply();
 				}
 		    } 
 		    else {
@@ -155,7 +168,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		    	//   "user_signed_out" - User is signed-out
 		    	//   "access_denied" - User denied access to your app
 		    	//   "immediate_failed" - Could not automatically log in the user
-		    	console.log('Sign-in state: ' + authResult['error']);
+		    	// console.log('Sign-in state: ' + authResult['error']);
 		    }
 		}
 

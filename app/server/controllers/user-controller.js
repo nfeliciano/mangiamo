@@ -27,6 +27,19 @@ module.exports.create = function (req,res) {
 	});
 }
 
+module.exports.findByFacebook = function (req,res) {
+	User.find({facebookID:req.query.facebookID}, function (err, results) {
+		console.log(results);
+		res.json(results);
+	});
+}
+
+module.exports.findByGoogle = function (req,res) {
+	User.find({googleID:req.query.googleID}, function (err, results) {
+		res.json(results);
+	});
+}
+
 // Returns an array of meal buddies. Empty array if no meal buddies.
 module.exports.getMealBuddies = function (req,res) {
 	if (req.query.key != null) {

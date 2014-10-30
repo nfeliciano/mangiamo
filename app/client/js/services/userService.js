@@ -7,6 +7,8 @@ app.factory('userService', ['$http', function($http, $resource) {
 	var user = '/api/users';
 	var userBuddies = '/api/users/buddies';
 	var deleteBuddies = '/api/users/buddies/delete';
+	var facebookLogin = '/api/users/facebook';
+	var googleLogin = '/api/users/google';
 
 	var userService = {};
 
@@ -44,6 +46,14 @@ app.factory('userService', ['$http', function($http, $resource) {
 	// Empty method. Will be used to delete a user from the database. Not sure if this is needed.
 	userService.deleteUser = function(userID) {
 
+	};
+
+	userService.findByFacebook = function(facebookID){
+		return $http.get(facebookLogin + '?facebookID=' + facebookID);
+	};
+
+	userService.findByGoogle = function(googleID){
+		return $http.get(googleLogin + '?googleID=' + googleID);
 	};
 
 	//Adds new meal buddy for a user. Three states:
