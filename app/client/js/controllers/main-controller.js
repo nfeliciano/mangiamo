@@ -288,6 +288,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// Returns ALL the place details and information 
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
+							console.log(place);
 							$scope.openModal('lg',place, marker);
 						}
 					}
@@ -390,6 +391,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// Returns ALL the place details and information 
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
+							console.log(place);
 							$scope.openModal('lg',place, marker);
 						}
 					}
@@ -399,6 +401,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		// Opens a modal when a map pin is clicked.
 		$scope.openModal = function (size, placeInfo, marker) {
+			
 			var modalInstance = $modal.open({
 				templateUrl: 'modalContent.html',
 				controller: 'ModalInstanceCtrl',
@@ -467,7 +470,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService, userService, placeInfo, marker) {
 	$scope.placeInfo = placeInfo;
 	$scope.placeName = placeInfo.name;
-	yelpRequest(placeInfo.name); 
+	yelpRequest(placeInfo); 
 	
 	if (marker.hasMeal) {
 		$scope.hasMeal = "Join!";
@@ -531,9 +534,9 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 	//   YELP  ATTEMPT   //
 	//
 		//Yelp authorization, request, and return 
-		function yelpRequest(name){
+		function yelpRequest(placeInfo){
 			
-			console.log("begin yelp Request");
+			console.log(placeInfo);
 		
 			var auth = {
 					//
@@ -550,24 +553,43 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 					}
 				};
 
-				console.log("Auth created");
-				var terms = name;
-				var near = 'Victoria';
-
+			
+				// Try to get almost EVERY variable from the google data, to be as super specific as possible
+			
+				var name = placeInfo.name;
+				var city = "Victoria"; 
+				//var streetAddress = placeInfo.adr_address; //placeInfo.street_address;
+				/*var postalCode = placeInfo.postal_code;
+				var city = placeInfo.locality;
+				var region = placeInfo.region;
+				var country = placeInfo.country_name;*/
+				
+				
+				console.log(name);
+			
+				/*console.log(streetAddress);
+				console.log(postalCode);
+				console.log(city);
+				console.log(region);
+				console.log(country);*/
+			
 				var accessor = {
 					consumerSecret : auth.consumerSecret,
 					tokenSecret : auth.accessTokenSecret
 				};
 				parameters = [];
-				parameters.push(['term', terms]);
-				parameters.push(['location', near]);
+				parameters.push(['name', name]);
+				parameters.push(['location', city]);
+				//parameters.push(['location.address', streetAddress]);
+				/*parameters.push(['location.postal_code', postalCode]);
+				parameters.push(['location.state_code', region]);
+				parameters.push(['location.country_code', country]);*/
 				parameters.push(['callback', 'cb']);
 				parameters.push(['oauth_consumer_key', auth.consumerKey]);
 				parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
 				parameters.push(['oauth_token', auth.accessToken]);
 				parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
 
-				console.log("Parameters set");
 				var message = {
 					'action' : 'http://api.yelp.com/v2/search',
 					'method' : 'GET',
@@ -578,7 +600,7 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 				OAuth.SignatureMethod.sign(message, accessor);
 
 				var parameterMap = OAuth.getParameterMap(message.parameters);
-				console.log(parameterMap);
+				//console.log(parameterMap);
 
 				$.ajax({
 					'url' : message.action,
@@ -586,7 +608,7 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 					'dataType' : 'jsonp',
 					'jsonpCallback' : 'cb',
 					'success' : function(data, textStats, XMLHttpRequest) {
-						console.log(data);
+						//console.log(data);
 						//$("body").append(output);
 					}
 				});
