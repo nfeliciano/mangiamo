@@ -39,7 +39,6 @@ module.exports.update = function(req,res) {
 				};
 	User.findOneAndUpdate(query, { $set : update }, function(err, results) {
 		res.json(results);
-		console.log(results);
 	});
 }
 
