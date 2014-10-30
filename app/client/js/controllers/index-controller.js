@@ -17,6 +17,9 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		$scope.logout = function() {
 			userService.logoutUser();
 			$location.path('login').replace();
+			FB.api('/me/permissions', 'delete', function(response) {});
+			gapi.auth.signOut();
+			$scope.authenticated = false;
 		}
 
 		/* Facebook Integration Stuff */
@@ -35,6 +38,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					sessionStorage.facebookID = response.id;
 					sessionStorage.name  =response.name;
 					$scope.authenticated = true;
+					$scope.$broadcast('showUserInfo', null);
 					$scope.$apply();
 				});
 
@@ -141,6 +145,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 				if(authResult['status']['method'] == 'PROMPT'){
 					getUserInfo();
 					$scope.authenticated = true;
+					$scope.$broadcast('showUserInfo', null);
 					$scope.$apply();
 				}
 		    } 

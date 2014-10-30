@@ -39,6 +39,11 @@ app.controller('loginController', ['$scope', '$location', 'userService',
 			$scope.hideUserInfo = !$scope.hideUserInfo
 		}
 
+		$scope.$on('showUserInfo', function(event, args) {
+			$scope.hideStartEating = !$scope.hideStartEating
+			$scope.hideUserInfo = !$scope.hideUserInfo
+		});
+
 		// This redirects back to main if the user tries to navigate here and they are already logged in
 		$scope.init = function() {
 			if (userService.isUserLoggedIn()) {
