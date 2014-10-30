@@ -5,6 +5,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
+		
+		$scope.yelpParamaters; //== this will contain all the yelp parameters required for authorising yelp requests
+		
+		
 		var minZoomLevel = 13; // as far back as they can go
 		var mapOptions = {
 			zoom: 13
@@ -450,6 +454,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			var infowindow = new google.maps.InfoWindow(options);
 			$scope.map.setCenter(options.position);
 		}
+		
+		
+		
+		
+		
+		
 }]);
 
 // This is an instance of the modal controller, which pops up when a marker is clicked on the map
@@ -457,6 +467,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService, userService, placeInfo, marker) {
 	$scope.placeInfo = placeInfo;
 	$scope.placeName = placeInfo.name;
+	//yelpRequest(placeInfo.name); 
+	
 	if (marker.hasMeal) {
 		$scope.hasMeal = "Join!";
 	}
@@ -515,4 +527,70 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 	$scope.ok = function () {
 		$modalInstance.close();
 	};
+	
+	//   YELP  ATTEMPT   //
+	//
+		//Yelp authorization, request, and return 
+		function yelpRequest(name){
+			
+			console.log("begin yelp Request");
+		
+			var auth = {
+					//
+					// Update with your auth tokens.
+					//
+					consumerKey : "FN1EWExdCvwBWG2NWwOlVQ",
+					consumerSecret : "1fcELmSK2dRC3DZlrjZbOxbauaE",
+					accessToken : "Qfs7FWBpXPii8ie5pChe2V-BbCECj5bh",
+					// This example is a proof of concept, for how to use the Yelp v2 API with javascript.
+					// You wouldn't actually want to expose your access token secret like this in a real application.
+					accessTokenSecret : "AZBkEksDmIWBt2rXTw5JrPJ3jjc",
+					serviceProvider : {
+						signatureMethod : "HMAC-SHA1"
+					}
+				};
+
+				console.log("Auth created");
+				var terms = name;
+				var near = 'Victoria';
+
+				var accessor = {
+					consumerSecret : auth.consumerSecret,
+					tokenSecret : auth.accessTokenSecret
+				};
+				parameters = [];
+				parameters.push(['term', terms]);
+				parameters.push(['location', near]);
+				parameters.push(['callback', 'cb']);
+				parameters.push(['oauth_consumer_key', auth.consumerKey]);
+				parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
+				parameters.push(['oauth_token', auth.accessToken]);
+				parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
+
+				console.log("Parameters set");
+				var message = {
+					'action' : 'http://api.yelp.com/v2/search',
+					'method' : 'GET',
+					'parameters' : parameters
+				};
+
+				OAuth.setTimestampAndNonce(message);
+				OAuth.SignatureMethod.sign(message, accessor);
+
+				var parameterMap = OAuth.getParameterMap(message.parameters);
+				console.log(parameterMap);
+
+				/*$.ajax({
+					'url' : message.action,
+					'data' : parameterMap,
+					'dataType' : 'jsonp',
+					'jsonpCallback' : 'cb',
+					'success' : function(data, textStats, XMLHttpRequest) {
+						console.log(data);
+						//$("body").append(output);
+					}
+				});
+		}
+		
+	
 });
