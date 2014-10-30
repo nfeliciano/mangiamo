@@ -467,7 +467,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService, userService, placeInfo, marker) {
 	$scope.placeInfo = placeInfo;
 	$scope.placeName = placeInfo.name;
-	//yelpRequest(placeInfo.name); 
+	yelpRequest(placeInfo.name); 
 	
 	if (marker.hasMeal) {
 		$scope.hasMeal = "Join!";
@@ -580,7 +580,7 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 				var parameterMap = OAuth.getParameterMap(message.parameters);
 				console.log(parameterMap);
 
-				/*$.ajax({
+				$.ajax({
 					'url' : message.action,
 					'data' : parameterMap,
 					'dataType' : 'jsonp',
