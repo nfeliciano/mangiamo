@@ -209,7 +209,7 @@ Requires: Interaction with API's, back-end logic for storing when user logs in t
 Developers: Kevin, Noel
 Status: Buttons have been added and connected to FB and G+ API, backend done. Need to find a place for buttons on front end
 Time Estimation: 8 Hours
-Time Spent: 17 Hours
+Time Spent: 21 Hours
 ~~~~
 ~~~~
 Feature Name: Meal Buddies 
@@ -218,7 +218,7 @@ Requires: Backend work for relations
 Developers: Lloyd, Kevin, Noel
 Status: Backed functionality complete, linked with front end, Need to do a UI overhaul
 Time Estimation: 40 Hours
-Time Spent: 19.5 Hours
+Time Spent: 22.5 Hours
 ~~~~
 ~~~~
 Feature Name: Buddies on Map 
