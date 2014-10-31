@@ -218,7 +218,7 @@ Requires: Backend work for relations
 Developers: Lloyd, Kevin, Noel
 Status: Backed functionality complete, linked with front end, Need to do a UI overhaul
 Time Estimation: 40 Hours
-Time Spent: 22.5 Hours
+Time Spent: 26.5 Hours
 ~~~~
 ~~~~
 Feature Name: Buddies on Map 
