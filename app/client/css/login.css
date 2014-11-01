@@ -1,18 +1,34 @@
 #inputContainer
 {
+	-webkit-transition:all linear 0.5s;
+	transition:all linear 2s;
 	position: relative;
-	/*height: 200px;*/
 	padding: 20px;
 	background-color: rgba(0,0,0,0.5);
 	width: 100%;
 	border-radius: 5px;
 	margin-top: 10%;
+	opacity: 1;
+}
+
+#inputContainer.ng-hide
+{
+	opacity: 0;
 }
 
 #startEating
 {
+	-webkit-transition:all linear 0.5s;
+	transition:all linear 2s;
 	text-align: center;
 	font-family: 'Kaushan Script', cursive;
+	opacity: 1;
+}
+
+/* Does not work yet...  ANIMATIONS!!! */
+#startEating.ng-hide
+{
+	opacity: 0;
 }
 
 #startEating > button
@@ -26,12 +42,6 @@
 	width: 100%;
 	padding: 2px;
 	margin: 0px 0px 5px 0px;
-	/*text-align: center;*/
-}
-
-#userInfo > form
-{
-	/*text-align: center;*/
 }
 
 #userInfo > form > span
@@ -39,18 +49,10 @@
 	color: white;
 	font-size: 1.2em;
 	padding-left: 5px;
-	/*width: 100%;*/
-	/*background-color: grey;*/
 }
 
-.startEating
+#submitButton
 {
 	margin-top: 15px;
 	float: none;
-}
-
-#dob
-{
-	/*background-color: grey;*/
-	/*border: 5px solid white;*/
 }

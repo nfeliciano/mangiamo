@@ -1,6 +1,5 @@
-
 app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 'mealService', 'userService',
-	function ($scope, $resource,$location,$modal,mealService,userService) {
+	function ($scope, $resource, $location, $modal, mealService, userService) {
 		$scope.placedMarkers = [];
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
@@ -8,6 +7,25 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		var minZoomLevel = 13; // as far back as they can go
 		var mapOptions = {
 			zoom: 13
+		}
+
+		$scope.addFriend = function(newMealBuddy) {
+			userService.addMealBuddy(newMealBuddy);
+		}
+
+		/* removeMealBuddy(mealBuddy, rejecting)
+		 * mealBuddy: object containing user data
+		 * rejecting: bool - True:  User is rejecting a request
+		 *					 False: User is deleting an existing friend
+		 */
+		$scope.removeMealBuddy = function(mealBuddy, rejecting) {
+			userService.deleteMealBuddy(mealBuddy[0].key, rejecting);
+			$scope.populateMealBuddies();
+		}
+
+		$scope.confirmMealBuddy = function(mealBuddyRequest) {
+			userService.confirmMealBuddy(mealBuddyRequest[0].key);
+			$scope.populateMealBuddies();
 		}
 
 		// initializes the google map and populates it with food places
@@ -251,7 +269,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				});
 			}
 		}
-
 		
 		checkDataBase = function(placeId){
 			
@@ -338,7 +355,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		createMarker = function(place) {
 
 			var meal = mealService.getMealsAtPlaceID( place.place_id).success(function(data){
-			
 				if( data.length >0){
 					
 					// This is the Mangiamo Meal marker, ie there is a meal here
@@ -414,8 +430,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		randomIntFromInterval = function(min,max) {
 		    return Math.floor(Math.random()*(max-min+1)+min);
 		}
-
-	
 	
 		// Removes the markers from the map,
 		function clearMarkers(){

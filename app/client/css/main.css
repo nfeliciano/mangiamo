@@ -1,13 +1,50 @@
+.text
+{
+	color: white;
+}
+
 #mapCanvas
 {
-	height: 550px;
-	min-width: 100%;
+	height: 100%;
 }
+
+
+/* MEAL BUDDIES */
+#mealBuddiesContainer
+{
+	transition:all linear 0.5s;
+	height: 80vh;
+	padding: 0px;
+	opacity: 1;
+}
+#mealBuddiesContainer.ng-hide
+{
+	opacity: 0;
+}
+
+#mealBuddiesContainer > div
+{
+	height: 100%;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.mealBuddyButton
+{
+	float: right;
+}
+
+.mealBuddy
+{
+	background-color: #eaeaea;
+	margin: 20px;
+	border-radius: 5px;
+	padding: 5px;
+}
+/* END MEAL BUDDIES */
 
 #mapContainer
 {
-	height: 100%;
-	margin: 20px;
+	height: 80vh;
 	position: relative;
 }
 
