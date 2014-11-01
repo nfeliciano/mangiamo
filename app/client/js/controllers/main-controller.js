@@ -476,7 +476,7 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 	
 	// Handles when the 'Join!' or 'Create a Meal' button has been clicked. Should maybe be separate methods later.
 	$scope.join = function() {
-		if (sessionStorage.key == null) {
+		if (angular.fromJson(localStorage.user).key == null) {
 			return; 
 		}
 		if ($scope.hasMeal == 'Joined!') {

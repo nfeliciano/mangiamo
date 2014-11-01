@@ -3,8 +3,10 @@ var User = require('../models/user');
 // Creates a new user and adds it to the database
 module.exports.create = function (req,res) {
 	var user = new User({
-		name: req.body.name,
 		key: req.body.key,
+		facebookID: req.body.facebookID,
+		googleID: req.body.googleID,
+		name: req.body.name,
 		birthDate: req.body.birthDate,
 		description: req.body.description,
 		profession: req.body.profession,
@@ -22,6 +24,33 @@ module.exports.create = function (req,res) {
 				}
 			});
 		}
+	});
+}
+
+module.exports.update = function(req,res) {
+	var query = { key: req.body.key };
+	var update = { 	name: req.body.name,
+					facebookID: req.body.facebookID, 
+					googleID: req.body.googleID,
+					birthDate: req.body.birthDate,
+					description: req.body.description,
+					profession: req.body.profession,
+					mealBuddies: req.body.mealBuddies,
+				};
+	User.findOneAndUpdate(query, { $set : update }, function(err, results) {
+		res.json(results);
+	});
+}
+
+module.exports.findByFacebook = function (req,res) {
+	User.find({facebookID:req.query.facebookID}, function (err, results) {
+		res.json(results);
+	});
+}
+
+module.exports.findByGoogle = function (req,res) {
+	User.find({googleID:req.query.googleID}, function (err, results) {
+		res.json(results);
 	});
 }
 
