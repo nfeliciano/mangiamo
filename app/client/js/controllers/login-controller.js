@@ -46,6 +46,7 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 			userService.addNewUser(name, facebookKey, googleKey, bdate, description, $scope.occupation);
 
 			$location.path('main').replace();
+			$scope.switchSuppBuddiesButton()
 		}
 
 		getDescriptionFromStrings = function(stringOne, stringTwo, stringThree) {

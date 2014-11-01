@@ -2,6 +2,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
 		$scope.mapClass = 'col-sm-12';
 		$scope.hideMealBuddies = true;
+		$scope.showMealBuddiesButton = false;
 
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
@@ -9,6 +10,12 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		$scope.UID = '';
 
 		$scope.authenticated = false;
+
+		// Call this to show or hide the supp buddies button
+		$scope.switchSuppBuddiesButton = function() {
+			$scope.showMealBuddiesButton = !$scope.showMealBuddiesButton;
+		}
+
 		// This allows the initial redirect when they come to the 
 		// page based on whether or not they are logged in
 		$scope.init = function() {

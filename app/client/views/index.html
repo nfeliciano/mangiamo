@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="mangiamo">
 	<head>
-		<title>Mangiamo</title>
+		<title>linksupp</title>
 
 		<!-- Standard Meta Information -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -60,12 +60,12 @@
 				        <span class="icon-bar"></span>
 				        <span class="icon-bar"></span> 
 			      	</button>
-			      <a class="navbar-brand" href="">Mangiamo</a>
+			      <a class="navbar-brand" href="">linksupp</a>
 			    </div>
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="collapse navbar-collapse" id="myNavbar">
 				      <ul class="nav navbar-nav navbar-right">
-				        <li><a href="" ng-click="toggleMealBuddies()"><span class="glyphicon glyphicon-user"></span> Friends</a></li>
+				        <li><a href="" ng-show="showMealBuddiesButton" ng-click="toggleMealBuddies()"><span class="glyphicon glyphicon-user"></span> Supp Buddies </a></li>
 				        <li><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
 				      </ul>
 				    </div>
@@ -82,8 +82,10 @@
 			</div><!-- /.container-fluid -->
 		</nav>
 
+		<input type="checkbox" ng-model="showMealBuddiesButton">
+
 		<div ui-view=""></div>
-		<div ng-hide="authenticated" id="authentication">
+<!-- 		<div ng-hide="authenticated" id="authentication">
 			<div id="googleLogin">
 				<img src="../img/sign_in_with_google.png" onmouseover="" style="cursor: pointer;"></img>
 			</div>
@@ -92,6 +94,6 @@
 					Login with Facebook
 				</fb:login-button>
 			</div>
-		</div>
+		</div> -->
 	</body>
 </html>
