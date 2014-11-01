@@ -101,6 +101,16 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					});
 				});
 
+				FB.api(
+					"/me/friends",
+					function (response) {
+						if (response && !response.error) {
+							console.log(response);
+							/* handle the result */
+      					}
+    				}
+				);
+
 				// Logged into your app and Facebook.
 				// This is where the code goes on successfull login,
 				// ie. change the page to the map.
