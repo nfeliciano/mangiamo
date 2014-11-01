@@ -531,12 +531,41 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 		$modalInstance.close();
 	};
 	
+	
+	$scope.removeStreetStuff = function(streetName){
+		
+		var re = /street/gi;
+		streetName = streetName.replace(re, "");
+		re = /Street/gi;
+		streetName = streetName.replace(re, "");
+		re = /Ave/gi;
+		streetName = streetName.replace(re, "");
+		re = /Avenue/gi;
+		streetName = streetName.replace(re, "");
+		re = /avenue/gi;
+		streetName = streetName.replace(re, "");
+		re = /ave/gi;
+		streetName = streetName.replace(re, "");
+		
+		
+		re = /road/gi;
+		streetName = streetName.replace(re, "");
+		re = /Road/gi;
+		streetName = streetName.replace(re, "");
+		re = /rd/gi;
+		streetName = streetName.replace(re, "");
+		re = /Rd/gi;
+		streetName = streetName.replace(re, "");
+		
+		return streetName;
+	}
+	
 	//   YELP  ATTEMPT   //
 	//
 		//Yelp authorization, request, and return 
 		function yelpRequest(placeInfo){
 			
-			console.log(placeInfo);
+		console.log(placeInfo);
 		
 			var auth = {
 					//
@@ -555,35 +584,51 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 
 			
 				// Try to get almost EVERY variable from the google data, to be as super specific as possible
-			
+				
 				var name = placeInfo.name;
-				var city = "Victoria"; 
-				//var streetAddress = placeInfo.adr_address; //placeInfo.street_address;
-				/*var postalCode = placeInfo.postal_code;
-				var city = placeInfo.locality;
-				var region = placeInfo.region;
-				var country = placeInfo.country_name;*/
+				
+				var formattedAddress = placeInfo.formatted_address;
+				var arrayAddresses = formattedAddress.split(",");
+				
+				console.log(arrayAddresses); 
+				var city =arrayAddresses[1];
+				
+				var streetAddress = arrayAddresses[0]
+				var city =arrayAddresses[1];
+				//var postalCode = placeInfo.postal_code;
+				//var region =  placeInfo.address_components[5].long_name;
+				var country =  arrayAddresses[3];
 				
 				
 				console.log(name);
 			
-				/*console.log(streetAddress);
-				console.log(postalCode);
+				console.log(streetAddress);
+			//	console.log(postalCode);
 				console.log(city);
-				console.log(region);
-				console.log(country);*/
+				//console.log(region);
+				console.log(country);
+			
+				console.log(placeInfo.geometry);
 			
 				var accessor = {
 					consumerSecret : auth.consumerSecret,
 					tokenSecret : auth.accessTokenSecret
 				};
+				var cll = [];
+				cll.push(parseFloat(placeInfo.geometry.location.B));
+				cll.push(parseFloat(placeInfo.geometry.location.k));
+				
+				console.log( cll);
+				
 				parameters = [];
+				parameters.push(['limit', "20"]);
+				//parameters.push(['term', "food"]);
+				parameters.push(['term', name]);
+				
+				//parameters.push(['cll', cll]);
 				parameters.push(['name', name]);
 				parameters.push(['location', city]);
-				//parameters.push(['location.address', streetAddress]);
-				/*parameters.push(['location.postal_code', postalCode]);
-				parameters.push(['location.state_code', region]);
-				parameters.push(['location.country_code', country]);*/
+				parameters.push(['address', streetAddress]);
 				parameters.push(['callback', 'cb']);
 				parameters.push(['oauth_consumer_key', auth.consumerKey]);
 				parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
@@ -608,8 +653,29 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 					'dataType' : 'jsonp',
 					'jsonpCallback' : 'cb',
 					'success' : function(data, textStats, XMLHttpRequest) {
-						//console.log(data);
-						//$("body").append(output);
+					
+						//IF data has an array of businesses
+						if( data.businesses.length > 0){
+						//ATTEMPT to find from the results the restaurant we want
+							console.log(data);
+							
+							for(var i =0; i <= data.businesses.length -1; i++){
+					
+								//console.log(data);
+								//console.log(data.businesses[i].location.address);
+								if( data.businesses[i].location.address == streetAddress){
+									console.log( "ITS A MATCH MOTHERFUCKER"); 
+									break;
+								}else{ 
+									console.log( "NOT A MATCH with ", data.businesses[i].location.address  ); 
+								}
+								
+									
+						
+							}
+						}else{
+							console.log( "NO RESULTS"); 
+						}
 					}
 				});
 		}
