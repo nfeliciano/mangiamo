@@ -24,7 +24,7 @@ module.exports.create = function (req,res) {
 // Adds a user to a meal (when the user commits) and increments numPeople
 module.exports.update = function (req,res) {
 	var query = { placeID: req.body.placeID };
-	var update = { people: { "id" : req.body.ID } };
+	var update = { people: { "key" : req.body.ID } };
 	var increment = { numPeople : 1 };
 
 	Meal.findOneAndUpdate(query, { $push : update, $inc: increment }, function(err, results) {
