@@ -1,5 +1,5 @@
 app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 'mealService', 'userService',
-	function ($scope, $resource,$location,$modal,mealService,userService) {
+	function ($scope, $resource, $location, $modal, mealService, userService) {
 		$scope.placedMarkers = [];
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
