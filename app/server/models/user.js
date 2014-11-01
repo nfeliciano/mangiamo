@@ -5,7 +5,7 @@ var UserSchema = new Schema({
 	key: { type: "string", unique: true },
 	facebookID: String,
 	googleID: String,
-	birthDate: Date,
+	ageRange: String,
 	description: String,
 	profession: String,
 	mealBuddies: [{ key: String }]

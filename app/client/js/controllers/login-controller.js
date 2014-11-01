@@ -40,10 +40,10 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 				}
 
 			}
-			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
+			
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
 
-			userService.addNewUser(name, facebookKey, googleKey, bdate, description, $scope.occupation);
+			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation);
 
 			$location.path('main').replace();
 		}

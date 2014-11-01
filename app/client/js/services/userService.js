@@ -23,15 +23,15 @@ app.factory('userService', ['$http', function($http, $resource) {
 	};
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
-	userService.addNewUser = function(name, facebookID, googleID, birthDate, description, profession) {
+	userService.addNewUser = function(name, facebookID, googleID, ageRange, description, profession) {
 		var userKey = generateUniqueKey();
-		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'birthDate':birthDate, 'description':description, 'profession':profession, 'mealBuddies':[] };
+		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':[] };
 		var res =  $http.post(user, request);
 		res.success(function(result) {
 			if (result != 'error') {
 				localStorage.user = angular.toJson(result);
 			} else {
-				userService.addNewUser(name, birthDate, description, profession);
+				userService.addNewUser(name, ageRange, description, profession);
 			}
 		});
 		return res;
@@ -40,16 +40,16 @@ app.factory('userService', ['$http', function($http, $resource) {
 	userService.addIDToUser = function(service, id, name) {
 		var user = angular.fromJson(localStorage.user);
 		if (service == 'fb') {
-			userService.updateUser(user.key, name, id, null, user.birthDate, user.description, user.profession, user.mealBuddies);
+			userService.updateUser(user.key, name, id, null, user.ageRange, user.description, user.profession, user.mealBuddies);
 		}
 		else if (service == 'gg') {
-			userService.updateUser(user.key, name, null, id, user.birthDate, user.description, user.profession, user.mealBuddies);
+			userService.updateUser(user.key, name, null, id, user.ageRange, user.description, user.profession, user.mealBuddies);
 		}
 	};
 
 	// Empty method. Will be used for updating a user's information.
-	userService.updateUser = function(userKey, name, facebookID, googleID, birthDate, description, profession, mealBuddies) {
-		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'birthDate':birthDate, 'description':description, 'profession':profession, 'mealBuddies':mealBuddies };
+	userService.updateUser = function(userKey, name, facebookID, googleID, ageRange, description, profession, mealBuddies) {
+		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':mealBuddies };
 		return $http.put(user, request);
 	};
 
