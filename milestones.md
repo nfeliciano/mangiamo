@@ -162,7 +162,7 @@ Requires: Being able to add meals to database (POST request), different view for
 Developers: Chris, Noel, Kevin
 Status: Created backend function for adding meals to the database
 Time Estimation: 8 Hours
-Time Spent: 1 Hours
+Time Spent: 2 Hours
 ~~~~
 ~~~~
 Feature Name: Attendance Confirmation
@@ -200,25 +200,25 @@ Requires: AWS account, lots of tutorials
 Developers: Kevin, Noel
 Status: Done for the Proof of Concept
 Time Estimation: 8
-Time Spent: 4
+Time Spent: 8
 ~~~~
 ~~~~
-Feature Name: Facebook Authentication 
-Description: Be able to sign-in using Facebook API 
-Requires: Interaction with Facebook API, back-end logic for storing when user logs in through Facebook? 
+Feature Name: Facebook and Google Authentication 
+Description: Be able to sign-in using Facebook and Google API 
+Requires: Interaction with API's, back-end logic for storing when user logs in through Facebook/Google
 Developers: Kevin, Noel
-Status: Buttons have been added and connected to FB API, just need to link to DB.
+Status: Buttons have been added and connected to FB and G+ API, backend done. Need to find a place for buttons on front end
 Time Estimation: 8 Hours
-Time Spent: 6.5 Hours
+Time Spent: 21 Hours
 ~~~~
 ~~~~
 Feature Name: Meal Buddies 
 Description: Be able to add 'meal buddies', be able to import from Facebook and add buddies in-app 
 Requires: Backend work for relations 
 Developers: Lloyd, Kevin, Noel
-Status: Front end started
+Status: Backed functionality complete, linked with front end, Need to do a UI overhaul
 Time Estimation: 40 Hours
-Time Spent: 11 Hours
+Time Spent: 26.5 Hours
 ~~~~
 ~~~~
 Feature Name: Buddies on Map 
@@ -322,13 +322,13 @@ Time Estimation:
 Time Spent: 0 Hours
 ~~~~
 ~~~~
-Feature Name: Google and LinkedIn Auth 
-Description: Include authentication using Google and LinkedIn 
+Feature Name: LinkedIn Auth 
+Description: Include authentication using LinkedIn 
 Requires: Figure out logic for how to tie it in with regular auth and Facebook auth
 Developers: Kevin
-Status: Google button added and connected to Google+ API, just need to connect with our backend
+Status: Not Started
 Time Estimation: 6
-Time Spent: 6.5 Hours
+Time Spent: 0
 ~~~~
 ~~~~
 Feature Name: Yelp! 

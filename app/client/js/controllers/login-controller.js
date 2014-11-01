@@ -26,12 +26,25 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 
 		// This function submits the user data to the database, and redirects the user
 		$scope.submitUserData = function() {
+			var name = null;
+			var facebookKey = null;
+			var googleKey = null;
+			if (sessionStorage.name) {
+				name = sessionStorage.name;
+				if (sessionStorage.facebookID) {
+					facebookKey = sessionStorage.facebookID;
+					googleKey = null;
+				}
+				if (sessionStorage.googleID) {
+					googleKey = sessionStorage.googleID;
+				}
+
+			}
 			var bdate = new Date(Number($scope.year), getMonthFromString($scope.month), Number($scope.day), 0, 0, 0, 0);
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
-			userService.addNewUser(null, bdate, description, $scope.occupation).success(function(data) {
-				// Grab the users unique ID
-				// Add code here
-			});
+
+			userService.addNewUser(name, facebookKey, googleKey, bdate, description, $scope.occupation);
+
 			$location.path('main').replace();
 		}
 
@@ -43,6 +56,17 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 			return new Date(Date.parse(month +" 1, 2012")).getMonth()
 		}
 
+		// Switches the divs in the login screen when the user has clicked 'start eating'
+		$scope.switchDivs = function() {
+			$scope.hideStartEating = !$scope.hideStartEating
+			$scope.hideUserInfo = !$scope.hideUserInfo
+		}
+
+		$scope.$on('showUserInfo', function(event, args) {
+			$scope.hideStartEating = !$scope.hideStartEating
+			$scope.hideUserInfo = !$scope.hideUserInfo
+		});
+
 		// This redirects back to main if the user tries to navigate here and they are already logged in
 		$scope.init = function() {
 			if (userService.isUserLoggedIn()) {
@@ -50,7 +74,6 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 			}
 		}
 		$scope.init();
-
 
 		/* Facebook Integration Stuff */
 		// This is called with the results from from FB.getLoginStatus().
