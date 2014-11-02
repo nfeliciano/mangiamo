@@ -1,5 +1,5 @@
 <div ng-controller="mainController" ng-init="initialize()">
-	<div id="mealBuddiesContainer" class="col-sm-3" ng-hide="hideMealBuddies">
+	<div id="mealBuddiesContainer" class="col-sm-2" ng-hide="hideMealBuddies">
 		<div>
 			<span class="text"> Your ID is: {{UID}} </span>
 			<form>
@@ -28,25 +28,9 @@
 		<div id="mapCanvas"></div>
 	</div>
 
-	<!-- The content for inside a modal when it pops up -->
-	<script type="text/ng-template" id="modalContent.html">
-		<div class="modal-header">
-			<h1>{{ placeName }}</h1>
-		</div>
-		<div class="modal-body">
-            <ul>
-                <li ng-repeat="user in users">
-                    Birth Year: {{ user.ageRange }} | Profession: {{user.profession }} | Me-Factor: {{ user.description }}
-                </li>
-            </ul>
-            
-            <div>
-            	<button class="btn btn-primary btn-large" ng-click="join()">{{hasMeal}}</button>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-        </div>
-	</script>
+	<!-- Meal Information -->
+<!-- 	<div>
+		<div id="mealInformation" class="col-sm-2">
+	</div> -->
 
 </div>

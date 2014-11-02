@@ -5,9 +5,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
 		var minZoomLevel = 13; // as far back as they can go
-		var mapOptions = {
-			zoom: 13
-		}
+		var mapOptions = { zoom: 13 }
+		$scope.showSuppBuddiesButton();
 
 		$scope.addFriend = function(newMealBuddy) {
 			userService.addMealBuddy(newMealBuddy);
@@ -74,8 +73,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 			initializeSearchBar();
 		}
-
-		
 		
 		
 		// initializes and adds the search bar on the map
@@ -274,7 +271,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 		}
 		
-		createDotMarker=function(place){
+		createDotMarker = function(place){
 			var marker =  new MarkerWithLabel({
 				icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0',  //Red dot
 				map: $scope.map,
@@ -307,7 +304,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			});
 		}
 		
-		createMealMarker= function(place){
+		createMealMarker = function(place){
 			
 			var numPeople = 0;
 			for( var i = 0; i < $scope.dataBase.length; i++){
@@ -406,23 +403,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 						}
 					}
 				});
-			});	
-		}
-		
-		// Opens a modal when a map pin is clicked.
-		$scope.openModal = function (size, placeInfo, marker) {
-			var modalInstance = $modal.open({
-				templateUrl: 'modalContent.html',
-				controller: 'ModalInstanceCtrl',
-				size: size,
-				resolve: {
-					placeInfo: function () {
-						return placeInfo;
-					},
-					marker: function() {
-						return marker;
-					}
-				}
 			});
 		}
 		
@@ -464,6 +444,33 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			var infowindow = new google.maps.InfoWindow(options);
 			$scope.map.setCenter(options.position);
 		}
+
+		// This redirects back to login if the user tries to navigate here and they are not logged in
+		$scope.initMain = function() {
+			console.log("In initMain");
+			if (!userService.isUserLoggedIn()) {
+				$location.path('login').replace();
+				console.log("In if Statement");
+			}
+		}
+		$scope.initMain();
+
+		// Opens a modal when a map pin is clicked.
+		$scope.openModal = function (size, placeInfo, marker) {
+			var modalInstance = $modal.open({
+				templateUrl: '/views/modalContent.html',
+				controller: 'ModalInstanceCtrl',
+				size: size,
+				resolve: {
+					placeInfo: function () {
+						return placeInfo;
+					},
+					marker: function() {
+						return marker;
+					}
+				}
+			});
+		}
 }]);
 
 // This is an instance of the modal controller, which pops up when a marker is clicked on the map
@@ -477,7 +484,7 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 	else {
 		$scope.hasMeal = "Create a Meal";
 	}
-	$scope.users = [];				// the list of users who have committed to this meal
+	$scope.users = [];// the list of users who have committed to this meal
 	
 	mealService.getPeopleFromMeal($scope.placeInfo.place_id).success(function(data) {
 		for (var i = 0; i < data.length; i++) {
@@ -490,6 +497,7 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 	
 	// Handles when the 'Join!' or 'Create a Meal' button has been clicked. Should maybe be separate methods later.
 	$scope.join = function() {
+		// NOT POSSIBLE ANYMORE
 		if (angular.fromJson(localStorage.user).key == null) {
 			return; 
 		}

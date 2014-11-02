@@ -1,7 +1,7 @@
 #inputContainer
 {
-	-webkit-transition:all linear 0.5s;
-	transition:all linear 2s;
+	-webkit-transition:all linear 0.2s;
+	transition: opacity linear 0.2s;
 	position: relative;
 	padding: 20px;
 	background-color: rgba(0,0,0,0.5);
@@ -18,17 +18,8 @@
 
 #startEating
 {
-	-webkit-transition:all linear 0.5s;
-	transition:all linear 2s;
 	text-align: center;
 	font-family: 'Kaushan Script', cursive;
-	opacity: 1;
-}
-
-/* Does not work yet...  ANIMATIONS!!! */
-#startEating.ng-hide
-{
-	opacity: 0;
 }
 
 #startEating > button

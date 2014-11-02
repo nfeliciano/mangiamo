@@ -12,8 +12,12 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		$scope.authenticated = false;
 
 		// Call this to show or hide the supp buddies button
-		$scope.switchSuppBuddiesButton = function() {
-			$scope.showMealBuddiesButton = !$scope.showMealBuddiesButton;
+		$scope.showSuppBuddiesButton = function() {
+			$scope.showMealBuddiesButton = true;
+		}
+
+		$scope.hideSuppBuddiesButton = function() {
+			$scope.showMealBuddiesButton = false;
 		}
 
 		// This allows the initial redirect when they come to the 
@@ -58,7 +62,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 							$scope.mealBuddies.push(data2);
 						});
 					}
-
 				}
 			});
 		}
@@ -67,13 +70,12 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			$scope.populateMealBuddies();
 			if ($scope.mapClass == 'col-sm-12') {
 				$scope.hideMealBuddies = false;
-				$scope.mapClass = 'col-sm-9';
+				$scope.mapClass = 'col-sm-10';
 			}
 			else {
 				$scope.hideMealBuddies = true;
 				$scope.mapClass = 'col-sm-12';
 			}
-
 		}
 		/* Facebook Integration Stuff */
 		// This is called with the results from from FB.getLoginStatus().

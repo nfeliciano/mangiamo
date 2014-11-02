@@ -8,18 +8,18 @@
 	height: 100%;
 }
 
-
 /* MEAL BUDDIES */
 #mealBuddiesContainer
 {
 	transition:all linear 0.5s;
-	height: 80vh;
-	padding: 0px;
+	height: 100vh;
+	padding: 50px 0px 0px 0px;
 	opacity: 1;
 }
 #mealBuddiesContainer.ng-hide
 {
 	opacity: 0;
+	width: 0px;
 }
 
 #mealBuddiesContainer > div
@@ -44,9 +44,26 @@
 
 #mapContainer
 {
-	height: 80vh;
+	transition:all linear 0.5s;
+	height: 100vh;
 	position: relative;
+	padding: 50px 0px 0px 0px;
 }
+
+#mealInformation
+{
+	transition:all linear 0.5s;
+	background-color: rgba(0,0,0,0.5);
+	height: 100vh;
+	padding-top: 50px 0px 0px 0px;
+	opacity: 1;
+}
+
+#mealInformation.ng-hide
+{
+	width: 0px;
+}
+
 
 .controls 
 {	
