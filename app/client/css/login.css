@@ -1,19 +1,24 @@
-#inputContainer
+#appDescription
 {
-	-webkit-transition:all linear 0.2s;
-	transition: opacity linear 0.2s;
-	position: relative;
-	padding: 20px;
-	background-color: rgba(0,0,0,0.5);
-	width: 100%;
-	border-radius: 5px;
-	margin-top: 10%;
-	opacity: 1;
+	text-align: center;
+	font-size: 1.4em;
+	padding: 30px;
+	margin-top: 100px;
+	color: white;
 }
 
-#inputContainer.ng-hide
+#authentication
 {
-	opacity: 0;
+	/*background-color: rgba(0,0,0,0.5);*/
+	border-radius: 5px;
+	/*height: 50px;*/
+	padding: 5px;
+	text-align: center;
+}
+
+#authentication > #fb-root
+{
+	text-align: center;
 }
 
 #startEating
@@ -29,11 +34,30 @@
 	border-color: #434470;
 }
 
-#userInfo > form > div > div > select
+#inputContainer
 {
+	-webkit-transition:all linear 0.2s;
+	transition: opacity linear 0.2s;
+	position: relative;
+	padding: 20px;
+	background-color: rgba(0,0,0,0.5);
 	width: 100%;
-	padding: 2px;
-	margin: 0px 0px 5px 0px;
+	border-radius: 5px;
+	opacity: 1;
+}
+
+#inputContainer.ng-hide
+{
+	opacity: 0;
+}
+
+#userInfoTitle
+{
+	text-align: center;
+	font-family: 'PT Sans', sans-serif;
+	color: white;
+	font-size: 1.4em;
+	margin-bottom: 10px;
 }
 
 #userInfo > form > span
@@ -43,8 +67,20 @@
 	padding-left: 5px;
 }
 
+#userInfo > form > div > div > select
+{
+	width: 100%;
+	padding: 2px;
+	margin: 0px 0px 5px 0px;
+}
+
 #submitButton
 {
-	margin-top: 15px;
+	margin-top: 40px;
 	float: none;
+}
+
+.underlined
+{
+	text-decoration: underline;
 }

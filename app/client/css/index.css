@@ -12,14 +12,6 @@ body
     background-repeat: no-repeat;
 }
 
-#appDescription
-{
-	text-align: center;
-	font-size: 1.4em;
-	padding: 30px;
-	color: white;
-}
-
 .navbar-brand 
 {
 	font-family: 'PT Sans', sans-serif;
