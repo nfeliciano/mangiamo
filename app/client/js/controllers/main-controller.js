@@ -584,7 +584,6 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 
 			
 				// Try to get almost EVERY variable from the google data, to be as super specific as possible
-				
 				var name = placeInfo.name;
 				
 				var formattedAddress = placeInfo.formatted_address;
@@ -596,7 +595,8 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 				var streetAddress = arrayAddresses[0]
 				var city =arrayAddresses[1];
 				//var postalCode = placeInfo.postal_code;
-				//var region =  placeInfo.address_components[5].long_name;
+				var streetNum =  placeInfo.address_components[0].long_name;
+				
 				var country =  arrayAddresses[3];
 				
 				
@@ -669,9 +669,6 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 								}else{ 
 									console.log( "NOT A MATCH with ", data.businesses[i].location.address  ); 
 								}
-								
-									
-						
 							}
 						}else{
 							console.log( "NO RESULTS"); 
