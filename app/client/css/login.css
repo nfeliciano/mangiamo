@@ -19,7 +19,8 @@
 #startEating
 {
 	text-align: center;
-	font-family: 'Kaushan Script', cursive;
+	font-family: 'PT Sans', sans-serif;
+	opacity: 1;
 }
 
 #startEating > button
