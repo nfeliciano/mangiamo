@@ -28,6 +28,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			$scope.populateMealBuddies();
 		}
 
+		$scope.getKeyFromFacebookID = function(facebookID){
+			userService.findByFacebook(facebookID).success(function(data) {
+				$scope.addFriend(data[0].key);
+			});
+		}
+
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);

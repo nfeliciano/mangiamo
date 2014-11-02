@@ -5,6 +5,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
+		$scope.mealBuddySuggestions = [];
 
 		$scope.UID = '';
 
@@ -34,6 +35,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			$scope.UID = angular.fromJson(localStorage.user).key;
 			$scope.mealBuddyRequests = [];
 			$scope.mealBuddies = [];
+			$scope.mealBuddySuggestions = angular.fromJson(sessionStorage.fbFriends);
 			// Grab the users MealBuddies from the database
 			userService.getMealBuddies().success( function(data1) {
 				// Sort through MealBuddies: requests vs actual Meal Buddies
@@ -49,10 +51,17 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					else {  // Current Meal Buddies
 						userService.getUserWithID(mealBuddy.key).success(function(data2) {
 							$scope.mealBuddies.push(data2);
+							for(var i = 0; i < $scope.mealBuddySuggestions.length; i++) {
+								if(data2[0].facebookID == $scope.mealBuddySuggestions[i].id) {
+									// Remove from mealBuddySuggestions
+									$scope.mealBuddySuggestions.splice(i, 1);
+								}
+							}
 						});
 					}
 
 				}
+
 			});
 		}
 
@@ -104,9 +113,10 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 				FB.api(
 					"/me/friends",
 					function (response) {
+						var fbFriendsArray = [];
 						if (response && !response.error) {
-							console.log(response);
 							/* handle the result */
+							sessionStorage.fbFriends = angular.toJson(response.data);
       					}
     				}
 				);

@@ -19,6 +19,13 @@
 				<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddyRequest, true)"> Decline </button>
 				<button class="mealBuddyButton" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
 			</div>
+
+			<p class="text"> SUGGESTED FRIENDS </p>
+			<div class="mealBuddy" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
+				{{mealBuddySuggestion.name}}
+				<button class="mealBuddyButton" ng-click="getKeyFromFacebookID(mealBuddySuggestion.id)"> Add </button>
+			</div>
+
 		</div>
 	</div>
 
