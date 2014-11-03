@@ -9,6 +9,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.showSuppBuddiesButton();
 
 		$scope.showMealInfo = false;  // ng-show variable
+		$scope.showJoinMealButton = false;
 		$scope.mealTimeHours = [];
 		$scope.mealTimeMinutes = [];
 		$scope.mealAttendees = [];// the list of users who have committed to this meal
@@ -26,15 +27,32 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			});
 		}
 
+		$scope.joinMeal = function() {
+			console.log("Test");
+		}
+
 		$scope.submitMealData = function() {
 			console.log($scope.mealTimeHour);
 			console.log($scope.mealTimeMinute);
+			console.log($scope.mealPlace.name);
 		}
-		$scope.updateMealInfo = function(place, marker) {
+
+		/* 
+		 * meal - boolean: true - user clicked on a meal marker
+		 *				   false - user clicked on a regular marker
+		 * 
+		 */
+		$scope.updateMealInfo = function(place, marker, meal) {
 			$scope.mealPlace = place;
 			$scope.mealMarker = marker;
 			$scope.initMeal();
 			$scope.showMealInfo = true;
+			if (meal == true) {
+				$scope.showJoinMealButton = true;
+			}
+			else {
+				$scope.showJoinMealButton = false;
+			}
 		}
 		
 
@@ -63,7 +81,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					});
 				}
 			})
-			console.log("Here");
 		}
 	
 		
@@ -336,21 +353,19 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// Returns ALL the place details and information 
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.updateMealInfo(place, marker);
+							$scope.updateMealInfo(place, marker, false);
 						}
 					}
 			});
 		}
 		
 		createMealMarker = function(place){
-			
 			var numPeople = 0;
 			for( var i = 0; i < $scope.dataBase.length; i++){
 				if($scope.dataBase[i].placeID == place.place_id){
 					numPeople += $scope.dataBase[i].numPeople;
 				}
 			}
-				
 					
 			// This is the Mangiamo Meal marker, ie there is a meal here
 			var marker =  new MarkerWithLabel({
@@ -380,7 +395,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				// Returns ALL the place details and information 
 				function getPlaceDetails(place, status) {
 					if (status == google.maps.places.PlacesServiceStatus.OK) {
-						$scope.updateMealInfo(place, marker);
+						$scope.updateMealInfo(place, marker, true);
 					}
 				}
 			});
@@ -388,7 +403,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		//Adds pin or dot to map
 		createMarker = function(place) {
-
 			var meal = mealService.getMealsAtPlaceID( place.place_id).success(function(data){
 				if( data.length >0){
 					
@@ -437,7 +451,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// Returns ALL the place details and information 
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.updateMealInfo(place, marker);
+							$scope.updateMealInfo(place, marker, false);
 						}
 					}
 				});

@@ -32,6 +32,7 @@
 				Me-Factor: {{mealAttendee.description}}
 			</div>
 		</div>
+		<button type="submit" id="joinMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="joinMeal()" ng-show="showJoinMealButton"> Join Meal </button>
 		<!-- New Meal -->
 		<div id="newMeal" ng-show="showMealInfo">
 			<form ng-init="initMealForm()" ng-submit="submitMealData()">
@@ -43,7 +44,7 @@
 					<option value="" disabled selected> Minute </option>
 					<option ng-repeat="mealTimeMinute in mealTimeMinutes"> {{mealTimeMinute.value}} </option>
 				</select>
-				<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Create Meal </button>
+				<button type="submit" id="createMealButton" class="btn btn-primary btn-block col-xs-6"> Create Meal </button>
 			</form>
 		</div>
 	</div>
