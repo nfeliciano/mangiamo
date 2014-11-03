@@ -6,7 +6,7 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 		// initForm populates local variables from local JSON files.  This speparates 
 		// a lot of data from html and Angular into appropriate JSON files.  The
 		// following "gets" allow angular to access these local JSON files
-		$scope.initForm = function() {
+		$scope.initLoginForm = function() {
 			$http.get('/json/occupations.json').success( function(data) {
 				$scope.occupations = data.occupations;
 			});

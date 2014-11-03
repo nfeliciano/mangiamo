@@ -26,6 +26,20 @@
 		<div>
 			
 		</div>
+		<!-- New Meal -->
+		<div id="newMeal" ng-show="newMeal">
+			<form ng-init="initMealForm()" ng-submit="submitMealData()">
+				<select ng-model="mealTimeHour">
+					<option value="" disabled selected> Hour </option>
+					<option ng-repeat="mealTimeHour in mealTimeHours"> {{mealTimeHour.twentyFour}} </option>
+				</select>
+				<select ng-model="mealTimeMinute">
+					<option value="" disabled selected> Minute </option>
+					<option ng-repeat="mealTimeMinute in mealTimeMinutes"> {{mealTimeMinute.value}} </option>
+				</select>
+				<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Create Meal </button>
+			</form>
+		</div>
 	</div>
 
 	<!-- Map -->
@@ -33,10 +47,4 @@
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="mapCanvas"></div>
 	</div>
-
-	<!-- Meal Information -->
-<!-- 	<div>
-		<div id="mealInformation" class="col-sm-2">
-	</div> -->
-
 </div>

@@ -1,0 +1,35 @@
+{
+	"mealTimeHours": [
+		{"twentyFour": "1", "twelve": "1 am"},
+		{"twentyFour": "2", "twelve": "2 am"},
+		{"twentyFour": "3", "twelve": "3 am"},
+		{"twentyFour": "4", "twelve": "4 am"},
+		{"twentyFour": "5", "twelve": "5 am"},
+		{"twentyFour": "6", "twelve": "6 am"},
+		{"twentyFour": "7", "twelve": "7 am"},
+		{"twentyFour": "8", "twelve": "8 am"},
+		{"twentyFour": "9", "twelve": "9 am"},
+		{"twentyFour": "10", "twelve": "10 am"},
+		{"twentyFour": "11", "twelve": "11 am"},
+		{"twentyFour": "12", "twelve": "Noon"},
+		{"twentyFour": "13", "twelve": "1 pm"},
+		{"twentyFour": "14", "twelve": "2 pm"},
+		{"twentyFour": "15", "twelve": "3 pm"},
+		{"twentyFour": "16", "twelve": "4 pm"},
+		{"twentyFour": "17", "twelve": "5 pm"},
+		{"twentyFour": "18", "twelve": "6 pm"},
+		{"twentyFour": "19", "twelve": "7 pm"},
+		{"twentyFour": "20", "twelve": "8 pm"},
+		{"twentyFour": "21", "twelve": "9 pm"},
+		{"twentyFour": "22", "twelve": "10 pm"},
+		{"twentyFour": "23", "twelve": "11 pm"},
+		{"twentyFour": "00", "twelve": "Midnight"}
+	],
+
+	"mealTimeMinutes": [
+		{"value": "00"},
+		{"value": "15"},
+		{"value": "30"},
+		{"value": "45"}
+	]
+}

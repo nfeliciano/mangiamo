@@ -1,5 +1,5 @@
-app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 'mealService', 'userService',
-	function ($scope, $resource, $location, $modal, mealService, userService) {
+app.controller('mainController', ['$scope', '$resource', '$location', '$modal', '$http', 'mealService', 'userService',
+	function ($scope, $resource, $location, $modal, $http, mealService, userService) {
 		$scope.placedMarkers = [];
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
@@ -8,8 +8,24 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		var mapOptions = { zoom: 13 }
 		$scope.showSuppBuddiesButton();
 
+		$scope.newMeal = true;  // ng-show variable
+		$scope.mealTimeHours = [];
+		$scope.mealTimeMinutes = [];
+
 		$scope.addFriend = function(newMealBuddy) {
 			userService.addMealBuddy(newMealBuddy);
+		}
+
+		$scope.initMealForm = function() {
+			$http.get('/json/mealTime.json').success( function(data) {
+				$scope.mealTimeHours = data.mealTimeHours;
+				$scope.mealTimeMinutes = data.mealTimeMinutes;
+			});
+		}
+
+		$scope.submitMealData = function() {
+			console.log($scope.mealTimeHour);
+			console.log($scope.mealTimeMinute);
 		}
 
 		/* removeMealBuddy(mealBuddy, rejecting)
@@ -73,7 +89,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 			initializeSearchBar();
 		}
-		
 		
 		// initializes and adds the search bar on the map
 		initializeSearchBar = function() {
@@ -202,8 +217,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				});
 			}
 		}
-		
-		
 		
 		smoothUpdateCallback= function(results, status, pagination) {
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
