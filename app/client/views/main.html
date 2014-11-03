@@ -23,11 +23,17 @@
 
 	<!-- Meal Information -->
 	<div id="mealInformationContainer" class="col-sm-2">
-		<div>
-			
+		<!-- Existing Meal -->
+		<div class="text">
+			{{mealPlace.name}}
+			<div ng-repeat="mealAttendee in mealAttendees">
+				Birth Year: {{mealAttendee.ageRange}}
+				Profession: {{mealAttendee.profession}}
+				Me-Factor: {{mealAttendee.description}}
+			</div>
 		</div>
 		<!-- New Meal -->
-		<div id="newMeal" ng-show="newMeal">
+		<div id="newMeal" ng-show="showMealInfo">
 			<form ng-init="initMealForm()" ng-submit="submitMealData()">
 				<select ng-model="mealTimeHour">
 					<option value="" disabled selected> Hour </option>

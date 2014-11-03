@@ -8,9 +8,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		var mapOptions = { zoom: 13 }
 		$scope.showSuppBuddiesButton();
 
-		$scope.newMeal = true;  // ng-show variable
+		$scope.showMealInfo = false;  // ng-show variable
 		$scope.mealTimeHours = [];
 		$scope.mealTimeMinutes = [];
+		$scope.mealAttendees = [];// the list of users who have committed to this meal
+		$scope.mealPlace = "";
+		$scope.mealMarker = "";
 
 		$scope.addFriend = function(newMealBuddy) {
 			userService.addMealBuddy(newMealBuddy);
@@ -27,6 +30,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			console.log($scope.mealTimeHour);
 			console.log($scope.mealTimeMinute);
 		}
+		$scope.updateMealInfo = function(place, marker) {
+			$scope.mealPlace = place;
+			$scope.mealMarker = marker;
+			$scope.initMeal();
+			$scope.showMealInfo = true;
+		}
+		
 
 		/* removeMealBuddy(mealBuddy, rejecting)
 		 * mealBuddy: object containing user data
@@ -42,6 +52,21 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			userService.confirmMealBuddy(mealBuddyRequest[0].key);
 			$scope.populateMealBuddies();
 		}
+
+		$scope.initMeal = function() {
+			$scope.mealAttendees = [];
+			mealService.getPeopleFromMeal($scope.mealPlace.place_id).success(function(data) {
+				for (var i = 0; i < data.length; i++) {
+					var user = data[i];
+					userService.getUserWithID(user.key).success(function(data) {
+						$scope.mealAttendees.push(data[0]);
+					});
+				}
+			})
+			console.log("Here");
+		}
+	
+		
 
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
@@ -311,7 +336,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// Returns ALL the place details and information 
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.openModal('lg',place, marker);
+							$scope.updateMealInfo(place, marker);
 						}
 					}
 			});
@@ -355,7 +380,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				// Returns ALL the place details and information 
 				function getPlaceDetails(place, status) {
 					if (status == google.maps.places.PlacesServiceStatus.OK) {
-						$scope.openModal('lg',place, marker);
+						$scope.updateMealInfo(place, marker);
 					}
 				}
 			});
@@ -412,7 +437,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// Returns ALL the place details and information 
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.openModal('lg',place, marker);
+							$scope.updateMealInfo(place, marker);
 						}
 					}
 				});
