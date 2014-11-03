@@ -34,13 +34,13 @@
 			{{mealPlace.name}}
 			<div ng-repeat="meal in meals">
 				People: {{meal.numPeople}}
-				Time: {{meal.time}}
+				<span ng-click="showAttendees(meal)">Time: {{meal.time}}</span>
 			</div>
-			<!-- <div ng-repeat="mealAttendee in mealAttendees">
+			<div ng-repeat="mealAttendee in mealAttendees">
 				Age Range: {{mealAttendee.ageRange}}
 				Profession: {{mealAttendee.profession}}
 				Me-Factor: {{mealAttendee.description}}
-			</div> -->
+			</div>
 		</div>
 		<button type="submit" id="joinMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="joinMeal()" ng-show="showJoinMealButton"> Join Meal </button>
 		<!-- New Meal -->

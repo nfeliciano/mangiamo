@@ -16,6 +16,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.mealPlace = "";
 		$scope.mealMarker = "";
 		$scope.meals = [];
+		$scope.currentMealKey = "";
 
 		$scope.addFriend = function(newMealBuddy) {
 			userService.addMealBuddy(newMealBuddy);
@@ -31,8 +32,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.joinMeal = function() {
 			if ($scope.mealMarker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
-				mealService.addUserToMeal($scope.mealPlace.place_id, key).success(function(data) {
-					$scope.mealMarker.labelContent = marker.labelContent+1; 
+				mealService.addUserToMeal($scope.currentMealKey, key).success(function(data) {
+					$scope.mealMarker.labelContent = $scope.mealMarker.labelContent+1; 
 					$scope.mealMarker.label.setContent();
 
 					userService.getUserWithID(key).success(function(data) {
@@ -48,14 +49,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 			mealService.addNewMeal($scope.mealPlace.place_id, 0, date, [], true).success(function(data) {
 				var key = angular.fromJson(localStorage.user).key;
-				mealService.addUserToMeal(data.key, key).success(function(data) {
+				mealService.addUserToMeal(data.key, key).success(function(data2) {
 					$scope.mealMarker.setIcon('../../img/restaurant.png');
 					$scope.mealMarker.hasMeal = true; 
 					$scope.mealMarker.labelContent = 1; 
 					$scope.mealMarker.label.setContent();
-
-					userService.getUserWithID(key).success(function(data) {
-						$scope.mealAttendees.push(data[0]);
+					$scope.meals.push(data2);
+					
+					userService.getUserWithID(key).success(function(data3) {
+						$scope.mealAttendees.push(data3[0]);
 					});
 				})
 			});
@@ -71,12 +73,21 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			$scope.mealMarker = marker;
 			$scope.initMeal();
 			$scope.showMealInfo = true;
-			if (meal == true) {
-				$scope.showJoinMealButton = true;
-			}
-			else {
-				$scope.showJoinMealButton = false;
-			}
+			$scope.showJoinMealButton = false;
+			$scope.mealAttendees = [];
+		}
+
+		$scope.showAttendees = function(meal) {
+			$scope.showJoinMealButton = true;
+			$scope.currentMealKey = meal.key;
+			$scope.mealAttendees = [];
+			mealService.getPeopleFromMeal(meal.key).success(function(data) {
+				for (var i = 0; i < data.length; i++) {
+					userService.getUserWithID(data[i].key).success(function(data2) {
+						$scope.mealAttendees.push(data2[0]);
+					});
+				}
+			});
 		}
 		
 
@@ -96,24 +107,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.initMeal = function() {
-			// $scope.mealAttendees = [];
-			// mealService.getPeopleFromMeal($scope.mealPlace.place_id).success(function(data) {
-			// 	for (var i = 0; i < data.length; i++) {
-			// 		var user = data[i];
-			// 		userService.getUserWithID(user.key).success(function(data) {
-			// 			$scope.mealAttendees.push(data[0]);
-			// 		});
-			// 	}
-			// })
-			// > get all meals from place id
-			// > store in $scope.meals
 			$scope.meals = [];
 			mealService.getMealsAtPlaceID($scope.mealPlace.place_id).success(function(data) {
 				for (var i = 0; i < data.length; i++) {
 					$scope.meals.push(data[i]);
-					// mealService.getPeopleFromMeal(data[i].key).success(function(data2) {
-
-					// });
 				}
 			});
 		}
