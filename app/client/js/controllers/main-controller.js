@@ -28,15 +28,36 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.joinMeal = function() {
-			// MOVE JOIN MEAL CODE FROM MODAL TO HERE
-			console.log("Test");
+			if ($scope.mealMarker.hasMeal) {
+				var key = angular.fromJson(localStorage.user).key;
+				mealService.addUserToMeal($scope.mealPlace.place_id, key).success(function(data) {
+					$scope.mealMarker.labelContent = marker.labelContent+1; 
+					$scope.mealMarker.label.setContent();
+
+					userService.getUserWithID(key).success(function(data) {
+						$scope.mealAttendees.push(data[0]);
+					});
+				})
+			}
 		}
 
 		$scope.submitMealData = function() {
-			// MOVE CREATE MEAL CODE FROM MODAL TO HERE
-			console.log($scope.mealTimeHour);
-			console.log($scope.mealTimeMinute);
-			console.log($scope.mealPlace.name);
+			var currentTime = new Date();
+			var date = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), $scope.mealTimeHour, $scope.mealTimeMinute, 0, 0);
+
+			mealService.addNewMeal($scope.mealPlace.place_id, 0, date, [], true).success(function(data) {
+				var key = angular.fromJson(localStorage.user).key;
+				mealService.addUserToMeal($scope.mealPlace.place_id, key).success(function(data) {
+					$scope.mealMarker.setIcon('../../img/restaurant.png');
+					$scope.mealMarker.hasMeal = true; 
+					$scope.mealMarker.labelContent = 1; 
+					$scope.mealMarker.label.setContent();
+
+					userService.getUserWithID(key).success(function(data) {
+						$scope.mealAttendees.push(data[0]);
+					});
+				})
+			});
 		}
 
 		/* 
