@@ -23,6 +23,12 @@
 
 	<!-- Meal Information -->
 	<div id="mealInformationContainer" class="col-sm-2">
+		<!-- User Instructions -->
+		<div id="userInstructions" class="text" ng-hide="showMealInfo">
+			Click a pin on the map to begin joining and creating meals.  
+			Use the existing pins, or use the search bar to look up a 
+			restaurant you know the name of.
+		</div>
 		<!-- Existing Meal -->
 		<div class="text">
 			{{mealPlace.name}}
