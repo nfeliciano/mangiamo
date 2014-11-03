@@ -23,7 +23,7 @@ module.exports.create = function (req,res) {
 
 // Adds a user to a meal (when the user commits) and increments numPeople
 module.exports.update = function (req,res) {
-	var query = { placeID: req.body.placeID };
+	var query = { key: req.body.key };
 	var update = { people: { "key" : req.body.ID } };
 	var increment = { numPeople : 1 };
 
@@ -34,8 +34,8 @@ module.exports.update = function (req,res) {
 
 // Returns an array of the people attending a meal
 module.exports.getPeople = function (req,res) {
-	if (req.query.placeID != null) {
-		Meal.find({placeID:req.query.placeID}, function(err, results) {
+	if (req.query.key != null) {
+		Meal.find({key:req.query.key}, function(err, results) {
 			if(results.length == 0){
 				res.json(results);
 			}
