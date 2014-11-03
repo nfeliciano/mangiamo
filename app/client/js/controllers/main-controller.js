@@ -28,10 +28,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.joinMeal = function() {
+			// MOVE JOIN MEAL CODE FROM MODAL TO HERE
 			console.log("Test");
 		}
 
 		$scope.submitMealData = function() {
+			// MOVE CREATE MEAL CODE FROM MODAL TO HERE
 			console.log($scope.mealTimeHour);
 			console.log($scope.mealTimeMinute);
 			console.log($scope.mealPlace.name);
