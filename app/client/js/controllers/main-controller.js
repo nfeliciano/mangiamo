@@ -29,7 +29,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.getKeyFromFacebookID = function(facebookID){
-			console.log(facebookID);
 			userService.findByFacebook(facebookID).success(function(data) {
 				$scope.addFriend(data[0].key);
 			});
