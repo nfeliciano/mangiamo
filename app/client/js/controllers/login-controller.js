@@ -61,7 +61,6 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 
 		// This redirects back to main if the user tries to navigate here and they are already logged in
 		$scope.initLogin = function() {
-			console.log("In initLogin");
 			if (userService.isUserLoggedIn()) {
 				$location.path('main').replace();
 			}

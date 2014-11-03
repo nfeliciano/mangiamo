@@ -1,24 +1,30 @@
 <div ng-controller="mainController" ng-init="initialize()">
+	<!-- Friends Bar -->
 	<div id="mealBuddiesContainer" class="col-sm-2" ng-hide="hideMealBuddies">
+		<span class="text"> Your ID is: {{UID}} </span>
+		<form>
+			<input type="text" ng-model="newMealBuddy">
+			<button ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>
+		</form>
+
+		<p class="text"> CURRENT FRIENDS </p>
+		<div class="mealBuddy" ng-repeat="mealBuddy in mealBuddies">
+			{{mealBuddy[0].name}}
+			<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddy, false)"> Remove </button>
+		</div>
+
+		 <p class="text"> FRIEND REQUESTS </p>
+		<div class="mealBuddy" ng-repeat="mealBuddyRequest in mealBuddyRequests">
+			{{mealBuddyRequest[0].name}}
+			<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddyRequest, true)"> Decline </button>
+			<button class="mealBuddyButton" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
+		</div>
+	</div>
+
+	<!-- Meal Information -->
+	<div id="mealInformationContainer" class="col-sm-2">
 		<div>
-			<span class="text"> Your ID is: {{UID}} </span>
-			<form>
-				<input type="text" ng-model="newMealBuddy">
-				<button ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>
-			</form>
-
-			<p class="text"> CURRENT FRIENDS </p>
-			<div class="mealBuddy" ng-repeat="mealBuddy in mealBuddies">
-				{{mealBuddy[0].name}}
-				<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddy, false)"> Remove </button>
-			</div>
-
-			 <p class="text"> FRIEND REQUESTS </p>
-			<div class="mealBuddy" ng-repeat="mealBuddyRequest in mealBuddyRequests">
-				{{mealBuddyRequest[0].name}}
-				<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddyRequest, true)"> Decline </button>
-				<button class="mealBuddyButton" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
-			</div>
+			
 		</div>
 	</div>
 

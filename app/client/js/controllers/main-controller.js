@@ -447,10 +447,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		// This redirects back to login if the user tries to navigate here and they are not logged in
 		$scope.initMain = function() {
-			console.log("In initMain TEST");
 			if (!userService.isUserLoggedIn()) {
 				$location.path('login').replace();
-				console.log("In if Statement");
 			}
 		}
 		$scope.initMain();

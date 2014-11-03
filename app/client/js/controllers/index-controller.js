@@ -1,6 +1,6 @@
 app.controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
-		$scope.mapClass = 'col-sm-12';
+		$scope.mapClass = 'col-sm-10';
 		$scope.hideMealBuddies = true;
 		$scope.showMealBuddiesButton = false;
 
@@ -68,13 +68,13 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		$scope.toggleMealBuddies = function() {
 			$scope.populateMealBuddies();
-			if ($scope.mapClass == 'col-sm-12') {
+			if ($scope.mapClass == 'col-sm-10') {
 				$scope.hideMealBuddies = false;
-				$scope.mapClass = 'col-sm-10';
+				$scope.mapClass = 'col-sm-8';
 			}
 			else {
 				$scope.hideMealBuddies = true;
-				$scope.mapClass = 'col-sm-12';
+				$scope.mapClass = 'col-sm-10';
 			}
 		}
 		/* Facebook Integration Stuff */
