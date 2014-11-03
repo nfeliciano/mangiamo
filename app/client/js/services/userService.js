@@ -70,16 +70,21 @@ app.factory('userService', ['$http', function($http, $resource) {
 	//- If it's just a 5 letter string, they are confirmed meal buddies
 	//- If it's a 5 letter string preceded by a '?', that means someone else is waiting for this user's confirmation
 	//- If it's a 5 letter string preceded by a '!', that means this user is waiting for someone else to confirm
+	//- If it's a 5 letter string preceded by a '+', that signifies a suggested friend
+	//- If it's a 5 letter string preceded by a '*', that signifies an ignored person
 	userService.addMealBuddy = function(buddyKey) {
-		userService.getUserWithID(buddyKey).success(function(res) {
+		console.log(buddyKey);
+		var buddyKeyString = buddyKey.replace(/[*]|[+]/g,'');
+		userService.getUserWithID(buddyKeyString).success(function(res) {
 			if (res.length > 0) {
+				//gets this user's meal buddies as an array
 				$http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key).success(function(results) {
 					//check array results to see if meal buddies contains the buddy key
 					var alreadyAdded = false;
 					var buddyPending = '';
 					for (buddy of results) {
-						var keyString = buddy.key.replace(/[!]|[?]/g,'');
-						if (keyString == buddyKey) {
+						var keyString = buddy.key.replace(/[!]|[?]|[+]|[*]/g,'');
+						if (keyString == buddyKeyString) {
 							alreadyAdded = true;
 							if (buddy.key.substring(0,1) == '?') {
 								buddyPending = keyString;
@@ -87,12 +92,34 @@ app.factory('userService', ['$http', function($http, $resource) {
 						}
 					}
 					if (!alreadyAdded) {
-						var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': '!'+buddyKey };
-						$http.put(userBuddies, request);
-						var buddyRequest = { 'userKey': buddyKey, 'buddyKey': '?'+angular.fromJson(localStorage.user).key };
-						$http.put(userBuddies, buddyRequest);
+						//the buddy cannot already be added when we're putting them into a user's suggested friends list
+						if (buddyKey.substring(0,1) == '+') {
+							
+							var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': '+'+buddyKeyString };
+							$http.put(userBuddies, request);
+						} else {
+							var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': '!'+buddyKeyString };
+							$http.put(userBuddies, request);
+							var buddyRequest = { 'userKey': buddyKeyString, 'buddyKey': '?'+angular.fromJson(localStorage.user).key };
+							$http.put(userBuddies, buddyRequest);
+						}
 					}
 					else {
+						//the buddy must be already in a user's suggested friends list to be ignored
+						if (buddyKey.substring(0,1) == '*') {
+							var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': '*'+buddyKeyString };
+							$http.put(userBuddies, request);
+							console.log('ignore this user');
+							return;
+						} 
+						//in this instance, we are adding a suggested buddy
+						else if (buddyKey.substring(0,1) == '+') {
+							var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': '!'+buddyKeyString };
+							$http.put(userBuddies, request);
+							var buddyRequest = { 'userKey': buddyKeyString, 'buddyKey': '?'+angular.fromJson(localStorage.user).key };
+							$http.put(userBuddies, buddyRequest);
+							return;
+						}
 						if (buddyPending.length > 0) {
 							userService.confirmMealBuddy(buddyPending);
 						}
