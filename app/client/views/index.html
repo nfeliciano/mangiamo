@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="mangiamo">
 	<head>
-		<title>linksupp</title>
+		<title>Linksupp</title>
+
+		<link href="img/logo.ico" rel="shortcut icon" type="image/x-icon" />
 
 		<!-- Standard Meta Information -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -66,7 +68,22 @@
 					<div class="collapse navbar-collapse" id="myNavbar">
 				      <ul class="nav navbar-nav navbar-right">
 				        <li><a href="" ng-show="showMealBuddiesButton" ng-click="toggleMealBuddies()"><span class="glyphicon glyphicon-user"></span> Friends </a></li>
+				        <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				        <li><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
+				        <li class="dropdown">
+				        	<a href="" class="dropdown-toggle" data-toggle="drowndown"><span class="glyphicon glyphicon-log-in"></span> Log In <span class="caret"></span></a>
+				        	<ul class="dropdown-menu" role="menu">
+				        		<li><a href="">
+				        			<div id="googleLogin"><img src="../img/sign_in_with_google.png" onmouseover="" style="cursor: pointer;"></img>
+									</div></a></li>
+				        		<li><a href="">
+				        			<div id="fb-root">
+									<fb:login-button scope="public_profile,email" onlogin="checkLoginState" size="large">
+										Login with Facebook
+									</fb:login-button>
+									</div></a></li>
+				        	</ul>
+				        </li>
 				      </ul>
 				    </div>
 
