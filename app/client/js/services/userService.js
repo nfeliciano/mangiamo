@@ -72,6 +72,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 	//- If it's a 5 letter string preceded by a '!', that means this user is waiting for someone else to confirm
 	//- If it's a 5 letter string preceded by a '+', that signifies a suggested friend
 	//- If it's a 5 letter string preceded by a '*', that signifies an ignored person
+	//This probably needs to be cleaned up.
 	userService.addMealBuddy = function(buddyKey) {
 		var buddyKeyString = buddyKey.replace(/[*]|[+]/g,'');
 		userService.getUserWithID(buddyKeyString).success(function(res) {
@@ -131,15 +132,15 @@ app.factory('userService', ['$http', function($http, $resource) {
 							}
 						} else {
 							//the buddy must be already in a user's suggested friends list to be ignored
-							//this isn't functional yet.
+							//this has not been tested yet.
 							if (buddyKey.substring(0,1) == '*') {
 								var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': '*'+buddyKeyString };
 								$http.put(userBuddies, request);
 								console.log('ignore this user');
 							}
-						}
-						else {
-							console.log('already added');
+							else {
+								console.log('already added');
+							}
 						}
 					}
 				})
