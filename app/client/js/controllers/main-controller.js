@@ -18,8 +18,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		 * rejecting: bool - True:  User is rejecting a request
 		 *					 False: User is deleting an existing friend
 		 */
-		$scope.removeMealBuddy = function(mealBuddy, rejecting) {
-			userService.deleteMealBuddy(mealBuddy[0].key, rejecting);
+		$scope.removeMealBuddy = function(mealBuddy) {
+			userService.deleteMealBuddy(mealBuddy[0].key);
 			$scope.populateMealBuddies();
 		}
 

@@ -38,28 +38,21 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			$scope.mealBuddySuggestions = [];
 			// Grab the users MealBuddies from the database
 			userService.getMealBuddies().success( function(data1) {
-				// Sort through MealBuddies: requests vs actual Meal Buddies
-				for (mealBuddy of data1) {
-					if (mealBuddy.key.substring(0, 1) == '!') {  // User has sent request to someone else
-						// Pending Request, do nothing
-					}
-					else if (mealBuddy.key.substring(0, 1) == '?') {  // User has a request from someone else
-						userService.getUserWithID(mealBuddy.key.substring(1, 6)).success(function(data2) {
-							$scope.mealBuddyRequests.push(data2);
-						});
-					} else if (mealBuddy.key.substring(0, 1) == '+') {
-						userService.getUserWithID(mealBuddy.key.substring(1, 6)).success(function(data2) {
-							$scope.mealBuddySuggestions.push(data2[0]);
-						});
-					}
-					else {  // Current Meal Buddies
-						userService.getUserWithID(mealBuddy.key).success(function(data2) {
-							$scope.mealBuddies.push(data2);
-						});
-					}
-
+				for (mealBuddy of data1.accepted) {
+					userService.getUserWithID(mealBuddy.key).success(function(data2) {
+						$scope.mealBuddies.push(data2);
+					});
 				}
-
+				for (mealBuddy of data1.pending) {
+					userService.getUserWithID(mealBuddy.key).success(function(data2) {
+						$scope.mealBuddyRequests.push(data2);
+					});
+				}
+				for (mealBuddy of data1.suggested) {
+					userService.getUserWithID(mealBuddy.key).success(function(data2) {
+						$scope.mealBuddySuggestions.push(data2);
+					});
+				}
 			});
 		}
 
@@ -116,7 +109,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 							for (var i = 0; i < response.data.length; i++) {
 								var fbFriend = response.data[i];
 								userService.findByFacebook(fbFriend.id).success(function(data) {
-									userService.addMealBuddy('+' + data[0].key);
+									userService.suggestMealBuddy(data[0].key);
 								});
 							}
       					}

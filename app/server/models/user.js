@@ -8,7 +8,14 @@ var UserSchema = new Schema({
 	ageRange: String,
 	description: String,
 	profession: String,
-	mealBuddies: [{ key: String }]
+	mealBuddies: {
+		accepted: [{ key: String }],
+		pending: [{ key: String }],
+		requested: [{ key: String }],
+		suggested: [{ key: String }],
+		stopSuggesting: [{ key: String }],
+		ignored: [{ key: String }]
+	}
 });
 
 //Model is named 'User'
