@@ -1,6 +1,7 @@
 .text
 {
 	color: white;
+	text-align: center;
 }
 
 #mapCanvas
