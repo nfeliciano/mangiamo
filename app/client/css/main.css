@@ -6,6 +6,7 @@
 #mapCanvas
 {
 	height: 100%;
+	position: relative;
 }
 
 /* START FRIENDS */
@@ -40,9 +41,11 @@
 /* START MEAL INFORMATION  */
 #mealInformationContainer
 {
+	position: absolute;
 	height: 100vh;
 	padding: 51px 0px 0px 0px;
-	background-color: rgba(0,0,0,0.5);
+	/*background-color: rgba(0,0,0,0.8);*/
+	background-color: rgba(44, 139, 207, 0.9);
 }
 
 #mealInformationContainer > div
@@ -132,4 +135,22 @@
 	text-align: center;
 	width: 15px;     
 	white-space: nowrap;
+}
+
+#userInstructions
+{
+	padding: 1em;
+}
+
+#mealinfo-exit
+{
+	text-align: right;
+	position: relative;
+	padding: 1em;
+}
+
+/*ridiculous hack that should be fixed ASAP!*/
+.col-sm-10
+{
+	width: 100%;
 }

@@ -21,8 +21,17 @@
 		</div>
 	</div>
 
+	<!-- Map -->
+	<div id="mapContainer" ng-class="mapClass" class="col-xs-12">
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+		<div id="mapCanvas"></div>
+	</div>
+
 	<!-- Meal Information -->
-	<div id="mealInformationContainer" class="col-sm-2">
+	<div id="mealInformationContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+
+		<div id="mealinfo-exit"><span class="glyphicon glyphicon-remove"></span></div>
+
 		<!-- User Instructions -->
 		<div id="userInstructions" class="text" ng-hide="showMealInfo">
 			Click a pin on the map to begin joining and creating meals.  
@@ -59,9 +68,4 @@
 		</div>
 	</div>
 
-	<!-- Map -->
-	<div id="mapContainer" ng-class="mapClass">
-		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-		<div id="mapCanvas"></div>
-	</div>
 </div>
