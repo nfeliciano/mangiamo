@@ -115,10 +115,10 @@ app.factory('userService', ['$http', function($http, $resource) {
 		userService.getMealBuddies().success(function(data) {
 			var accepted = data.accepted;
 			var suggested = data.suggested;
-			if (isKeyInArray(accepted, buddyKey)) {
-				return;
-			}
-			else if (isKeyInArray(suggested, buddyKey)) {
+			if (isKeyInArray(data.accepted, buddyKey) ||
+				isKeyInArray(data.suggested, buddyKey) ||
+				isKeyInArray(data.requested, buddyKey) ||
+				isKeyInArray(data.pending, buddyKey)) {
 				return;
 			}
 			else {

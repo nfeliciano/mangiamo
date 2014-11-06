@@ -22,7 +22,7 @@
 
 			<p class="text"> SUGGESTED FRIENDS </p>
 			<div class="mealBuddy" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
-				{{mealBuddySuggestion.name}}
+				{{mealBuddySuggestion[0].name}}
 				<button class="mealBuddyButton" ng-click="getKeyFromFacebookID(mealBuddySuggestion.facebookID)"> Add </button>
 			</div>
 
