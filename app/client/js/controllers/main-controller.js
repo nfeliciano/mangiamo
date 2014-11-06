@@ -4,8 +4,14 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
+		$scope.usersMealBuddies = [];
+		$scope.selectedMarker = null;
+		$scope.selectedMarkerOldIcon= null;
 		var minZoomLevel = 13; // as far back as they can go
-		var mapOptions = { zoom: 13 }
+		var mapOptions = {
+			zoom: 14,
+			streetViewControl: false		
+		}
 		$scope.showSuppBuddiesButton();
 
 		$scope.showMealInfo = false;  // ng-show variable
@@ -17,6 +23,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.mealMarker = "";
 		$scope.meals = [];
 		$scope.currentMealKey = "";
+		
 
 		$scope.addFriend = function(newMealBuddy) {
 			userService.addMealBuddy(newMealBuddy);
@@ -115,11 +122,20 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			});
 		}
 	
+	
+		//Fills in global array of users friends
+		$scope.getUsersMealBuddies = function() {
+			userService.getMealBuddies().success(function(data){
+				console.log(data);
+				$scope.usersMealBuddies= data;
+			});
+		}
 		
 
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
+			$scope.getUsersMealBuddies();
 			$scope.lastPosition = new google.maps.LatLng(48.4449579, -123.33535710000001);   // This is the default position if Geolocation is enabled it is overwritten to the users location 
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
@@ -147,13 +163,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				types: ['restaurant','cafe', 'bar', 'food']
 			};
 				
-			$scope.infowindow = new google.maps.InfoWindow();
+		
 			var service = new google.maps.places.PlacesService($scope.map);
 			service.radarSearch(request, callback);
 			
 			// refreshes the map with new food places when the map is moved a certain amount
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
+				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
 					$scope.lastPosition = $scope.map.getCenter();
 					request.location=$scope.map.getCenter();
 					service.radarSearch(request, fastCallback); 
@@ -170,7 +186,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Create the search box and link it to the UI element.
 			var input = /** @type {HTMLInputElement} */(
 		    	document.getElementById('pac-input'));
-			$scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+			$scope.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
 
 			var searchBox = new google.maps.places.SearchBox(
     		/** @type {HTMLInputElement} */(input));
@@ -268,6 +284,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				
 				mealService.getAllMeals().success(function(data){
 					nukeAllMarkers();
+					$scope.database =null; //think it might be a possible leak so for now do this
 					$scope.dataBase =data;
 				
 					var hasMeal = false;		
@@ -292,71 +309,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 		
-		smoothUpdateCallback= function(results, status, pagination) {
-			if (status == google.maps.places.PlacesServiceStatus.OK) {
-				var newPlaces = [];		//This is a subset of results that will be added
-				$scope.willBeDeletedMarkers =  $scope.placedMarkers;	//this is the current set of markers, anything that is left in here will be removed from map
-				$scope.placedMarkers = [];	
-				var found =false;
-				
-				mealService.getAllMeals().success(function(data){
-					$scope.dataBase =data;
-				
-					// for each result, check if its new, or needs to be deleted
-					for (var i = 0; i < results.length; i++) {
-			
-						found = false;
-						for (var x = $scope.willBeDeletedMarkers.length-1;  x >=0; x--) {
-							
-							// If the recent radar search returns a location we already have, then don't remove it, and don't add it again
-							if($scope.willBeDeletedMarkers[x].markerId == results[i].place_id){
-								found = true;
-								$scope.placedMarkers.push($scope.willBeDeletedMarkers[x]);	//add back to placedMarkers
-								$scope.willBeDeletedMarkers.splice(x,1);					//this removes the marker we already have from the array that will be deleted
-								break;
-							}
-						}
-						
-						//if it was not found 
-						if(!found) {
-							newPlaces.push(results[i]); // these are the markers that will be added
-						}
-					}
-					
-					//clearMarkers(); //Remove markers that should no longer be on the map
-					
-					var hasMeal = false;
-					//for each of the new places, create a marker.
-					for( var y =0; y < newPlaces.length; y++){ // for each place not already on map
-				
-						hasMeal = false;
-						for( var x = 0; x < $scope.dataBase.length; x++){
-							if($scope.dataBase[x].placeID == newPlaces[y].place_id){
-								hasMeal = true;
-								break;
-							}
-						}
-						
-						if( hasMeal){
-							createMealMarker(newPlaces[y]);
-						}
-						else{
-							createDotMarker(newPlaces[y]);	// for each place in result create marker
-						}
-						
-					}
-			
-						
-					newPlaces = []; //not sure how much javascript clean up is needed
-					results = [];
 		
-				});
-			}
-		}
-		
-		checkDataBase = function(placeId){
-			
-		}
 		
 		createDotMarker = function(place){
 			var marker =  new MarkerWithLabel({
@@ -365,7 +318,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				position: place.geometry.location,
 				draggable: false,    //property that allows user to move marker
 				raiseOnDrag: false,
-				//labelContent:randomIntFromInterval(1,15), 
 				labelAnchor: new google.maps.Point(7, 33),    // anchors to
 				labelClass: 'labels', // the CSS class for the label
 				
@@ -376,6 +328,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
+					updateMarkerIcon(marker);
 					var request = {
 						placeId:marker.markerId,
 					};
@@ -392,88 +345,78 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 		
 		createMealMarker = function(place){
-			var numPeople = 0;
-			for( var i = 0; i < $scope.dataBase.length; i++){
-				if($scope.dataBase[i].placeID == place.place_id){
-					numPeople += $scope.dataBase[i].numPeople;
-				}
-			}
-					
-			// This is the Mangiamo Meal marker, ie there is a meal here
-			var marker =  new MarkerWithLabel({
-				icon: '../../img/restaurant.png',
-				map: $scope.map,
-				position:  place.geometry.location,
-				draggable: false,    //property that allows user to move marker
-				raiseOnDrag: false,
-				labelContent:numPeople, 
-				labelAnchor: new google.maps.Point(7, 33),    // anchors to
-				labelClass: "labels", // the CSS class for the label
+		
+			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				
-				// Some additional properties of the markers so we can access them later
-				markerId : place.place_id,
-				hasMeal: true,
-			});
-		
-		
-			$scope.placedMarkers.push(marker); // Array marker
-			google.maps.event.addListener(marker, 'click', function() {
-				var request = {
-					placeId:marker.markerId,
-				};
-				var service = new google.maps.places.PlacesService($scope.map);
-				service.getDetails(request,getPlaceDetails);
-		
-				// Returns ALL the place details and information 
-				function getPlaceDetails(place, status) {
-					if (status == google.maps.places.PlacesServiceStatus.OK) {
-						$scope.updateMealInfo(place, marker, true);
-					}
-				}
-			});
-		}
-		
-		//Adds pin or dot to map
-		createMarker = function(place) {
-			var meal = mealService.getMealsAtPlaceID( place.place_id).success(function(data){
-				if( data.length >0){
-					
-					// This is the Mangiamo Meal marker, ie there is a meal here
-					var marker =  new MarkerWithLabel({
-						icon: '../../img/restaurant.png',
-						map: $scope.map,
-						position:  place.geometry.location,
-						draggable: false,    //property that allows user to move marker
-						raiseOnDrag: false,
-						labelContent:data[0].numPeople, 
-						labelAnchor: new google.maps.Point(7, 33),    // anchors to
-						labelClass: "labels", // the CSS class for the label
-						
-						// Some additional properties of the markers so we can access them later
-						markerId : place.place_id,
-						hasMeal: true,
-					});
-				}
-				else {
-					// THIS IS THE DOT MARKER, ie no meals here
-					var marker =  new MarkerWithLabel({
-						icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0',  //Red dot
-						map: $scope.map,
-						position: place.geometry.location,
-						draggable: false,    //property that allows user to move marker
-						raiseOnDrag: false,
-						//labelContent:randomIntFromInterval(1,15), 
-						labelAnchor: new google.maps.Point(7, 33),    // anchors to
-						labelClass: 'labels', // the CSS class for the label
-						
-						// Some additional properties of the markers so we can access them later
-						markerId : place.place_id,
-						hasMeal: false,
-					});
+				var numPeople = 0;
+				var searchingForBuddy = true;
+				var buddyWasFound = false;
+				
+				//see if user has friends
+				if(  $scope.usersMealBuddies == 0 ){
+					searchingForBuddy = false;	
 				}
 				
+				loop1:
+				for (var i = 0; i < data.length; i++) {
+					
+					numPeople += data[i].numPeople;
+					
+					if( searchingForBuddy){
+						
+						loop2:
+						for( var y = 0; y < $scope.usersMealBuddies.length; y++){
+							
+							loop3:
+							for(var z = 0; z< data[i].people.length; z++){
+						
+								if( $scope.usersMealBuddies[y].key == data[i].people[z].key){
+									buddyWasFound = true;
+									searchingForBuddy = false; 
+									break loop2;
+								}
+							}	
+						}
+					}	
+				}
+				
+				var icon = '../../img/restaurant.png'; //default meal marker
+				
+				/*
+				if( buddyWasFound && user is going){
+				
+				}
+				else if ( user is going){
+				
+				}
+				
+				*/
+				
+				if( buddyWasFound){
+					icon = '../../img/restaur_friend.png'; // friend going marker
+				}
+						
+				// This is the Mangiamo Meal marker, ie there is a meal here
+				var marker =  new MarkerWithLabel({
+					icon: icon,
+					map: $scope.map,
+					position:  place.geometry.location,
+					draggable: false,    //property that allows user to move marker
+					raiseOnDrag: false,
+					labelContent:numPeople, 
+					labelAnchor: new google.maps.Point(7, 33),    // anchors to
+					labelClass: "labels", // the CSS class for the label
+					
+					// Some additional properties of the markers so we can access them later
+					markerId : place.place_id,
+					hasMeal: true,
+				});
+			
+			
 				$scope.placedMarkers.push(marker); // Array marker
 				google.maps.event.addListener(marker, 'click', function() {
+					updateMarkerIcon(marker);
+					
 					var request = {
 						placeId:marker.markerId,
 					};
@@ -483,17 +426,53 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// Returns ALL the place details and information 
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.updateMealInfo(place, marker, false);
+							$scope.updateMealInfo(place, marker, true);
 						}
 					}
 				});
 			});
 		}
 		
-		// Returns random numbers
-		randomIntFromInterval = function(min,max) {
-		    return Math.floor(Math.random()*(max-min+1)+min);
+	
+		//paramater is the new selected marker,
+		// function updates old marker to its old image, and update new to new image
+		updateMarkerIcon = function(marker) {
+		  
+			//if the old one exists, return it to normal
+			if($scope.selectedMarker != null){
+				$scope.selectedMarker.setIcon($scope.selectedMarkerOldIcon);
+			}
+			
+			$scope.selectedMarker = marker; 
+			$scope.selectedMarkerOldIcon =marker.icon; // saves the current image so it can be updated next time we enter here
+			
+			switch(marker.icon){
+			
+			//Red dot
+			case 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0':
+				marker.setIcon( '../../img/restaur_selected.png');
+				break;
+				
+			//Normal Meal
+			case '../../img/restaurant.png':
+				marker.setIcon('../../img/restaur_selected.png');
+				break;
+			//Friend going
+			case '../../img/restaur_friend.png':
+				marker.setIcon('../../img/restaur_selected_friend.png');
+				break;
+			//CASE IT IS THE ONE YOU ARE GOING TO 
+			//CURRENT NO CHANGE
+			case '../../img/restaur_going.png':
+				marker.setIcon('../../img/restaur_going.png');
+				break;
+			}
+			
+			
+			
 		}
+	
+		
 	
 		// Removes the markers from the map,
 		function clearMarkers(){
@@ -601,7 +580,7 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService
 		else {
 			mealService.addNewMeal($scope.placeInfo.place_id, 0, new Date(), [], true).success(function(data) {
 				mealService.addUserToMeal($scope.placeInfo.place_id, key).success(function(data) {
-					marker.setIcon('../../img/restaurant.png');
+					marker.icon.setIcon('../../img/restaurant.png');
 					marker.hasMeal = true; 
 					marker.labelContent = 1; 
 					marker.label.setContent();
