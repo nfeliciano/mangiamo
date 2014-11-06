@@ -22,40 +22,43 @@
 	</div>
 
 	<!-- Meal Information -->
-	<div id="mealInformationContainer" class="col-sm-2">
+	<div id="mealInformationContainer" class="col-sm-4">
 		<!-- User Instructions -->
 		<div id="userInstructions" class="text" ng-hide="showMealInfo">
 			Click a pin on the map to begin joining and creating meals.  
 			Use the existing pins, or use the search bar to look up a 
 			restaurant you know the name of.
 		</div>
-		<!-- Existing Meal -->
-		<div class="text">
-			{{mealPlace.name}}
-			<div ng-repeat="meal in meals">
-				People: {{meal.numPeople}}
-				<span ng-click="showAttendees(meal)">Time: {{meal.time}}</span>
+		<!-- Location -->
+		<div id="mealPlace">
+			<div id="mealPlaceName"> {{currentPin.name}} </div>
+			<span id="mealTime"> {{currentPin.meals}} </span>
+			<!-- Existing Meals -->
+			<div class="meal" ng-repeat="meal in meals">
+				<div id="mealTime">
+					{{currentPin.time}}
+				</div>
+				<div ng-repeat="mealAttendee in mealAttendees">
+					<!-- Age Range: {{mealAttendee.ageRange}}
+					Profession: {{mealAttendee.profession}}
+					Me-Factor: {{mealAttendee.description}} -->
+				</div>
+				<button type="submit" class="btn btn-primary btn-block col-xs-6" ng-click="joinMeal(meal)" ng-show="showJoinMealButton"> Join Meal </button>
 			</div>
-			<div ng-repeat="mealAttendee in mealAttendees">
-				Age Range: {{mealAttendee.ageRange}}
-				Profession: {{mealAttendee.profession}}
-				Me-Factor: {{mealAttendee.description}}
+			<!-- Create Meal -->
+			<div id="newMeal" ng-show="showMealInfo">
+				<form ng-init="initMealForm()" ng-submit="submitMealData()">
+					<select ng-model="mealTimeHour">
+						<option value="" disabled selected> Hour </option>
+						<option ng-repeat="mealTimeHour in mealTimeHours"> {{mealTimeHour.twentyFour}} </option>
+					</select>
+					<select ng-model="mealTimeMinute">
+						<option value="" disabled selected> Minute </option>
+						<option ng-repeat="mealTimeMinute in mealTimeMinutes"> {{mealTimeMinute.value}} </option>
+					</select>
+					<button type="submit" id="createMealButton" class="btn btn-primary btn-block col-xs-6"> Create Meal </button>
+				</form>
 			</div>
-		</div>
-		<button type="submit" id="joinMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="joinMeal()" ng-show="showJoinMealButton"> Join Meal </button>
-		<!-- New Meal -->
-		<div id="newMeal" ng-show="showMealInfo">
-			<form ng-init="initMealForm()" ng-submit="submitMealData()">
-				<select ng-model="mealTimeHour">
-					<option value="" disabled selected> Hour </option>
-					<option ng-repeat="mealTimeHour in mealTimeHours"> {{mealTimeHour.twentyFour}} </option>
-				</select>
-				<select ng-model="mealTimeMinute">
-					<option value="" disabled selected> Minute </option>
-					<option ng-repeat="mealTimeMinute in mealTimeMinutes"> {{mealTimeMinute.value}} </option>
-				</select>
-				<button type="submit" id="createMealButton" class="btn btn-primary btn-block col-xs-6"> Create Meal </button>
-			</form>
 		</div>
 	</div>
 

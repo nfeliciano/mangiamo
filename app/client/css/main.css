@@ -37,7 +37,20 @@
 }
 /* END FRIENDS */
 
-/* START MEAL INFORMATION  */
+/* MEAL INFORMATION START */
+#mealPlaceName
+{
+	color: white;
+	width: 100%;
+	text-align: center;
+	font-size: 1.4em;
+}
+
+#mealTime
+{
+	color: white;
+}
+
 #mealInformationContainer
 {
 	height: 100vh;
@@ -45,11 +58,20 @@
 	background-color: rgba(0,0,0,0.5);
 }
 
-#mealInformationContainer > div
+#mealInformation
 {
+	background-color: rgba(0,0,0,0.5);
+	height: 100vh;
+	padding-top: 51px 0px 0px 0px;
+	opacity: 1;
 }
 
-/* END MEAL INFORMATION */
+.meal
+{
+	padding-bottom: 10px;
+	/*border: 5px solid white;*/
+}
+/* MEAL INFORMATION END */
 
 #mapContainer
 {
@@ -58,21 +80,6 @@
 	position: relative;
 	padding: 51px 0px 0px 0px;
 }
-
-#mealInformation
-{
-	transition:all linear 0.5s;
-	background-color: rgba(0,0,0,0.5);
-	height: 100vh;
-	padding-top: 51px 0px 0px 0px;
-	opacity: 1;
-}
-
-#mealInformation.ng-hide
-{
-	width: 0px;
-}
-
 
 .controls 
 {	
