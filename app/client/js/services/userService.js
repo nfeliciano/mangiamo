@@ -8,6 +8,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 	var userBuddies = '/api/users/buddies';
 	var facebookLogin = '/api/users/facebook';
 	var googleLogin = '/api/users/google';
+	var userMeals = '/api/users/meals';
 
 	//the new stuff
 	var userRequest = '/api/users/buddies/request';
@@ -28,6 +29,12 @@ app.factory('userService', ['$http', function($http, $resource) {
 	userService.getUserWithID = function(key) {
 		return $http.get(user + '?key=' + key);
 	};
+
+	userService.addMealToUser = function(mealKey) {
+		var userKey = angular.fromJson(localStorage.user).key;
+		var request = { "key" : userKey, "mealkey" : mealKey };
+		return $http.put(userMeals, request);
+	}
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
 	userService.addNewUser = function(name, facebookID, googleID, ageRange, description, profession) {

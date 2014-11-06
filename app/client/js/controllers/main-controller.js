@@ -43,6 +43,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				mealService.addUserToMeal($scope.currentMealKey, key).success(function(data) {
 					$scope.mealMarker.labelContent = $scope.mealMarker.labelContent+1; 
 					$scope.mealMarker.label.setContent();
+					console.log($scope.currentMealKey);
+
+					userService.addMealToUser($scope.currentMealKey);
 
 					userService.getUserWithID(key).success(function(data) {
 						$scope.mealAttendees.push(data[0]);
@@ -59,10 +62,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.addUserToMeal(data.key, key).success(function(data2) {
 					$scope.mealMarker.setIcon('../../img/restaurant.png');
+					$scope.currentMealKey = data.key;
 					$scope.mealMarker.hasMeal = true; 
 					$scope.mealMarker.labelContent = 1; 
 					$scope.mealMarker.label.setContent();
 					$scope.meals.push(data2);
+
+					userService.addMealToUser($scope.currentMealKey);
 					
 					userService.getUserWithID(key).success(function(data3) {
 						$scope.mealAttendees.push(data3[0]);

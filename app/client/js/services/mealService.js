@@ -14,6 +14,10 @@ app.factory('mealService', ['$http', function($http) {
 		return $http.get(meal);
 	};
 
+	mealService.getMealDetails = function(mealKey) {
+		return $http.get(meal + '?key=' + mealKey);
+	}
+
 	// Returns an array of the people 
 	mealService.getPeopleFromMeal = function(mealKey) {
 		return $http.get(people + '?key=' + mealKey);
