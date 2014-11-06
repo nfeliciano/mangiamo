@@ -7,6 +7,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		var minZoomLevel = 13; // as far back as they can go
 		var mapOptions = { zoom: 13 }
 		$scope.showSuppBuddiesButton();
+		$scope.mapLoading = true;
 
 		$scope.showMealInfo = false;  // ng-show variable
 		$scope.showJoinMealButton = false;
@@ -114,8 +115,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				}
 			});
 		}
-	
-		
 
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
@@ -290,6 +289,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					}
 				});
 			}
+
 		}
 		
 		smoothUpdateCallback= function(results, status, pagination) {
