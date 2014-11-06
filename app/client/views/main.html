@@ -38,6 +38,7 @@
 		<!-- Existing Meal -->
 		<div class="text">
 			{{mealPlace.name}}
+			{{mealPlace.rating}}
 			<div ng-repeat="meal in meals">
 				People: {{meal.numPeople}}
 				<span ng-click="showAttendees(meal)">Time: {{meal.time}}</span>

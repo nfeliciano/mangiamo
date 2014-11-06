@@ -12,6 +12,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			zoom: 14,
 			streetViewControl: false		
 		}
+		
 		$scope.showSuppBuddiesButton();
 
 		$scope.showMealInfo = false;  // ng-show variable
@@ -24,7 +25,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.meals = [];
 		$scope.currentMealKey = "";
 		
-
 		$scope.addFriend = function(newMealBuddy) {
 			$scope.newMealBuddy = "";
 			userService.addMealBuddy(newMealBuddy);
@@ -77,12 +77,14 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		 * 
 		 */
 		$scope.updateMealInfo = function(place, marker, meal) {
+			
 			$scope.mealPlace = place;
 			$scope.mealMarker = marker;
 			$scope.initMeal();
 			$scope.showMealInfo = true;
 			$scope.showJoinMealButton = false;
 			$scope.mealAttendees = [];
+			
 		}
 
 		$scope.showAttendees = function(meal) {
@@ -189,7 +191,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			// refreshes the map with new food places when the map is moved a certain amount
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
+				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1){
 					$scope.lastPosition = $scope.map.getCenter();
 					request.location=$scope.map.getCenter();
 					service.radarSearch(request, fastCallback); 
@@ -273,7 +275,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
 				
 				mealService.getAllMeals().success(function(data){
-				
+					$scope.dataBase = null;
 					$scope.dataBase =data;
 				
 					var hasMeal = false;		
@@ -292,7 +294,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 						else{
 							createDotMarker(results[i]);	// for each place in result create marker
 						}
-						
 					}
 				});
 			}
@@ -323,14 +324,11 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 						else{
 							createDotMarker(results[i]);	// for each place in result create marker
 						}
-						
 					}
 				});
 			}
 		}
-		
-		
-		
+
 		createDotMarker = function(place){
 			var marker =  new MarkerWithLabel({
 				icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0',  //Red dot
@@ -348,19 +346,19 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
-					updateMarkerIcon(marker);
-					var request = {
-						placeId:marker.markerId,
-					};
-					var service = new google.maps.places.PlacesService($scope.map);
-					service.getDetails(request,getPlaceDetails);
-			
-					// Returns ALL the place details and information 
-					function getPlaceDetails(place, status) {
-						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.updateMealInfo(place, marker, false);
-						}
+				updateMarkerIcon(marker);
+				var request = {
+					placeId:marker.markerId,
+				};
+				var service = new google.maps.places.PlacesService($scope.map);
+				service.getDetails(request,getPlaceDetails);
+		
+				// Returns ALL the place details and information 
+				function getPlaceDetails(place, status) {
+					if (status == google.maps.places.PlacesServiceStatus.OK) {
+						$scope.updateMealInfo(place, marker, false);
 					}
+				}
 			});
 		}
 		
@@ -487,26 +485,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				marker.setIcon('../../img/restaur_going.png');
 				break;
 			}
-			
-			
-			
 		}
 	
-		
-	
-		// Removes the markers from the map,
-		function clearMarkers(){
-			for (var i = 0; i < $scope.willBeDeletedMarkers.length; i++ ) {
-				$scope.willBeDeletedMarkers[i].setMap(null);
-			}
-			$scope.willBeDeletedMarkers = [];
-		}
 		
 		function nukeAllMarkers(){
 			for (var i = 0; i < $scope.placedMarkers.length; i++ ) {
 				$scope.placedMarkers[i].setMap(null);
 			}
 			$scope.placedMarkers = [];
+			console.log($scope.placedMarkers);
 		}
 		
 		// In the event that the browser cannot or user chooses not to support geolocation, this is how that's handled
@@ -535,87 +522,4 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 		$scope.initMain();
-
-		// Opens a modal when a map pin is clicked.
-		$scope.openModal = function (size, placeInfo, marker) {
-			var modalInstance = $modal.open({
-				templateUrl: '/views/modalContent.html',
-				controller: 'ModalInstanceCtrl',
-				size: size,
-				resolve: {
-					placeInfo: function () {
-						return placeInfo;
-					},
-					marker: function() {
-						return marker;
-					}
-				}
-			});
-		}
 }]);
-
-// This is an instance of the modal controller, which pops up when a marker is clicked on the map
-// It can theoretically go into another file, but since it's heavily attached to the main controller, I think it makes sense to keep it here
-app.controller('ModalInstanceCtrl', function($scope, $modalInstance, mealService, userService, placeInfo, marker) {
-	$scope.placeInfo = placeInfo;
-	$scope.placeName = placeInfo.name;
-	if (marker.hasMeal) {
-		$scope.hasMeal = "Join!";
-	}
-	else {
-		$scope.hasMeal = "Create a Meal";
-	}
-	$scope.users = [];// the list of users who have committed to this meal
-	
-	mealService.getPeopleFromMeal($scope.placeInfo.place_id).success(function(data) {
-		for (var i = 0; i < data.length; i++) {
-			var user = data[i];
-			userService.getUserWithID(user.key).success(function(data) {
-				$scope.users.push(data[0]);
-			});
-		}
-	})
-	
-	// Handles when the 'Join!' or 'Create a Meal' button has been clicked. Should maybe be separate methods later.
-	$scope.join = function() {
-		// NOT POSSIBLE ANYMORE
-		if (angular.fromJson(localStorage.user).key == null) {
-			return; 
-		}
-		if ($scope.hasMeal == 'Joined!') {
-			return;
-		}
-		var key = angular.fromJson(localStorage.user).key;
-		if (marker.hasMeal) {
-			mealService.addUserToMeal($scope.placeInfo.place_id, key).success(function(data) {
-				marker.labelContent = marker.labelContent+1; 
-				marker.label.setContent();
-				$scope.hasMeal = 'Joined!';
-
-				userService.getUserWithID(key).success(function(data) {
-					$scope.users.push(data[0]);
-				});
-			})
-		}
-		else {
-			mealService.addNewMeal($scope.placeInfo.place_id, 0, new Date(), [], true).success(function(data) {
-				mealService.addUserToMeal($scope.placeInfo.place_id, key).success(function(data) {
-					marker.icon.setIcon('../../img/restaurant.png');
-					marker.hasMeal = true; 
-					marker.labelContent = 1; 
-					marker.label.setContent();
-					$scope.hasMeal = 'Joined!';	
-
-					userService.getUserWithID(key).success(function(data) {
-						$scope.users.push(data[0]);
-					});
-				})
-			});
-		}
-	}
-
-	// When the 'Ok' button has been clicked
-	$scope.ok = function () {
-		$modalInstance.close();
-	};
-});
