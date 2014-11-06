@@ -14,6 +14,10 @@ app.factory('mealService', ['$http', function($http) {
 		return $http.get(meal);
 	};
 
+	mealService.getMealDetails = function(mealKey) {
+		return $http.get(meal + '?key=' + mealKey);
+	}
+
 	// Returns an array of the people 
 	mealService.getPeopleFromMeal = function(mealKey) {
 		return $http.get(people + '?key=' + mealKey);
@@ -26,8 +30,10 @@ app.factory('mealService', ['$http', function($http) {
 
 	// 
 	mealService.addUserToMeal = function(mealKey, ID) {
-		var request = {"key":mealKey, "ID":ID};
-		return $http.put(meal, request);
+		$http.get(meal + '?key=' + mealKey).success(function(data) {
+			var request = {"key":mealKey, "ID":ID, "meal":data};
+			return $http.put(meal, request);
+		});
 	};
 
 	// Adds a new meal to the database with the key placeID-time
