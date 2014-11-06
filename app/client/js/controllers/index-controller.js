@@ -57,8 +57,8 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 
 		$scope.toggleMealBuddies = function() {
-			$scope.populateMealBuddies();
 			if ($scope.mapClass == 'col-sm-12') {
+				$scope.populateMealBuddies();
 				$scope.hideMealBuddies = false;
 				$scope.mapClass = 'col-sm-9';
 			}
