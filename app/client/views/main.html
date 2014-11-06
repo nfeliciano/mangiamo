@@ -1,6 +1,13 @@
 <div ng-controller="mainController" ng-init="initialize()">
+	
+	<!-- Map -->
+	<div id="mapContainer" ng-class="mapClass" class="col-xs-12">
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+		<div id="mapCanvas"></div>
+	</div>
+
 	<!-- Friends Bar -->
-	<div id="mealBuddiesContainer" class="col-sm-2" ng-hide="hideMealBuddies">
+	<div id="mealBuddiesContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2" ng-hide="hideMealBuddies">
 		<span class="text"> Your ID is: {{UID}} </span>
 		<form>
 			<input type="text" ng-model="newMealBuddy">
@@ -21,16 +28,10 @@
 		</div>
 	</div>
 
-	<!-- Map -->
-	<div id="mapContainer" ng-class="mapClass" class="col-xs-12">
-		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-		<div id="mapCanvas"></div>
-	</div>
-
 	<!-- Meal Information -->
-	<div id="mealInformationContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+	<div id="mealInformationContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2" ng-show="showMealSidebar">
 
-		<div id="mealinfo-exit"><span class="glyphicon glyphicon-remove"></span></div>
+		<div id="mealinfo-exit" ng-click="showMealSidebar = !showMealSidebar"><span class="glyphicon glyphicon-remove visible-xs"></span></div>
 
 		<!-- User Instructions -->
 		<div id="userInstructions" class="text" ng-hide="showMealInfo">

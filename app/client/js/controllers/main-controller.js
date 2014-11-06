@@ -5,10 +5,28 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
 		var minZoomLevel = 13; // as far back as they can go
-		var mapOptions = { zoom: 13 }
+		var mapOptions = { 
+			zoomControlOptions: {
+        		style: google.maps.ZoomControlStyle.LARGE,
+        		position: google.maps.ControlPosition.RIGHT_CENTER}, 
+        	panControlOptions: {
+        		position: google.maps.ControlPosition.RIGHT_CENTER},
+        	zoom: 13 
+        }
 		$scope.showSuppBuddiesButton();
+		$scope.showLogoutButton();
+		
+		// TODO- throw this in a function or something
+		// Shows different buttons based on authentication.
+		if($scope.authenticated == false){
+			$scope.showLoginButton();
+			// $scope.hideLogoutButton();
+		}
+		else {
+			$scope.showLogoutButton();
+			$scope.hideLoginButton();
+		}
 
-		$scope.showMealInfo = false;  // ng-show variable
 		$scope.showJoinMealButton = false;
 		$scope.mealTimeHours = [];
 		$scope.mealTimeMinutes = [];
@@ -170,7 +188,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Create the search box and link it to the UI element.
 			var input = /** @type {HTMLInputElement} */(
 		    	document.getElementById('pac-input'));
-			$scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+			$scope.map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
 			var searchBox = new google.maps.places.SearchBox(
     		/** @type {HTMLInputElement} */(input));
@@ -376,6 +394,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
+					
+					$scope.hidetheMealBuddies();
+					$scope.showtheMealSidebar();
+
 					var request = {
 						placeId:marker.markerId,
 					};
@@ -418,6 +440,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
+				
+				$scope.hidetheMealBuddies();
+				$scope.showtheMealSidebar();
+
 				var request = {
 					placeId:marker.markerId,
 				};
@@ -474,6 +500,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				
 				$scope.placedMarkers.push(marker); // Array marker
 				google.maps.event.addListener(marker, 'click', function() {
+					
+					console.log("you clicked a marker");
+
 					var request = {
 						placeId:marker.markerId,
 					};

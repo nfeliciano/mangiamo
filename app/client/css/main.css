@@ -13,11 +13,12 @@
 /* START FRIENDS */
 #mealBuddiesContainer
 {
-	transition:all linear 0.5s;
-	background-color: rgba(0,0,0,0.5);
+	/*transition:all linear 0.5s;*/
+	background-color: rgba(44, 139, 207, 0.9);
 	height: 100vh;
 	padding: 51px 0px 0px 0px;
 	opacity: 1;
+	position:absolute;
 }
 #mealBuddiesContainer.ng-hide
 {
@@ -45,7 +46,6 @@
 	position: absolute;
 	height: 100vh;
 	padding: 51px 0px 0px 0px;
-	/*background-color: rgba(0,0,0,0.8);*/
 	background-color: rgba(44, 139, 207, 0.9);
 }
 
@@ -80,6 +80,7 @@
 
 .controls 
 {	
+	text-align: center
 	margin-top: 16px;
 	border: 1px solid transparent;
 	border-radius: 2px 0 0 2px;
@@ -148,10 +149,4 @@
 	text-align: right;
 	position: relative;
 	padding: 1em;
-}
-
-/*ridiculous hack that should be fixed ASAP!*/
-.col-sm-10
-{
-	width: 100%;
 }
