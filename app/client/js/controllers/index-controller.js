@@ -1,7 +1,8 @@
 app.controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
-		$scope.mapClass = 'col-sm-12';
+		$scope.mapClass = 'col-sm-10';
 		$scope.hideMealBuddies = true;
+		$scope.showMealBuddiesButton = false;
 
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
@@ -10,6 +11,16 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		$scope.UID = '';
 
 		$scope.authenticated = false;
+
+		// Call this to show or hide the supp buddies button
+		$scope.showSuppBuddiesButton = function() {
+			$scope.showMealBuddiesButton = true;
+		}
+
+		$scope.hideSuppBuddiesButton = function() {
+			$scope.showMealBuddiesButton = false;
+		}
+
 		// This allows the initial redirect when they come to the 
 		// page based on whether or not they are logged in
 		$scope.init = function() {
@@ -57,16 +68,15 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 
 		$scope.toggleMealBuddies = function() {
-			if ($scope.mapClass == 'col-sm-12') {
+			if ($scope.mapClass == 'col-sm-10') {
 				$scope.populateMealBuddies();
 				$scope.hideMealBuddies = false;
-				$scope.mapClass = 'col-sm-9';
+				$scope.mapClass = 'col-sm-8';
 			}
 			else {
 				$scope.hideMealBuddies = true;
-				$scope.mapClass = 'col-sm-12';
+				$scope.mapClass = 'col-sm-10';
 			}
-
 		}
 		/* Facebook Integration Stuff */
 		// This is called with the results from from FB.getLoginStatus().
