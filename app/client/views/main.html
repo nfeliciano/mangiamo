@@ -20,7 +20,7 @@
 			<button class="mealBuddyButton" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
 		</div>
 
-		<p class="text"> SUGGESTED FRIENDS </p>
+		<p class="text"> SUGGESTED FRIENDS </p> <span id="import-friends" ng-click="loadSuggestions()">Find Facebook Friends</span>
 		<div class="mealBuddy" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
 			{{mealBuddySuggestion[0].name}}
 			<button class="mealBuddyButton" ng-click="getKeyFromFacebookID(mealBuddySuggestion[0].facebookID)"> Add </button>

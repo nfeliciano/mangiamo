@@ -41,6 +41,12 @@
 	border-radius: 5px;
 	padding: 5px;
 }
+
+#import-friends
+{
+	font-size: 14px;
+	color: #fff;
+}
 /* END FRIENDS */
 
 /* START MEAL INFORMATION  */

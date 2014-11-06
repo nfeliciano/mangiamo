@@ -137,7 +137,9 @@ module.exports.suggestBuddy = function(req,res) {
 	var query = { key: req.body.userKey };
 	var buddyQuery = { key: req.body.buddyKey };
 	var update = { 'mealBuddies.suggested' : buddyQuery };
-	User.findOneAndUpdate(query, { $push : update }, function(err, results) {});
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
+		res.json(results);
+	});
 }
 
 // Cases: user no longer wants to see this person suggested

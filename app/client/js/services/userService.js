@@ -127,7 +127,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 			}
 			else {
 				var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
-				$http.put(userSuggest, request);
+				return $http.put(userSuggest, request);
 			}
 		});
 	}

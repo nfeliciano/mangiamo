@@ -131,9 +131,25 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		//TODO: Do we need this method?
 		$scope.getUsersMealBuddies = function() {
 			userService.getMealBuddies().success(function(data){
-				console.log(data);
 				$scope.usersMealBuddies= data;
 			});
+		}
+
+		$scope.loadSuggestions = function() {
+			FB.api(
+				"/me/friends",
+				function (response) {
+					if (response && !response.error) {
+						/* handle the result */
+						for (var i = 0; i < response.data.length; i++) {
+							var fbFriend = response.data[i];
+							userService.findByFacebook(fbFriend.id).success(function(data) {
+								userService.suggestMealBuddy(data[0].key);
+							});
+						}
+  					}
+				}
+			);
 		}
 
 		// initializes the google map and populates it with food places

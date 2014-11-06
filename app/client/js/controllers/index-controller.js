@@ -111,21 +111,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					});
 				});
 
-				FB.api(
-					"/me/friends",
-					function (response) {
-						if (response && !response.error) {
-							/* handle the result */
-							for (var i = 0; i < response.data.length; i++) {
-								var fbFriend = response.data[i];
-								userService.findByFacebook(fbFriend.id).success(function(data) {
-									userService.suggestMealBuddy(data[0].key);
-								});
-							}
-      					}
-    				}
-				);
-
 				// Logged into your app and Facebook.
 				// This is where the code goes on successfull login,
 				// ie. change the page to the map.
