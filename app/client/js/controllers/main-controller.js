@@ -14,9 +14,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		/* removeMealBuddy(mealBuddy, rejecting)
-		 * mealBuddy: object containing user data
-		 * rejecting: bool - True:  User is rejecting a request
-		 *					 False: User is deleting an existing friend
+		 * mealBuddy: a key of the buddy
 		 */
 		$scope.removeMealBuddy = function(mealBuddy) {
 			userService.deleteMealBuddy(mealBuddy[0].key);

@@ -174,7 +174,11 @@ module.exports.removeBuddy = function(req,res) {
 	User.findOneAndUpdate(query, { $pull : removePending }, function(err, results) {});
 
 	var buddyRemove = { 'mealBuddies.accepted' : query };
+	var buddyRequestedRemove = { 'mealBuddies.requested' : query };
+	var buddyPendingRemove = { 'mealBuddies.pending' : query };
 	User.findOneAndUpdate(buddyQuery, { $pull : buddyRemove }, function(err, results) {});
+	User.findOneAndUpdate(buddyQuery, { $pull : buddyRequestedRemove }, function(err, results) {});
+	User.findOneAndUpdate(buddyQuery, { $pull : buddyPendingRemove }, function(err, results) {});
 }
 
 // Ignores a user who has added them
