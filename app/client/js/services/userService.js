@@ -125,7 +125,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 				var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
 				$http.put(userSuggest, request);
 			}
-		}
+		});
 	}
 
 	// Returns true or false depending on whether a user is in local storage.
