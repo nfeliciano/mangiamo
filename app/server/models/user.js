@@ -9,12 +9,12 @@ var UserSchema = new Schema({
 	description: String,
 	profession: String,
 	mealBuddies: {
-		accepted: [{ key: String }],
-		pending: [{ key: String }],
-		requested: [{ key: String }],
-		suggested: [{ key: String }],
-		stopSuggesting: [{ key: String }],
-		ignored: [{ key: String }]
+		accepted: [{ key: { type: "string", unique: true }, }],
+		pending: [{ key: { type: "string", unique: true }, }],
+		requested: [{ key: { type: "string", unique: true }, }],
+		suggested: [{ key: { type: "string", unique: true }, }],
+		stopSuggesting: [{ key: { type: "string", unique: true }, }],
+		ignored: [{ key: { type: "string", unique: true }, }]
 	}
 });
 

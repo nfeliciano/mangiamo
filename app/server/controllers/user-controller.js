@@ -101,6 +101,9 @@ module.exports.requestBuddy = function(req,res) {
 	var update = { 'mealBuddies.requested' : buddyQuery };
 	User.findOneAndUpdate(query, { $push : update }, function(err, results) {});
 
+	var buddyRemoveSuggested = { 'mealBuddies.suggested' : query };
+	User.findOneAndUpdate(buddyQuery, { $pull : buddyRemoveSuggested }, function(err, results) {});
+
 	var updateBuddy = { 'mealBuddies.pending' : query };
 	User.findOneAndUpdate(buddyQuery, { $push : updateBuddy }, function(err, results) {
 		res.json(results);
