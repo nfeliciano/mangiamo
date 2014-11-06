@@ -8,7 +8,8 @@ body
 {
 	height: 100%;
 	width: 100%;
-	background-image: url("/img/van_background.jpg");
+	background-size: 100%;
+	background-image: url("/img/vic_background.jpg");
     background-repeat: no-repeat;
 }
 
