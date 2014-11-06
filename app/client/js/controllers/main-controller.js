@@ -10,22 +10,27 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.addFriend = function(newMealBuddy) {
+			$scope.newMealBuddy = "";
 			userService.addMealBuddy(newMealBuddy);
 		}
 
 		/* removeMealBuddy(mealBuddy, rejecting)
-		 * mealBuddy: object containing user data
-		 * rejecting: bool - True:  User is rejecting a request
-		 *					 False: User is deleting an existing friend
+		 * mealBuddy: a key of the buddy
 		 */
-		$scope.removeMealBuddy = function(mealBuddy, rejecting) {
-			userService.deleteMealBuddy(mealBuddy[0].key, rejecting);
+		$scope.removeMealBuddy = function(mealBuddy) {
+			userService.deleteMealBuddy(mealBuddy[0].key);
 			$scope.populateMealBuddies();
 		}
 
 		$scope.confirmMealBuddy = function(mealBuddyRequest) {
 			userService.confirmMealBuddy(mealBuddyRequest[0].key);
 			$scope.populateMealBuddies();
+		}
+
+		$scope.getKeyFromFacebookID = function(facebookID){
+			userService.findByFacebook(facebookID).success(function(data) {
+				$scope.addFriend(data[0].key);
+			});
 		}
 
 		// initializes the google map and populates it with food places

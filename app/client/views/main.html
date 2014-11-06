@@ -1,6 +1,6 @@
 <div ng-controller="mainController" ng-init="initialize()">
 	<div id="mealBuddiesContainer" class="col-sm-3" ng-hide="hideMealBuddies">
-		<div>
+		<div class="scroll">
 			<span class="text"> Your ID is: {{UID}} </span>
 			<form>
 				<input type="text" ng-model="newMealBuddy">
@@ -10,15 +10,22 @@
 			<p class="text"> CURRENT FRIENDS </p>
 			<div class="mealBuddy" ng-repeat="mealBuddy in mealBuddies">
 				{{mealBuddy[0].name}}
-				<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddy, false)"> Remove </button>
+				<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddy)"> Remove </button>
 			</div>
 
 			 <p class="text"> FRIEND REQUESTS </p>
 			<div class="mealBuddy" ng-repeat="mealBuddyRequest in mealBuddyRequests">
 				{{mealBuddyRequest[0].name}}
-				<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddyRequest, true)"> Decline </button>
+				<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddyRequest)"> Decline </button>
 				<button class="mealBuddyButton" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
 			</div>
+
+			<p class="text"> SUGGESTED FRIENDS </p>
+			<div class="mealBuddy" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
+				{{mealBuddySuggestion[0].name}}
+				<button class="mealBuddyButton" ng-click="getKeyFromFacebookID(mealBuddySuggestion[0].facebookID)"> Add </button>
+			</div>
+
 		</div>
 	</div>
 

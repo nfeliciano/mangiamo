@@ -8,6 +8,11 @@
 	height: 100%;
 }
 
+.scroll
+{
+	overflow-y:auto
+}
+
 
 /* MEAL BUDDIES */
 #mealBuddiesContainer
