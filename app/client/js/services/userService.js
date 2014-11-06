@@ -76,21 +76,25 @@ app.factory('userService', ['$http', function($http, $resource) {
 	userService.addMealBuddy = function(buddyKey) {
 		userService.getMealBuddies().success(function(data) {
 			//check if buddy is already a buddy
-			var accepted = data.accepted;
-			if (isKeyInArray(accepted, buddyKey)) {
-				return;
-			}
+			userService.getUserWithID(buddyKey).success(function(data2) {
+				if (data2.length == 0) {
+					return;
+				}
+				if (isKeyInArray(data.accepted, buddyKey) ||
+					isKeyInArray(data.requested, buddyKey)) {
+					return;
+				}
 
-			//check if user is already being added by buddy
-			var pending = data.pending;
-			if (isKeyInArray(accepted, buddyKey)) {
-				var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
-				$http.put(userConfirm, request);
-			}
-			else {
-				var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
-				$http.put(userRequest, request);
-			}
+				//check if user is already being added by buddy
+				if (isKeyInArray(data.pending, buddyKey)) {
+					var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
+					$http.put(userConfirm, request);
+				}
+				else {
+					var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
+					$http.put(userRequest, request);
+				}
+			});
 		});
 	};
 
