@@ -74,7 +74,7 @@
 #mealPlace
 {
 	background-color: #CCCCCC;
-	padding: 20px 0 60px 0;
+	padding: 0px 0 60px 0;
 }
 
 #friendAdder
@@ -141,7 +141,7 @@
 {
 	color: #2F5F7F;
 	text-align: center;
-	font-size: 2em;
+	font-size: 1.8em;
 	font-family: "Roboto", sans-serif;
 }
 

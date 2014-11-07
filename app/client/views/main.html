@@ -79,12 +79,15 @@
 			Click a pin or marker on the map to begin joining and creating meals.  
 			Use the existing markers, or use the search bar to look up a 
 			restaurant you know the name of.
+			<hr>
+			<img src="/img/legend.png">
 		</div>
 
-		<div class="sidebarTitle" ng-show="showMealInfo"> Location Info </div>
-		<hr>
+		<div class="sidebarTitle" ng-show="showMealInfo"> Location Info 
+		</div>
 		<!-- Location -->
 		<div id="mealPlace" ng-show="showMealInfo">
+			<hr>
 			<div id="mealPlaceName"> {{currentPin.name}} </div>
 			<!-- Existing Meals -->
 			<accordion close-others="true">
