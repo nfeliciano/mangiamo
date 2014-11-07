@@ -52,7 +52,7 @@
 		</accordion>
 
 		<p class="text"> Suggested Friends </p>
-		<button class="btn btn-default btn-sm" ng-click="loadSuggestions()"> Find Facebook Friends </button>
+		<button class="btn btn-default btn-sm" ng-click="loadSuggestions()" ng-disabled="findingFriends"> Find Facebook Friends </button>
 		<accordion close-others="true">
 			<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
 				<accordion-heading>
