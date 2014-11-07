@@ -372,7 +372,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
-				location.reload();
+				
 				updateMarkerIcon(marker);
 				var request = {
 					placeId:marker.markerId,
