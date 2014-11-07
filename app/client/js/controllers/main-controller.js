@@ -86,7 +86,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					}
 
 					// Set 24 hour to 12 hour
-					hour = (hour % 12)
+					hour = (hour % 12);
 					if (hour == 0) {
 						hour = 12;
 					}
@@ -179,7 +179,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		//TODO: Do we need this method?
 		$scope.getUsersMealBuddies = function() {
 			userService.getMealBuddies().success(function(data){
-				$scope.usersMealBuddies= data;
+				$scope.usersMealBuddies = data;
 			});
 		}
 
@@ -217,7 +217,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				    $scope.map.setCenter(pos);
 				
 				}, function() {
-				
 					handleNoGeolocation(true);
 				});
 			} else {
