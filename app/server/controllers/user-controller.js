@@ -68,26 +68,6 @@ module.exports.getMealBuddies = function (req,res) {
 	}
 }
 
-// Adds a new meal buddy to the meal buddies array. Or accepts a pending request.
-module.exports.addNewBuddy = function (req,res) {
-	var query = { key: req.body.userKey };
-	var update = { mealBuddies: { "key" : req.body.buddyKey } };
-
-	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
-		res.json(results);
-	});
-}
-
-// Deletes a meal buddy or rejects a pending request.
-module.exports.deleteBuddy = function (req,res) {
-	var query = { key: req.body.userKey };
-	var update = { mealBuddies: { "key" : req.body.buddyKey } };
-
-	User.findOneAndUpdate(query, { $pull : update }, function(err, results) {
-		res.json(results);
-	});
-}
-
 // Returns an array of users. Either all users, or users with a specific userID.
 module.exports.list = function (req,res) {
 	if(req.query.key != null){
@@ -100,4 +80,120 @@ module.exports.list = function (req,res) {
 			res.json(results);
 		});
 	}
+}
+
+// Adds the meal the user joined to the user
+module.exports.addMealToUser = function (req,res) {
+	var query = { key: req.body.key };
+	var update = { mealsAttending: { "key" : req.body.mealkey } };
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {});
+}
+
+// We will now need some more methods
+// Cases: adds a buddy by key, adds a suggested buddy
+module.exports.requestBuddy = function(req,res) {
+	// remove from suggested, ignored
+	// add onto requested
+	// add onto pending for the requested user
+	var query = { key: req.body.userKey };
+	var buddyQuery = { key: req.body.buddyKey };
+	var removeSuggested = { 'mealBuddies.suggested' : buddyQuery };
+	var removeIgnored = { 'mealBuddies.ignored' : buddyQuery };
+	var removeStopSuggesting = { 'mealBuddies.stopSuggesting' : buddyQuery };
+
+	User.findOneAndUpdate(query, { $pull : removeSuggested }, function(err, results) {});
+	User.findOneAndUpdate(query, { $pull : removeIgnored }, function(err, results) {});
+	User.findOneAndUpdate(query, { $pull : removeStopSuggesting }, function(err, results) {});
+
+	var update = { 'mealBuddies.requested' : buddyQuery };
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {});
+
+	var buddyRemoveSuggested = { 'mealBuddies.suggested' : query };
+	User.findOneAndUpdate(buddyQuery, { $pull : buddyRemoveSuggested }, function(err, results) {});
+
+	var updateBuddy = { 'mealBuddies.pending' : query };
+	User.findOneAndUpdate(buddyQuery, { $push : updateBuddy }, function(err, results) {
+		res.json(results);
+	});
+}
+
+// Cases: confirms a buddy request
+module.exports.confirmBuddy = function(req,res) {
+	// remove from pending
+	// remove from other user's requested
+	// add onto accepted
+	var query = { key: req.body.userKey };
+	var buddyQuery = { key: req.body.buddyKey };
+
+	var removePending = { 'mealBuddies.pending' : buddyQuery };
+	var removeBuddyRequested = { 'mealBuddies.requested' : query };
+	User.findOneAndUpdate(query, { $pull : removePending }, function(err, results) {});
+	User.findOneAndUpdate(buddyQuery, { $pull : removeBuddyRequested }, function(err, results) {});
+
+	var addBuddy = { 'mealBuddies.accepted' : buddyQuery };
+	var buddyAdd = { 'mealBuddies.accepted' : query };
+	User.findOneAndUpdate(query, { $push : addBuddy }, function(err, results) {});
+	User.findOneAndUpdate(buddyQuery, { $push : buddyAdd }, function(err, results) {
+		res.json(results);
+	});
+}
+
+// Cases: pulls friends from Facebook
+module.exports.suggestBuddy = function(req,res) {
+	// add onto suggested
+	var query = { key: req.body.userKey };
+	var buddyQuery = { key: req.body.buddyKey };
+	var update = { 'mealBuddies.suggested' : buddyQuery };
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
+		res.json(results);
+	});
+}
+
+// Cases: user no longer wants to see this person suggested
+module.exports.stopSuggesting = function(req,res) {
+	// remove from suggested
+	// add to stop suggested
+	var query = { key: req.body.userKey };
+	var buddyQuery = { key: req.body.buddyKey };
+
+	var removeSuggested = { 'mealBuddies.suggested' : buddyQuery };
+	User.findOneAndUpdate(query, { $pull : removeSuggested }, function(err, results) {});
+
+	var stopSuggesting = { 'mealBuddies.stopSuggesting' : buddyQuery };
+	User.findOneAndUpdate(query, { $push : stopSuggesting }, function(err, results) {});
+}
+
+// Cases: rejects a buddy request, deletes a buddy
+module.exports.removeBuddy = function(req,res) {
+	// remove from all lists except ignored
+	// remove from buddy's accepted list
+	var query = { key: req.body.userKey };
+	var buddyQuery = { key: req.body.buddyKey };
+
+	var removeBuddy = { 'mealBuddies.accepted' : buddyQuery };
+	var removeSuggested = { 'mealBuddies.suggested' : buddyQuery };
+	var removeStopSuggesting = { 'mealBuddies.stopSuggesting' : buddyQuery };
+	var removeRequested = { 'mealBuddies.requested' : buddyQuery };
+	var removePending = { 'mealBuddies.pending' : buddyQuery };
+
+	User.findOneAndUpdate(query, { $pull : removeBuddy }, function(err, results) {});
+	User.findOneAndUpdate(query, { $pull : removeSuggested }, function(err, results) {});
+	User.findOneAndUpdate(query, { $pull : removeStopSuggesting }, function(err, results) {});
+	User.findOneAndUpdate(query, { $pull : removeRequested }, function(err, results) {});
+	User.findOneAndUpdate(query, { $pull : removePending }, function(err, results) {});
+
+	var buddyRemove = { 'mealBuddies.accepted' : query };
+	var buddyRequestedRemove = { 'mealBuddies.requested' : query };
+	var buddyPendingRemove = { 'mealBuddies.pending' : query };
+	User.findOneAndUpdate(buddyQuery, { $pull : buddyRemove }, function(err, results) {});
+	User.findOneAndUpdate(buddyQuery, { $pull : buddyRequestedRemove }, function(err, results) {});
+	User.findOneAndUpdate(buddyQuery, { $pull : buddyPendingRemove }, function(err, results) {
+		res.json(results);
+	});
+}
+
+// Ignores a user who has added them
+module.exports.ignoreBuddy = function(req,res) {
+	// remove from all lists
+	// add to ignored
 }

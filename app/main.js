@@ -43,10 +43,17 @@ app.get('/api/users', userController.list);
 app.post('/api/users', userController.create);
 app.put('/api/users', userController.update);
 app.get('/api/users/buddies', userController.getMealBuddies);
-app.put('/api/users/buddies', userController.addNewBuddy);
-app.put('/api/users/buddies/delete', userController.deleteBuddy);
 app.get('/api/users/facebook', userController.findByFacebook);
 app.get('/api/users/google', userController.findByGoogle);
+app.put('/api/users/meals', userController.addMealToUser);
+
+//Meal buddies stuff
+app.put('/api/users/buddies/request', userController.requestBuddy);
+app.put('/api/users/buddies/confirm', userController.confirmBuddy);
+app.put('/api/users/buddies/suggest', userController.suggestBuddy);
+app.put('/api/users/buddies/suggest/stop', userController.stopSuggesting);
+app.put('/api/users/buddies/remove', userController.removeBuddy);
+app.put('/api/users/buddies/ignore', userController.ignoreBuddy);
 
 app.listen(3000, function() {
 	console.log('I\'m listening');

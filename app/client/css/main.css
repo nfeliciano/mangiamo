@@ -10,7 +10,13 @@
 	position: relative;
 }
 
-/* START FRIENDS */
+.scroll
+{
+	overflow-y:auto
+}
+
+
+/* MEAL BUDDIES */
 #mealBuddiesContainer
 {
 	/*transition:all linear 0.5s;*/
@@ -37,6 +43,12 @@
 	margin: 20px;
 	border-radius: 5px;
 	padding: 5px;
+}
+
+#import-friends
+{
+	font-size: 14px;
+	color: #fff;
 }
 /* END FRIENDS */
 

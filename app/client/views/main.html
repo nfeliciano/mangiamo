@@ -9,7 +9,7 @@
 	<!-- Friends Bar -->
 	<div id="mealBuddiesContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2" ng-show="showFriendsSidebar">
 
-		<div id="mealinfo-exit" ng-click="toggleMealBuddies(false)"><span class="glyphicon glyphicon-remove visible-xs"></span></div>
+		<div id="mealinfo-exit" ng-click="showFriendsSidebar2(false)"><span class="glyphicon glyphicon-remove visible-xs"></span></div>
 
 		<span class="text"> Your ID is: {{UID}} </span>
 		<form>
@@ -28,6 +28,12 @@
 			{{mealBuddyRequest[0].name}}
 			<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddyRequest, true)"> Decline </button>
 			<button class="mealBuddyButton" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
+		</div>
+
+		<p class="text"> SUGGESTED FRIENDS </p> <span id="import-friends" ng-click="loadSuggestions()">Find Facebook Friends</span>
+		<div class="mealBuddy" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
+			{{mealBuddySuggestion[0].name}}
+			<button class="mealBuddyButton" ng-click="getKeyFromFacebookID(mealBuddySuggestion[0].facebookID)"> Add </button>
 		</div>
 	</div>
 
@@ -61,8 +67,7 @@
 			</accordion>
 			<!-- Create Meal -->
 			<div id="newMeal" ng-init="initMealForm()" ng-show="showMealInfo">
-				<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="ismeridian" readonly-input="true"></timepicker>
-				<button id="hourModeButton" class="btn btn-info" ng-click="toggleHourMode()">12H / 24H</button>
+				<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
 				<button id="createMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="createMeal()"> Create Meal </button>
 			</div>
 		</div>
