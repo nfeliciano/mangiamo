@@ -12,6 +12,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		var minZoomLevel = 13; // as far back as they can go
 
+		$scope.hideLoginButton();
+
 		var mapOptions = { 
 			zoomControlOptions: {
         		style: google.maps.ZoomControlStyle.LARGE,
@@ -606,12 +608,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			google.maps.event.clearInstanceListeners(document);
 			//google.maps.event.clearInstanceListeners(mapDiv);
 		}
-		//window.onbeforeunload = unloadScript();
-		
-		/*$(window).beforeunload(function() {
-		// your code here
-			
-		});*/
 		
 		$(window).bind('beforeunload', function(e) {
 
@@ -634,5 +630,4 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 	
 			}
 		});
-		
 }]);
