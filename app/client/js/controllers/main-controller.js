@@ -208,7 +208,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			);
 			setTimeout(function() {
 				$scope.populateMealBuddies();
-			}, 500);
+			}, 1000);
 		}
 
 		// initializes the google map and populates it with food places
@@ -248,7 +248,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			// refreshes the map with new food places when the map is moved a certain amount
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
+				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
+					$scope.getUsersMealBuddies();
 					$scope.lastPosition = $scope.map.getCenter();
 					request.location=$scope.map.getCenter();
 					service.radarSearch(request, fastCallback); 
