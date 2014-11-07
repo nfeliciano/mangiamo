@@ -152,7 +152,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
 					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
 					$scope.currentPin.marker.hasMeal = true; 
-					$scope.currentPin.marker.labelContent = 1; 
+					
+					$scope.currentPin.marker.labelContent = $scope.currentPin.marker.labelContent + 1 ; 
 					$scope.currentPin.marker.label.setContent();
 					userService.addMealToUser(meal.key);
 					$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
@@ -596,5 +597,5 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 		$scope.initMain();
-
+	
 }]);
