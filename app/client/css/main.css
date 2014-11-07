@@ -1,7 +1,10 @@
 .text
 {
-	color: white;
+	color: #2F5F7F;
 	text-align: center;
+	font-family: "Roboto", sans-serif;
+	padding: 20px 0 10px 0;
+	font-size: 1.2em;
 }
 
 #mapCanvas
@@ -20,11 +23,17 @@
 #mealBuddiesContainer
 {
 	/*transition:all linear 0.5s;*/
-	background-color: #24253A;
+	/*background-color: rgba(187,187,187, 0.95);*/
+	background-color: #CCCCCC;
 	height: 100vh;
 	padding: 51px 0px 0px 0px;
+	overflow-y: auto;
 	opacity: 1;
 	position:absolute;
+	text-align: center;
+	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
+	-moz-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
+	box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 }
 #mealBuddiesContainer.ng-hide
 {
@@ -45,20 +54,32 @@
 	padding: 5px;
 }
 
-#import-friends
+.mealAttendee
 {
-	font-size: 14px;
-	color: #fff;
+	text-align: center;
 }
 /* END FRIENDS */
 
 /* MEAL INFORMATION START */
 #mealPlaceName
 {
-	color: white;
+	ccolor: #2F5F7F;
 	width: 100%;
 	text-align: center;
 	font-size: 1.4em;
+	padding-bottom: 10px;
+	font-family: "Roboto", sans-serif;
+}
+
+#mealPlace
+{
+	background-color: #CCCCCC;
+	padding: 20px 0 60px 0;
+}
+
+#friendAdder
+{
+	margin-top: 5px;
 }
 
 #mealTime
@@ -66,13 +87,31 @@
 	color: white;
 }
 
+#mealTimePicker
+{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.listedMeal
+{
+	text-align: left;
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	box-shadow: 0 1px 1px rgba(0,0,0, .5);
+}
+
 #mealInformationContainer
 {
 	height: 100vh;
 	position: absolute;
 	padding: 51px 0px 0px 0px;
-	background-color: #24253A;
-	border-color: rgba(144, 239, 107, 0.9);
+	overflow-y: auto;
+	/*background-color: rgba(170, 170, 170, 0.8);*/
+	background-color: #CCCCCC;
+	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
+	-moz-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
+	box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 }
 
 #mealInformation
@@ -87,15 +126,28 @@
 {
 	padding-bottom: 10px;
 }
+
+#timeTicker
+{
+	text-align: center;
+}
 /* MEAL INFORMATION END */
 
 /* CREATE MEAL START */
 
 /* CREATE MEAL END */
 
+.sidebarTitle
+{
+	color: #2F5F7F;
+	text-align: center;
+	font-size: 2em;
+	font-family: "Roboto", sans-serif;
+}
+
 #mapContainer
 {
-	transition:all linear 0.5s;
+	/*transition:all linear 0.5s;*/
 	height: 100vh;
 	position: relative;
 	padding: 51px 0px 0px 0px;
@@ -164,7 +216,10 @@
 
 #userInstructions
 {
+	text-align: center;
 	padding: 1em;
+	font-family: "Roboto", sans-serif;
+	color: #2F5F7F;
 }
 
 #mealinfo-exit

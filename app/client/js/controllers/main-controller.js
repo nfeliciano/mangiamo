@@ -57,6 +57,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				var mealData = angular.fromJson(data);
+
 				$scope.currentPin.meals = [];  // Reset data
 				for (var i = 0; i < mealData.length; i++) {
 					$scope.currentPin.meals.push({"time": "", "key": "", "attendees": []});
@@ -165,7 +166,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			});
 		}
 
-		$scope.getKeyFromFacebookID = function(facebookID){
+		$scope.addFriendFromFacebookID = function(facebookID){
+			console.log("Here");
 			userService.findByFacebook(facebookID).success(function(data) {
 				$scope.addFriend(data[0].key);
 			});

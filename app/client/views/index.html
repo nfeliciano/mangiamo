@@ -56,7 +56,7 @@
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="col-xs-2">
 			</div>
-			<div class="container-fluid col-xs-8">
+			<div class="container-fluid col-xs-9">
 				<div class="navbar-header">
 			    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 				        <span class="icon-bar"></span>
@@ -66,28 +66,44 @@
 			      <a class="navbar-brand" href=""><strong>link</strong>supp<sup><sup>ALPHA</sup></sup></a>
 			    </div>
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="collapse navbar-collapse" id="myNavbar">
-				      <ul class="nav navbar-nav navbar-right">
-				        <li><a href="" ng-show="showMealBuddiesButton" ng-click="toggleMealBuddies()"><span class="glyphicon glyphicon-user"></span> Friends </a></li>
-				        <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-				        <li class="dropdown" ng-show="showingLoginButton">
-				        	<a href="" class="dropdown-toggle" data-toggle="drowndown"><span class="glyphicon glyphicon-log-in"></span> Log In <span class="caret"></span></a>
-				        	<ul class="dropdown-menu" role="menu">
-				        		<li><a href="">
-				        			<div id="googleLogin"><img src="../img/sign_in_with_google.png" onmouseover="" style="cursor: pointer;"></img>
-									</div></a></li>
-				        		<li><a href="">
-				        			<div id="fb-root">
-									<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState" size="large">
-										Login with Facebook
-									</fb:login-button>
-									</div></a></li>
-				        	</ul>
-				        </li>
-				        <li ng-show="showingLogoutButton"><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Log Out </a></li>
-				      </ul>
-				    </div>
-			</div><!-- /.container-fluid -->
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="" ng-show="showMealBuddiesButton" ng-click="toggleMealBuddies()"><span class="glyphicon glyphicon-user"></span> Friends </a></li>
+						<li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+
+						<!--
+						<li class="dropdown" ng-show="showingLoginButton">
+							<a href="" class="dropdown-toggle" data-toggle="drowndown"><span class="glyphicon glyphicon-log-in"></span> Log In <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="">
+										<div id="googleLogin">
+											<img src="../img/sign_in_with_google.png" onmouseover="" style="cursor: pointer;"></img>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="">
+										<div id="fb-root">
+											<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState" size="large">
+												Login with Facebook
+											</fb:login-button>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</li>
+						-->
+						<li ng-show="showingLogoutButton">
+							<a href="" ng-click="logout()">
+								<span class="glyphicon glyphicon-log-in"></span> 
+								Log Out 
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div> 
+			<!-- /.container-fluid -->
 		</nav>
 
 		<!-- ui-view is where the content of our webpage gets put -->
