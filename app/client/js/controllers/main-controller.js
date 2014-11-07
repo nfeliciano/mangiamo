@@ -27,7 +27,11 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.usersMealsAttending = []; 
 		$scope.addFriend = function(newMealBuddy) {
 			$scope.newMealBuddy = "";
-			userService.addMealBuddy(newMealBuddy);
+			userService.getMealBuddies().success(function(mealBuddies) {
+				userService.addMealBuddy(newMealBuddy, mealBuddies).success(function() {
+					$scope.populateMealBuddies();
+				});
+			});
 		}
 
 		$scope.getUsersMealsAttending = function(){
@@ -117,13 +121,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		 * mealBuddy: a key of the buddy
 		 */
 		$scope.removeMealBuddy = function(mealBuddy) {
-			userService.deleteMealBuddy(mealBuddy[0].key);
-			$scope.populateMealBuddies();
+			userService.deleteMealBuddy(mealBuddy[0].key).success(function(data) {
+				$scope.populateMealBuddies();
+			});
 		}
 
 		$scope.confirmMealBuddy = function(mealBuddyRequest) {
-			userService.confirmMealBuddy(mealBuddyRequest[0].key);
-			$scope.populateMealBuddies();
+			userService.confirmMealBuddy(mealBuddyRequest[0].key).success(function(data) {
+				$scope.populateMealBuddies();
+			});
 		}
 
 		$scope.getKeyFromFacebookID = function(facebookID){
@@ -155,15 +161,21 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				function (response) {
 					if (response && !response.error) {
 						/* handle the result */
-						for (var i = 0; i < response.data.length; i++) {
-							var fbFriend = response.data[i];
-							userService.findByFacebook(fbFriend.id).success(function(data) {
-								userService.suggestMealBuddy(data[0].key);
-							});
-						}
+						userService.getMealBuddies().success(function(mealBuddies) {
+							for (var i = 0; i < response.data.length; i++) {
+								var j = i;
+								var fbFriend = response.data[i];
+								userService.findByFacebook(fbFriend.id).success(function(data) {
+									userService.suggestMealBuddy(data[0].key, mealBuddies);
+								});
+							}
+						});
   					}
 				}
 			);
+			setTimeout(function() {
+				$scope.populateMealBuddies();
+			}, 500);
 		}
 	
 		// initializes the google map and populates it with food places

@@ -223,12 +223,23 @@ Time Spent: 26.5 Hours
 ~~~~
 Feature Name: Buddies on Map 
 Description: If a buddy is eating somewhere and has checked in, display his face 
-Requires: Get from backend if a person is your buddy, display face if so 
-Developers:
-Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
+Requires: Searching meal goes against users friends, altering marker icon related to it
+Developers: Jesper, Chris
+Status: Finished
+Time Estimation: 5
+Time Spent: 3 Hours
 ~~~~
+
+~~~~
+Feature Name: Map Icon logic
+Description: different icons for cases: no meal, meal, meal with buddy, meal user going to, meal user and buddy going to, currently selected restaurant icon
+Requires: new icons, update functions, switch statments and the like
+Developers: Jesper, Chris
+Status: Finished
+Time Estimation: 5
+Time Spent: 3 Hours
+~~~~
+
 
 
 ~~~~
@@ -238,7 +249,7 @@ Requires: Research
 Status: Non seem to offer anythign imediatly helpfull
 Developers: Jesper
 Time Estimation: 2 Hours
-Time Spent: 1 Hours
+Time Spent: 3 Hours
 ~~~~
 
 ~~~~
@@ -248,6 +259,26 @@ Requires:Yelp account, Yelp api key, understanding yelp api
 Status: Yelp acount, and yelp api key check...
 Developers: Jesper
 Time Estimation: 6 Hours
+Time Spent: 6 Hours
+~~~~
+
+~~~~
+Feature Name: Searching related to google place
+Description: using yelp api
+Requires: Yelp finding specific location based on google data
+Status: Dropped, doesnt fufill desired option, a bit of a nightmare
+Developers: Jesper
+Time Estimation: 2 Hours
+Time Spent: 6 Hours
+~~~~
+
+~~~~
+Feature Name: Using Google Rating
+Description:  using googles rating instead of yelps
+Requires: just using place.rating, updated for new non modal
+Status: finished
+Developers: Jesper
+Time Estimation: 1 Hours
 Time Spent: 1 Hours
 ~~~~
 
@@ -258,8 +289,8 @@ Description: faster map loading... faster updating
 Requires:Less calls to Database, no holding for async calls inside pin creation 
 Status: finished..for now
 Developers: Jesper
-Time Estimation: 6 Hours
-Time Spent: 4 Hours
+Time Estimation: 8 Hours
+Time Spent: 6 Hours
 ~~~~
 
 ~~~~
@@ -273,24 +304,27 @@ Time Spent: 1.5 Hours
 ~~~~
 
 ~~~~
-Feature Name: Remove Map Geolocation reliance 
-Description: Enable the map to work regardless of geolocaion is allowed or not
-Requires: Swapping around code scoping, adding checks and defaults, tracing current incorrect pathing 
-Status: finished
-Developers: Jesper
-Time Estimation: 2 Hours
-Time Spent: 1.5 Hours
-~~~~
-
-~~~~
-Feature Name: Map zoom limit
+Feature Name: Map zoom limit fiddleings
 Description:  limits zoom
 Requires: 
 Status: finished
 Developers: Jesper
 Time Estimation: 0.1 Hours
-Time Spent: 0.1 Hours
+Time Spent: 0.2 Hours
 ~~~~
+
+
+~~~~
+Feature Name: Finding Leaks
+Description:  finding leaks
+Requires: hair pulling
+Status: will never be finished
+Developers: Jesper
+Time Estimation: infinite Hours
+Time Spent: 2 Hours
+~~~~
+
+
 
 
 #### Milestone 3 - Live Beta ####
@@ -330,15 +364,7 @@ Status: Not Started
 Time Estimation: 6
 Time Spent: 0
 ~~~~
-~~~~
-Feature Name: Yelp! 
-Description: Be able to see Yelp reviews on the front end of restaurants 
-Requires: Interaction with Yelp API, display on the front end
-Developers:
-Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
-~~~~
+
 
 ##### New Feature Template #####
 ~~~~
