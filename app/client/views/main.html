@@ -1,6 +1,16 @@
 <div ng-controller="mainController" ng-init="initialize()">
+	
+	<!-- Map -->
+	<div id="mapContainer" class="col-xs-12">
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+		<div id="mapCanvas"></div>
+	</div>
+
 	<!-- Friends Bar -->
-	<div id="mealBuddiesContainer" class="col-sm-2" ng-hide="hideMealBuddies">
+	<div id="mealBuddiesContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2" ng-show="showFriendsSidebar">
+
+		<div id="mealinfo-exit" ng-click="hidetheMealBuddies()"><span class="glyphicon glyphicon-remove visible-xs"></span></div>
+
 		<span class="text"> Your ID is: {{UID}} </span>
 		<form>
 			<input type="text" ng-model="newMealBuddy">
@@ -22,13 +32,19 @@
 	</div>
 
 	<!-- Meal Information -->
-	<div id="mealInformationContainer" class="col-sm-4">
+	<div id="mealInformationContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2" ng-show="showMealSidebar">
+		<!-- Remove sidebar "X" for mobile users -->
+		<div id="mealinfo-exit" ng-click="hideMealSidebar()">  
+			<span class="glyphicon glyphicon-remove visible-xs"></span>
+		</div>
+
 		<!-- User Instructions -->
 		<div id="userInstructions" class="text" ng-hide="showMealInfo">
-			Click a pin on the map to begin joining and creating meals.  
-			Use the existing pins, or use the search bar to look up a 
+			Click a pin or marker on the map to begin joining and creating meals.  
+			Use the existing markers, or use the search bar to look up a 
 			restaurant you know the name of.
 		</div>
+
 		<!-- Location -->
 		<div id="mealPlace">
 			<div id="mealPlaceName"> {{currentPin.name}} </div>
@@ -52,11 +68,5 @@
 				</form>
 			</div>
 		</div>
-	</div>
-
-	<!-- Map -->
-	<div id="mapContainer" ng-class="mapClass">
-		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-		<div id="mapCanvas"></div>
 	</div>
 </div>

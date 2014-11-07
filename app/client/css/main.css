@@ -1,21 +1,24 @@
 .text
 {
 	color: white;
+	text-align: center;
 }
 
 #mapCanvas
 {
 	height: 100%;
+	position: relative;
 }
 
 /* START FRIENDS */
 #mealBuddiesContainer
 {
-	transition:all linear 0.5s;
-	background-color: rgba(0,0,0,0.5);
+	/*transition:all linear 0.5s;*/
+	background-color: rgba(44, 139, 207, 0.9);
 	height: 100vh;
 	padding: 51px 0px 0px 0px;
 	opacity: 1;
+	position:absolute;
 }
 #mealBuddiesContainer.ng-hide
 {
@@ -54,8 +57,10 @@
 #mealInformationContainer
 {
 	height: 100vh;
+	position: absolute;
 	padding: 51px 0px 0px 0px;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(44, 139, 207, 0.9);
+	border-color: rgba(144, 239, 107, 0.9);
 }
 
 #mealInformation
@@ -87,6 +92,7 @@
 
 .controls 
 {	
+	text-align: center
 	margin-top: 16px;
 	border: 1px solid transparent;
 	border-radius: 2px 0 0 2px;
@@ -101,7 +107,7 @@
 {
 	background-color: #fff;
 	padding: 0 11px 0 13px;
-	width: 400px;
+	width: 360px;
 	font-family: Roboto;
 	font-size: 15px;
 	font-weight: 300;
@@ -143,4 +149,16 @@
 	text-align: center;
 	width: 15px;     
 	white-space: nowrap;
+}
+
+#userInstructions
+{
+	padding: 1em;
+}
+
+#mealinfo-exit
+{
+	text-align: right;
+	position: relative;
+	padding: 1em;
 }
