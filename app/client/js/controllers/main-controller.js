@@ -388,10 +388,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 		
-		checkDataBase = function(placeId){
-			
-		}
-		
 		createDotMarker = function(place){
 			var marker =  new MarkerWithLabel({
 				icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0',  //Red dot
@@ -524,20 +520,4 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 		$scope.initMain();
 
-		// Opens a modal when a map pin is clicked.
-		$scope.openModal = function (size, placeInfo, marker) {
-			var modalInstance = $modal.open({
-				templateUrl: '/views/modalContent.html',
-				controller: 'ModalInstanceCtrl',
-				size: size,
-				resolve: {
-					placeInfo: function () {
-						return placeInfo;
-					},
-					marker: function() {
-						return marker;
-					}
-				}
-			});
-		}
 }]);
