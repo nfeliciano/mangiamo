@@ -82,7 +82,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			FB.api('/me/permissions', 'delete', function(response) {});
 			gapi.auth.signOut();
 
-			// TODO - Can someone just change this?
 			$scope.authenticated = false;
 			$scope.showingLoginButton = true;
 			$scope.showingLogoutButton = false;
