@@ -84,11 +84,11 @@ app.factory('userService', ['$http', function($http, $resource) {
 		//check if buddy is already a buddy
 		return userService.getUserWithID(buddyKey).success(function(data2) {
 			if (data2.length == 0) {
-				return;
+				return $http.get('');
 			}
 			if (isKeyInArray(mealBuddies.accepted, buddyKey) ||
 				isKeyInArray(mealBuddies.requested, buddyKey)) {
-				return;
+				return $http.get('');
 			}
 
 			//check if user is already being added by buddy
@@ -120,21 +120,19 @@ app.factory('userService', ['$http', function($http, $resource) {
 		return $http.put(userRemove, request);
 	};
 
-	userService.suggestMealBuddy = function(buddyKey) {
-		userService.getMealBuddies().success(function(data) {
-			var accepted = data.accepted;
-			var suggested = data.suggested;
-			if (isKeyInArray(data.accepted, buddyKey) ||
-				isKeyInArray(data.suggested, buddyKey) ||
-				isKeyInArray(data.requested, buddyKey) ||
-				isKeyInArray(data.pending, buddyKey)) {
-				return;
-			}
-			else {
-				var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
-				return $http.put(userSuggest, request);
-			}
-		});
+	userService.suggestMealBuddy = function(buddyKey, mealBuddies) {
+		var accepted = mealBuddies.accepted;
+		var suggested = mealBuddies.suggested;
+		if (isKeyInArray(mealBuddies.accepted, buddyKey) ||
+			isKeyInArray(mealBuddies.suggested, buddyKey) ||
+			isKeyInArray(mealBuddies.requested, buddyKey) ||
+			isKeyInArray(mealBuddies.pending, buddyKey)) {
+			return $http.get('');
+		}
+		else {
+			var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
+			return $http.put(userSuggest, request);
+		}
 	}
 
 	// Returns true or false depending on whether a user is in local storage.

@@ -153,12 +153,19 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				function (response) {
 					if (response && !response.error) {
 						/* handle the result */
-						for (var i = 0; i < response.data.length; i++) {
-							var fbFriend = response.data[i];
-							userService.findByFacebook(fbFriend.id).success(function(data) {
-								userService.suggestMealBuddy(data[0].key);
-							});
-						}
+						userService.getMealBuddies().success(function(mealBuddies) {
+							for (var i = 0; i < response.data.length; i++) {
+								var j = i;
+								var fbFriend = response.data[i];
+								userService.findByFacebook(fbFriend.id).success(function(data) {
+									userService.suggestMealBuddy(data[0].key, mealBuddies).success(function(data2) {
+										if (j == response.data.length-1) {
+											$scope.populateMealBuddies();
+										}
+									});
+								});
+							}
+						});
   					}
 				}
 			);
