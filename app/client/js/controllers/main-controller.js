@@ -87,7 +87,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					}
 
 					// Set 24 hour to 12 hour
-					hour = (hour % 12)
+					hour = (hour % 12);
 					if (hour == 0) {
 						hour = 12;
 					}
@@ -114,6 +114,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 
+
 		$scope.addFriend = function(newMealBuddy) {
 			userService.addMealBuddy(newMealBuddy);
 		}
@@ -126,6 +127,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 		
 		
+
+
 		$scope.joinMeal = function(meal) {
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
@@ -188,7 +191,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		//TODO: Do we need this method?
 		$scope.getUsersMealBuddies = function() {
 			userService.getMealBuddies().success(function(data){
-				$scope.usersMealBuddies= data;
+				$scope.usersMealBuddies = data.accepted;
 			});
 		}
 
@@ -200,7 +203,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 						/* handle the result */
 						userService.getMealBuddies().success(function(mealBuddies) {
 							for (var i = 0; i < response.data.length; i++) {
-								var j = i;
 								var fbFriend = response.data[i];
 								userService.findByFacebook(fbFriend.id).success(function(data) {
 									userService.suggestMealBuddy(data[0].key, mealBuddies);
@@ -227,7 +229,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				    $scope.map.setCenter(pos);
 				
 				}, function() {
-				
 					handleNoGeolocation(true);
 				});
 			} else {
