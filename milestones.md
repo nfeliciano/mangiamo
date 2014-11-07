@@ -227,8 +227,19 @@ Requires: Searching meal goes against users friends, altering marker icon relate
 Developers: Jesper, Chris
 Status: Finished
 Time Estimation: 5
-Time Spent: 4 Hours
+Time Spent: 3 Hours
 ~~~~
+
+~~~~
+Feature Name: Map Icon logic
+Description: different icons for cases: no meal, meal, meal with buddy, meal user going to, meal user and buddy going to, currently selected restaurant icon
+Requires: new icons, update functions, switch statments and the like
+Developers: Jesper, Chris
+Status: Finished
+Time Estimation: 5
+Time Spent: 3 Hours
+~~~~
+
 
 
 ~~~~
@@ -272,8 +283,6 @@ Time Spent: 1 Hours
 ~~~~
 
 
-
-
 ~~~~
 Feature Name: Faster Loading of Map
 Description: faster map loading... faster updating
@@ -295,23 +304,13 @@ Time Spent: 1.5 Hours
 ~~~~
 
 ~~~~
-Feature Name: Remove Map Geolocation reliance 
-Description: Enable the map to work regardless of geolocaion is allowed or not
-Requires: Swapping around code scoping, adding checks and defaults, tracing current incorrect pathing 
-Status: finished
-Developers: Jesper
-Time Estimation: 2 Hours
-Time Spent: 1.5 Hours
-~~~~
-
-~~~~
-Feature Name: Map zoom limit
+Feature Name: Map zoom limit fiddleings
 Description:  limits zoom
 Requires: 
 Status: finished
 Developers: Jesper
 Time Estimation: 0.1 Hours
-Time Spent: 0.1 Hours
+Time Spent: 0.2 Hours
 ~~~~
 
 
@@ -365,15 +364,7 @@ Status: Not Started
 Time Estimation: 6
 Time Spent: 0
 ~~~~
-~~~~
-Feature Name: Yelp! 
-Description: Be able to see Yelp reviews on the front end of restaurants 
-Requires: Interaction with Yelp API, display on the front end
-Developers:
-Status: Not Started 
-Time Estimation:
-Time Spent: 0 Hours
-~~~~
+
 
 ##### New Feature Template #####
 ~~~~
