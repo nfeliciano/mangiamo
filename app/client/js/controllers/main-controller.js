@@ -178,7 +178,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.addFriendFromFacebookID = function(facebookID){
-			console.log("Here");
 			userService.findByFacebook(facebookID).success(function(data) {
 				$scope.addFriend(data[0].key);
 			});
