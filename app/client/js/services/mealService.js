@@ -30,10 +30,8 @@ app.factory('mealService', ['$http', function($http) {
 
 	// 
 	mealService.addUserToMeal = function(mealKey, ID) {
-		$http.get(meal + '?key=' + mealKey).success(function(data) {
-			var request = {"key":mealKey, "ID":ID, "meal":data};
-			return $http.put(meal, request);
-		});
+		var request = {"key":mealKey, "ID":ID};
+		return $http.put(meal, request);
 	};
 
 	// Adds a new meal to the database with the key placeID-time

@@ -45,6 +45,7 @@ app.put('/api/users', userController.update);
 app.get('/api/users/buddies', userController.getMealBuddies);
 app.get('/api/users/facebook', userController.findByFacebook);
 app.get('/api/users/google', userController.findByGoogle);
+app.put('/api/users/meals', userController.addMealToUser);
 
 //Meal buddies stuff
 app.put('/api/users/buddies/request', userController.requestBuddy);
