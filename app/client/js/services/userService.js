@@ -141,16 +141,17 @@ app.factory('userService', ['$http', function($http, $resource) {
 
 	// Returns true or false depending on whether a user is in local storage.
 	userService.isUserLoggedIn = function() {
-		if (localStorage.user != 'loggedout') {
-			return true;
-		} else {
+		if (localStorage.user == undefined || (localStorage.user == "null")) {  // SLIP'S SHITTING THROUGH THE CRACKS
 			return false;
+		} 
+		else {
+			return true;
 		}
 	};
 
 	// Removes the user from localStorage
 	userService.logoutUser = function() {
-		localStorage.user = 'loggedout';
+		localStorage.user = null;
 		sessionStorage.name = null;
 		sessionStorage.facebookID = null;
 		sessionStorage.googleID = null;
