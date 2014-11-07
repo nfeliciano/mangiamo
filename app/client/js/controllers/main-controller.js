@@ -597,5 +597,39 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 		$scope.initMain();
+		function unloadScript(){
+			console.log("unload");
+			google.maps.event.clearInstanceListeners(window);
+			google.maps.event.clearInstanceListeners(document);
+			//google.maps.event.clearInstanceListeners(mapDiv);
+		}
+		//window.onbeforeunload = unloadScript();
+		
+		/*$(window).beforeunload(function() {
+		// your code here
+			
+		});*/
+		
+		$(window).bind('beforeunload', function(e) {
+
+			if (1)
+			{
+				console.log("unload");
+				nukeAllMarkers();
+				$scope.map.setMap(null);
+				$scope.map = null;
+				google.maps.event.clearInstanceListeners(window);
+				google.maps.event.clearInstanceListeners(document);
+				
+				$scope.placedMarkers = null;
+				$scope.willBeDeletedMarkers = null;
+				$scope.lastPosition = null;
+				$scope.dataBase = null;
+				$scope.usersMealBuddies = null;
+				$scope.selectedMarkerOldIcon = null;
+				$scope.usersMealsAttending = null; 
 	
+			}
+		});
+		
 }]);
