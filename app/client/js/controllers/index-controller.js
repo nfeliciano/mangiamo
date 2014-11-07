@@ -1,9 +1,11 @@
 app.controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
-		$scope.mapClass = 'col-sm-10';
-		$scope.hideMealBuddies = true;
+		$scope.showFriendsSidebar = false;
 		$scope.showMealBuddiesButton = false;
-
+		$scope.showingLoginButton = true;
+		$scope.showingLogoutButton = false;
+		$scope.showMealInfo = false;
+		$scope.showMealSidebar = true;
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
 		$scope.mealBuddySuggestions = [];
@@ -12,13 +14,54 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		$scope.authenticated = false;
 
-		// Call this to show or hide the supp buddies button
+		$scope.toggleMealInfo = function(show) {
+			$scope.showMealInfo = show;
+		}
+
+		$scope.toggleMealSidebar = function(show) {
+			$scope.showMealSidebar = show;
+		}
+
+		$scope.showFriendsSidebar2 = function(show){
+			$scope.showFriendsSidebar = show;
+		}
+
+		$scope.toggleMealBuddies = function() {
+			$scope.showFriendsSidebar = !$scope.showFriendsSidebar;
+			if($scope.showFriendsSidebar) {
+				$scope.showMealSidebar = false;
+			}
+			else {
+				$scope.showMealSidebar = true;				
+			}
+			$scope.populateMealBuddies();
+		}
+
+		// Call this to show or hide the supp buddies (friends) button
 		$scope.showSuppBuddiesButton = function() {
 			$scope.showMealBuddiesButton = true;
 		}
 
 		$scope.hideSuppBuddiesButton = function() {
 			$scope.showMealBuddiesButton = false;
+		}
+
+		// Call this to show or hide the login button
+		$scope.showLoginButton = function() {
+			$scope.showingLoginButton = true;
+		}
+
+		$scope.hideLoginButton = function() {
+			$scope.showingLoginButton = false;
+		}
+
+		// Call this to show or hide the login button
+		$scope.showLogoutButton = function() {
+			$scope.showingLogoutButton = true;
+		}
+
+		$scope.hideLogoutButton = function() {
+			$scope.showingLogoutButton = false;
 		}
 
 		// This allows the initial redirect when they come to the 
@@ -38,7 +81,10 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			$location.path('login').replace();
 			FB.api('/me/permissions', 'delete', function(response) {});
 			gapi.auth.signOut();
+
 			$scope.authenticated = false;
+			$scope.showingLoginButton = true;
+			$scope.showingLogoutButton = false;
 		}
 
 		// Populate MealBuddies, and MealBuddyRequests to be displayed in the Meal Buddies SideBar
@@ -67,17 +113,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			});
 		}
 
-		$scope.toggleMealBuddies = function() {
-			if ($scope.mapClass == 'col-sm-10') {
-				$scope.populateMealBuddies();
-				$scope.hideMealBuddies = false;
-				$scope.mapClass = 'col-sm-8';
-			}
-			else {
-				$scope.hideMealBuddies = true;
-				$scope.mapClass = 'col-sm-10';
-			}
-		}
 		/* Facebook Integration Stuff */
 		// This is called with the results from from FB.getLoginStatus().
 		statusChangeCallback = function(response) {

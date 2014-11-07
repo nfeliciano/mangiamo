@@ -42,7 +42,7 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 			}
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
 
-			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation).success( function() {
+			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation, 0).success( function() {
 				$location.path('main').replace();
 			});
 		}

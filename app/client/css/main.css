@@ -1,11 +1,16 @@
 .text
 {
-	color: white;
+	color: #2F5F7F;
+	text-align: center;
+	font-family: "Roboto", sans-serif;
+	padding: 20px 0 10px 0;
+	font-size: 1.2em;
 }
 
 #mapCanvas
 {
 	height: 100%;
+	position: relative;
 }
 
 .scroll
@@ -17,11 +22,18 @@
 /* MEAL BUDDIES */
 #mealBuddiesContainer
 {
-	transition:all linear 0.5s;
-	background-color: rgba(0,0,0,0.5);
+	/*transition:all linear 0.5s;*/
+	/*background-color: rgba(187,187,187, 0.95);*/
+	background-color: #CCCCCC;
 	height: 100vh;
 	padding: 51px 0px 0px 0px;
+	overflow-y: auto;
 	opacity: 1;
+	position:absolute;
+	text-align: center;
+	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
+	-moz-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
+	box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 }
 #mealBuddiesContainer.ng-hide
 {
@@ -42,52 +54,108 @@
 	padding: 5px;
 }
 
-#import-friends
+.mealAttendee
 {
-	font-size: 14px;
-	color: #fff;
+	text-align: center;
 }
 /* END FRIENDS */
 
-/* START MEAL INFORMATION  */
+/* MEAL INFORMATION START */
+#mealPlaceName
+{
+	ccolor: #2F5F7F;
+	width: 100%;
+	text-align: center;
+	font-size: 1.4em;
+	padding-bottom: 10px;
+	font-family: "Roboto", sans-serif;
+}
+
+#mealPlace
+{
+	background-color: #CCCCCC;
+	padding: 0px 0 60px 0;
+}
+
+#friendAdder
+{
+	margin-top: 5px;
+}
+
+#mealTime
+{
+	color: white;
+}
+
+#mealTimePicker
+{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.listedMeal
+{
+	text-align: left;
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	box-shadow: 0 1px 1px rgba(0,0,0, .5);
+}
+
 #mealInformationContainer
 {
 	height: 100vh;
+	position: absolute;
 	padding: 51px 0px 0px 0px;
-	background-color: rgba(0,0,0,0.5);
-}
-
-#mealInformationContainer > div
-{
-}
-
-/* END MEAL INFORMATION */
-
-#mapContainer
-{
-	transition:all linear 0.5s;
-	height: 100vh;
-	position: relative;
-	padding: 51px 0px 0px 0px;
+	overflow-y: auto;
+	/*background-color: rgba(170, 170, 170, 0.8);*/
+	background-color: #CCCCCC;
+	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
+	-moz-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
+	box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 }
 
 #mealInformation
 {
-	transition:all linear 0.5s;
 	background-color: rgba(0,0,0,0.5);
 	height: 100vh;
 	padding-top: 51px 0px 0px 0px;
 	opacity: 1;
 }
 
-#mealInformation.ng-hide
+.meal
 {
-	width: 0px;
+	padding-bottom: 10px;
 }
 
+#timeTicker
+{
+	text-align: center;
+}
+/* MEAL INFORMATION END */
+
+/* CREATE MEAL START */
+
+/* CREATE MEAL END */
+
+.sidebarTitle
+{
+	color: #2F5F7F;
+	text-align: center;
+	font-size: 1.8em;
+	font-family: "Roboto", sans-serif;
+}
+
+#mapContainer
+{
+	/*transition:all linear 0.5s;*/
+	height: 100vh;
+	position: relative;
+	padding: 51px 0px 0px 0px;
+}
 
 .controls 
 {	
+	text-align: center
 	margin-top: 16px;
 	border: 1px solid transparent;
 	border-radius: 2px 0 0 2px;
@@ -102,7 +170,7 @@
 {
 	background-color: #fff;
 	padding: 0 11px 0 13px;
-	width: 400px;
+	width: 360px;
 	font-family: Roboto;
 	font-size: 15px;
 	font-weight: 300;
@@ -144,4 +212,19 @@
 	text-align: center;
 	width: 15px;     
 	white-space: nowrap;
+}
+
+#userInstructions
+{
+	text-align: center;
+	padding: 1em;
+	font-family: "Roboto", sans-serif;
+	color: #2F5F7F;
+}
+
+#mealinfo-exit
+{
+	text-align: right;
+	position: relative;
+	padding: 1em;
 }

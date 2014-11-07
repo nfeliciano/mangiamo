@@ -37,15 +37,19 @@ app.factory('userService', ['$http', function($http, $resource) {
 	}
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
-	userService.addNewUser = function(name, facebookID, googleID, ageRange, description, profession) {
+	userService.addNewUser = function(name, facebookID, googleID, ageRange, description, profession, counter) {
 		var userKey = generateUniqueKey();
 		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':null };
 		var res =  $http.post(user, request);
+		if (counter++ == 10) {
+			alert("The Database is currently down.  Please try again later.");
+			return;
+		}
 		res.success(function(result) {
 			if (result != 'error') {
 				localStorage.user = angular.toJson(result);
 			} else {
-				userService.addNewUser(name, ageRange, description, profession);
+				userService.addNewUser(name, facebookID, googleID, ageRange, description, profession, counter);
 			}
 		});
 		return res;
