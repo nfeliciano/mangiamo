@@ -109,7 +109,6 @@ app.factory('userService', ['$http', function($http, $resource) {
 
 	// Returns an array of meal buddies. Empty array if no meal buddies exist.
 	userService.getMealBuddies = function() {
-		console.log(localStorage.user);
 		return $http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key);
 	};
 
