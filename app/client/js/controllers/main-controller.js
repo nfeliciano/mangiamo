@@ -27,7 +27,11 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		$scope.addFriend = function(newMealBuddy) {
 			$scope.newMealBuddy = "";
-			userService.addMealBuddy(newMealBuddy);
+			userService.getMealBuddies().success(function(mealBuddies) {
+				userService.addMealBuddy(newMealBuddy, mealBuddies).success(function() {
+					$scope.populateMealBuddies();
+				});
+			});
 		}
 
 		$scope.initMealForm = function() {
