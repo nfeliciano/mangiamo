@@ -113,12 +113,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				});
 			}
 		}
-
-
-		$scope.addFriend = function(newMealBuddy) {
-			userService.addMealBuddy(newMealBuddy);
-		}
-
 		
 		$scope.getUsersMealsAttending = function(){
 			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
