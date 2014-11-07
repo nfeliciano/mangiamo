@@ -45,7 +45,7 @@
 			</accordion>
 			<!-- Create Meal -->
 			<div id="newMeal" ng-show="showMealInfo">
-				<form ng-init="initMealForm()" ng-submit="submitMealData()">
+				<form ng-init="initMealForm()" ng-submit="createMeal()">
 					<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="ismeridian" readonly-input="true"></timepicker>
 					<button id="hourModeButton" class="btn btn-info" ng-click="toggleHourMode()">12H / 24H</button>
 					<button type="submit" id="createMealButton" class="btn btn-primary btn-block col-xs-6"> Create Meal </button>
@@ -56,7 +56,7 @@
 
 	<!-- Map -->
 	<div id="mapContainer" ng-class="mapClass">
-		<input id="pac-input" class="controls" type="text" placeholder="Search Box" ng-hide="mapLoading">
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="mapCanvas"></div>
 	</div>
 </div>
