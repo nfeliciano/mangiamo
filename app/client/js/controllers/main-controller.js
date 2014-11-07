@@ -175,7 +175,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		//TODO: Do we need this method?
 		$scope.getUsersMealBuddies = function() {
 			userService.getMealBuddies().success(function(data){
-				$scope.usersMealBuddies= data;
+				$scope.usersMealBuddies= data.accepted;
 			});
 		}
 
