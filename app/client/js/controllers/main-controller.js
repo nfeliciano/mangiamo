@@ -192,6 +192,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.loadSuggestions = function() {
+			$scope.findingFriends = true;
 			FB.api(
 				"/me/friends",
 				function (response) {
@@ -210,6 +211,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			);
 			setTimeout(function() {
 				$scope.populateMealBuddies();
+				$scope.findingFriends = false;
 			}, 1000);
 		}
 
