@@ -14,7 +14,7 @@
 #mealBuddiesContainer
 {
 	/*transition:all linear 0.5s;*/
-	background-color: rgba(44, 139, 207, 0.9);
+	background-color: #24253A;
 	height: 100vh;
 	padding: 51px 0px 0px 0px;
 	opacity: 1;
@@ -59,7 +59,7 @@
 	height: 100vh;
 	position: absolute;
 	padding: 51px 0px 0px 0px;
-	background-color: rgba(44, 139, 207, 0.9);
+	background-color: #24253A;
 	border-color: rgba(144, 239, 107, 0.9);
 }
 
@@ -74,7 +74,6 @@
 .meal
 {
 	padding-bottom: 10px;
-	/*border: 5px solid white;*/
 }
 /* MEAL INFORMATION END */
 

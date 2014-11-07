@@ -13,26 +13,27 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		$scope.authenticated = false;
 
-		$scope.hideMealInfo = function() {
-			$scope.showMealInfo = false;
+		$scope.toggleMealInfo = function(show) {
+			$scope.showMealInfo = show;
 		}
 
-		$scope.showtheMealSidebar = function() {
-			if($scope.showMealSidebar == false){
-				$scope.showMealSidebar = true;
-			}
+		$scope.toggleMealSidebar = function(show) {
+			$scope.showMealSidebar = show;
 		}
 
-		$scope.hideMealSidebar = function() {
-			if($scope.showMealSidebar == true){
+		$scope.showFriendsSidebar2 = function(show){
+			$scope.showFriendsSidebar = show;
+		}
+
+		$scope.toggleMealBuddies = function() {
+			$scope.showFriendsSidebar = !$scope.showFriendsSidebar;
+			if($scope.showFriendsSidebar) {
 				$scope.showMealSidebar = false;
 			}
-		}
-
-		$scope.hidetheMealBuddies = function(){
-			if($scope.showFriendsSidebar == true){
-				$scope.showFriendsSidebar = false;
+			else {
+				$scope.showMealSidebar = true;				
 			}
+			$scope.populateMealBuddies();
 		}
 
 		// Call this to show or hide the supp buddies (friends) button
@@ -110,17 +111,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					}
 				}
 			});
-		}
-
-		$scope.toggleMealBuddies = function() {
-			$scope.showFriendsSidebar = !$scope.showFriendsSidebar;
-			if($scope.showFriendsSidebar) {
-				$scope.showMealSidebar = false;
-			}
-			else{
-				$scope.showMealSidebar = true;				
-			}
-			$scope.populateMealBuddies();
 		}
 
 		/* Facebook Integration Stuff */

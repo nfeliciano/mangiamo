@@ -31,8 +31,9 @@ body
 }
 
 .navbar-default {
-	background-color: #242451;
-	border-color: #434470;
+	/*background-color: #242451;*/
+	background-color: #0E1033;
+	border-color: #050511;
 }
 .navbar-default .navbar-brand {
 	color: #ecf0f1;

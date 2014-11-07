@@ -9,7 +9,7 @@
 	<!-- Friends Bar -->
 	<div id="mealBuddiesContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2" ng-show="showFriendsSidebar">
 
-		<div id="mealinfo-exit" ng-click="hidetheMealBuddies()"><span class="glyphicon glyphicon-remove visible-xs"></span></div>
+		<div id="mealinfo-exit" ng-click="toggleMealBuddies(false)"><span class="glyphicon glyphicon-remove visible-xs"></span></div>
 
 		<span class="text"> Your ID is: {{UID}} </span>
 		<form>
@@ -34,7 +34,7 @@
 	<!-- Meal Information -->
 	<div id="mealInformationContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2" ng-show="showMealSidebar">
 		<!-- Remove sidebar "X" for mobile users -->
-		<div id="mealinfo-exit" ng-click="hideMealSidebar()">  
+		<div id="mealinfo-exit" ng-click="toggleMealSidebar(false)">  
 			<span class="glyphicon glyphicon-remove visible-xs"></span>
 		</div>
 
@@ -60,12 +60,10 @@
 				</accordion-group>
 			</accordion>
 			<!-- Create Meal -->
-			<div id="newMeal" ng-show="showMealInfo">
-				<form ng-init="initMealForm()" ng-submit="createMeal()">
-					<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="ismeridian" readonly-input="true"></timepicker>
-					<button id="hourModeButton" class="btn btn-info" ng-click="toggleHourMode()">12H / 24H</button>
-					<button type="submit" id="createMealButton" class="btn btn-primary btn-block col-xs-6"> Create Meal </button>
-				</form>
+			<div id="newMeal" ng-init="initMealForm()" ng-show="showMealInfo">
+				<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="ismeridian" readonly-input="true"></timepicker>
+				<button id="hourModeButton" class="btn btn-info" ng-click="toggleHourMode()">12H / 24H</button>
+				<button id="createMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="createMeal()"> Create Meal </button>
 			</div>
 		</div>
 	</div>

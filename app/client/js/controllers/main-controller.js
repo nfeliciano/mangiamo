@@ -20,7 +20,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		// Shows different buttons based on authentication.
 		if($scope.authenticated == false){
 			$scope.showLoginButton();
-			// $scope.hideLogoutButton();
 		}
 		else {
 			$scope.showLogoutButton();
@@ -47,10 +46,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			$scope.currentPin.name = place.name;
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
+			$scope.currentPin.meals = [];
 
 			// Force minutes to start at 00
 			var d = new Date();
 			d.setMinutes(0);
+			d.setHours(d.getHours() + 1);
 			$scope.mealTime = d;
 
 			// Populate $scope.currentPin.meals
@@ -83,8 +84,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					$scope.populateAttendees(mealData, i);
 				}
 			});
+			$scope.showFriendsSidebar2(false);
+			$scope.toggleMealSidebar(true);
+			$scope.toggleMealInfo(true);
 
-			$scope.showtheMealSidebar();
 		}
 
 
@@ -256,7 +259,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		    	searchBox.setBounds(bounds);
 			});
 			
-			
 		   // Limit the zoom level
 			google.maps.event.addListener($scope.map, 'zoom_changed', function() {
 				if ($scope.map.getZoom() < minZoomLevel){
@@ -406,10 +408,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
-					
-					$scope.hidetheMealBuddies();
-					$scope.showtheMealSidebar();
-					// $scope.showMealSidebar = true;
 
 					var request = {
 						placeId:marker.markerId,
@@ -453,10 +451,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
-				
-				$scope.hidetheMealBuddies();
-				$scope.showtheMealSidebar();
-				// $scope.showMealSidebar = true;
 
 				var request = {
 					placeId:marker.markerId,
