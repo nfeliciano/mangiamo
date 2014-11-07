@@ -397,6 +397,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					
 					$scope.hidetheMealBuddies();
 					$scope.showtheMealSidebar();
+					// $scope.showMealSidebar = true;
 
 					var request = {
 						placeId:marker.markerId,
@@ -443,6 +444,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				
 				$scope.hidetheMealBuddies();
 				$scope.showtheMealSidebar();
+				// $scope.showMealSidebar = true;
 
 				var request = {
 					placeId:marker.markerId,

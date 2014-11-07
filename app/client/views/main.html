@@ -8,6 +8,9 @@
 
 	<!-- Friends Bar -->
 	<div id="mealBuddiesContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2" ng-hide="hideMealBuddies">
+
+		<div id="mealinfo-exit" ng-click="hidetheMealBuddies()"><span class="glyphicon glyphicon-remove visible-xs"></span></div>
+
 		<span class="text"> Your ID is: {{UID}} </span>
 		<form>
 			<input type="text" ng-model="newMealBuddy">
@@ -31,12 +34,12 @@
 	<!-- Meal Information -->
 	<div id="mealInformationContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-2" ng-show="showMealSidebar">
 
-		<div id="mealinfo-exit" ng-click="showMealSidebar = !showMealSidebar"><span class="glyphicon glyphicon-remove visible-xs"></span></div>
+		<div id="mealinfo-exit" ng-click="hideMealSidebar()"><span class="glyphicon glyphicon-remove visible-xs"></span></div>
 
 		<!-- User Instructions -->
 		<div id="userInstructions" class="text" ng-hide="showMealInfo">
-			Click a pin on the map to begin joining and creating meals.  
-			Use the existing pins, or use the search bar to look up a 
+			Click a pin or marker on the map to begin joining and creating meals.  
+			Use the existing markers, or use the search bar to look up a 
 			restaurant you know the name of.
 		</div>
 		<!-- Existing Meal -->

@@ -21,7 +21,12 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			if($scope.showMealSidebar == false){
 				$scope.showMealSidebar = true;
 			}
-			$scope.showMealSidebar = true;
+		}
+
+		$scope.hideMealSidebar = function() {
+			if($scope.showMealSidebar == true){
+				$scope.showMealSidebar = false;
+			}
 		}
 
 		$scope.hidetheMealBuddies = function(){
@@ -110,7 +115,13 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		$scope.toggleMealBuddies = function() {
 			$scope.populateMealBuddies();
 			$scope.hideMealBuddies = !$scope.hideMealBuddies;
-			$scope.showMealSidebar = false;
+			if($scope.hideMealBuddies == true){
+				$scope.showMealSidebar = true;
+			}
+			else{
+				$scope.showMealSidebar = false;				
+			}
+			// $scope.showMealSidebar = false;
 		}
 
 		/* Facebook Integration Stuff */
