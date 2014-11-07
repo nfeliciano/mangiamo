@@ -15,22 +15,17 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
         }
 		$scope.showSuppBuddiesButton();
 		$scope.showLogoutButton();
-		
-		// TODO- throw this in a function or something
-		// Shows different buttons based on authentication.
-		if($scope.authenticated == false){
-			$scope.showLoginButton();
-		}
-		else {
-			$scope.showLogoutButton();
-			$scope.hideLoginButton();
-		}
 
 		$scope.mealTime = new Date();
 		$scope.ismeridian = true;
 		$scope.toggleHourMode = function() {
 			$scope.ismeridian = !$scope.ismeridian;
 		}
+
+		$scope.status = {
+			isFirstOpen: true,
+			isFirstDisabled: false
+		};
 
 		$scope.currentPin = { "name": "",
 							  "place": "",
@@ -57,7 +52,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				var mealData = angular.fromJson(data);
-				console.log(mealData);
+				// console.log(mealData);
 				$scope.currentPin.meals = [];  // Reset data
 				for (var i = 0; i < mealData.length; i++) {
 					$scope.currentPin.meals.push({"time": "", "key": "", "attendees": []});
