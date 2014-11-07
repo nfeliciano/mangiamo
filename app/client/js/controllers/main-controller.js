@@ -24,12 +24,19 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.mealMarker = "";
 		$scope.meals = [];
 		$scope.currentMealKey = "";
-		
+		$scope.usersMealsAttending = []; 
 		$scope.addFriend = function(newMealBuddy) {
 			$scope.newMealBuddy = "";
 			userService.addMealBuddy(newMealBuddy);
 		}
 
+		$scope.getUsersMealsAttending = function(){
+			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
+				$scope.usersMealsAttending = data[0].mealsAttending; 
+			});
+		}
+		
+		
 		$scope.initMealForm = function() {
 			$http.get('/json/mealTime.json').success( function(data) {
 				$scope.mealTimeHours = data.mealTimeHours;
@@ -43,7 +50,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				mealService.addUserToMeal($scope.currentMealKey, key).success(function(data) {
 					$scope.mealMarker.labelContent = $scope.mealMarker.labelContent+1; 
 					$scope.mealMarker.label.setContent();
-					console.log($scope.currentMealKey);
 
 					userService.addMealToUser($scope.currentMealKey);
 
@@ -85,7 +91,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.updateMealInfo = function(place, marker, meal) {
 			
 			$scope.mealPlace = place;
-			$scope.mealMarker = marker;
+			//$scope.mealMarker = marker;  
 			$scope.initMeal();
 			$scope.showMealInfo = true;
 			$scope.showJoinMealButton = false;
@@ -159,11 +165,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				}
 			);
 		}
-
+	
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
+			console.log("yeup");
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 			$scope.getUsersMealBuddies();
+			$scope.getUsersMealsAttending();
 			$scope.lastPosition = new google.maps.LatLng(48.4449579, -123.33535710000001);   // This is the default position if Geolocation is enabled it is overwritten to the users location 
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
@@ -197,11 +205,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			// refreshes the map with new food places when the map is moved a certain amount
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1){
+				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
 					$scope.lastPosition = $scope.map.getCenter();
 					request.location=$scope.map.getCenter();
 					service.radarSearch(request, fastCallback); 
-					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
 				}
 			});
 		
@@ -304,6 +311,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				});
 			}
 		}
+
 		
 		fastCallback = function(results, status){
 			
@@ -313,7 +321,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					nukeAllMarkers();
 					$scope.database =null; //think it might be a possible leak so for now do this
 					$scope.dataBase =data;
-				
+					data = null;
 					var hasMeal = false;		
 					for (var i = 0; i < results.length; i++) { // Removed the checking because this method now only happens on the first load
 						hasMeal = false;
@@ -352,6 +360,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
+				location.reload();
 				updateMarkerIcon(marker);
 				var request = {
 					placeId:marker.markerId,
@@ -369,6 +378,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 		
 		createMealMarker = function(place){
+		
+			var userIsGoing = false;
+			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
+				if($scope.usersMealsAttending[i].key.substring(0,place.place_id.length) == place.place_id){
+					userIsGoing = true;
+				}
+			}
 		
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				
@@ -409,14 +425,11 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				/*
 				if( buddyWasFound && user is going){
 				
+				}*/
+				if (userIsGoing){
+					icon = '../../img/restaur_going.png'; // user is going
 				}
-				else if ( user is going){
-				
-				}
-				
-				*/
-				
-				if( buddyWasFound){
+				else if( buddyWasFound){
 					icon = '../../img/restaur_friend.png'; // friend going marker
 				}
 						
@@ -496,10 +509,11 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		function nukeAllMarkers(){
 			for (var i = 0; i < $scope.placedMarkers.length; i++ ) {
+				google.maps.event.clearListeners($scope.placedMarkers[i]);
 				$scope.placedMarkers[i].setMap(null);
+				delete $scope.placedMarkers[i];
 			}
 			$scope.placedMarkers = [];
-			console.log($scope.placedMarkers);
 		}
 		
 		// In the event that the browser cannot or user chooses not to support geolocation, this is how that's handled
@@ -528,4 +542,5 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 		$scope.initMain();
+
 }]);
