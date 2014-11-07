@@ -95,11 +95,11 @@ app.factory('userService', ['$http', function($http, $resource) {
 				//check if user is already being added by buddy
 				if (isKeyInArray(data.pending, buddyKey)) {
 					var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
-					$http.put(userConfirm, request);
+					return $http.put(userConfirm, request);
 				}
 				else {
 					var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
-					$http.put(userRequest, request);
+					return $http.put(userRequest, request);
 				}
 			});
 		});
@@ -113,13 +113,13 @@ app.factory('userService', ['$http', function($http, $resource) {
 	// Confirms a meal buddy that has a pending request to the user.
 	userService.confirmMealBuddy = function(buddyKey) {
 		var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
-		$http.put(userConfirm, request);
+		return $http.put(userConfirm, request);
 	};
 
 	// Deletes or rejects a meal buddy. Up to client
 	userService.deleteMealBuddy = function(buddyKey) {
 		var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
-		$http.put(userRemove, request);
+		return $http.put(userRemove, request);
 	};
 
 	userService.suggestMealBuddy = function(buddyKey) {

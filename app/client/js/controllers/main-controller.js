@@ -109,13 +109,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		 * mealBuddy: a key of the buddy
 		 */
 		$scope.removeMealBuddy = function(mealBuddy) {
-			userService.deleteMealBuddy(mealBuddy[0].key);
-			$scope.populateMealBuddies();
+			userService.deleteMealBuddy(mealBuddy[0].key).success(function(data) {
+				$scope.populateMealBuddies();
+			});
 		}
 
 		$scope.confirmMealBuddy = function(mealBuddyRequest) {
-			userService.confirmMealBuddy(mealBuddyRequest[0].key);
-			$scope.populateMealBuddies();
+			userService.confirmMealBuddy(mealBuddyRequest[0].key).success(function(data) {
+				$scope.populateMealBuddies();
+			});
 		}
 
 		$scope.getKeyFromFacebookID = function(facebookID){
