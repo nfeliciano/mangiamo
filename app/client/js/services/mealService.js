@@ -14,9 +14,13 @@ app.factory('mealService', ['$http', function($http) {
 		return $http.get(meal);
 	};
 
+	mealService.getMealDetails = function(mealKey) {
+		return $http.get(meal + '?key=' + mealKey);
+	}
+
 	// Returns an array of the people 
-	mealService.getPeopleFromMeal = function(placeID) {
-		return $http.get(people + '?placeID=' + placeID);
+	mealService.getPeopleFromMeal = function(mealKey) {
+		return $http.get(people + '?key=' + mealKey);
 	};
 
 	// Gets all meals from the backend with the specific place ID.
@@ -25,8 +29,8 @@ app.factory('mealService', ['$http', function($http) {
 	};
 
 	// 
-	mealService.addUserToMeal = function(placeID, ID) {
-		var request = {"placeID":placeID, "ID":ID};
+	mealService.addUserToMeal = function(mealKey, ID) {
+		var request = {"key":mealKey, "ID":ID};
 		return $http.put(meal, request);
 	};
 

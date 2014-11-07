@@ -82,6 +82,13 @@ module.exports.list = function (req,res) {
 	}
 }
 
+// Adds the meal the user joined to the user
+module.exports.addMealToUser = function (req,res) {
+	var query = { key: req.body.key };
+	var update = { mealsAttending: { "key" : req.body.mealkey } };
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {});
+}
+
 // We will now need some more methods
 // Cases: adds a buddy by key, adds a suggested buddy
 module.exports.requestBuddy = function(req,res) {
@@ -137,7 +144,9 @@ module.exports.suggestBuddy = function(req,res) {
 	var query = { key: req.body.userKey };
 	var buddyQuery = { key: req.body.buddyKey };
 	var update = { 'mealBuddies.suggested' : buddyQuery };
-	User.findOneAndUpdate(query, { $push : update }, function(err, results) {});
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
+		res.json(results);
+	});
 }
 
 // Cases: user no longer wants to see this person suggested
@@ -178,7 +187,9 @@ module.exports.removeBuddy = function(req,res) {
 	var buddyPendingRemove = { 'mealBuddies.pending' : query };
 	User.findOneAndUpdate(buddyQuery, { $pull : buddyRemove }, function(err, results) {});
 	User.findOneAndUpdate(buddyQuery, { $pull : buddyRequestedRemove }, function(err, results) {});
-	User.findOneAndUpdate(buddyQuery, { $pull : buddyPendingRemove }, function(err, results) {});
+	User.findOneAndUpdate(buddyQuery, { $pull : buddyPendingRemove }, function(err, results) {
+		res.json(results);
+	});
 }
 
 // Ignores a user who has added them

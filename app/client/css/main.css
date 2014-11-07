@@ -18,19 +18,15 @@
 #mealBuddiesContainer
 {
 	transition:all linear 0.5s;
-	height: 80vh;
-	padding: 0px;
+	background-color: rgba(0,0,0,0.5);
+	height: 100vh;
+	padding: 51px 0px 0px 0px;
 	opacity: 1;
 }
 #mealBuddiesContainer.ng-hide
 {
 	opacity: 0;
-}
-
-#mealBuddiesContainer > div
-{
-	height: 100%;
-	background-color: rgba(0,0,0,0.5);
+	width: 0px;
 }
 
 .mealBuddyButton
@@ -45,13 +41,50 @@
 	border-radius: 5px;
 	padding: 5px;
 }
-/* END MEAL BUDDIES */
+
+#import-friends
+{
+	font-size: 14px;
+	color: #fff;
+}
+/* END FRIENDS */
+
+/* START MEAL INFORMATION  */
+#mealInformationContainer
+{
+	height: 100vh;
+	padding: 51px 0px 0px 0px;
+	background-color: rgba(0,0,0,0.5);
+}
+
+#mealInformationContainer > div
+{
+}
+
+/* END MEAL INFORMATION */
 
 #mapContainer
 {
-	height: 80vh;
+	transition:all linear 0.5s;
+	height: 100vh;
 	position: relative;
+	padding: 51px 0px 0px 0px;
 }
+
+#mealInformation
+{
+	transition:all linear 0.5s;
+	background-color: rgba(0,0,0,0.5);
+	height: 100vh;
+	padding-top: 51px 0px 0px 0px;
+	opacity: 1;
+}
+
+#mealInformation.ng-hide
+{
+	width: 0px;
+}
+
 
 .controls 
 {	

@@ -1,11 +1,12 @@
 app.controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
 		$scope.startEating = true;
+		$scope.hideSuppBuddiesButton();
 
 		// initForm populates local variables from local JSON files.  This speparates 
 		// a lot of data from html and Angular into appropriate JSON files.  The
 		// following "gets" allow angular to access these local JSON files
-		$scope.initForm = function() {
+		$scope.initLoginForm = function() {
 			$http.get('/json/occupations.json').success( function(data) {
 				$scope.occupations = data.occupations;
 			});
@@ -38,14 +39,12 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 				if (sessionStorage.googleID) {
 					googleKey = sessionStorage.googleID;
 				}
-
 			}
-			
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
 
-			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation);
-
-			$location.path('main').replace();
+			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation).success( function() {
+				$location.path('main').replace();
+			});
 		}
 
 		getDescriptionFromStrings = function(stringOne, stringTwo, stringThree) {
@@ -61,10 +60,10 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 		});
 
 		// This redirects back to main if the user tries to navigate here and they are already logged in
-		$scope.init = function() {
+		$scope.initLogin = function() {
 			if (userService.isUserLoggedIn()) {
 				$location.path('main').replace();
 			}
 		}
-		$scope.init();
+		$scope.initLogin();
 }]);

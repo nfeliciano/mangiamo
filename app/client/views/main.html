@@ -1,31 +1,67 @@
 <div ng-controller="mainController" ng-init="initialize()">
-	<div id="mealBuddiesContainer" class="col-sm-3" ng-hide="hideMealBuddies">
-		<div class="scroll">
-			<span class="text"> Your ID is: {{UID}} </span>
-			<form>
-				<input type="text" ng-model="newMealBuddy">
-				<button ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>
+	<!-- Friends Bar -->
+	<div id="mealBuddiesContainer" class="col-sm-2" ng-hide="hideMealBuddies">
+		<span class="text"> Your ID is: {{UID}} </span>
+		<form>
+			<input type="text" ng-model="newMealBuddy">
+			<button ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>
+		</form>
+
+		<p class="text"> CURRENT FRIENDS </p>
+		<div class="mealBuddy" ng-repeat="mealBuddy in mealBuddies">
+			{{mealBuddy[0].name}}
+			<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddy, false)"> Remove </button>
+		</div>
+
+		<p class="text"> FRIEND REQUESTS </p>
+		<div class="mealBuddy" ng-repeat="mealBuddyRequest in mealBuddyRequests">
+			{{mealBuddyRequest[0].name}}
+			<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddyRequest, true)"> Decline </button>
+			<button class="mealBuddyButton" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
+		</div>
+
+		<p class="text"> SUGGESTED FRIENDS </p> <span id="import-friends" ng-click="loadSuggestions()">Find Facebook Friends</span>
+		<div class="mealBuddy" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
+			{{mealBuddySuggestion[0].name}}
+			<button class="mealBuddyButton" ng-click="getKeyFromFacebookID(mealBuddySuggestion[0].facebookID)"> Add </button>
+		</div>
+	</div>
+
+	<!-- Meal Information -->
+	<div id="mealInformationContainer" class="col-sm-2">
+		<!-- User Instructions -->
+		<div id="userInstructions" class="text" ng-hide="showMealInfo">
+			Click a pin on the map to begin joining and creating meals.  
+			Use the existing pins, or use the search bar to look up a 
+			restaurant you know the name of.
+		</div>
+		<!-- Existing Meal -->
+		<div class="text">
+			{{mealPlace.name}}
+			<div ng-repeat="meal in meals">
+				People: {{meal.numPeople}}
+				<span ng-click="showAttendees(meal)">Time: {{meal.time}}</span>
+			</div>
+			<div ng-repeat="mealAttendee in mealAttendees">
+				Age Range: {{mealAttendee.ageRange}}
+				Profession: {{mealAttendee.profession}}
+				Me-Factor: {{mealAttendee.description}}
+			</div>
+		</div>
+		<button type="submit" id="joinMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="joinMeal()" ng-show="showJoinMealButton"> Join Meal </button>
+		<!-- New Meal -->
+		<div id="newMeal" ng-show="showMealInfo">
+			<form ng-init="initMealForm()" ng-submit="submitMealData()">
+				<select ng-model="mealTimeHour">
+					<option value="" disabled selected> Hour </option>
+					<option ng-repeat="mealTimeHour in mealTimeHours"> {{mealTimeHour.twentyFour}} </option>
+				</select>
+				<select ng-model="mealTimeMinute">
+					<option value="" disabled selected> Minute </option>
+					<option ng-repeat="mealTimeMinute in mealTimeMinutes"> {{mealTimeMinute.value}} </option>
+				</select>
+				<button type="submit" id="createMealButton" class="btn btn-primary btn-block col-xs-6"> Create Meal </button>
 			</form>
-
-			<p class="text"> CURRENT FRIENDS </p>
-			<div class="mealBuddy" ng-repeat="mealBuddy in mealBuddies">
-				{{mealBuddy[0].name}}
-				<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddy)"> Remove </button>
-			</div>
-
-			 <p class="text"> FRIEND REQUESTS </p>
-			<div class="mealBuddy" ng-repeat="mealBuddyRequest in mealBuddyRequests">
-				{{mealBuddyRequest[0].name}}
-				<button class="mealBuddyButton" ng-click="removeMealBuddy(mealBuddyRequest)"> Decline </button>
-				<button class="mealBuddyButton" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
-			</div>
-
-			<p class="text"> SUGGESTED FRIENDS </p>
-			<div class="mealBuddy" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
-				{{mealBuddySuggestion[0].name}}
-				<button class="mealBuddyButton" ng-click="getKeyFromFacebookID(mealBuddySuggestion[0].facebookID)"> Add </button>
-			</div>
-
 		</div>
 	</div>
 
@@ -34,26 +70,4 @@
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="mapCanvas"></div>
 	</div>
-
-	<!-- The content for inside a modal when it pops up -->
-	<script type="text/ng-template" id="modalContent.html">
-		<div class="modal-header">
-			<h1>{{ placeName }}</h1>
-		</div>
-		<div class="modal-body">
-            <ul>
-                <li ng-repeat="user in users">
-                    Birth Year: {{ user.ageRange }} | Profession: {{user.profession }} | Me-Factor: {{ user.description }}
-                </li>
-            </ul>
-            
-            <div>
-            	<button class="btn btn-primary btn-large" ng-click="join()">{{hasMeal}}</button>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-        </div>
-	</script>
-
 </div>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="mangiamo">
 	<head>
-		<title>Mangiamo</title>
+		<title>Linksupp</title>
+
+		<link href="img/logo.ico" rel="shortcut icon" type="image/x-icon" />
 
 		<!-- Standard Meta Information -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -32,7 +34,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/index.css">
 		<link rel="stylesheet" type='text/css' href="/css/login.css">
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
-		<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Kaushan+Script'>
+		<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
 
 		<!-- Google Sign-In API -->
 		<meta name="google-signin-clientid" content="531132549575-uki7bfheg6kjssjt3hbu4tlug3d0lbal.apps.googleusercontent.com" />
@@ -60,13 +62,28 @@
 				        <span class="icon-bar"></span>
 				        <span class="icon-bar"></span> 
 			      	</button>
-			      <a class="navbar-brand" href="">Mangiamo</a>
+			      <a class="navbar-brand" href=""><strong>link</strong>supp</a>
 			    </div>
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="collapse navbar-collapse" id="myNavbar">
 				      <ul class="nav navbar-nav navbar-right">
-				        <li><a href="" ng-click="toggleMealBuddies()"><span class="glyphicon glyphicon-user"></span> Friends</a></li>
+				        <li><a href="" ng-show="showMealBuddiesButton" ng-click="toggleMealBuddies()"><span class="glyphicon glyphicon-user"></span> Friends </a></li>
+				        <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				        <li><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
+				        <li class="dropdown">
+				        	<a href="" class="dropdown-toggle" data-toggle="drowndown"><span class="glyphicon glyphicon-log-in"></span> Log In <span class="caret"></span></a>
+				        	<ul class="dropdown-menu" role="menu">
+				        		<li><a href="">
+				        			<div id="googleLogin"><img src="../img/sign_in_with_google.png" onmouseover="" style="cursor: pointer;"></img>
+									</div></a></li>
+				        		<li><a href="">
+				        			<div id="fb-root">
+									<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState" size="large">
+										Login with Facebook
+									</fb:login-button>
+									</div></a></li>
+				        	</ul>
+				        </li>
 				      </ul>
 				    </div>
 
@@ -82,16 +99,7 @@
 			</div><!-- /.container-fluid -->
 		</nav>
 
+		<!-- ui-view is where the content of our webpage gets put -->
 		<div ui-view=""></div>
-		<div ng-hide="authenticated" id="authentication">
-			<div id="googleLogin">
-				<img src="../img/sign_in_with_google.png" onmouseover="" style="cursor: pointer;"></img>
-			</div>
-			<div id="fb-root">
-				<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState" size="large">
-					Login with Facebook
-				</fb:login-button>
-			</div>
-		</div>
 	</body>
 </html>

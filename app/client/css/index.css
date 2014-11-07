@@ -12,22 +12,13 @@ body
     background-repeat: no-repeat;
 }
 
-#appDescription
-{
-	text-align: center;
-	font-size: 1.4em;
-	padding: 30px;
-	color: white;
-}
-
 .navbar-brand 
 {
-	font-family: 'Kaushan Script', cursive;
+	font-family: 'PT Sans', sans-serif;
 	color: white;
 }
 
 .navbar-default {
-	position: relative;
 	background-color: #242451;
 	border-color: #434470;
 }

@@ -1,27 +1,43 @@
 <div>
-
+	<!-- START ROW 1 -->
+	<!-- Formatting Div ; Adds left-side padding -->
 	<div class="col-xs-0 col-sm-3">
 	</div>
-
-	<div class="col-xs-12 col-sm-6">
+	<!-- App description -->
+	<div class="hidden-xs col-sm-6">
 		<p id="appDescription">
-			Mangiamo lets you expand your network by connecting you with people who are looking to share a meal.
+			Expand your network by connecting with people who are looking to share a meal.
 		</p>
 	</div>
-
-	<div class="col-xs-0 col-sm-4">
+	<!-- Formatting Div ; Adds right-side padding -->
+	<div class="col-xs-0 col-sm-3">	
 	</div>
+	<!-- END ROW 1 -->
 
+	<!-- START ROW 2 -->
+	<!-- Formatting Div ; Adds left-side padding -->
+	<div class="col-xs-1 col-sm-4">
+	</div>
+	<!-- Main Login Content -->
 	<div class="col-xs-12 col-sm-4">
-		<!-- Splash screen with "Start Eating" button -->
+		<!-- Try It Out! -->
 		<div id="startEating" ng-show="startEating">
-			<button ng-click="startEating = !startEating" type="submit" class="btn btn-primary"><h3>Start Eating!</h3></button>
+			<button ng-click="startEating = !startEating" type="submit" class="btn btn-primary">
+				<h4> Try linksupp <span class="underlined"> without an account! </span></h4>
+			</button>
 		</div>
+		<!-- Login Form -->
 		<div id="inputContainer" ng-hide="startEating">
 			<!-- Request user information -->
 			<div id="userInfo">
-				<form ng-init="initForm()" ng-submit="submitUserData()" >
-					<span >Date of Birth</span>
+			
+				<!-- NEED TO MAKE THIS CLICKABLE -->
+				<div id="info-exit"><span ng-click="startEating = !startEating" class="glyphicon glyphicon-remove"></span></div>
+				
+				<form ng-init="initLoginForm()" ng-submit="submitUserData()" >
+
+					<div id="userInfoTitle"> Some Basic Information </div>
+					<span>Date of Birth</span>
 					<div id="dob">
 						<div class="col-sm-12">
 							<select ng-model="dateRange" ng-init="somethingHere = options[0]">
@@ -39,7 +55,7 @@
 							</select>
 						</div>
 					</div>
-					<span>"Me" Factor</span>
+					<span>Describe Yourself!</span>
 					<div id="description">
 						<div class="col-sm-4">
 							<select ng-model="description1">
@@ -68,4 +84,9 @@
 			</div>
 		</div>
 	</div>
+	<!-- Formatting Div ; Adds right-side padding -->
+	<div class="col-xs-0 col-sm-3">	
+	</div>
+	<!-- END ROW 2 -->
+
 </div>
