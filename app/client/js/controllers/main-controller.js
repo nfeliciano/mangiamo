@@ -16,6 +16,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.mealAttendees = []; // the list of users who have committed to this meal
 		$scope.meals = [];
 
+		$scope.mealTime = new Date();
+
+		$scope.ismeridian = true;
+		$scope.toggleHourMode = function() {
+			$scope.ismeridian = !$scope.ismeridian;
+		}
+
 		$scope.currentPin = { "name": "",
 							  "place": "",
 							  "marker": "",
@@ -34,11 +41,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
 
+			// Force minutes to start at 00
+			var d = new Date();
+			d.setMinutes(0);
+			$scope.mealTime = d;
+
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				var mealData = angular.fromJson(data);
 				$scope.currentPin.meals = [];  // Reset data
-				console.log(mealData);
 				for (var i = 0; i < mealData.length; i++) {
 					$scope.currentPin.meals.push({"time": "", "attendees": []});
 
