@@ -131,7 +131,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.addUserToMeal(meal.key, key).success(function(data) {
-					$scope.currentPin.marker.labelContent = $scope.currentPin.marker.labelContent + 1; 
+					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1; 
 					$scope.currentPin.marker.label.setContent();
 					userService.addMealToUser(meal.key);
 					userService.getUserWithID(key).success(function(data) {
@@ -156,8 +156,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
 					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
 					$scope.currentPin.marker.hasMeal = true; 
-					
-					$scope.currentPin.marker.labelContent = $scope.currentPin.marker.labelContent + 1 ; 
+					console.log($scope.currentPin.marker.labelContent);
+					if ($scope.currentPin.marker.labelContent == "") {
+						$scope.currentPin.marker.labelContent = 1;
+					}
+					else {
+						$scope.currentPin.marker.labelContent = (parseInt($scope.currentPin.marker.labelContent) + 1 ); 
+					}
 					$scope.currentPin.marker.label.setContent();
 					userService.addMealToUser(meal.key);
 					$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
@@ -404,6 +409,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				position: place.geometry.location,
 				draggable: false,    //property that allows user to move marker
 				raiseOnDrag: false,
+				labelContent: 0,
 				labelAnchor: new google.maps.Point(7, 33),    // anchors to
 				labelClass: 'labels', // the CSS class for the label
 				
