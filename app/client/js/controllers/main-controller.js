@@ -113,10 +113,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 
-		$scope.addFriend = function(newMealBuddy) {
-			userService.addMealBuddy(newMealBuddy);
-		}
-
 		$scope.joinMeal = function(meal) {
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
@@ -191,7 +187,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 						/* handle the result */
 						userService.getMealBuddies().success(function(mealBuddies) {
 							for (var i = 0; i < response.data.length; i++) {
-								var j = i;
 								var fbFriend = response.data[i];
 								userService.findByFacebook(fbFriend.id).success(function(data) {
 									userService.suggestMealBuddy(data[0].key, mealBuddies);

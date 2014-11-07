@@ -8,14 +8,14 @@ var UserSchema = new Schema({
 	ageRange: String,
 	description: String,
 	profession: String,
-	mealsAttending: [ { key: { type: "string", unique: true } } ],
+	mealsAttending: [ { key: { type: "string" } } ],
 	mealBuddies: {
-		accepted: [{ key: { type: "string", unique: true } }],
-		pending: [{ key: { type: "string", unique: true } }],
-		requested: [{ key: { type: "string", unique: true } }],
-		suggested: [{ key: { type: "string", unique: true } }],
-		stopSuggesting: [{ key: { type: "string", unique: true } }],
-		ignored: [{ key: { type: "string", unique: true } }]
+		accepted: [{ key: { type: "string" } }],
+		pending: [{ key: { type: "string" } }],
+		requested: [{ key: { type: "string" } }],
+		suggested: [{ key: { type: "string" } }],
+		stopSuggesting: [{ key: { type: "string" } }],
+		ignored: [{ key: { type: "string" } }]
 	}
 });
 
