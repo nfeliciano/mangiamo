@@ -6,7 +6,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.dataBase = [];
 		$scope.usersMealBuddies = [];
 		$scope.selectedMarkerOldIcon = null;
-
+		$scope.usersMealsAttending = []; 
 		$scope.showSuppBuddiesButton();
 		$scope.showLogoutButton();
 
@@ -18,7 +18,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
         		position: google.maps.ControlPosition.RIGHT_CENTER}, 
         	panControlOptions: {
         		position: google.maps.ControlPosition.RIGHT_CENTER},
-        	zoom: 13 
+        	zoom: 14,
+			streetViewControl: false			
         }
 
 		$scope.mealTime = new Date();
@@ -113,6 +114,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				});
 			}
 		}
+		
+		$scope.getUsersMealsAttending = function(){
+			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
+				$scope.usersMealsAttending = data[0].mealsAttending; 
+			});
+		}
+		
+		
+
 
 		$scope.joinMeal = function(meal) {
 			if ($scope.currentPin.marker.hasMeal) {
@@ -140,10 +150,11 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				var key = angular.fromJson(localStorage.user).key;
 
 				mealService.addUserToMeal(data.key, key).success(function(meal) {
-					$scope.currentPin.marker.setIcon('../../img/restaur_selected.png');
+					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
 					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
 					$scope.currentPin.marker.hasMeal = true; 
-					$scope.currentPin.marker.labelContent = 1; 
+					
+					$scope.currentPin.marker.labelContent = $scope.currentPin.marker.labelContent + 1 ; 
 					$scope.currentPin.marker.label.setContent();
 					userService.addMealToUser(meal.key);
 					$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
@@ -200,13 +211,14 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			);
 			setTimeout(function() {
 				$scope.populateMealBuddies();
-			}, 500);
+			}, 1000);
 		}
 
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 			$scope.getUsersMealBuddies();
+			$scope.getUsersMealsAttending(); 
 			$scope.lastPosition = new google.maps.LatLng(48.4449579, -123.33535710000001);   // This is the default position if Geolocation is enabled it is overwritten to the users location 
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
@@ -239,7 +251,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			// refreshes the map with new food places when the map is moved a certain amount
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 2000){
+				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
+					$scope.getUsersMealBuddies();
 					$scope.lastPosition = $scope.map.getCenter();
 					request.location=$scope.map.getCenter();
 					service.radarSearch(request, fastCallback); 
@@ -323,7 +336,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
 				
 				mealService.getAllMeals().success(function(data){
-				
+					$scope.dataBase = null;
 					$scope.dataBase =data;
 				
 					var hasMeal = false;		
@@ -415,6 +428,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		createMealMarker = function(place){
+			
+			var userIsGoing = false;
+
+			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
+				if($scope.usersMealsAttending[i].key.substring(0,place.place_id.length) == place.place_id){
+					userIsGoing = true;
+				}
+			}
+			
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 
 				var numPeople = 0;
@@ -451,7 +473,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				
 				var icon = '../../img/restaurant.png'; //default meal marker
 				
-				if( buddyWasFound){
+				/*if( buddyWasFound && userIsGoing){
+					icon = user is going and buddy
+				} else*/
+				if( userIsGoing){
+					icon = '../../img/restaur_going.png';
+				}
+				else if( buddyWasFound){
 					icon = '../../img/restaur_friend.png'; // friend going marker
 				}
 						
@@ -538,7 +566,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		function nukeAllMarkers(){
 			for (var i = 0; i < $scope.placedMarkers.length; i++ ) {
+				google.maps.event.clearListeners($scope.placedMarkers[i]);
 				$scope.placedMarkers[i].setMap(null);
+				delete $scope.placedMarkers[i];
 			}
 			$scope.placedMarkers = [];
 		}
@@ -569,5 +599,5 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 		$scope.initMain();
-
+	
 }]);
