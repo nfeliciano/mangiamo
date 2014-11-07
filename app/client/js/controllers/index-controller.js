@@ -44,11 +44,11 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		// Populate MealBuddies, and MealBuddyRequests to be displayed in the Meal Buddies SideBar
 		$scope.populateMealBuddies = function() {
 			$scope.UID = angular.fromJson(localStorage.user).key;
-			$scope.mealBuddyRequests = [];
-			$scope.mealBuddies = [];
-			$scope.mealBuddySuggestions = [];
 			// Grab the users MealBuddies from the database
 			userService.getMealBuddies().success( function(data1) {
+				$scope.mealBuddyRequests = [];
+				$scope.mealBuddies = [];
+				$scope.mealBuddySuggestions = [];
 				for (mealBuddy of data1.accepted) {
 					userService.getUserWithID(mealBuddy.key).success(function(data2) {
 						$scope.mealBuddies.push(data2);

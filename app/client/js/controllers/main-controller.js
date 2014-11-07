@@ -158,17 +158,16 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 								var j = i;
 								var fbFriend = response.data[i];
 								userService.findByFacebook(fbFriend.id).success(function(data) {
-									userService.suggestMealBuddy(data[0].key, mealBuddies).success(function(data2) {
-										if (j == response.data.length-1) {
-											$scope.populateMealBuddies();
-										}
-									});
+									userService.suggestMealBuddy(data[0].key, mealBuddies);
 								});
 							}
 						});
   					}
 				}
 			);
+			setTimeout(function() {
+				$scope.populateMealBuddies();
+			}, 500);
 		}
 
 		// initializes the google map and populates it with food places
