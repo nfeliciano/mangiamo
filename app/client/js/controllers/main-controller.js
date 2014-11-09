@@ -27,6 +27,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		$scope.mealTime = new Date();
 
+		// Adds a Friend
 		$scope.addFriend = function(newMealBuddy) {
 			$scope.newMealBuddy = "";
 			userService.getMealBuddies().success(function(mealBuddies) {
@@ -106,9 +107,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			$scope.showFriendsSidebar2(false);
 			$scope.toggleMealSidebar(true);
 			$scope.toggleMealInfo(true);
-
 		}
-
 
 		$scope.populateAttendees = function(mealData, i) {
 			for (var j = 0; j < mealData[i].people.length; j++) {
@@ -123,9 +122,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				$scope.usersMealsAttending = data[0].mealsAttending; 
 			});
 		}
-		
-		
-
 
 		$scope.joinMeal = function(meal) {
 			if ($scope.currentPin.marker.hasMeal) {
@@ -156,7 +152,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
 					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
 					$scope.currentPin.marker.hasMeal = true; 
-					console.log($scope.currentPin.marker.labelContent);
 					if ($scope.currentPin.marker.labelContent == "") {
 						$scope.currentPin.marker.labelContent = 1;
 					}
@@ -529,7 +524,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				});
 			});
 		}
-		
 	
 		//paramater is the new selected marker,
 		// function updates old marker to its old image, and update new to new image
