@@ -112,14 +112,35 @@
 					</div>
 					<button class="btn btn-default btn-sm" ng-click="joinMeal(meal)"> Join Meal </button>
 				</accordion-group>
+				<accordion-group>
+					<!-- Create Meal -->
+					<accordion-heading>
+						<!-- <div id="createMealHeader">
+							Create New Meal
+							<i class="pull-right glyphicon glyphicon-plus"></i>
+						</div> -->
+						<div id="mealInfoHeader">
+							<div>
+								--
+							</div>
+							--:--
+							<i class="pull-right glyphicon glyphicon-plus"></i>
+						</div>
+					</accordion-heading>
+					<div id="timeTicker">
+							<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+						</div>
+						<button id="createMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="createMeal()"> Create a New Meal </button>
+				</accordion-group>
 			</accordion>
-			<!-- Create Meal -->
-			<div id="newMeal" ng-init="initMealForm()">
+			
+
+			<!-- <div id="newMeal" ng-init="initMealForm()">
 				<div id="timeTicker">
 					<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
 				</div>
 				<button id="createMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="createMeal()"> Create a New Meal </button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>
