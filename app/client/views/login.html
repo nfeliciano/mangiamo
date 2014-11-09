@@ -49,11 +49,11 @@
 				<form ng-init="initLoginForm()" ng-submit="submitUserData()" >
 
 					<div id="userInfoTitle"> Some Basic Information </div>
-					<span>Date of Birth</span>
+					<span>Age Range</span>
 					<div id="dob">
 						<div class="col-sm-12">
 							<select ng-model="dateRange" ng-init="somethingHere = options[0]">
-								<option value="" disabled selected> Date Range </option>
+								<option value="" disabled selected> Age Range </option>
 								<option ng-repeat="dateRange in dateRanges"> {{dateRange.value}} </option>
 							</select>
 						</div>

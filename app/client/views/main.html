@@ -106,11 +106,19 @@
 						</div>
 					</accordion-heading>
 					<div ng-repeat="attendee in meal.attendees">
-						Age Range: {{attendee.ageRange}}<br>
-						Profession: {{attendee.profession}}<br>
-						Me-Factor: {{attendee.description}}<br><br>
+						<div class="mealAttendee">
+							<!-- Age Range &nbsp - {{attendee.ageRange}}<br>
+							Profession &nbsp - {{attendee.profession}}<br>
+							"Me" Factor - {{attendee.description}} -->
+							<!-- {{attendee.description}}<br>
+							{{attendee.profession}}<br>
+							{{attendee.ageRange}} -->
+							I am a <span>{{attendee.description}}</span> with a profession in 
+							<span>{{attendee.profession}}</span> and I am between 
+							<span>{{attendee.ageRange}}</span>.
+						</div>
 					</div>
-					<button class="btn btn-default btn-sm button" ng-click="joinMeal(meal)"> Join Meal </button>
+					<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)"> Join Meal </button>
 				</accordion-group>
 				<accordion-group>
 					<!-- Create Meal -->

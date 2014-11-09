@@ -46,17 +46,17 @@
 	float: right;
 }
 
-.mealBuddy
-{
-	background-color: #eaeaea;
-	margin: 20px;
-	border-radius: 5px;
-	padding: 5px;
-}
-
 .mealAttendee
 {
-	text-align: center;
+	background-color: rgba(47, 95, 127, .1);
+	border-radius: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+.mealAttendee > span
+{
+	font-weight: bold;
 }
 
 #mealsHeader
