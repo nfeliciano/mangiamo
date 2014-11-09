@@ -136,6 +136,12 @@
 {
 	text-align: center;
 }
+
+.button
+{
+	background-color: #2F5F7F;
+	color: white;
+}
 /* MEAL INFORMATION END */
 
 /* CREATE MEAL START */
