@@ -49,8 +49,8 @@ app.get('/', function(req,res) {
 
 //Facebook authentication
 passport.use(new FacebookStrategy({
-	clientID: 283325225209622,
-    clientSecret: "c0f7916fc9cba7495409679025aba041",
+	clientID: 38723781237683823,
+    clientSecret: "i4yy48yey484s8s48s4t4",
     callbackURL: "http://localhost:3000/auth/facebook/callback"
 },
 function (accessToken, refreshToken, profile, done) {
