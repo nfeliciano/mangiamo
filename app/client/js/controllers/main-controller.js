@@ -119,7 +119,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		$scope.getUsersMealsAttending = function(){
 			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
-				console.log("UPDATE USER MEALS"); 
 				$scope.usersMealsAttending = data[0].mealsAttending; 
 			});
 		}
@@ -131,14 +130,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			//update current user meals, just as a precaution
 			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
 				$scope.usersMealsAttending = data[0].mealsAttending; 
-				console.log("UPDATE USER MEALS"); 
+				
 				//hard code limit 1
 				if($scope.usersMealsAttending.length >0){
-					console.log("user cannot join");
-					return false;
+					return false;	//User cant join
 				}
-				console.log("user can join");
-				return true; 
+		
+				return true; // USer can join
 				
 			});
 		}
@@ -166,7 +164,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.createMeal = function() {
-			console.log("create meal");
+
 			//test if user can join
 			if(!$scope.isUserAllowedToJoinMeal()){
 				return;
@@ -472,7 +470,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
 				if($scope.usersMealsAttending[i].key.substring(0,place.place_id.length) == place.place_id){
-					console.log("USER IS GOING to " + $scope.usersMealsAttending[i].key);
 					userIsGoing = true;
 				}
 			}
