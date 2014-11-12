@@ -5,7 +5,7 @@ var express 				= require('express'),
 	config 					= require('./config'),
 	mealsController 		= require('./server/controllers/meals-controller');
 	userController			= require('./server/controllers/user-controller');
-	options 				= { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 10000 } }, 
+	options 				= { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 10000 } },
                 				replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 10000 } } };
 
 // set the 'dbUrl' to the mongodb url that corresponds to the environment we are in
@@ -13,7 +13,7 @@ app.set('dbUrl', config.db['development']);
 // connect mongoose to the mongo dbUrl
 mongoose.connect(app.get('dbUrl'), options);
 
-mongoose.connection.on('error', console.error.bind(console, 'connection error:'));  
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -30,6 +30,7 @@ app.use('/css', express.static(__dirname + '/client/css'));
 app.use('/img', express.static(__dirname + '/client/img'));
 app.use('/views', express.static(__dirname + '/client/views'));
 app.use('/json', express.static(__dirname + '/client/json'));
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
 //REST API
 //Meals
