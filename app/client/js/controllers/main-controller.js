@@ -119,14 +119,42 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		$scope.getUsersMealsAttending = function(){
 			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
+				console.log("UPDATE USER MEALS"); 
 				$scope.usersMealsAttending = data[0].mealsAttending; 
 			});
 		}
 
+		
+		//Just a place holder function for whatever method of testing weither a person is allowed to join,
+		//for now just updates their current meals, and sees if its greater than 1 then they can join
+		$scope.isUserAllowedToJoinMeal = function(){
+			//update current user meals, just as a precaution
+			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
+				$scope.usersMealsAttending = data[0].mealsAttending; 
+				console.log("UPDATE USER MEALS"); 
+				//hard code limit 1
+				if($scope.usersMealsAttending.length >0){
+					console.log("user cannot join");
+					return false;
+				}
+				console.log("user can join");
+				return true; 
+				
+			});
+		}
+		
 		$scope.joinMeal = function(meal) {
+		
+			//Test if user can join meal
+			if(!$scope.isUserAllowedToJoinMeal())
+			{
+				return;
+			}
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.addUserToMeal(meal.key, key).success(function(data) {
+					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
+					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
 					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1; 
 					$scope.currentPin.marker.label.setContent();
 					userService.addMealToUser(meal.key);
@@ -138,6 +166,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.createMeal = function() {
+			console.log("create meal");
+			//test if user can join
+			if(!$scope.isUserAllowedToJoinMeal()){
+				return;
+			}
+		
 			var currentTime = new Date();
 			var date = new Date(currentTime.getFullYear(),
 								currentTime.getMonth(), 
@@ -438,6 +472,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
 				if($scope.usersMealsAttending[i].key.substring(0,place.place_id.length) == place.place_id){
+					console.log("USER IS GOING to " + $scope.usersMealsAttending[i].key);
 					userIsGoing = true;
 				}
 			}
@@ -576,6 +611,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 			$scope.placedMarkers = [];
 		}
+		
+		
+		
 		
 		// In the event that the browser cannot or user chooses not to support geolocation, this is how that's handled
 		function handleNoGeolocation(errorFlag) {
