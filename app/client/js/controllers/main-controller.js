@@ -133,10 +133,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				
 				//hard code limit 1
 				if($scope.usersMealsAttending.length >0){
-					return false;	//User cant join
+					return false; // user cannot join
 				}
-		
-				return true; // USer can join
+				return true;  //user can join
 				
 			});
 		}
