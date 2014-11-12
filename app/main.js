@@ -84,7 +84,7 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback', function (req, res, next) {
 	passport.authenticate('facebook', function (err, user, info) {
 		// This is the default destination upon successful login.
-    	var succesUrl = '/#/main';
+    	var successUrl = '/#/main';
     	var failureUrl = '/#/login';
 
     	// Add logic to redirect
