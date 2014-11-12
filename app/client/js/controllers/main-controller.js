@@ -27,6 +27,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		$scope.mealTime = new Date();
 
+		// Adds a Friend
 		$scope.addFriend = function(newMealBuddy) {
 			$scope.newMealBuddy = "";
 			userService.getMealBuddies().success(function(mealBuddies) {
@@ -106,9 +107,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			$scope.showFriendsSidebar2(false);
 			$scope.toggleMealSidebar(true);
 			$scope.toggleMealInfo(true);
-
 		}
-
 
 		$scope.populateAttendees = function(mealData, i) {
 			for (var j = 0; j < mealData[i].people.length; j++) {
@@ -123,14 +122,36 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				$scope.usersMealsAttending = data[0].mealsAttending; 
 			});
 		}
-		
-		
 
-
+		
+		//Just a place holder function for whatever method of testing weither a person is allowed to join,
+		//for now just updates their current meals, and sees if its greater than 1 then they can join
+		$scope.isUserAllowedToJoinMeal = function(){
+			//update current user meals, just as a precaution
+			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
+				$scope.usersMealsAttending = data[0].mealsAttending; 
+				
+				//hard code limit 1
+				if($scope.usersMealsAttending.length >0){
+					return false; // user cannot join
+				}
+				return true;  //user can join
+				
+			});
+		}
+		
 		$scope.joinMeal = function(meal) {
+		
+			//Test if user can join meal
+			if(!$scope.isUserAllowedToJoinMeal())
+			{
+				return;
+			}
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.addUserToMeal(meal.key, key).success(function(data) {
+					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
+					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
 					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1; 
 					$scope.currentPin.marker.label.setContent();
 					userService.addMealToUser(meal.key);
@@ -142,6 +163,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.createMeal = function() {
+
+			//test if user can join
+			if(!$scope.isUserAllowedToJoinMeal()){
+				return;
+			}
+		
 			var currentTime = new Date();
 			var date = new Date(currentTime.getFullYear(),
 								currentTime.getMonth(), 
@@ -156,7 +183,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
 					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
 					$scope.currentPin.marker.hasMeal = true; 
-					console.log($scope.currentPin.marker.labelContent);
 					if ($scope.currentPin.marker.labelContent == "") {
 						$scope.currentPin.marker.labelContent = 1;
 					}
@@ -529,7 +555,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				});
 			});
 		}
-		
 	
 		//paramater is the new selected marker,
 		// function updates old marker to its old image, and update new to new image
@@ -582,6 +607,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 			$scope.placedMarkers = [];
 		}
+		
+		
+		
 		
 		// In the event that the browser cannot or user chooses not to support geolocation, this is how that's handled
 		function handleNoGeolocation(errorFlag) {

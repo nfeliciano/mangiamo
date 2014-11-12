@@ -1,5 +1,4 @@
 <div ng-controller="mainController" ng-init="initialize()">
-	
 	<!-- Map -->
 	<div id="mapContainer" class="col-xs-12">
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -7,7 +6,7 @@
 	</div>
 
 	<!-- Friends Bar -->
-	<div id="mealBuddiesContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-3" ng-show="showFriendsSidebar">
+	<div id="mealBuddiesContainer" class="col-xs-12 col-sm-4 col-md-3 col-lg-3" ng-show="showFriendsSidebar">
 		
 		<div id="mealinfo-exit" ng-click="showFriendsSidebar2(false)">
 			<span class="glyphicon glyphicon-remove visible-xs"></span>
@@ -68,8 +67,8 @@
 	</div>
 
 	<!-- Meal Information -->
-	<div id="mealInformationContainer" class="col-xs-12 col-sm-3 col-md-3 col-lg-3" ng-show="showMealSidebar">
-		<!-- Remove sidebar "X" for mobile users -->
+	<div id="mealInformationContainer" class="col-xs-12 col-sm-4 col-md-3 col-lg-3" ng-show="showMealSidebar">
+		<!-- Remove-sidebar-"X" for mobile users -->
 		<div id="mealinfo-exit" ng-click="toggleMealSidebar(false)">  
 			<span class="glyphicon glyphicon-remove visible-xs"></span>
 		</div>
@@ -83,36 +82,73 @@
 			<img src="/img/legend.png">
 		</div>
 
-		<div class="sidebarTitle" ng-show="showMealInfo"> Location Info 
-		</div>
 		<!-- Location -->
 		<div id="mealPlace" ng-show="showMealInfo">
+			<div class="sidebarTitle" ng-show="showMealInfo">
+				{{currentPin.name}}
+			</div>
 			<hr>
-			<div id="mealPlaceName"> {{currentPin.name}} </div>
 			<!-- Existing Meals -->
+			<div id="mealsHeader">
+				<span class="pull-left"> Meal Time </span> 
+				Attendees
+				<span class="pull-right"> Info </span>
+			</div>
 			<accordion close-others="true">
-				<accordion-group is-open="status.open" ng-repeat="meal in currentPin.meals" class="listedMeal">
+				<accordion-group class="listedMeal" is-open="status.open" ng-repeat="meal in currentPin.meals">
 					<accordion-heading>
-						{{meal.time}}
-						<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+						<div id="mealInfoHeader">
+							<div>
+								{{meal.attendees.length}}
+							</div>
+							{{meal.time}}
+							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+						</div>
 					</accordion-heading>
 					<div ng-repeat="attendee in meal.attendees">
-						Age Range: {{attendee.ageRange}}<br>
-						Profession: {{attendee.profession}}<br>
-						Me-Factor: {{attendee.description}}<br><br>
+						<div class="mealAttendee">
+							<!-- Age Range &nbsp - {{attendee.ageRange}}<br>
+							Profession &nbsp - {{attendee.profession}}<br>
+							"Me" Factor - {{attendee.description}} -->
+							<!-- {{attendee.description}}<br>
+							{{attendee.profession}}<br>
+							{{attendee.ageRange}} -->
+							I am a <span>{{attendee.description}}</span> with a profession in 
+							<span>{{attendee.profession}}</span> and I am between 
+							<span>{{attendee.ageRange}}</span>.
+						</div>
 					</div>
-					<button class="btn btn-default btn-sm" ng-click="joinMeal(meal)"> Join Meal </button>
+					<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)"> Join Meal </button>
+				</accordion-group>
+				<accordion-group>
+					<!-- Create Meal -->
+					<accordion-heading>
+						<!-- <div id="createMealHeader">
+							Create New Meal
+							<i class="pull-right glyphicon glyphicon-plus"></i>
+						</div> -->
+						<div id="mealInfoHeader">
+							<div>
+								--
+							</div>
+							--:--
+							<i class="pull-right glyphicon glyphicon-plus"></i>
+						</div>
+					</accordion-heading>
+					<div id="timeTicker">
+							<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+						</div>
+						<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal()"> Create a New Meal </button>
 				</accordion-group>
 			</accordion>
-			<!-- Create Meal -->
-			<br>
-			<hr>
-			<div id="newMeal" ng-init="initMealForm()">
+			
+
+			<!-- <div id="newMeal" ng-init="initMealForm()">
 				<div id="timeTicker">
 					<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
 				</div>
 				<button id="createMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="createMeal()"> Create a New Meal </button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

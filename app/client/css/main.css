@@ -29,7 +29,7 @@
 	padding: 51px 0px 0px 0px;
 	overflow-y: auto;
 	opacity: 1;
-	position:absolute;
+	position: absolute;
 	text-align: center;
 	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 	-moz-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
@@ -46,31 +46,45 @@
 	float: right;
 }
 
-.mealBuddy
+.mealAttendee
 {
-	background-color: #eaeaea;
-	margin: 20px;
+	background-color: rgba(47, 95, 127, .1);
 	border-radius: 5px;
-	padding: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
 }
 
-.mealAttendee
+.mealAttendee > span
+{
+	font-weight: bold;
+}
+
+#mealsHeader
+{
+	color: #2F5F7F;
+	padding: 0 15px 5px 13px;
+	text-align: center;
+}
+
+#mealInfoHeader
+{
+	width: 100%;
+}
+
+#mealInfoHeader > div
+{
+	position: absolute;
+	width: 90%;
+	text-align: center;
+}
+
+#createMealHeader
 {
 	text-align: center;
 }
 /* END FRIENDS */
 
 /* MEAL INFORMATION START */
-#mealPlaceName
-{
-	ccolor: #2F5F7F;
-	width: 100%;
-	text-align: center;
-	font-size: 1.4em;
-	padding-bottom: 10px;
-	font-family: "Roboto", sans-serif;
-}
-
 #mealPlace
 {
 	background-color: #CCCCCC;
@@ -105,21 +119,12 @@
 {
 	height: 100vh;
 	position: absolute;
-	padding: 51px 0px 0px 0px;
+	padding: 51px 10px 0px 10px;
 	overflow-y: auto;
-	/*background-color: rgba(170, 170, 170, 0.8);*/
 	background-color: #CCCCCC;
 	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 	-moz-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 	box-shadow: 1px 0px 1px rgba(0,0,0, .5);
-}
-
-#mealInformation
-{
-	background-color: rgba(0,0,0,0.5);
-	height: 100vh;
-	padding-top: 51px 0px 0px 0px;
-	opacity: 1;
 }
 
 .meal
@@ -130,6 +135,12 @@
 #timeTicker
 {
 	text-align: center;
+}
+
+.button
+{
+	background-color: #2F5F7F;
+	color: white;
 }
 /* MEAL INFORMATION END */
 
