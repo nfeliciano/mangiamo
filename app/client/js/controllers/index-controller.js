@@ -1,18 +1,63 @@
 app.controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
-		$scope.showFriendsSidebar = false;
-		$scope.showMealBuddiesButton = false;
+		$scope.UID = '';
+		$scope.authenticated = false;
+
 		$scope.showingLoginButton = true;
 		$scope.showingLogoutButton = false;
-		$scope.showMealInfo = false;
-		$scope.showMealSidebar = true;
+
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
 		$scope.mealBuddySuggestions = [];
 
-		$scope.UID = '';
+		$scope.sidebarVisible = true;
+		$scope.linksVisible = false;
+		$scope.mealsVisible = false;
+		$scope.introVisible = true;
 
-		$scope.authenticated = false;
+		// $scope.showMealInfo = false;
+		// $scope.showMealSidebar = true;
+		// $scope.showFriendsSidebar = false;
+		// $scope.showMealBuddiesButton = false;
+
+		$scope.toggleSidebar = function(show) {
+			$scope.sidebarVisible = show;
+		}
+
+		$scope.setSidebarContent = function(content) {
+			if (content == "links") {
+				if ($scope.linksVisible = true) {
+					$scope.sidebarVisible = false;
+					$scope.linksVisible = false;
+				}
+				else {
+					$scope.linksVisible = true;
+					$scope.mealsVisible = false;
+					$scope.introVisible = false;
+					$scope.sidebarVisible = true;
+				}				
+			}
+			else if (content = "intro") {
+				if ($scope.introVisible = true;) {
+					$scope.sidebarVisible = false;
+					$scope.introVisible = true;
+				}
+				else
+				{
+					$scope.linksVisible = false;
+					$scope.mealsVisible = false;
+					$scope.introVisible = true;
+					$scope.sidebarVisible = true;
+				}
+			}
+			else  // (content == "meals")
+			{
+				$scope.linksVisible = false;
+				$scope.mealsVisible = true;
+				$scope.introVisible = false;
+				$scope.sidebarVisible = true;
+			}
+		}
 
 		$scope.toggleMealInfo = function(show) {
 			$scope.showMealInfo = show;

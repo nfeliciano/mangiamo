@@ -13,6 +13,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		var minZoomLevel = 13; // as far back as they can go
 
 		$scope.hideLoginButton();
+		
 		$scope.showFriendsSidebar2(false);
 		$scope.toggleMealBuddies();
 		$scope.toggleMealInfo(false);
