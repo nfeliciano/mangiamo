@@ -107,12 +107,6 @@
 					</accordion-heading>
 					<div ng-repeat="attendee in meal.attendees">
 						<div class="mealAttendee">
-							<!-- Age Range &nbsp - {{attendee.ageRange}}<br>
-							Profession &nbsp - {{attendee.profession}}<br>
-							"Me" Factor - {{attendee.description}} -->
-							<!-- {{attendee.description}}<br>
-							{{attendee.profession}}<br>
-							{{attendee.ageRange}} -->
 							I am a <span>{{attendee.description}}</span> with a profession in 
 							<span>{{attendee.profession}}</span> and I am between 
 							<span>{{attendee.ageRange}}</span>.
@@ -136,19 +130,12 @@
 						</div>
 					</accordion-heading>
 					<div id="timeTicker">
-							<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
-						</div>
-						<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal()"> Create a New Meal </button>
+						<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+						{{mealTime.getHours()}}:{{mealTime.getMinutes()}}
+					</div>
+					<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime)"> Create a New Meal </button>
 				</accordion-group>
 			</accordion>
-			
-
-			<!-- <div id="newMeal" ng-init="initMealForm()">
-				<div id="timeTicker">
-					<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
-				</div>
-				<button id="createMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="createMeal()"> Create a New Meal </button>
-			</div> -->
 		</div>
 	</div>
 </div>

@@ -13,6 +13,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		var minZoomLevel = 13; // as far back as they can go
 
 		$scope.hideLoginButton();
+		$scope.showFriendsSidebar2(false);
+		$scope.toggleMealBuddies();
 		$scope.toggleMealInfo(false);
 
 		var mapOptions = { 
@@ -24,8 +26,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
         	zoom: 14,
 			streetViewControl: false			
         }
-
-		$scope.mealTime = new Date();
 
 		// Adds a Friend
 		$scope.addFriend = function(newMealBuddy) {
@@ -47,13 +47,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 							  		   ]
 							};
 
+		$scope.mealTime = new Date();
+
 		$scope.updateMealInfo = function(place, marker) {
 			$scope.currentPin.name = place.name;
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
 			$scope.currentPin.meals = [];
 
-			// Force minutes to start at 00
+			//Force minutes to start at 00
 			var d = new Date();
 			d.setMinutes(0);
 			d.setHours(d.getHours() + 1);
@@ -62,7 +64,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				var mealData = angular.fromJson(data);
-
+				console.log(mealData);
 				$scope.currentPin.meals = [];  // Reset data
 				for (var i = 0; i < mealData.length; i++) {
 					$scope.currentPin.meals.push({"time": "", "key": "", "attendees": []});
@@ -123,10 +125,11 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			});
 		}
 
-		
 		//Just a place holder function for whatever method of testing weither a person is allowed to join,
 		//for now just updates their current meals, and sees if its greater than 1 then they can join
 		$scope.isUserAllowedToJoinMeal = function(){
+			// OVERRIDE
+			return true;
 			//update current user meals, just as a precaution
 			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
 				$scope.usersMealsAttending = data[0].mealsAttending; 
@@ -162,7 +165,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 
-		$scope.createMeal = function() {
+		$scope.createMeal = function(mealTime) {
 
 			//test if user can join
 			if(!$scope.isUserAllowedToJoinMeal()){
@@ -173,8 +176,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			var date = new Date(currentTime.getFullYear(),
 								currentTime.getMonth(), 
 								currentTime.getDate(), 
-								$scope.mealTime.getHours(), 
-								$scope.mealTime.getMinutes(), 0, 0);
+								mealTime.getHours(), 
+								mealTime.getMinutes(), 0, 0);
 
 			mealService.addNewMeal($scope.currentPin.place.place_id, 0, date, [], true).success(function(data) {
 				var key = angular.fromJson(localStorage.user).key;
@@ -607,9 +610,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 			$scope.placedMarkers = [];
 		}
-		
-		
-		
 		
 		// In the event that the browser cannot or user chooses not to support geolocation, this is how that's handled
 		function handleNoGeolocation(errorFlag) {
