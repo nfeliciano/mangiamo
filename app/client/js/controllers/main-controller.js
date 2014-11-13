@@ -9,6 +9,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.usersMealsAttending = []; 
 		$scope.showSuppBuddiesButton();
 		$scope.showLogoutButton();
+		
+		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
+		// $scope.attendingMeal = true;  
 
 		var minZoomLevel = 13; // as far back as they can go
 
@@ -161,6 +164,25 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				})
 			}
 		}
+
+		// Add a check for if user is attending meal
+		// $scope.leaveMeal = function(meal) {
+		// 	if ($scope.currentPin.marker.hasMeal) {
+		// 		var key = angular.fromJson(localStorage.user).key;
+		// 		mealService.deleteUserFromMeal(meal.key, key).success(function(data) {
+		// 			$scope.currentPin.marker.setIcon('../../img/restaurant.png');
+		// 			$scope.selectedMarkerOldIcon = '../../img/restaur_selected.png';
+		// 			$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) - 1; 
+		// 			$scope.currentPin.marker.label.setContent();
+		// 			userService.deleteMealFromUser(meal.key);
+		// 			userService.getUserWithID(key).success(function(data) {
+		// 				meal.attendees.push(data[0]);
+		// 			});
+					
+		// 		})
+		// 	}
+		// }
+		// TODO - if meal no longer has any attendees, perform further changes - TODO
 
 		$scope.createMeal = function() {
 

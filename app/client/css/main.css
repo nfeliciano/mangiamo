@@ -24,7 +24,7 @@
 {
 	/*transition:all linear 0.5s;*/
 	/*background-color: rgba(187,187,187, 0.95);*/
-	background-color: #CCCCCC;
+	background-color: #DDDDDD;
 	height: 100vh;
 	padding: 51px 0px 0px 0px;
 	overflow-y: auto;
@@ -87,7 +87,7 @@
 /* MEAL INFORMATION START */
 #mealPlace
 {
-	background-color: #CCCCCC;
+	background-color: #DDDDDD;
 	padding: 0px 0 60px 0;
 }
 
@@ -121,7 +121,7 @@
 	position: absolute;
 	padding: 51px 10px 0px 10px;
 	overflow-y: auto;
-	background-color: #CCCCCC;
+	background-color: #DDDDDD;
 	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 	-moz-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 	box-shadow: 1px 0px 1px rgba(0,0,0, .5);
