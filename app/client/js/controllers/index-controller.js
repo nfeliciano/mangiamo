@@ -41,6 +41,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					$scope.linksVisible = false;
 				}
 				else {
+					$scope.populateMealBuddies();
 					$scope.mealsVisible = false;
 					$scope.introVisible = false;
 					$scope.linksVisible = true;
@@ -128,7 +129,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					});
 				}
 			});
-			$scope.setSidebarContent('links');
 		}
 
 		/* Facebook Integration Stuff */
