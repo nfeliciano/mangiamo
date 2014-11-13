@@ -1,68 +1,87 @@
 app.controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
-		$scope.showFriendsSidebar = false;
-		$scope.showMealBuddiesButton = false;
-		$scope.showingLoginButton = true;
-		$scope.showingLogoutButton = false;
-		$scope.showMealInfo = false;
-		$scope.showMealSidebar = true;
+		/* GLOBAL DATA START */
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
 		$scope.mealBuddySuggestions = [];
 
+		$scope.loginButtonVisible;
+		$scope.logoutButtonVisible;
+		$scope.linksButtonVisible;
+
+		$scope.sidebarVisible = false;
+		$scope.linksVisible = false;
+		$scope.mealsVisible = false;
+		$scope.introVisible = false;
+		/* GLOBAL DATA END */
+
+		// REMOVE THIS
 		$scope.UID = '';
 
-		$scope.authenticated = false;
-
-		$scope.toggleMealInfo = function(show) {
-			$scope.showMealInfo = show;
-		}
-
-		$scope.toggleMealSidebar = function(show) {
-			$scope.showMealSidebar = show;
-		}
-
-		$scope.showFriendsSidebar2 = function(show){
-			$scope.showFriendsSidebar = show;
-		}
-
-		$scope.toggleMealBuddies = function() {
-			$scope.showFriendsSidebar = !$scope.showFriendsSidebar;
-			if($scope.showFriendsSidebar) {
-				$scope.showMealSidebar = false;
+		/* GLOBAL ACCESS FUNCTIONS START */
+		$scope.toggleSidebar = function(show) {
+			if (show == true) {
+				$scope.linksVisible = false;
+				$scope.mealsVisible = false;
+				$scope.introVisible = true;
+				$scope.sidebarVisible = true;
 			}
-			else {
-				$scope.showMealSidebar = true;				
+			else { // (show == false)
+				$scope.sidebarVisible = false;
+				$scope.linksVisible = false;
+				$scope.mealsVisible = false;
+				$scope.introVisible = false;
 			}
-			$scope.populateMealBuddies();
 		}
 
-		// Call this to show or hide the supp buddies (friends) button
-		$scope.showSuppBuddiesButton = function() {
-			$scope.showMealBuddiesButton = true;
+		$scope.setSidebarContent = function(content) {
+			if (content == "links") {
+				if ($scope.linksVisible == true) {
+					$scope.sidebarVisible = false;
+					$scope.linksVisible = false;
+				}
+				else {
+					$scope.populateMealBuddies();
+					$scope.mealsVisible = false;
+					$scope.introVisible = false;
+					$scope.linksVisible = true;
+					$scope.sidebarVisible = true;
+				}				
+			}
+			else if (content == "intro") {
+				if ($scope.introVisible == true) {
+					$scope.sidebarVisible = false;
+					$scope.introVisible = true;
+				}
+				else
+				{
+					$scope.linksVisible = false;
+					$scope.mealsVisible = false;
+					$scope.introVisible = true;
+					$scope.sidebarVisible = true;
+				}
+			}
+			else  // (content == "meals")
+			{
+				$scope.linksVisible = false;
+				$scope.introVisible = false;
+				$scope.mealsVisible = true;
+				$scope.sidebarVisible = true;
+			}
 		}
 
-		$scope.hideSuppBuddiesButton = function() {
-			$scope.showMealBuddiesButton = false;
+		$scope.toggleLinksButton = function(show) {
+			$scope.linksButtonVisible = show;
 		}
 
-		// Call this to show or hide the login button
-		$scope.showLoginButton = function() {
-			$scope.showingLoginButton = true;
+		$scope.toggleLoginButton = function(show) {
+			$scope.loginButtonVisible = show;
 		}
 
-		$scope.hideLoginButton = function() {
-			$scope.showingLoginButton = false;
+		$scope.toggleLogoutButton = function(show) {
+			$scope.logoutButtonVisible = show;
 		}
-
-		// Call this to show or hide the login button
-		$scope.showLogoutButton = function() {
-			$scope.showingLogoutButton = true;
-		}
-
-		$scope.hideLogoutButton = function() {
-			$scope.showingLogoutButton = false;
-		}
+		/* GLOBAL ACESS FUNCTIONS END */
 
 		// This allows the initial redirect when they come to the 
 		// page based on whether or not they are logged in
@@ -82,9 +101,8 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			FB.api('/me/permissions', 'delete', function(response) {});
 			gapi.auth.signOut();
 
-			$scope.authenticated = false;
-			$scope.showingLoginButton = true;
-			$scope.showingLogoutButton = false;
+			$scope.toggleLoginButton(true);
+			$scope.toggleLogoutButton(false);
 		}
 
 		// Populate MealBuddies, and MealBuddyRequests to be displayed in the Meal Buddies SideBar
@@ -124,7 +142,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 				FB.api('/me', {fields: 'name'}, function(response) {
 					sessionStorage.facebookID = response.id;
 					sessionStorage.name  =response.name;
-					$scope.authenticated = true;
 
 					userService.findByFacebook(response.id).success(function(data) {
 
@@ -263,7 +280,6 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 				// Update the app to reflect a signed in user
 				if(authResult['status']['method'] == 'PROMPT'){
 					getUserInfo();
-					$scope.authenticated = true;
 				}
 		    } 
 		    else {
