@@ -11,7 +11,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.showLogoutButton();
 		
 		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
-		// $scope.attendingMeal = true;  
+		$scope.attendingMeal = false;  
 
 		var minZoomLevel = 13; // as far back as they can go
 
@@ -139,82 +139,100 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					return false; // user cannot join
 				}
 				return true;  //user can join
-				
 			});
+		}
+
+		$scope.isUserAttendingMeal = function(meal){
+			// if (meal.attendees.indexOf(angular.fromJson(localStorage.user)))
+			$scope.attendingMeal = false;
+			for (var i=0; i<meal.attendees.length; i++){
+				if (meal.attendees[i].key == angular.fromJson(localStorage.user).key){
+					$scope.attendingMeal = true;
+					break;
+				}
+			}
 		}
 		
 		$scope.joinMeal = function(meal) {
 		
 			//Test if user can join meal
-			if(!$scope.isUserAllowedToJoinMeal())
-			{
-				return;
-			}
-			if ($scope.currentPin.marker.hasMeal) {
-				var key = angular.fromJson(localStorage.user).key;
-				mealService.addUserToMeal(meal.key, key).success(function(data) {
-					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
-					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
-					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1; 
-					$scope.currentPin.marker.label.setContent();
-					userService.addMealToUser(meal.key);
-					userService.getUserWithID(key).success(function(data) {
-						meal.attendees.push(data[0]);
-					});
-				})
-			}
+			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
+				$scope.usersMealsAttending = data[0].mealsAttending; 
+				
+				//hard code limit 1
+				if($scope.usersMealsAttending.length >0){
+					return; // user cannot join
+				}
+				if ($scope.currentPin.marker.hasMeal) {
+					var key = angular.fromJson(localStorage.user).key;
+					mealService.addUserToMeal(meal.key, key).success(function(data) {
+						$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
+						$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
+						$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1; 
+						$scope.currentPin.marker.label.setContent();
+						userService.addMealToUser(meal.key);
+						userService.getUserWithID(key).success(function(data) {
+							meal.attendees.push(data[0]);
+						});
+					})
+				}
+			});
 		}
 
 		// Add a check for if user is attending meal
-		// $scope.leaveMeal = function(meal) {
-		// 	if ($scope.currentPin.marker.hasMeal) {
-		// 		var key = angular.fromJson(localStorage.user).key;
-		// 		mealService.deleteUserFromMeal(meal.key, key).success(function(data) {
-		// 			$scope.currentPin.marker.setIcon('../../img/restaurant.png');
-		// 			$scope.selectedMarkerOldIcon = '../../img/restaur_selected.png';
-		// 			$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) - 1; 
-		// 			$scope.currentPin.marker.label.setContent();
-		// 			userService.deleteMealFromUser(meal.key);
-		// 			userService.getUserWithID(key).success(function(data) {
-		// 				meal.attendees.push(data[0]);
-		// 			});
-					
-		// 		})
-		// 	}
-		// }
+		$scope.leaveMeal = function(meal) {
+			if ($scope.currentPin.marker.hasMeal) {
+				var key = angular.fromJson(localStorage.user).key;
+				mealService.deleteUserFromMeal(meal.key, key).success(function(data) {
+					// NEED CASE FOR FRIEND MEAL MARKER
+					$scope.currentPin.marker.setIcon('../../img/restaur_selected.png');
+					$scope.selectedMarkerOldIcon = '../../img/restaurant.png';
+					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) - 1; 
+					$scope.currentPin.marker.label.setContent();
+					userService.getUserWithID(key).success(function(data) {
+						var indexOfUser = meal.attendees.indexOf(data[0]);
+						meal.attendees.splice(indexOfUser, 1);
+						userService.deleteMealFromUser(meal.key);
+					});
+				});
+			}
+		}
 		// TODO - if meal no longer has any attendees, perform further changes - TODO
 
 		$scope.createMeal = function() {
 
-			//test if user can join
-			if(!$scope.isUserAllowedToJoinMeal()){
-				return;
-			}
-		
-			var currentTime = new Date();
-			var date = new Date(currentTime.getFullYear(),
-								currentTime.getMonth(), 
-								currentTime.getDate(), 
-								$scope.mealTime.getHours(), 
-								$scope.mealTime.getMinutes(), 0, 0);
+			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
+				$scope.usersMealsAttending = data[0].mealsAttending; 
+				
+				//hard code limit 1
+				if($scope.usersMealsAttending.length >0){
+					return; // user cannot join
+				}
+				var currentTime = new Date();
+				var date = new Date(currentTime.getFullYear(),
+									currentTime.getMonth(), 
+									currentTime.getDate(), 
+									$scope.mealTime.getHours(), 
+									$scope.mealTime.getMinutes(), 0, 0);
 
-			mealService.addNewMeal($scope.currentPin.place.place_id, 0, date, [], true).success(function(data) {
-				var key = angular.fromJson(localStorage.user).key;
+				mealService.addNewMeal($scope.currentPin.place.place_id, 0, date, [], true).success(function(data) {
+					var key = angular.fromJson(localStorage.user).key;
 
-				mealService.addUserToMeal(data.key, key).success(function(meal) {
-					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
-					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
-					$scope.currentPin.marker.hasMeal = true; 
-					if ($scope.currentPin.marker.labelContent == "") {
-						$scope.currentPin.marker.labelContent = 1;
-					}
-					else {
-						$scope.currentPin.marker.labelContent = (parseInt($scope.currentPin.marker.labelContent) + 1 ); 
-					}
-					$scope.currentPin.marker.label.setContent();
-					userService.addMealToUser(meal.key);
-					$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
-				})
+					mealService.addUserToMeal(data.key, key).success(function(meal) {
+						$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
+						$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
+						$scope.currentPin.marker.hasMeal = true; 
+						if ($scope.currentPin.marker.labelContent == "") {
+							$scope.currentPin.marker.labelContent = 1;
+						}
+						else {
+							$scope.currentPin.marker.labelContent = (parseInt($scope.currentPin.marker.labelContent) + 1 ); 
+						}
+						$scope.currentPin.marker.label.setContent();
+						userService.addMealToUser(meal.key);
+						$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
+					})
+				});
 			});
 		}
 

@@ -105,7 +105,7 @@
 							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 						</div>
 					</accordion-heading>
-					<div ng-repeat="attendee in meal.attendees">
+					<div ng-repeat="attendee in meal.attendees" ng-init="isUserAttendingMeal(meal)">
 						<div class="mealAttendee">
 							<!-- Age Range &nbsp - {{attendee.ageRange}}<br>
 							Profession &nbsp - {{attendee.profession}}<br>
