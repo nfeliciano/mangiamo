@@ -1,6 +1,9 @@
 linksupp
 ====
 
+![Banner](mockups/logo-banner.png)
+====
+
 ![Login](screenshots/LoginScreen.png)
 
 ##Description
