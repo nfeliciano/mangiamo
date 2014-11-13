@@ -1,22 +1,40 @@
 app.controller('mainController', ['$scope', '$resource', '$location', '$modal', '$http', 'mealService', 'userService',
 	function ($scope, $resource, $location, $modal, $http, mealService, userService) {
+		/* GLOBAL DATA (In main-controller.js) START */
 		$scope.placedMarkers = [];
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
 		$scope.usersMealBuddies = [];
 		$scope.selectedMarkerOldIcon = null;
-		$scope.usersMealsAttending = []; 
-		$scope.showSuppBuddiesButton();
-		$scope.showLogoutButton();
-
+		$scope.usersMealsAttending = [];
 		var minZoomLevel = 13; // as far back as they can go
+		$scope.currentPin = { "name": "",
+							  "place": null,
+							  "marker": null,
+							  "rating": "",
+							  "meals": [ /*{ "time": "",
+							  			     "key": "",
+							  			     "attendees": [] }*/
+							  		   ]
+							};
 
-		$scope.hideLoginButton();
+		$scope.mealTime = new Date();
+		/* GLOBAL DATA (In main-controller.js) END */
+
+		/* MAIN.HTML REFRESH CODE START (called on page refresh) */
+		// Set the navbar to display the proper elements
+		$scope.toggleLinksButton(true);
+		$scope.toggleLogoutButton(true);
+		$scope.toggleLoginButton(false);
+
+		// Hide the sidebar on page load, then load the "intro" sidebar content
+		$scope.toggleSidebar(false);
+		$scope.setSidebarContent('intro');
+
+		/* MAIN.HTML REFRESH CODE END */
+
 		
-		$scope.showFriendsSidebar2(false);
-		$scope.toggleMealBuddies();
-		$scope.toggleMealInfo(false);
 
 		var mapOptions = { 
 			zoomControlOptions: {
@@ -37,18 +55,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				});
 			});
 		}
-
-		$scope.currentPin = { "name": "",
-							  "place": null,
-							  "marker": null,
-							  "rating": "",
-							  "meals": [ /*{ "time": "",
-							  			     "key": "",
-							  			     "attendees": [] }*/
-							  		   ]
-							};
-
-		$scope.mealTime = new Date();
 
 		$scope.updateMealInfo = function(place, marker) {
 			$scope.currentPin.name = place.name;
@@ -107,9 +113,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					$scope.populateAttendees(mealData, i);
 				}
 			});
-			$scope.showFriendsSidebar2(false);
-			$scope.toggleMealSidebar(true);
-			$scope.toggleMealInfo(true);
+			$scope.setSidebarContent('meals');
 		}
 
 		$scope.populateAttendees = function(mealData, i) {
@@ -553,7 +557,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// Returns ALL the place details and information 
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.updateMealInfo(place, marker, true);
+							$scope.updateMealInfo(place, marker);
 						}
 					}
 				});

@@ -70,11 +70,20 @@
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="" ng-show="showMealBuddiesButton" ng-click="toggleMealBuddies()"><span class="glyphicon glyphicon-user"></span> Friends </a></li>
-						<li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+						<li>
+							<a href="" ng-show="linksButtonVisible" ng-click="setSidebarContent('links')">
+								<span class="glyphicon glyphicon-user"></span> 
+								Friends 
+							</a>
+						</li>
+						<!-- <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li> -->
 
-						<li class="dropdown" ng-show="showingLoginButton">
-							<a href="" class="dropdown-toggle" data-toggle="drowndown"><span class="glyphicon glyphicon-log-in"></span> Log In <span class="caret"></span></a>
+						<li class="dropdown" ng-show="loginButtonVisible">
+							<a href="" class="dropdown-toggle" data-toggle="drowndown">
+								<span class="glyphicon glyphicon-log-in"></span> 
+								Log In 
+								<span class="caret"></span>
+							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
 									<a href="">
@@ -95,7 +104,7 @@
 							</ul>
 						</li>
 						
-						<li ng-show="showingLogoutButton">
+						<li ng-show="logoutButtonVisible">
 							<a href="" ng-click="logout()">
 								<span class="glyphicon glyphicon-log-in"></span> 
 								Log Out 
