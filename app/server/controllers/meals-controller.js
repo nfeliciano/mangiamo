@@ -1,4 +1,5 @@
 var Meal = require('../models/meal');
+var cron = require('cron');
 
 // Creates a new meal
 module.exports.create = function (req,res) {
@@ -10,7 +11,7 @@ module.exports.create = function (req,res) {
 		people: req.body.people,
 		active: req.body.active,
 	});
-	
+
 	meal.save(function (err, result) {
 		if (!err) {
 			return res.json(result);
@@ -46,7 +47,7 @@ module.exports.getPeople = function (req,res) {
 	}
 }
 
-// Returns an array of meals. If we're not seeking a specific placeID, it returns all meals. 
+// Returns an array of meals. If we're not seeking a specific placeID, it returns all meals.
 // If we pass in a placeID, it returns all meals in that location
 // If we pass in a key, it returns the only meal in that key
 module.exports.list = function (req,res) {
@@ -66,3 +67,17 @@ module.exports.list = function (req,res) {
 		});
 	}
 }
+
+var User = require('../models/user');
+var cronJob = cron.CronJob;
+var updateMeals = new cronJob('0* 00,15,30,45 * * * *', function () {
+	var currentDate = new Date();
+	//get all meals
+	Meal.find({}, function (err, results) {
+		for (var i = 0; i < results.length; i++) {
+			if (currentDate >= results[i].time) {
+				Meal.findOneAndRemove({key : results[i].key}, function(err, results) {});
+			}
+		}
+	});
+}, null, true);
