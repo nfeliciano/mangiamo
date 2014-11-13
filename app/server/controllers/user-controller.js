@@ -89,6 +89,14 @@ module.exports.addMealToUser = function (req,res) {
 	User.findOneAndUpdate(query, { $push : update }, function(err, results) {});
 }
 
+module.exports.deleteMealFromUser = function (req,res) {
+	var query = { key: req.body.key };
+	var update = { mealsAttending: { "key" : req.body.mealkey } };
+	User.findOneAndUpdate(query, { $pull : update }, function(err, results) {
+		res.json(results);
+	});
+}
+
 // We will now need some more methods
 // Cases: adds a buddy by key, adds a suggested buddy
 module.exports.requestBuddy = function(req,res) {

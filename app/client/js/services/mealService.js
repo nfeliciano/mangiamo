@@ -12,7 +12,7 @@ app.factory('mealService', ['$http', function($http) {
 	// Gets ALL the meals from the database with no filtering as an array
 	mealService.getAllMeals = function() {
 		return $http.get(meal);
-	};
+	}
 
 	mealService.getMealDetails = function(mealKey) {
 		return $http.get(meal + '?key=' + mealKey);
@@ -21,18 +21,23 @@ app.factory('mealService', ['$http', function($http) {
 	// Returns an array of the people 
 	mealService.getPeopleFromMeal = function(mealKey) {
 		return $http.get(people + '?key=' + mealKey);
-	};
+	}
 
 	// Gets all meals from the backend with the specific place ID.
 	mealService.getMealsAtPlaceID =  function(placeID) {
 		return $http.get(meal + '?placeID=' + placeID);
-	};
+	}
 
 	// 
 	mealService.addUserToMeal = function(mealKey, ID) {
 		var request = {"key":mealKey, "ID":ID};
 		return $http.put(meal, request);
-	};
+	}
+
+	mealService.deleteUserFromMeal = function(mealKey, ID) {
+		var request = {"key":mealKey, "ID":ID};
+		return $http.put(people, request);
+	}
 
 	// Adds a new meal to the database with the key placeID-time
 	mealService.addNewMeal = function(placeID, numPeople, time, people, active) {

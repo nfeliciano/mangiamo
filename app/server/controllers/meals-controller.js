@@ -32,6 +32,18 @@ module.exports.update = function (req,res) {
 	});
 }
 
+
+// Deletes a user from a meal
+module.exports.deletePeople = function (req,res) {
+	var query = { key: req.body.key };
+	var update = { people: { "key" : req.body.ID } };
+	var decrement = { numPeople : -1 };
+
+	Meal.findOneAndUpdate(query, { $pull : update, $inc: decrement }, function(err, results) {
+		res.json(results);
+	});
+}
+
 // Returns an array of the people attending a meal
 module.exports.getPeople = function (req,res) {
 	if (req.query.key != null) {
