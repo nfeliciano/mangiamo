@@ -12,16 +12,16 @@
 			<span class="glyphicon glyphicon-remove visible-xs"></span>
 		</div>
 
-		<div class="sidebarTitle"> Friends </div>
+		<div class="sidebarTitle"> Links </div>
 		<hr>
 
 		<span class="text"> Your ID is: {{UID}} </span>
 		<form>
-			<input type="text" ng-model="newMealBuddy" placeholder="Enter a friend's ID"><br>
-			<button ng-click="addFriend(newMealBuddy)" class="btn btn-primary" id="friendAdder"> Click to add a Friend! </button>
+			<input type="text" ng-model="newMealBuddy" placeholder="Enter a link's ID"><br>
+			<button ng-click="addFriend(newMealBuddy)" class="btn btn-primary" id="friendAdder"> Click to add a Link! </button>
 		</form>
 
-		<p class="text"> Current Friends </p>
+		<p class="text"> Current Links </p>
 		<accordion close-others="true">
 			<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddy in mealBuddies">
 				<accordion-heading>
@@ -35,7 +35,7 @@
 			</accordion-group>
 		</accordion>
 
-		<p class="text"> Friend Requests </p>
+		<p class="text"> Link Requests </p>
 		<accordion close-others="true">
 			<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddyRequest in mealBuddyRequests">
 				<accordion-heading>
@@ -50,8 +50,8 @@
 			</accordion-group>
 		</accordion>
 
-		<p class="text"> Suggested Friends </p>
-		<button class="btn btn-default btn-sm" ng-click="loadSuggestions()" ng-disabled="findingFriends"> Find Facebook Friends </button>
+		<p class="text"> Find Facebook Friends </p>
+		<button class="btn btn-default btn-sm" ng-click="loadSuggestions()" ng-disabled="findingFriends"> Search </button>
 		<accordion close-others="true">
 			<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
 				<accordion-heading>
@@ -95,7 +95,7 @@
 				<span class="pull-right"> Info </span>
 			</div>
 			<accordion close-others="true">
-				<accordion-group class="listedMeal" is-open="status.open" ng-repeat="meal in currentPin.meals">
+				<accordion-group class="listedMeal" is-open="status.open" ng-repeat="meal in currentPin.meals | orderBy: 'time'">
 					<accordion-heading>
 						<div id="mealInfoHeader">
 							<div>
@@ -118,7 +118,8 @@
 							<span>{{attendee.ageRange}}</span>.
 						</div>
 					</div>
-					<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)"> Join Meal </button>
+					<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)" ng-hide="attendingMeal"> Join Meal </button>
+					<button class="btn btn-block btn-danger" ng-click="leaveMeal(meal)" ng-show="attendingMeal"> Leave Meal </button>
 				</accordion-group>
 				<accordion-group>
 					<!-- Create Meal -->
