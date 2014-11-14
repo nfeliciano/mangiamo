@@ -6,6 +6,7 @@
 app.factory('mealService', ['$http', function($http) {
 	var meal = '/api/meals';
 	var people = '/api/meals/people';
+	var delMeal = '/api/meals/delete';
 
 	var mealService = {};
 
@@ -43,6 +44,11 @@ app.factory('mealService', ['$http', function($http) {
 	mealService.addNewMeal = function(placeID, numPeople, time, people, active) {
 		var request = {"key":placeID + "-" + time, "time":time, "numPeople":numPeople, "placeID":placeID, "people":people, "active":active};
 		return $http.post(meal, request);
+	}
+
+	mealService.deleteMeal = function(mealKey) {
+		var request = { "key":mealKey };
+		return $http.put(delMeal, request);
 	}
 
 	return mealService;

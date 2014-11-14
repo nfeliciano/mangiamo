@@ -58,6 +58,12 @@ module.exports.getPeople = function (req,res) {
 	}
 }
 
+module.exports.deleteMeal = function (req,res) {
+	Meal.findOneAndRemove({key : req.body.key}, function(err, results) {
+		res.json(results);
+	});
+}
+
 // Returns an array of meals. If we're not seeking a specific placeID, it returns all meals. 
 // If we pass in a placeID, it returns all meals in that location
 // If we pass in a key, it returns the only meal in that key

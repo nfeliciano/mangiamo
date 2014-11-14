@@ -33,6 +33,7 @@ app.use('/json', express.static(__dirname + '/client/json'));
 
 //REST API
 //Meals
+app.put('/api/meals/delete', mealsController.deleteMeal);
 app.put('/api/meals', mealsController.update);
 app.get('/api/meals', mealsController.list);
 app.get('/api/meals/people', mealsController.getPeople);
