@@ -140,7 +140,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				$scope.usersMealsAttending = data[0].mealsAttending; 
 				
 				//hard code limit 1
-				if($scope.usersMealsAttending.length >0){
+				if($scope.usersMealsAttending.length > 0){
 					return false; // user cannot join
 				}
 				return true;  //user can join
@@ -149,10 +149,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 		
 		$scope.joinMeal = function(meal) {
-		
 			//Test if user can join meal
 			if(!$scope.isUserAllowedToJoinMeal())
 			{
+				$scope.tellUser("You are already in a meal.  Please leave your other meal to join a new one.");
 				return;
 			}
 			if ($scope.currentPin.marker.hasMeal) {
