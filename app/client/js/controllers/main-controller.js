@@ -5,7 +5,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
-		$scope.usersMealBuddies = [];
 		$scope.usersMealsAttending = [];
 		$scope.selectedMarkerOldIcon = null;
 		
@@ -39,8 +38,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.setSidebarContent('intro');
 
 		/* MAIN.HTML REFRESH CODE END */
-
-		
 
 		var mapOptions = { 
 			zoomControlOptions: {
@@ -157,8 +154,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				}
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.addUserToMeal(meal.key, key).success(function(data) {
-					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
-					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
+					$scope.currentPin.marker.setIcon('/img/restaur_going.png');
+					$scope.selectedMarkerOldIcon = '/img/restaur_going.png';
 					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1; 
 					$scope.currentPin.marker.label.setContent();
 					userService.addMealToUser(meal.key);
@@ -174,14 +171,43 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.deleteUserFromMeal(meal.key, key).success( function(data) {
-					$scope.currentPin.marker.setIcon('../../img/restaur_selected.png');
-					$scope.selectedMarkerOldIcon = '../../img/restaurant.png';
-					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) - 1; 
-					$scope.currentPin.marker.label.setContent();
+					console.log($scope.currentPin.meals);
+					// Check if anyone is there
+					if ($scope.currentPin.meals.length == 1 && $scope.currentPin.meals[0].attendees.length == 1) {
+						$scope.currentPin.marker.setIcon('/img/restaur_selected.png');
+						$scope.selectedMarkerOldIcon = 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0';
+						$scope.currentPin.marker.labelContent = '';
+						$scope.currentPin.marker.label.setContent();
+
+						mealService.deleteMeal(meal.key);
+					}
+					else {
+						// Check if a friend is there
+						// Loop through your friends
+						break1:
+						for (var i = 0; i < $scope.mealBuddies.length; i++) {
+							for (var j = 0; j < $scope.mealBuddies[i][0].mealsAttending.length; j++) {
+								if ($scope.mealBuddies[i][0].mealsAttending[j].key.substring(0, 28) == meal.key.substring(0, 28)) {
+									$scope.currentPin.marker.setIcon('/img/restaur_selected_friend.png');
+									$scope.selectedMarkerOldIcon = '/img/restaur_friend.png';
+									break break1;
+								}
+							}
+						}
+
+						if ($scope.selectedMarkerOldIcon != '/img/restaur_friend.png') {
+							$scope.currentPin.marker.setIcon('/img/restaur_selected.png');
+							$scope.selectedMarkerOldIcon = '/img/restaurant.png';
+						}
+						$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) - 1; 
+						$scope.currentPin.marker.label.setContent();
+					}
+
+					
 					userService.getUserWithID(key).success(function(data) {
 						userService.deleteMealFromUser(meal.key, key).success( function(data) {
-							$scope.tellUser("You have left the " + meal.time + " meal at " + $scope.currentPin.name + ".",
-								"We are sad to see you go!");
+							$scope.tellUser('You have left the ' + meal.time +  ' meal at ' + $scope.currentPin.name + '.',
+								'We are sad to see you go!');
 							$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
 						});
 					});
@@ -210,8 +236,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					var key = angular.fromJson(localStorage.user).key;
 
 					mealService.addUserToMeal(data.key, key).success(function(meal) {
-						$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
-						$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
+						$scope.currentPin.marker.setIcon('/img/restaur_going.png');
+						$scope.selectedMarkerOldIcon = '/img/restaur_going.png';
 						$scope.currentPin.marker.hasMeal = true; 
 						if ($scope.currentPin.marker.labelContent == "") {
 							$scope.currentPin.marker.labelContent = 1;
@@ -244,14 +270,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				$scope.addFriend(data[0].key);
 			});
 		}
-	
-		//Fills in global array of users friends
-		//TODO: Do we need this method?
-		$scope.getUsersMealBuddies = function() {
-			userService.getMealBuddies().success(function(data){
-				$scope.usersMealBuddies = data.accepted;
-			});
-		}
 
 		$scope.loadSuggestions = function() {
 			$scope.findingFriends = true;
@@ -280,7 +298,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
-			$scope.getUsersMealBuddies();
+			$scope.populateMealBuddies();
 			$scope.getUsersMealsAttending(); 
 			$scope.lastPosition = new google.maps.LatLng(48.4449579, -123.33535710000001);   // This is the default position if Geolocation is enabled it is overwritten to the users location 
 			if (navigator.geolocation) {
@@ -315,7 +333,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// refreshes the map with new food places when the map is moved a certain amount
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
-					$scope.getUsersMealBuddies();
+					$scope.populateMealBuddies();
 					$scope.lastPosition = $scope.map.getCenter();
 					request.location=$scope.map.getCenter();
 					service.radarSearch(request, fastCallback); 
@@ -508,7 +526,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				var buddyWasFound = false;
 				
 				//see if user has friends
-				if(  $scope.usersMealBuddies == 0 ){
+				if(  $scope.mealBuddies.length == 0 ){
 					searchingForBuddy = false;	
 				}
 				
@@ -520,12 +538,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					if(searchingForBuddy){
 						
 						loop2:
-						for( var y = 0; y < $scope.usersMealBuddies.length; y++){
+						for( var y = 0; y < $scope.mealBuddies.length; y++){
 							
 							loop3:
 							for(var z = 0; z< data[i].people.length; z++){
 						
-								if( $scope.usersMealBuddies[y].key == data[i].people[z].key){
+								if( $scope.mealBuddies[y][0].key == data[i].people[z].key){
 									buddyWasFound = true;
 									searchingForBuddy = false; 
 									break loop2;
@@ -535,16 +553,16 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					}	
 				}
 				
-				var icon = '../../img/restaurant.png'; //default meal marker
+				var icon = '/img/restaurant.png'; //default meal marker
 				
 				/*if( buddyWasFound && userIsGoing){
 					icon = user is going and buddy
 				} else*/
 				if( userIsGoing){
-					icon = '../../img/restaur_going.png';
+					icon = '/img/restaur_going.png';
 				}
 				else if( buddyWasFound){
-					icon = '../../img/restaur_friend.png'; // friend going marker
+					icon = '/img/restaur_friend.png'; // friend going marker
 				}
 						
 				// This is the Mangiamo Meal marker, ie there is a meal here
@@ -587,34 +605,37 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		//paramater is the new selected marker,
 		// function updates old marker to its old image, and update new to new image
 		updateMarkerIcon = function(marker) {
-		  
-			//if the old one exists, return it to normal
+		  	// At this point, currentPin is still the old marker, so check icons
+			// if the old one exists, return it to normal
 			if($scope.currentPin.marker != null){
 				$scope.currentPin.marker.setIcon($scope.selectedMarkerOldIcon);
 			}
 			
+			// Update the marker to the new marker
 			$scope.currentPin.marker = marker;
 			$scope.selectedMarkerOldIcon = marker.icon; // saves the current image so it can be updated next time we enter here
 			
+			console.log(marker.icon);
+
 			switch(marker.icon){
 			
 			//Red dot
 			case 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0':
-				marker.setIcon( '../../img/restaur_selected.png');
+				marker.setIcon('/img/restaur_selected.png');
 				break;
 				
 			//Normal Meal
-			case '../../img/restaurant.png':
-				marker.setIcon('../../img/restaur_selected.png');
+			case '/img/restaurant.png':
+				marker.setIcon('/img/restaur_selected.png');
 				break;
 			//Friend going
-			case '../../img/restaur_friend.png':
-				marker.setIcon('../../img/restaur_selected_friend.png');
+			case '/img/restaur_friend.png':
+				marker.setIcon('/img/restaur_selected_friend.png');
 				break;
 			//CASE IT IS THE ONE YOU ARE GOING TO 
 			//CURRENT NO CHANGE
-			case '../../img/restaur_going.png':
-				marker.setIcon('../../img/restaur_going.png');
+			case '/img/restaur_going.png':
+				marker.setIcon('/img/restaur_going.png');
 				break;
 			}
 		}
@@ -684,7 +705,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				$scope.willBeDeletedMarkers = null;
 				$scope.lastPosition = null;
 				$scope.dataBase = null;
-				$scope.usersMealBuddies = null;
 				$scope.selectedMarkerOldIcon = null;
 				$scope.usersMealsAttending = null; 
 	
