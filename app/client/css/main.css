@@ -5,7 +5,7 @@
 	background-color: #CCCCCC;
 	height: 100vh;
 	/* First 51px on the top is for the navbar */
-	padding: 51px 0px 0px 0px;
+	padding: 51px 10px 0px 10px;
 
 	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
 	-moz-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);

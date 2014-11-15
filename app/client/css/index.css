@@ -8,20 +8,6 @@ body
 {
 	height: 100%;
 	width: 100%;
-	/*background-image: url("/img/vic_background.jpg");
-	background-repeat: no-repeat; 
-    background-attachment: fixed;       
-    webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-color: rgba(44, 139, 207, 1);
-
-    -webkit-filter: blur(5px);
-	-moz-filter: blur(5px);
-	-o-filter: blur(5px);
-	-ms-filter: blur(5px);
-	filter: blur(5px);*/
 }
 
 .background2
@@ -44,6 +30,19 @@ body
 	-ms-filter: blur(4px);
 	filter: blur(4px) brightness(0.8);
 }
+
+/* USER FEEDBACK MODAL */
+#errorMessage
+{
+	padding: 20px;
+}
+
+.modal-dialog
+{
+	margin-top: 100px;
+	text-align: center;
+}
+/* USER FEEDBACK MODAL END */
 
 .glyphicon-remove
 {
