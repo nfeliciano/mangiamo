@@ -22,3 +22,15 @@ var updateMeals = new cronJob('00 14,29,44,59 * * * *', function () {
         }
     });
 }, null, true);
+
+var removeMealsForUsers = new cronJob('00 59 23 * * *', function() {
+    User.find({}, function(err, results) {
+            for (var i = 0; i < results.length; i++) {
+                var query = { 'key' : results[i].key };
+                for (var j = 0; j < results[i].mealsAttending.length; j++) {
+                    var update = { mealsAttending: { 'key' : results[i].mealsAttending[j].key } };
+                    User.findOneAndUpdate(query, { $pull : update }, function(err, res) { console.log(res) });
+                }
+            }
+    });
+}, null, true);
