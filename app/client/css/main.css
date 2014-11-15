@@ -1,3 +1,53 @@
+/* SIDEBAR */
+#sidebarContainer
+{
+	position: absolute;
+	background-color: #CCCCCC;
+	height: 100vh;
+	/* First 51px on the top is for the navbar */
+	padding: 51px 10px 0px 10px;
+
+	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
+	-moz-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
+	box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
+
+	overflow-y: auto;
+}
+
+#closeSidebar
+{
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+	/* INTRO */
+	#introContainer
+	{
+		text-align: center;
+		font-family: "Roboto", sans-serif;
+		color: #2F5F7F;
+	}
+	/* INTRO END */
+
+	/* LINKS */
+	#linksContainer
+	{
+		text-align: center;
+	}
+	/* LINKS END */
+
+	/* MEALS */
+	#mealsContainer
+	{
+
+	}
+	/* MEALS END */
+/* SIDEBAR END */
+
+
+
+/* EVERYTHING BELOW THIS COMMENT NEEDS TO BE CATEGORIZED AND VALIDATED AS VALID AND NECESSARY CODE */
+
 .text
 {
 	color: #2F5F7F;
@@ -18,29 +68,7 @@
 	overflow-y:auto
 }
 
-
 /* MEAL BUDDIES */
-#mealBuddiesContainer
-{
-	/*transition:all linear 0.5s;*/
-	/*background-color: rgba(187,187,187, 0.95);*/
-	background-color: #DDDDDD;
-	height: 100vh;
-	padding: 51px 0px 0px 0px;
-	overflow-y: auto;
-	opacity: 1;
-	position: absolute;
-	text-align: center;
-	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
-	-moz-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
-	box-shadow: 1px 0px 1px rgba(0,0,0, .5);
-}
-#mealBuddiesContainer.ng-hide
-{
-	opacity: 0;
-	width: 0px;
-}
-
 .mealBuddyButton
 {
 	float: right;
@@ -77,11 +105,6 @@
 	width: 90%;
 	text-align: center;
 }
-
-#createMealHeader
-{
-	text-align: center;
-}
 /* END FRIENDS */
 
 /* MEAL INFORMATION START */
@@ -113,18 +136,6 @@
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
 	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
 	box-shadow: 0 1px 1px rgba(0,0,0, .5);
-}
-
-#mealInformationContainer
-{
-	height: 100vh;
-	position: absolute;
-	padding: 51px 10px 0px 10px;
-	overflow-y: auto;
-	background-color: #DDDDDD;
-	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
-	-moz-box-shadow: 1px 0px 1px rgba(0,0,0, .5);
-	box-shadow: 1px 0px 1px rgba(0,0,0, .5);
 }
 
 .meal
@@ -223,19 +234,4 @@
 	text-align: center;
 	width: 15px;     
 	white-space: nowrap;
-}
-
-#userInstructions
-{
-	text-align: center;
-	padding: 1em;
-	font-family: "Roboto", sans-serif;
-	color: #2F5F7F;
-}
-
-#mealinfo-exit
-{
-	text-align: right;
-	position: relative;
-	padding: 1em;
 }

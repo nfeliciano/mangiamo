@@ -10,7 +10,7 @@ module.exports.create = function (req,res) {
 		people: req.body.people,
 		active: req.body.active,
 	});
-	
+
 	meal.save(function (err, result) {
 		if (!err) {
 			return res.json(result);

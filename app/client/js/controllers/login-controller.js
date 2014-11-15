@@ -1,7 +1,11 @@
 app.controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
 		$scope.startEating = true;
-		$scope.hideSuppBuddiesButton();
+
+		// Set the navbar to display the proper elements
+		$scope.toggleLinksButton(false);
+		$scope.toggleLogoutButton(false);
+		$scope.toggleLoginButton(true);
 
 		// initForm populates local variables from local JSON files.  This speparates 
 		// a lot of data from html and Angular into appropriate JSON files.  The
