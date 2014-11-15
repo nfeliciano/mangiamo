@@ -168,11 +168,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.addUserToMeal(meal.key, key).success(function(data) {
+					$scope.usersMealsAttending[0] = meal; // manualy update users meals (local copy)
 					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
 					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
 					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1; 
 					$scope.currentPin.marker.label.setContent();
 					userService.addMealToUser(meal.key);
+					
 					userService.getUserWithID(key).success(function(data) {
 						meal.attendees.push(data[0]);
 					});
@@ -200,6 +202,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				var key = angular.fromJson(localStorage.user).key;
 
 				mealService.addUserToMeal(data.key, key).success(function(meal) {
+					$scope.usersMealsAttending[0] = data; // manualy update users meals (local copy)
 					$scope.currentPin.marker.setIcon('../../img/restaur_going.png');
 					$scope.selectedMarkerOldIcon = '../../img/restaur_going.png';
 					$scope.currentPin.marker.hasMeal = true; 
@@ -486,7 +489,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		createMealMarker = function(place){
 			
 			var userIsGoing = false;
-
 			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
 				if($scope.usersMealsAttending[i].key.substring(0,place.place_id.length) == place.place_id){
 					userIsGoing = true;
