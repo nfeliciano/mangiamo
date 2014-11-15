@@ -71,7 +71,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				var mealData = angular.fromJson(data);
-				console.log(mealData);
+				
 				$scope.currentPin.meals = [];  // Reset data
 				for (var i = 0; i < mealData.length; i++) {
 					$scope.currentPin.meals.push({"time": "", "key": "", "attendees": []});
@@ -132,29 +132,39 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		//Just a place holder function for whatever method of testing weither a person is allowed to join,
 		//for now just updates their current meals, and sees if its greater than 1 then they can join
-		$scope.isUserAllowedToJoinMeal = function(){
+		$scope.isUserAllowedToJoinMeal = function(meal,isCreate){
+			 
 			// OVERRIDE
-			return true;
+			//return true;
 			//update current user meals, just as a precaution
 			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
 				$scope.usersMealsAttending = data[0].mealsAttending; 
-				
 				//hard code limit 1
-				if($scope.usersMealsAttending.length >0){
-					return false; // user cannot join
-				}
-				return true;  //user can join
+				if(!($scope.usersMealsAttending.length >0)){
+					//if its not greater than 0, then user can join or create meal
+					if(isCreate){
+						createMeal(meal);	//create meal callback
+					}else{
+						joinMeal(meal);	//join meal callback
+					}
+				}else{
 				
+				//USER FEED BACK :: "already attending meal at that time"
+				//console.log("USER CANT: already attending meal at that time");
+				}
 			});
 		}
 		
-		$scope.joinMeal = function(meal) {
 		
+		//Call from button to join meal, on callback if user is allowed to join, then all the join meal stuff happens
+		$scope.joinMeal = function(meal) {
 			//Test if user can join meal
-			if(!$scope.isUserAllowedToJoinMeal())
-			{
-				return;
-			}
+			$scope.isUserAllowedToJoinMeal(meal,false); //has a call back which joins meal if allowed, false paramater means its join not create
+		}
+		
+		//callback from isUserAllowedToJoinMeal
+		function joinMeal(meal){
+			//Test if user can join meal
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.addUserToMeal(meal.key, key).success(function(data) {
@@ -170,13 +180,17 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 
-		$scope.createMeal = function(mealTime) {
-
-			//test if user can join
-			if(!$scope.isUserAllowedToJoinMeal()){
-				return;
-			}
 		
+				
+		//Call from button to create meal
+		$scope.createMeal = function(meal) {
+			//Test if user can join meal
+			$scope.isUserAllowedToJoinMeal(meal,true); //has a call back which joins meal if allowed
+		}
+		
+		//callback from isUserAllowedToJoinMeal
+		function createMeal(mealTime) {
+
 			var currentTime = new Date();
 			var date = new Date(currentTime.getFullYear(),
 								currentTime.getMonth(), 
