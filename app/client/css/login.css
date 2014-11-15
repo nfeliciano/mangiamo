@@ -105,3 +105,9 @@
 	text-align: right;
 	position: relative;
 }
+
+#player
+{
+	max-width: 100%;
+	margin-top: 10px;
+}
