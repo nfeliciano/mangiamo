@@ -3,8 +3,7 @@ var Meal = require('../models/meal');
 var User = require('../models/user');
 
 var cronJob = cron.CronJob;
-var updateMeals = new cronJob('* 00,15,30,45 * * * *', function () {
-// var updateMeals = new cronJob('*/5 * * * * *', function () {
+var updateMeals = new cronJob('00 14,29,44,59 * * * *', function () {
     var currentDate = new Date();
     // get all meals
     Meal.find({}, function (err, results) {
