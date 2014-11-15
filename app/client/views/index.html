@@ -21,7 +21,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/ui-bootstrap-tpls-0.11.2.js"></script>
 
-		<!-- Custom JS files -->		
+		<!-- Custom JS files -->
 		<script type="text/javascript" src="/js/app.js"></script>
 		<script type="text/javascript" src="/js/controllers/index-controller.js"></script>
 		<script type="text/javascript" src="/js/controllers/login-controller.js"></script>
@@ -64,7 +64,7 @@
 			    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 				        <span class="icon-bar"></span>
 				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span> 
+				        <span class="icon-bar"></span>
 			      	</button>
 			      <a class="navbar-brand" href=""><strong>link</strong>supp<sup><sup>BETA</sup></sup></a>
 			    </div>
@@ -73,16 +73,16 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<a href="" ng-show="linksButtonVisible" ng-click="setSidebarContent('links')">
-								<span class="glyphicon glyphicon-user"></span> 
-								Friends 
+								<span class="glyphicon glyphicon-user"></span>
+								Friends
 							</a>
 						</li>
 						<!-- <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li> -->
-						
+
 						<li class="dropdown" ng-show="loginButtonVisible">
 							<a href="" class="dropdown-toggle" data-toggle="drowndown">
-								<span class="glyphicon glyphicon-log-in"></span> 
-								Log In 
+								<span class="glyphicon glyphicon-log-in"></span>
+								Log In
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu" role="menu">
@@ -104,20 +104,58 @@
 								</li>
 							</ul>
 						</li>
-						
+						<li>
+							<a href="" ng-click="contact()">
+								<span class="glyphicon glyphicon-envelope"></span>
+								Contact Us
+							</a>
+						</li>
+
 						<li ng-show="logoutButtonVisible">
 							<a href="" ng-click="logout()">
-								<span class="glyphicon glyphicon-log-in"></span> 
-								Log Out 
+								<span class="glyphicon glyphicon-log-in"></span>
+								Log Out
 							</a>
 						</li>
 					</ul>
 				</div>
-			</div> 
+			</div>
 			<!-- /.container-fluid -->
 		</nav>
 
-		<div id="errorModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div id="contactModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true"> x </span>
+							<span class="sr-only"> Close </span>
+						</button>
+						<h4 class="modal-title" id="mySmallModalLabel"> Contact Us </h4>
+					</div>
+					<div id="contactMessage">
+						<br>
+						Questions? Comments? Compliments? Write them here!
+						<br><br>
+						<form novalidate name="contactForm">
+							<div class="form-group">
+								<input class="form-control" type="email" name="contactEmail"
+									placeholder="Your Email" required ng-model="contactEmail" />
+								<!-- <span class="help-block" ng-show="contactForm.contactMessage.$error.required">Required</span> -->
+							</div>
+							<div class="form-group">
+								<textarea class="form-control" type="text" name="contactMessage"
+									placeholder="Your Message" rows="5" required ng-model="contactMessage"/></textarea>
+									<!-- <span class="help-block" ng-show="contactForm.contactMessage.$error.required">Required</span> -->
+							</div>
+							<button class="btn btn-default button" ng-click="sendMessage()"> Send Feedback </button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-md">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -127,7 +165,8 @@
 						</button>
 						<h4 class="modal-title" id="mySmallModalabel"> {{tellUserTitle}} </h4>
 					</div>
-					<div id="errorMessage">
+					<br>
+					<div>
 						{{tellUserMessage}}
 					</div>
 				</div>

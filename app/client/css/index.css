@@ -31,8 +31,15 @@ body
 	filter: blur(4px) brightness(0.8);
 }
 
+/* USER CONTACT FORM */
+#contactModal .modal-content
+{
+	padding: 20px;
+}
+/* USER CONTACT FORM END */
+
 /* USER FEEDBACK MODAL */
-#errorMessage
+#errorModal .modal-content
 {
 	padding: 20px;
 }

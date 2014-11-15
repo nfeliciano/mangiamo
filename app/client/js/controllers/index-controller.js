@@ -49,7 +49,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					$scope.introVisible = false;
 					$scope.linksVisible = true;
 					$scope.sidebarVisible = true;
-				}				
+				}
 			}
 			else if (content == "intro") {
 				if ($scope.introVisible == true) {
@@ -86,7 +86,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 		/* GLOBAL ACESS FUNCTIONS END */
 
-		// This allows the initial redirect when they come to the 
+		// This allows the initial redirect when they come to the
 		// page based on whether or not they are logged in
 		$scope.init = function() {
 			if (userService.isUserLoggedIn()) {
@@ -103,6 +103,27 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			$scope.tellUserTitle = typeof(title) !== 'undefined' ? title : "Oops! We've Encountered a Problem.";
 			$scope.tellUserMessage = message;
 			$('#errorModal').modal();
+		}
+
+		$scope.contact = function() {
+			$scope.contactMessage = "";
+			$scope.contactEmail = "";
+			$('#contactModal').modal();
+		}
+
+		$scope.sendMessage = function() {
+			$('#contactModal').modal('hide');
+			if ($scope.contactMessage == null) {
+				$scope.tellUser('Sorry! You need to actually enter some text!', 'We need more information');
+				return;
+			}
+			if ($scope.contactMessage.length > 5) {
+				userService.contactDevs($scope.contactMessage, $scope.contactEmail);
+				$scope.contactMessage = "";
+				$scope.contactEmail = "";
+			} else {
+				$scope.tellUser('Sorry! We\'d like to hear more than a couple of letters!', 'We need more information');
+			}
 		}
 
 		$scope.logout = function() {
@@ -291,7 +312,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 				if(authResult['status']['method'] == 'PROMPT'){
 					getUserInfo();
 				}
-		    } 
+		    }
 		    else {
 		    	// Update the app to reflect a signed out user
 		    	// Possible error values:

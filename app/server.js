@@ -4,14 +4,16 @@ var express 				= require('express'),
 	bodyParser 				= require('body-parser'),
 	mongoose 				= require('mongoose'),
 	config 					= require('./config'),
-	mealsController 		= require('./server/controllers/meals-controller');
-	userController			= require('./server/controllers/user-controller');
-	scheduler				= require('./server/controllers/scheduler.js');
+	mealsController 		= require('./server/controllers/meals-controller'),
+	userController			= require('./server/controllers/user-controller'),
+	contactController		= require('./server/controllers/contact-controller'),
+	scheduler				= require('./server/controllers/scheduler.js'),
 	options 				= { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 10000 } },
                 				replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 10000 } } };
 
 // set the 'dbUrl' to the mongodb url that corresponds to the environment we are in
 app.set('dbUrl', config.db['development']);
+
 // connect mongoose to the mongo dbUrl
 mongoose.connect(app.get('dbUrl'), options);
 
@@ -59,6 +61,9 @@ app.put('/api/users/buddies/suggest', userController.suggestBuddy);
 app.put('/api/users/buddies/suggest/stop', userController.stopSuggesting);
 app.put('/api/users/buddies/remove', userController.removeBuddy);
 app.put('/api/users/buddies/ignore', userController.ignoreBuddy);
+
+//Contact form
+app.post('/contact', contactController.sendEmail);
 
 app.listen(3000, function() {
 	console.log('I\'m listening');
