@@ -5,76 +5,15 @@
 		<div id="mapCanvas"></div>
 	</div>
 
-	<!-- Friends Bar -->
-	<div id="mealBuddiesContainer" class="col-xs-12 col-sm-4 col-md-3 col-lg-3" ng-show="showFriendsSidebar">
-		
-		<div id="mealinfo-exit" ng-click="showFriendsSidebar2(false)">
-			<span class="glyphicon glyphicon-remove visible-xs"></span>
-		</div>
-
-		<div class="sidebarTitle"> Friends </div>
-		<hr>
-
-		<span class="text"> Your ID is: {{UID}} </span>
-		<form>
-			<input type="text" ng-model="newMealBuddy" placeholder="Enter a friend's ID"><br>
-			<button ng-click="addFriend(newMealBuddy)" class="btn btn-primary" id="friendAdder"> Click to add a Friend! </button>
-		</form>
-
-		<p class="text"> Current Friends </p>
-		<accordion close-others="true">
-			<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddy in mealBuddies">
-				<accordion-heading>
-					{{mealBuddy[0].name}}
-					<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-				</accordion-heading>
-				Age Range: {{mealBuddy[0].ageRange}}<br>
-				Profession: {{mealBuddy[0].profession}}<br>
-				Me-Factor: {{mealBuddy[0].description}}<br>
-				<button class="btn btn-default btn-sm" ng-click="removeMealBuddy(mealBuddy, false)"> Remove </button>
-			</accordion-group>
-		</accordion>
-
-		<p class="text"> Friend Requests </p>
-		<accordion close-others="true">
-			<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddyRequest in mealBuddyRequests">
-				<accordion-heading>
-					{{mealBuddyRequest[0].name}}
-					<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-				</accordion-heading>
-				Age Range: {{mealBuddyRequest[0].ageRange}}<br>
-				Profession: {{mealBuddyRequest[0].profession}}<br>
-				Me-Factor: {{mealBuddyRequest[0].description}}<br>
-				<button class="btn btn-default btn-sm" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
-				<button class="btn btn-default btn-sm" ng-click="removeMealBuddy(mealBuddyRequest)"> Decline </button>
-			</accordion-group>
-		</accordion>
-
-		<p class="text"> Suggested Friends </p>
-		<button class="btn btn-default btn-sm" ng-click="loadSuggestions()" ng-disabled="findingFriends"> Find Facebook Friends </button>
-		<accordion close-others="true">
-			<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
-				<accordion-heading>
-					{{mealBuddySuggestion[0].name}}
-					<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-				</accordion-heading>
-				Age Range: {{mealBuddySuggestion[0].ageRange}}<br>
-				Profession: {{mealBuddySuggestion[0].profession}}<br>
-				Me-Factor: {{mealBuddySuggestion[0].description}}<br>
-				<button class="btn btn-default btn-sm" ng-click="addFriendFromFacebookID(mealBuddySuggestion[0].facebookID)"> Add </button>
-			</accordion-group>
-		</accordion>
-	</div>
-
-	<!-- Meal Information -->
-	<div id="mealInformationContainer" class="col-xs-12 col-sm-4 col-md-3 col-lg-3" ng-show="showMealSidebar">
-		<!-- Remove-sidebar-"X" for mobile users -->
-		<div id="mealinfo-exit" ng-click="toggleMealSidebar(false)">  
-			<span class="glyphicon glyphicon-remove visible-xs"></span>
+	<!-- Sidebar -->
+	<div id="sidebarContainer" class="col-xs-12 col-sm-4 col-md-3 col-lg-3" ng-show="sidebarVisible">
+		<!-- Close Sidebar "X" -->
+		<div id="closeSidebar">
+			<span class="glyphicon glyphicon-remove pull-right" ng-click="toggleSidebar('false')"></span>
 		</div>
 
 		<!-- User Instructions -->
-		<div id="userInstructions" ng-hide="showMealInfo">
+		<div id="introContainer" ng-show="introVisible">
 			Click a pin or marker on the map to begin joining and creating meals.  
 			Use the existing markers, or use the search bar to look up a 
 			restaurant you know the name of.
@@ -82,73 +21,114 @@
 			<img src="/img/legend.png">
 		</div>
 
-		<!-- Location -->
-		<div id="mealPlace" ng-show="showMealInfo">
-			<div class="sidebarTitle" ng-show="showMealInfo">
-				{{currentPin.name}}
-			</div>
-			<hr>
-			<!-- Existing Meals -->
-			<div id="mealsHeader">
-				<span class="pull-left"> Meal Time </span> 
-				Attendees
-				<span class="pull-right"> Info </span>
-			</div>
+		<!-- Links -->
+		<div id="linksContainer"  ng-show="linksVisible">
+			<div class="sidebarTitle"> Friends </div>
+			<hr>toggleSidebar
+
+			<span class="text"> Your ID is: {{UID}} </span>
+			<form>
+				<input type="text" placeholder="Enter a friend's ID" ng-model="newMealBuddy"><br>
+				<button id="friendAdder" class="btn btn-primary" ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>
+			</form>
+
+			<p class="text"> Current Friends </p>
 			<accordion close-others="true">
-				<accordion-group class="listedMeal" is-open="status.open" ng-repeat="meal in currentPin.meals">
+				<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddy in mealBuddies">
 					<accordion-heading>
-						<div id="mealInfoHeader">
-							<div>
-								{{meal.attendees.length}}
-							</div>
-							{{meal.time}}
-							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-						</div>
+						{{mealBuddy[0].name}}
+						<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 					</accordion-heading>
-					<div ng-repeat="attendee in meal.attendees">
-						<div class="mealAttendee">
-							<!-- Age Range &nbsp - {{attendee.ageRange}}<br>
-							Profession &nbsp - {{attendee.profession}}<br>
-							"Me" Factor - {{attendee.description}} -->
-							<!-- {{attendee.description}}<br>
-							{{attendee.profession}}<br>
-							{{attendee.ageRange}} -->
-							I am a <span>{{attendee.description}}</span> with a profession in 
-							<span>{{attendee.profession}}</span> and I am between 
-							<span>{{attendee.ageRange}}</span>.
-						</div>
-					</div>
-					<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)"> Join Meal </button>
-				</accordion-group>
-				<accordion-group>
-					<!-- Create Meal -->
-					<accordion-heading>
-						<!-- <div id="createMealHeader">
-							Create New Meal
-							<i class="pull-right glyphicon glyphicon-plus"></i>
-						</div> -->
-						<div id="mealInfoHeader">
-							<div>
-								--
-							</div>
-							--:--
-							<i class="pull-right glyphicon glyphicon-plus"></i>
-						</div>
-					</accordion-heading>
-					<div id="timeTicker">
-							<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
-						</div>
-						<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal()"> Create a New Meal </button>
+					Age Range: {{mealBuddy[0].ageRange}}<br>
+					Profession: {{mealBuddy[0].profession}}<br>
+					Me-Factor: {{mealBuddy[0].description}}<br>
+					<button class="btn btn-default btn-sm" ng-click="removeMealBuddy(mealBuddy, false)"> Remove </button>
 				</accordion-group>
 			</accordion>
-			
 
-			<!-- <div id="newMeal" ng-init="initMealForm()">
-				<div id="timeTicker">
-					<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+			<p class="text"> Friend Requests </p>
+			<accordion close-others="true">
+				<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddyRequest in mealBuddyRequests">
+					<accordion-heading>
+						{{mealBuddyRequest[0].name}}
+						<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</accordion-heading>
+					Age Range: {{mealBuddyRequest[0].ageRange}}<br>
+					Profession: {{mealBuddyRequest[0].profession}}<br>
+					Me-Factor: {{mealBuddyRequest[0].description}}<br>
+					<button class="btn btn-default btn-sm" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
+					<button class="btn btn-default btn-sm" ng-click="removeMealBuddy(mealBuddyRequest)"> Decline </button>
+				</accordion-group>
+			</accordion>
+
+			<p class="text"> Suggested Friends </p>
+			<button class="btn btn-default btn-sm" ng-click="loadSuggestions()" ng-disabled="findingFriends"> Find Facebook Friends </button>
+			<accordion close-others="true">
+				<accordion-group class="listedMeal" is-open="status.open" ng-repeat="mealBuddySuggestion in mealBuddySuggestions">
+					<accordion-heading>
+						{{mealBuddySuggestion[0].name}}
+						<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</accordion-heading>
+					Age Range: {{mealBuddySuggestion[0].ageRange}}<br>
+					Profession: {{mealBuddySuggestion[0].profession}}<br>
+					Me-Factor: {{mealBuddySuggestion[0].description}}<br>
+					<button class="btn btn-default btn-sm" ng-click="addFriendFromFacebookID(mealBuddySuggestion[0].facebookID)"> Add </button>
+				</accordion-group>
+			</accordion>
+		</div>
+
+		<!-- Meal Information -->
+		<div id="mealsContainer" ng-show="mealsVisible">
+			<!-- Location -->
+			<div id="mealPlace">
+				<div class="sidebarTitle">
+					{{currentPin.name}}
 				</div>
-				<button id="createMealButton" class="btn btn-primary btn-block col-xs-6" ng-click="createMeal()"> Create a New Meal </button>
-			</div> -->
+				<hr>
+				<!-- Existing Meals -->
+				<div id="mealsHeader">
+					<span class="pull-left"> Meal Time </span> 
+					Attendees
+					<span class="pull-right"> Info </span>
+				</div>
+				<accordion close-others="true">
+					<accordion-group class="listedMeal" is-open="status.open" ng-repeat="meal in currentPin.meals">
+						<accordion-heading>
+							<div id="mealInfoHeader">
+								<div>
+									{{meal.attendees.length}}
+								</div>
+								{{meal.time}}
+								<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+							</div>
+						</accordion-heading>
+						<div ng-repeat="attendee in meal.attendees">
+							<div class="mealAttendee">
+								I am a <span>{{attendee.description}}</span> with a profession in 
+								<span>{{attendee.profession}}</span> and I am between 
+								<span>{{attendee.ageRange}}</span>.
+							</div>
+						</div>
+						<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)"> Join Meal </button>
+					</accordion-group>
+					<accordion-group>
+						<!-- Create Meal -->
+						<accordion-heading>
+							<div id="mealInfoHeader">
+								<div>
+									--
+								</div>
+								--:--
+								<i class="pull-right glyphicon glyphicon-plus"></i>
+							</div>
+						</accordion-heading>
+						<div id="timeTicker">
+							<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+						</div>
+						<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime)"> Create a New Meal </button>
+					</accordion-group>
+				</accordion>
+			</div>
 		</div>
 	</div>
 </div>

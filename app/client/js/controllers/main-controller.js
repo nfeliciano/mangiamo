@@ -1,19 +1,40 @@
 app.controller('mainController', ['$scope', '$resource', '$location', '$modal', '$http', 'mealService', 'userService',
 	function ($scope, $resource, $location, $modal, $http, mealService, userService) {
+		/* GLOBAL DATA (In main-controller.js) START */
 		$scope.placedMarkers = [];
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
 		$scope.usersMealBuddies = [];
 		$scope.selectedMarkerOldIcon = null;
-		$scope.usersMealsAttending = []; 
-		$scope.showSuppBuddiesButton();
-		$scope.showLogoutButton();
-
+		$scope.usersMealsAttending = [];
 		var minZoomLevel = 13; // as far back as they can go
+		$scope.currentPin = { "name": "",
+							  "place": null,
+							  "marker": null,
+							  "rating": "",
+							  "meals": [ /*{ "time": "",
+							  			     "key": "",
+							  			     "attendees": [] }*/
+							  		   ]
+							};
 
-		$scope.hideLoginButton();
-		$scope.toggleMealInfo(false);
+		$scope.mealTime = new Date();
+		/* GLOBAL DATA (In main-controller.js) END */
+
+		/* MAIN.HTML REFRESH CODE START (called on page refresh) */
+		// Set the navbar to display the proper elements
+		$scope.toggleLinksButton(true);
+		$scope.toggleLogoutButton(true);
+		$scope.toggleLoginButton(false);
+
+		// Hide the sidebar on page load, then load the "intro" sidebar content
+		$scope.toggleSidebar(false);
+		$scope.setSidebarContent('intro');
+
+		/* MAIN.HTML REFRESH CODE END */
+
+		
 
 		var mapOptions = { 
 			zoomControlOptions: {
@@ -25,8 +46,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			streetViewControl: false			
         }
 
-		$scope.mealTime = new Date();
-
 		// Adds a Friend
 		$scope.addFriend = function(newMealBuddy) {
 			$scope.newMealBuddy = "";
@@ -37,23 +56,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			});
 		}
 
-		$scope.currentPin = { "name": "",
-							  "place": null,
-							  "marker": null,
-							  "rating": "",
-							  "meals": [ /*{ "time": "",
-							  			     "key": "",
-							  			     "attendees": [] }*/
-							  		   ]
-							};
-
 		$scope.updateMealInfo = function(place, marker) {
 			$scope.currentPin.name = place.name;
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
 			$scope.currentPin.meals = [];
 
-			// Force minutes to start at 00
+			//Force minutes to start at 00
 			var d = new Date();
 			d.setMinutes(0);
 			d.setHours(d.getHours() + 1);
@@ -62,7 +71,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				var mealData = angular.fromJson(data);
-
 				$scope.currentPin.meals = [];  // Reset data
 				for (var i = 0; i < mealData.length; i++) {
 					$scope.currentPin.meals.push({"time": "", "key": "", "attendees": []});
@@ -104,9 +112,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					$scope.populateAttendees(mealData, i);
 				}
 			});
-			$scope.showFriendsSidebar2(false);
-			$scope.toggleMealSidebar(true);
-			$scope.toggleMealInfo(true);
+			$scope.setSidebarContent('meals');
 		}
 
 		$scope.populateAttendees = function(mealData, i) {
@@ -123,16 +129,17 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			});
 		}
 
-		
 		//Just a place holder function for whatever method of testing weither a person is allowed to join,
 		//for now just updates their current meals, and sees if its greater than 1 then they can join
 		$scope.isUserAllowedToJoinMeal = function(){
+			// OVERRIDE
+			return true;
 			//update current user meals, just as a precaution
 			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
 				$scope.usersMealsAttending = data[0].mealsAttending; 
 				
 				//hard code limit 1
-				if($scope.usersMealsAttending.length >0){
+				if($scope.usersMealsAttending.length > 0){
 					return false; // user cannot join
 				}
 				return true;  //user can join
@@ -141,10 +148,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 		
 		$scope.joinMeal = function(meal) {
-		
 			//Test if user can join meal
 			if(!$scope.isUserAllowedToJoinMeal())
 			{
+				$scope.tellUser("You are already in a meal.  Please leave your other meal to join a new one.");
 				return;
 			}
 			if ($scope.currentPin.marker.hasMeal) {
@@ -162,7 +169,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 
-		$scope.createMeal = function() {
+		$scope.createMeal = function(mealTime) {
 
 			//test if user can join
 			if(!$scope.isUserAllowedToJoinMeal()){
@@ -173,8 +180,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			var date = new Date(currentTime.getFullYear(),
 								currentTime.getMonth(), 
 								currentTime.getDate(), 
-								$scope.mealTime.getHours(), 
-								$scope.mealTime.getMinutes(), 0, 0);
+								mealTime.getHours(), 
+								mealTime.getMinutes(), 0, 0);
 
 			mealService.addNewMeal($scope.currentPin.place.place_id, 0, date, [], true).success(function(data) {
 				var key = angular.fromJson(localStorage.user).key;
@@ -549,7 +556,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					// Returns ALL the place details and information 
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.updateMealInfo(place, marker, true);
+							$scope.updateMealInfo(place, marker);
 						}
 					}
 				});
@@ -607,9 +614,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 			$scope.placedMarkers = [];
 		}
-		
-		
-		
 		
 		// In the event that the browser cannot or user chooses not to support geolocation, this is how that's handled
 		function handleNoGeolocation(errorFlag) {

@@ -10,7 +10,7 @@ module.exports.create = function (req,res) {
 		people: req.body.people,
 		active: req.body.active,
 	});
-	
+
 	meal.save(function (err, result) {
 		if (!err) {
 			return res.json(result);
@@ -46,7 +46,7 @@ module.exports.getPeople = function (req,res) {
 	}
 }
 
-// Returns an array of meals. If we're not seeking a specific placeID, it returns all meals. 
+// Returns an array of meals. If we're not seeking a specific placeID, it returns all meals.
 // If we pass in a placeID, it returns all meals in that location
 // If we pass in a key, it returns the only meal in that key
 module.exports.list = function (req,res) {

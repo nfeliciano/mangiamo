@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "body-parser": "^1.8.4",
+    "cron": "^1.0.5",
     "express": "^4.9.4",
     "mongoose": "^3.8.16"
   }
