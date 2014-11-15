@@ -154,6 +154,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				}
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.addUserToMeal(meal.key, key).success(function(data) {
+					$scope.usersMealsAttending = meal;
 					$scope.currentPin.marker.setIcon('/img/restaur_going.png');
 					$scope.selectedMarkerOldIcon = '/img/restaur_going.png';
 					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1; 
@@ -236,6 +237,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					var key = angular.fromJson(localStorage.user).key;
 
 					mealService.addUserToMeal(data.key, key).success(function(meal) {
+						$scope.usersMealsAttending[0] = data;
 						$scope.currentPin.marker.setIcon('/img/restaur_going.png');
 						$scope.selectedMarkerOldIcon = '/img/restaur_going.png';
 						$scope.currentPin.marker.hasMeal = true; 
@@ -614,8 +616,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Update the marker to the new marker
 			$scope.currentPin.marker = marker;
 			$scope.selectedMarkerOldIcon = marker.icon; // saves the current image so it can be updated next time we enter here
-			
-			console.log(marker.icon);
 
 			switch(marker.icon){
 			
