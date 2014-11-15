@@ -16,6 +16,8 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		$scope.tellUserTitle = "";
 		$scope.tellUserMessage = "";
+
+		$scope.user = null;
 		/* GLOBAL DATA END */
 
 		// REMOVE THIS
@@ -138,7 +140,10 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		// Populate MealBuddies, and MealBuddyRequests to be displayed in the Meal Buddies SideBar
 		$scope.populateMealBuddies = function() {
-			$scope.UID = angular.fromJson(localStorage.user).key;
+			if ($scope.user == null) {
+				return;
+			}
+			$scope.UID = angular.fromJson($scope.user).key;
 			// Grab the users MealBuddies from the database
 			userService.getMealBuddies().success( function(data1) {
 				$scope.mealBuddyRequests = [];
@@ -178,7 +183,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 						if (data.length > 0) {
 							var user = data[0];
-							localStorage.user = angular.toJson(user);
+							$scope.user = angular.toJson(user);
 							$location.path('main').replace();
 						} else {
 							if ($location.path() == '/login') {
@@ -284,7 +289,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					userService.findByGoogle(resp.result.id).success(function(data) {
 						if (data.length) {
 							var user = data[0];
-							localStorage.user = angular.toJson(user);
+							$scope.user = angular.toJson(user);
 							$location.path('main').replace();
 						} else {
 							if ($location.path() == '/login') {

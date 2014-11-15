@@ -1,13 +1,15 @@
 app.controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
-		$scope.startEating = true;
+		$scope.startEating = function() {
+			$location.path('main').replace();
+		};
 
 		// Set the navbar to display the proper elements
 		$scope.toggleLinksButton(false);
 		$scope.toggleLogoutButton(false);
 		$scope.toggleLoginButton(true);
 
-		// initForm populates local variables from local JSON files.  This speparates 
+		// initForm populates local variables from local JSON files.  This speparates
 		// a lot of data from html and Angular into appropriate JSON files.  The
 		// following "gets" allow angular to access these local JSON files
 		$scope.initLoginForm = function() {
@@ -58,10 +60,6 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 		getMonthFromString = function(month) {
 			return new Date(Date.parse(month +" 1, 2012")).getMonth()
 		}
-
-		$scope.$on('showUserInfo', function(event, args) {
-			$scope.startEating = false;
-		});
 
 		// This redirects back to main if the user tries to navigate here and they are already logged in
 		$scope.initLogin = function() {
