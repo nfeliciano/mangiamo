@@ -27,6 +27,13 @@
 			<button ng-click="startEating = !startEating" type="submit" class="btn btn-primary">
 				<h4> Try linksupp <span class="underlined"> without an account! </span></h4>
 			</button>
+			
+			<!-- YouTube Tutorial, TODO POSITIONING NEEDED -->
+			<iframe id="player" type="text/html" width="640" height="390"
+				src="http://www.youtube.com/embed/6ol6h0DApqQ"
+				frameborder="0"
+				allowfullscreen>
+			</iframe>
 		</div>
 		<!-- Login Form -->
 		<div id="inputContainer" ng-hide="startEating">
@@ -81,8 +88,10 @@
 					<div class="col-xs-3"></div>
 
 					<!-- fix float: left -->
-					<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Submit </button>		
+					<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Submit </button>	
+				
 				</form>
+			
 			</div>
 		</div>
 	</div>
