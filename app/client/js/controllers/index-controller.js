@@ -106,11 +106,13 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 
 		$scope.contact = function() {
+			$scope.contactMessage = "";
+			$scope.contactEmail = "";
 			$('#contactModal').modal();
 		}
 
 		$scope.sendMessage = function() {
-			
+			userService.contactDevs($scope.contactMessage, $scope.contactEmail);
 		}
 
 		$scope.logout = function() {

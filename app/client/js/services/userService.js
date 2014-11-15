@@ -143,7 +143,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 	userService.isUserLoggedIn = function() {
 		if (localStorage.user == undefined || (localStorage.user == "null")) {  // SLIP'S SHITTING THROUGH THE CRACKS
 			return false;
-		} 
+		}
 		else {
 			return true;
 		}
@@ -155,6 +155,12 @@ app.factory('userService', ['$http', function($http, $resource) {
 		sessionStorage.name = null;
 		sessionStorage.facebookID = null;
 		sessionStorage.googleID = null;
+	}
+
+	userService.contactDevs = function(message, email) {
+		var request = { 'message' : message, 'email' : email };
+		console.log(request);
+		$http.post('/contact', request);
 	}
 
 	generateUniqueKey = function() {
