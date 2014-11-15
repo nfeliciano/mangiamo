@@ -173,15 +173,17 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.leaveMeal = function(meal) {
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
-				mealService.deleteUserFromMeal(meal.key, key).success(function(data) {
+				mealService.deleteUserFromMeal(meal.key, key).success( function(data) {
 					$scope.currentPin.marker.setIcon('../../img/restaur_selected.png');
 					$scope.selectedMarkerOldIcon = '../../img/restaurant.png';
 					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) - 1; 
 					$scope.currentPin.marker.label.setContent();
 					userService.getUserWithID(key).success(function(data) {
-						var indexOfUser = meal.attendees.indexOf(data[0]);
-						meal.attendees.splice(indexOfUser, 1);
-						userService.deleteMealFromUser(meal.key);
+						userService.deleteMealFromUser(meal.key, key).success( function(data) {
+							$scope.tellUser("You have left the " + meal.time + " meal at " + $scope.currentPin.name + ".",
+								"We are sad to see you go!");
+							$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
+						});
 					});
 				});
 			}

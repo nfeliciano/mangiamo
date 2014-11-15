@@ -37,9 +37,8 @@ app.factory('userService', ['$http', function($http, $resource) {
 		return $http.put(userMeals, request);
 	}
 
-	userService.deleteMealFromUser = function(mealKey) {
-		var userKey = angular.fromJson(localStorage.user).key;
-		var request = { "key" : userKey, "mealkey" : mealKey };
+	userService.deleteMealFromUser = function(mealKey, key) {
+		var request = { "key" : key, "mealkey" : mealKey };
 		return $http.put(userDeleteMeals, request);
 	}
 
