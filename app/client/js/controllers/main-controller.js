@@ -412,26 +412,35 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		
 			//Form request for location search
-			var request = {
+			var firstRequest = {
 				location: $scope.lastPosition,
 				rankby : google.maps.places.RankBy.DISTANCE,
 				radius: radius,
 				types: ['restaurant','cafe', 'bar', 'food']
 			};
 				
+				//Form request for location search
+			var request = {
+				location: $scope.lastPosition,
+				rankby : google.maps.places.RankBy.DISTANCE,
+				bounds: $scope.map.getBounds(),
+				types: ['restaurant','cafe', 'bar', 'food']
+			};
+				
 		
 			var service = new google.maps.places.PlacesService($scope.map);
-			service.radarSearch(request, callback);
+			service.radarSearch(firstRequest, callback);
 			
 			// refreshes the map with new food places when the map is moved a certain amount
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 				
 				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > radius/3){
-					request.radius = radius;
+					//request.radius = radius;
+					request.bounds = $scope.map.getBounds();
 					console.log(radius); 
 					$scope.getUsersMealBuddies();
 					$scope.lastPosition = $scope.map.getCenter();
-					request.location=offsetCenter($scope.map.getCenter(),250,250);
+					request.location=offsetCenter($scope.map.getCenter(),-radius/10,-radius/10);
 					service.radarSearch(request, fastCallback); 
 					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
 				}
@@ -449,15 +458,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 				var screenWidthMeters = google.maps.geometry.spherical.computeDistanceBetween (sw, ne);
 				//console.log(screenWidthMeters	);		
-				radius = screenWidthMeters/4; 
-				
-					request.radius = radius;
+				//radius = screenWidthMeters/4; 
+				request.bounds = $scope.map.getBounds();
+					//request.radius = radius;
 					console.log(radius); 
 					$scope.getUsersMealBuddies();
 					$scope.lastPosition = $scope.map.getCenter();
 					
 					request.location=offsetCenter($scope.map.getCenter(),radius/4,radius/4);
-					request.location.l
+					//request.location.l
 					service.radarSearch(request, fastCallback); 
 					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
 				
@@ -475,13 +484,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// offset can be negative
 			// offsetx and offsety are both optional
 
-			var scale = Math.pow(2, map.getZoom());
+			var scale = Math.pow(2, $scope.map.getZoom());
 			var nw = new google.maps.LatLng(
-				map.getBounds().getNorthEast().lat(),
-				map.getBounds().getSouthWest().lng()
+				$scope.map.getBounds().getNorthEast().lat(),
+				$scope.map.getBounds().getSouthWest().lng()
 			);
 
-			var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+			var worldCoordinateCenter = $scope.map.getProjection().fromLatLngToPoint(latlng);
 			var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
 
 			var worldCoordinateNewCenter = new google.maps.Point(
@@ -489,8 +498,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				worldCoordinateCenter.y + pixelOffset.y
 			);
 
-			var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
-			map.setCenter(newCenter);
+			var newCenter = $scope.map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
 			
 			return newCenter;
 		}
