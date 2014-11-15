@@ -122,7 +122,7 @@
 			<!-- /.container-fluid -->
 		</nav>
 
-		<div id="contactModal" class="modal fade bs-example-modal-m" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div id="contactModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-md">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -133,26 +133,28 @@
 						<h4 class="modal-title" id="mySmallModalLabel"> Contact Us </h4>
 					</div>
 					<div id="contactMessage">
+						<br>
 						Questions? Comments? Compliments? Write them here!
+						<br><br>
 						<form novalidate name="contactForm">
-							<div class="form-group" ng-class="{'has-error': contactForm.contactMessage.$invalid}">
-								<input class="form-control" type="text" name="contactMessage"
-									placeholder="Your Message" required ng-model="contactMessage" />
-									<!-- <span class="help-block" ng-show="contactForm.contactMessage.$error.required">Required</span> -->
-							</div>
-							<div class="form-group" ng-class="{'has-error': contactForm.contactEmail.$invalid}">
+							<div class="form-group">
 								<input class="form-control" type="email" name="contactEmail"
 									placeholder="Your Email" required ng-model="contactEmail" />
 								<!-- <span class="help-block" ng-show="contactForm.contactMessage.$error.required">Required</span> -->
 							</div>
-							<button ng-click="sendMessage()">Send</button>
+							<div class="form-group">
+								<textarea class="form-control" type="text" name="contactMessage"
+									placeholder="Your Message" rows="5" required ng-model="contactMessage"/></textarea>
+									<!-- <span class="help-block" ng-show="contactForm.contactMessage.$error.required">Required</span> -->
+							</div>
+							<button class="btn btn-default button" ng-click="sendMessage()"> Send Feedback </button>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div id="errorModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-md">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -162,7 +164,8 @@
 						</button>
 						<h4 class="modal-title" id="mySmallModalabel"> {{tellUserTitle}} </h4>
 					</div>
-					<div id="errorMessage">
+					<br>
+					<div>
 						{{tellUserMessage}}
 					</div>
 				</div>

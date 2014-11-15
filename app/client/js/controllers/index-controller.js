@@ -106,6 +106,8 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 
 		$scope.contact = function() {
+			$scope.contactMessage = "";
+			$scope.contactEmail = "";
 			$('#contactModal').modal();
 		}
 
