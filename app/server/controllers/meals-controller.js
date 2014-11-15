@@ -66,16 +66,3 @@ module.exports.list = function (req,res) {
 		});
 	}
 }
-
-// var cronJob = cron.CronJob;
-// var updateMeals = new cronJob('0* 00,15,30,45 * * * *', function () {
-// 	var currentDate = new Date();
-// 	//get all meals
-// 	Meal.find({}, function (err, results) {
-// 		for (var i = 0; i < results.length; i++) {
-// 			if (currentDate >= results[i].time) {
-// 				Meal.findOneAndRemove({key : results[i].key}, function(err, results) {});
-// 			}
-// 		}
-// 	});
-// }, null, true);
