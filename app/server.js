@@ -37,9 +37,11 @@ app.use('/json', express.static(__dirname + '/client/json'));
 
 //REST API
 //Meals
+app.put('/api/meals/delete', mealsController.deleteMeal);
 app.put('/api/meals', mealsController.update);
 app.get('/api/meals', mealsController.list);
 app.get('/api/meals/people', mealsController.getPeople);
+app.put('/api/meals/people', mealsController.deletePeople);
 app.post('/api/meals', mealsController.create);
 
 //Users
@@ -50,6 +52,7 @@ app.get('/api/users/buddies', userController.getMealBuddies);
 app.get('/api/users/facebook', userController.findByFacebook);
 app.get('/api/users/google', userController.findByGoogle);
 app.put('/api/users/meals', userController.addMealToUser);
+app.put('/api/users/deleteMeals', userController.deleteMealFromUser);
 
 //Meal buddies stuff
 app.put('/api/users/buddies/request', userController.requestBuddy);

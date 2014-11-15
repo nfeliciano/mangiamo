@@ -86,7 +86,17 @@ module.exports.list = function (req,res) {
 module.exports.addMealToUser = function (req,res) {
 	var query = { key: req.body.key };
 	var update = { mealsAttending: { "key" : req.body.mealkey } };
-	User.findOneAndUpdate(query, { $push : update }, function(err, results) {});
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
+		res.json(results);
+	});
+}
+
+module.exports.deleteMealFromUser = function (req,res) {
+	var query = { key: req.body.key };
+	var update = { mealsAttending: { "key" : req.body.mealkey } };
+	User.findOneAndUpdate(query, { $pull : update }, function(err, results) {
+		res.json(results);
+	});
 }
 
 // We will now need some more methods
@@ -160,7 +170,9 @@ module.exports.stopSuggesting = function(req,res) {
 	User.findOneAndUpdate(query, { $pull : removeSuggested }, function(err, results) {});
 
 	var stopSuggesting = { 'mealBuddies.stopSuggesting' : buddyQuery };
-	User.findOneAndUpdate(query, { $push : stopSuggesting }, function(err, results) {});
+	User.findOneAndUpdate(query, { $push : stopSuggesting }, function(err, results) {
+		res.json(results);
+	});
 }
 
 // Cases: rejects a buddy request, deletes a buddy
