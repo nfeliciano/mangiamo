@@ -106,6 +106,8 @@
 						</accordion-heading>
 						<div ng-repeat="attendee in meal.attendees" ng-init="isUserAttendingMeal(meal)">
 							<div class="mealAttendee" ng-class="{mealAttendeeSelf: isThisMe(attendee)}">
+								<div class="attendeeIdentifer" ng-show="isThisMe(attendee)">- This is You! -</div>
+								<div class="attendeeIdentifer" ng-show="isThisMyFriend(attendee)">- {{ attendee.name }} -</div>
 								I am a <span>{{attendee.description}}</span> with a profession in 
 								<span>{{attendee.profession}}</span> and I am between 
 								<span>{{attendee.ageRange}}</span>.

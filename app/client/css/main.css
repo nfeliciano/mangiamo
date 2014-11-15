@@ -95,6 +95,12 @@
 	font-weight: bold;
 }
 
+.attendeeIdentifer
+{
+	text-align: center;
+	font-size: 0.8em;
+}
+
 #mealsHeader
 {
 	color: #2F5F7F;

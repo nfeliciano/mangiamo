@@ -142,10 +142,28 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 		}
 
-		$scope.isThisMe = function(attendee){
+		$scope.isThisMe = function(attendee)
+		{
 			return (angular.fromJson(localStorage.user).key == attendee.key);
 		}
 		
+		$scope.isThisMyFriend = function(attendee)
+		{
+			if($scope.currentPin.marker.icon != '/img/restaur_selected_friend.png' &&
+				$scope.currentPin.marker.icon != '/img/restaur_going.png') {			
+				return false;
+			}
+			else{
+				console.log($scope.mealBuddies);
+				for(index in $scope.mealBuddies){
+					if($scope.mealBuddies[index][0].key == attendee.key){
+						return true;
+					}
+				}
+			return false;
+			}
+		}
+
 		$scope.joinMeal = function(meal) {
 			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
 				$scope.usersMealsAttending = data[0].mealsAttending;
