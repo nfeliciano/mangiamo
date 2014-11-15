@@ -1,5 +1,4 @@
 var Meal = require('../models/meal');
-var cron = require('cron');
 
 // Creates a new meal
 module.exports.create = function (req,res) {
@@ -67,17 +66,3 @@ module.exports.list = function (req,res) {
 		});
 	}
 }
-
-var User = require('../models/user');
-var cronJob = cron.CronJob;
-var updateMeals = new cronJob('0* 00,15,30,45 * * * *', function () {
-	var currentDate = new Date();
-	//get all meals
-	Meal.find({}, function (err, results) {
-		for (var i = 0; i < results.length; i++) {
-			if (currentDate >= results[i].time) {
-				Meal.findOneAndRemove({key : results[i].key}, function(err, results) {});
-			}
-		}
-	});
-}, null, true);
