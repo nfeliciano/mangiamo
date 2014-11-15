@@ -9,6 +9,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 	var facebookLogin = '/api/users/facebook';
 	var googleLogin = '/api/users/google';
 	var userMeals = '/api/users/meals';
+	var userDeleteMeals = '/api/users/deleteMeals';
 
 	//the new stuff
 	var userRequest = '/api/users/buddies/request';
@@ -23,17 +24,22 @@ app.factory('userService', ['$http', function($http, $resource) {
 	// Gets all the users from the backend, no filtering. Can parse through them in results.
 	userService.getAllUsers = function() {
 		return $http.get(user);
-	};
+	}
 
 	// Gets a user from the backend with the specific ID.
 	userService.getUserWithID = function(key) {
 		return $http.get(user + '?key=' + key);
-	};
+	}
 
 	userService.addMealToUser = function(mealKey) {
 		var userKey = angular.fromJson(localStorage.user).key;
 		var request = { "key" : userKey, "mealkey" : mealKey };
 		return $http.put(userMeals, request);
+	}
+
+	userService.deleteMealFromUser = function(mealKey, key) {
+		var request = { "key" : key, "mealkey" : mealKey };
+		return $http.put(userDeleteMeals, request);
 	}
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
@@ -53,7 +59,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 			}
 		});
 		return res;
-	};
+	}
 
 	userService.addIDToUser = function(service, id, name) {
 		var user = angular.fromJson(localStorage.user);
@@ -63,26 +69,26 @@ app.factory('userService', ['$http', function($http, $resource) {
 		else if (service == 'gg') {
 			userService.updateUser(user.key, name, null, id, user.ageRange, user.description, user.profession, user.mealBuddies);
 		}
-	};
+	}
 
 	// Empty method. Will be used for updating a user's information.
 	userService.updateUser = function(userKey, name, facebookID, googleID, ageRange, description, profession, mealBuddies) {
 		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':mealBuddies };
 		return $http.put(user, request);
-	};
+	}
 
 	// Empty method. Will be used to delete a user from the database. Not sure if this is needed.
 	userService.deleteUser = function(userID) {
 
-	};
+	}
 
 	userService.findByFacebook = function(facebookID){
 		return $http.get(facebookLogin + '?facebookID=' + facebookID);
-	};
+	}
 
 	userService.findByGoogle = function(googleID){
 		return $http.get(googleLogin + '?googleID=' + googleID);
-	};
+	}
 
 	userService.addMealBuddy = function(buddyKey, mealBuddies) {
 		//check if buddy is already a buddy
@@ -105,24 +111,24 @@ app.factory('userService', ['$http', function($http, $resource) {
 				return $http.put(userRequest, request);
 			}
 		});
-	};
+	}
 
 	// Returns an array of meal buddies. Empty array if no meal buddies exist.
 	userService.getMealBuddies = function() {
 		return $http.get(userBuddies + '?key=' + angular.fromJson(localStorage.user).key);
-	};
+	}
 
 	// Confirms a meal buddy that has a pending request to the user.
 	userService.confirmMealBuddy = function(buddyKey) {
 		var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
 		return $http.put(userConfirm, request);
-	};
+	}
 
 	// Deletes or rejects a meal buddy. Up to client
 	userService.deleteMealBuddy = function(buddyKey) {
 		var request = { 'userKey': angular.fromJson(localStorage.user).key, 'buddyKey': buddyKey };
 		return $http.put(userRemove, request);
-	};
+	}
 
 	userService.suggestMealBuddy = function(buddyKey, mealBuddies) {
 		var accepted = mealBuddies.accepted;
@@ -147,7 +153,7 @@ app.factory('userService', ['$http', function($http, $resource) {
 		else {
 			return true;
 		}
-	};
+	}
 
 	// Removes the user from localStorage
 	userService.logoutUser = function() {

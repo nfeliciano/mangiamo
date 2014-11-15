@@ -69,7 +69,6 @@
 }
 
 /* MEAL BUDDIES */
-
 .mealBuddyButton
 {
 	float: right;
@@ -111,7 +110,6 @@
 /* MEAL INFORMATION START */
 #mealPlace
 {
-	background-color: #CCCCCC;
 	padding: 0px 0 60px 0;
 }
 
