@@ -14,7 +14,8 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		$scope.mealsVisible = false;
 		$scope.introVisible = false;
 
-		$scope.errorMessage = "";
+		$scope.tellUserTitle = "";
+		$scope.tellUserMessage = "";
 		/* GLOBAL DATA END */
 
 		// REMOVE THIS
@@ -97,9 +98,10 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 		$scope.init();
 
-		// Pass this function the string to be displayed to the user as an error message
-		$scope.tellUser = function(string) {
-			$scope.errorMessage = string;
+		// Pass this function the title and message to be displayed to the user as an error message
+		$scope.tellUser = function(message, title) {
+			$scope.tellUserTitle = typeof(title) !== 'undefined' ? title : "Oops! We've Encountered a Problem.";
+			$scope.tellUserMessage = message;
 			$('#errorModal').modal();
 		}
 

@@ -71,7 +71,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				var mealData = angular.fromJson(data);
-				console.log(mealData);
 				$scope.currentPin.meals = [];  // Reset data
 				for (var i = 0; i < mealData.length; i++) {
 					$scope.currentPin.meals.push({"time": "", "key": "", "attendees": []});
