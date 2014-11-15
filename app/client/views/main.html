@@ -14,17 +14,36 @@
 
 		<!-- User Instructions -->
 		<div id="introContainer" ng-show="introVisible">
-			Click a pin or marker on the map to begin joining and creating meals.  
-			Use the existing markers, or use the search bar to look up a 
-			restaurant you know the name of.
+			<head>
+			<h1>Help</h1>	
+			</head>
+		
+			<header>
+			<span class="glyphicon glyphicon-hand-up"></span>
+				Click a pin on the map
+			</header>
+			<header>
+				<span class="glyphicon glyphicon-cutlery"></span>
+				Create or join a meal
+			</header>
+			<header>
+				<span class="glyphicon glyphicon-search"></span>
+				Use the search bar to find your favourite locations
+			</header>
+			<header>
+				<span class="glyphicon glyphicon-link"></span>
+				Press Friends tab, add friends new and old
+			 </header>
+			
+			
 			<hr>
+			<h1> Legend </h1>
 			<img src="/img/legend.png">
 		</div>
 
 		<!-- Links -->
 		<div id="linksContainer"  ng-show="linksVisible">
 			<div class="sidebarTitle"> Friends </div>
-			<hr>toggleSidebar
 
 			<span class="text"> Your ID is: {{UID}} </span>
 			<form>
