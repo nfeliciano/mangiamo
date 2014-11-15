@@ -20,9 +20,11 @@ module.exports.sendEmail = function(req,res) {
     }, function(err, results) {
         if (err) {
             console.log(err);
+            res.json(500);
         }
         else {
             console.log('Message Sent ' + results.response);
+            res.json(200);
         }
     });
 }

@@ -105,7 +105,7 @@
 						</li>
 						<li>
 							<a href="" ng-click="contact()">
-								<span class="glyphicon glyphicon-log-in"></span>
+								<span class="glyphicon glyphicon-envelope"></span>
 								Contact Us
 							</a>
 						</li>
@@ -132,12 +132,20 @@
 						</button>
 						<h4 class="modal-title" id="mySmallModalLabel"> Contact Us </h4>
 					</div>
-					<div id="errorMessage">
+					<div id="contactMessage">
 						Questions? Comments? Compliments? Write them here!
-						<form novalidate class="contact-form">
-							<p>Message: <input type="text" ng-model="contactMessage" /></p>
-							<p>E-Mail: <input type="text" ng-model="contactEmail" /></p>
-							<button ng-click="sendMessage()" data-dismiss="modal">Send</button>
+						<form novalidate name="contactForm">
+							<div class="form-group" ng-class="{'has-error': contactForm.contactMessage.$invalid}">
+								<input class="form-control" type="text" name="contactMessage"
+									placeholder="Your Message" required ng-model="contactMessage" />
+									<!-- <span class="help-block" ng-show="contactForm.contactMessage.$error.required">Required</span> -->
+							</div>
+							<div class="form-group" ng-class="{'has-error': contactForm.contactEmail.$invalid}">
+								<input class="form-control" type="email" name="contactEmail"
+									placeholder="Your Email" required ng-model="contactEmail" />
+								<!-- <span class="help-block" ng-show="contactForm.contactMessage.$error.required">Required</span> -->
+							</div>
+							<button ng-click="sendMessage()">Send</button>
 						</form>
 					</div>
 				</div>

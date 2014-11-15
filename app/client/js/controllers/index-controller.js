@@ -106,13 +106,22 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 
 		$scope.contact = function() {
-			$scope.contactMessage = "";
-			$scope.contactEmail = "";
 			$('#contactModal').modal();
 		}
 
 		$scope.sendMessage = function() {
-			userService.contactDevs($scope.contactMessage, $scope.contactEmail);
+			$('#contactModal').modal('hide');
+			if ($scope.contactMessage == null) {
+				$scope.tellUser('Sorry! You need to actually enter some text!', 'We need more information');
+				return;
+			}
+			if ($scope.contactMessage.length > 5) {
+				userService.contactDevs($scope.contactMessage, $scope.contactEmail);
+				$scope.contactMessage = "";
+				$scope.contactEmail = "";
+			} else {
+				$scope.tellUser('Sorry! We\'d like to hear more than a couple of letters!', 'We need more information');
+			}
 		}
 
 		$scope.logout = function() {
