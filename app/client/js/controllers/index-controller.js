@@ -102,6 +102,10 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 		$scope.init();
 
+		$scope.declareUser = function(user) {
+			$scope.user = angular.toJson(user);
+		}
+
 		// Pass this function the title and message to be displayed to the user as an error message
 		$scope.tellUser = function(message, title) {
 			$scope.tellUserTitle = typeof(title) !== 'undefined' ? title : "Oops! We've Encountered a Problem.";
@@ -132,7 +136,9 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		$scope.logout = function() {
 			$scope.user = null;
-			userService.logoutUser();
+			sessionStorage.name = null;
+			sessionStorage.facebookID = null;
+			sessionStorage.googleID = null;
 			$location.path('login').replace();
 			FB.api('/me/permissions', 'delete', function(response) {});
 			gapi.auth.signOut();
@@ -195,6 +201,11 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 									$scope.toggleLoginButton(false);
 								}
 								$scope.startEating = false;
+							} else {
+								$location.path('login').replace();
+								$scope.startEating = false;
+								$scope.toggleLogoutButton(true);
+								$scope.toggleLoginButton(false);
 							}
 						}
 					});
@@ -299,6 +310,11 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 									$scope.toggleLoginButton(false);
 								}
 								$scope.startEating = false;
+							} else {
+								$location.path('login').replace();
+								$scope.startEating = false;
+								$scope.toggleLogoutButton(true);
+								$scope.toggleLoginButton(false);
 							}
 						}
 					});

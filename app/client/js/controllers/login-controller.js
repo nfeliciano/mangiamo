@@ -1,9 +1,11 @@
 app.controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
 		// Set the navbar to display the proper elements
-		$scope.toggleLinksButton(false);
-		$scope.toggleLogoutButton(false);
-		$scope.toggleLoginButton(true);
+		if (sessionStorage.name == null || sessionStorage.name == undefined || sessionStorage.name == 'null') {
+			$scope.toggleLinksButton(false);
+			$scope.toggleLogoutButton(false);
+			$scope.toggleLoginButton(true);
+		}
 
 		// initForm populates local variables from local JSON files.  This speparates
 		// a lot of data from html and Angular into appropriate JSON files.  The
@@ -49,8 +51,11 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
 
 			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
-				$scope.user = angular.toJson(data);
+				$scope.declareUser(data);
 				$location.path('main').replace();
+				$scope.toggleLinksButton(true);
+				$scope.toggleLogoutButton(true);
+				$scope.toggleLoginButton(false);
 			});
 		}
 

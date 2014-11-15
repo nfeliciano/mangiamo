@@ -26,7 +26,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		$scope.mealTime = new Date();
 		/* GLOBAL DATA (In main-controller.js) END */
-
 		/* MAIN.HTML REFRESH CODE START (called on page refresh) */
 		// Set the navbar to display the proper elements
 		if ($scope.user != null) {

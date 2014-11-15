@@ -134,12 +134,6 @@ app.factory('userService', ['$http', function($http, $resource) {
 		}
 	}
 
-	userService.logoutUser = function() {
-		sessionStorage.name = null;
-		sessionStorage.facebookID = null;
-		sessionStorage.googleID = null;
-	}
-
 	userService.contactDevs = function(message, email) {
 		var request = { 'message' : message, 'email' : email };
 		console.log(request);
