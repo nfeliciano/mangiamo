@@ -141,6 +141,10 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				}
 			}
 		}
+
+		$scope.isThisMe = function(attendee){
+			return (angular.fromJson(localStorage.user).key == attendee.key);
+		}
 		
 		$scope.joinMeal = function(meal) {
 			userService.getUserWithID(angular.fromJson(localStorage.user).key).success(function(data) {
