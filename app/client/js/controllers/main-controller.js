@@ -34,8 +34,112 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		/* MAIN.HTML REFRESH CODE END */
 
-		
-
+		var styleArray=	[
+    {
+        "featureType": "administrative",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "stylers": [
+            {
+                "color": "#84afa3"
+            },
+            {
+                "lightness": 52
+            }
+        ]
+    },
+    {
+        "stylers": [
+            {
+                "saturation": -17
+            },
+            {
+                "gamma": 0.36
+            }
+        ]
+    },
+    {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#3f518c"
+            }
+        ]
+    }
+]
 		var mapOptions = { 
 			zoomControlOptions: {
         		style: google.maps.ZoomControlStyle.LARGE,
@@ -43,7 +147,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
         	panControlOptions: {
         		position: google.maps.ControlPosition.RIGHT_CENTER},
         	zoom: 14,
-			streetViewControl: false			
+			streetViewControl: false,	
+			styles: styleArray
         }
 
 		// Adds a Friend
@@ -274,7 +379,14 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
+			
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
+			//Associate the styled map with the MapTypeId and set it to display.
+			/*$scope.map.mapTypes.set('map_style', styledMap);
+			$scope.map.setMapTypeId('map_style');
+			*/
+			
+			
 			$scope.getUsersMealBuddies();
 			$scope.getUsersMealsAttending(); 
 			$scope.lastPosition = new google.maps.LatLng(48.4449579, -123.33535710000001);   // This is the default position if Geolocation is enabled it is overwritten to the users location 
