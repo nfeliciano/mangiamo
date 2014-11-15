@@ -145,6 +145,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 			$scope.toggleLoginButton(true);
 			$scope.toggleLogoutButton(false);
+			$scope.startEating = true;
 		}
 
 		// Populate MealBuddies, and MealBuddyRequests to be displayed in the Meal Buddies SideBar
