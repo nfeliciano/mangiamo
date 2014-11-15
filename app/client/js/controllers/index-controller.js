@@ -1,6 +1,8 @@
 app.controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
 		/* GLOBAL DATA START */
+		$scope.startEating = true;
+
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
 		$scope.mealBuddySuggestions = [];
@@ -91,7 +93,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		// This allows the initial redirect when they come to the
 		// page based on whether or not they are logged in
 		$scope.init = function() {
-			if (userService.isUserLoggedIn()) {
+			if ($scope.user != null) {
 				$location.path('main').replace();
 			}
 			else {
@@ -129,6 +131,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 
 		$scope.logout = function() {
+			$scope.user = null;
 			userService.logoutUser();
 			$location.path('login').replace();
 			FB.api('/me/permissions', 'delete', function(response) {});
@@ -145,7 +148,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			}
 			$scope.UID = angular.fromJson($scope.user).key;
 			// Grab the users MealBuddies from the database
-			userService.getMealBuddies().success( function(data1) {
+			userService.getMealBuddies($scope.UID).success( function(data1) {
 				$scope.mealBuddyRequests = [];
 				$scope.mealBuddies = [];
 				$scope.mealBuddySuggestions = [];
@@ -187,13 +190,11 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 							$location.path('main').replace();
 						} else {
 							if ($location.path() == '/login') {
-								$scope.$broadcast('showUserInfo', null);
-								if (!$scope.$$phase) {
-									$scope.$apply();
+								if ($scope.user == null) {
+									$scope.toggleLogoutButton(true);
+									$scope.toggleLoginButton(false);
 								}
-							}
-							else {
-								userService.addIDToUser('fb', sessionStorage.facebookID, sessionStorage.name);
+								$scope.startEating = false;
 							}
 						}
 					});
@@ -293,13 +294,11 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 							$location.path('main').replace();
 						} else {
 							if ($location.path() == '/login') {
-								$scope.$broadcast('showUserInfo', null);
-								if (!$scope.$$phase) {
-									$scope.$apply();
+								if ($scope.user == null) {
+									$scope.toggleLogoutButton(true);
+									$scope.toggleLoginButton(false);
 								}
-							}
-							else {
-								userService.addIDToUser('gg', sessionStorage.googleID, sessionStorage.name);
+								$scope.startEating = false;
 							}
 						}
 					});

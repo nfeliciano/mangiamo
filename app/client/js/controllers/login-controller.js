@@ -1,9 +1,5 @@
 app.controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
-		$scope.startEating = function() {
-			$location.path('main').replace();
-		};
-
 		// Set the navbar to display the proper elements
 		$scope.toggleLinksButton(false);
 		$scope.toggleLogoutButton(false);
@@ -25,6 +21,10 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 				$scope.meFactorNouns = data.meFactorNouns;
 			});
 		};
+
+		$scope.tryApp = function() {
+			$location.path('main').replace();
+		}
 
 		// Generates a random integer between 1 and n
 		$scope.getRandomSpan = function(n){
@@ -48,7 +48,8 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 			}
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
 
-			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation, 0).success( function() {
+			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
+				$scope.user = angular.toJson(data);
 				$location.path('main').replace();
 			});
 		}
@@ -63,7 +64,7 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 
 		// This redirects back to main if the user tries to navigate here and they are already logged in
 		$scope.initLogin = function() {
-			if (userService.isUserLoggedIn()) {
+			if ($scope.user != null) {
 				$location.path('main').replace();
 			}
 		}

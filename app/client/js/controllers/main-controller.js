@@ -53,8 +53,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		// Adds a Friend
 		$scope.addFriend = function(newMealBuddy) {
 			$scope.newMealBuddy = "";
-			userService.getMealBuddies().success(function(mealBuddies) {
-				userService.addMealBuddy(newMealBuddy, mealBuddies).success(function() {
+			var userKey = angular.fromJson($scope.user).key;
+			userService.getMealBuddies(userKey).success(function(mealBuddies) {
+				userService.addMealBuddy(newMealBuddy, mealBuddies, userKey).success(function() {
 					$scope.populateMealBuddies();
 				});
 			});
@@ -165,7 +166,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					$scope.selectedMarkerOldIcon = '/img/restaur_going.png';
 					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1;
 					$scope.currentPin.marker.label.setContent();
-					userService.addMealToUser(meal.key);
+					userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
 					userService.getUserWithID(key).success(function(data) {
 						meal.attendees.push(data[0]);
 					});
@@ -261,7 +262,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 							$scope.currentPin.marker.labelContent = (parseInt($scope.currentPin.marker.labelContent) + 1 );
 						}
 						$scope.currentPin.marker.label.setContent();
-						userService.addMealToUser(meal.key);
+						userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
 						$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
 					})
 				});
@@ -269,13 +270,13 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		$scope.removeMealBuddy = function(mealBuddy) {
-			userService.deleteMealBuddy(mealBuddy[0].key).success(function(data) {
+			userService.deleteMealBuddy(mealBuddy[0].key, angular.fromJson($scope.user).key).success(function(data) {
 				$scope.populateMealBuddies();
 			});
 		}
 
 		$scope.confirmMealBuddy = function(mealBuddyRequest) {
-			userService.confirmMealBuddy(mealBuddyRequest[0].key).success(function(data) {
+			userService.confirmMealBuddy(mealBuddyRequest[0].key, angular.fromJson($scope.user).key).success(function(data) {
 				$scope.populateMealBuddies();
 			});
 		}
@@ -293,11 +294,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				function (response) {
 					if (response && !response.error) {
 						/* handle the result */
-						userService.getMealBuddies().success(function(mealBuddies) {
+						var userKey = angular.fromJson($scope.user).key;
+						userService.getMealBuddies(userKey).success(function(mealBuddies) {
 							for (var i = 0; i < response.data.length; i++) {
 								var fbFriend = response.data[i];
 								userService.findByFacebook(fbFriend.id).success(function(data) {
-									userService.suggestMealBuddy(data[0].key, mealBuddies);
+									userService.suggestMealBuddy(data[0].key, mealBuddies, userKey);
 								});
 							}
 						});
