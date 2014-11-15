@@ -103,18 +103,11 @@
 								</li>
 							</ul>
 						</li>
-						<li class="dropdown">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown">
-								<span class="glyphicon glyphicon-envelope"></span>
+						<li>
+							<a href="" ng-click="contact()">
+								<span class="glyphicon glyphicon-log-in"></span>
 								Contact Us
 							</a>
-							<div class="dropdown-menu">
-								<form class="contact-form" id="contactForm">
-									<input name="contact-content" id="contact-content" type="text" placeholder="what would you like to say?" />
-									<input name="contact-email" id="contact-email" type="text" placeholder="How can we reach you?" />
-									<button type="button" id="contactButton" class="btn">Submit</button>
-								</form>
-							</div>
 						</li>
 
 						<li ng-show="logoutButtonVisible">
@@ -128,6 +121,28 @@
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
+
+		<div id="contactModal" class="modal fade bs-example-modal-m" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true"> x </span>
+							<span class="sr-only"> Close </span>
+						</button>
+						<h4 class="modal-title" id="mySmallModalLabel"> Contact Us </h4>
+					</div>
+					<div id="errorMessage">
+						Questions? Comments? Compliments? Write them here!
+						<form novalidate class="contact-form">
+							<p>Message: <input type="text" ng-model="contactMessage" /></p>
+							<p>E-Mail: <input type="text" ng-model="contactEmail" /></p>
+							<button ng-click="sendMessage()" data-dismiss="modal">Send</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div id="errorModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-md">
