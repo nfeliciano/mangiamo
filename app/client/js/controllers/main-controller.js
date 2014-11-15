@@ -8,6 +8,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.usersMealBuddies = [];
 		$scope.selectedMarkerOldIcon = null;
 		$scope.usersMealsAttending = [];
+		var radius = 3000;
+		var lastZoomLevel = 13; 
 		var minZoomLevel = 13; // as far back as they can go
 		$scope.currentPin = { "name": "",
 							  "place": null,
@@ -105,7 +107,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
         "elementType": "geometry",
         "stylers": [
             {
-                "visibility": "on"
+				  "visibility": "simplified"
             }
         ]
     },
@@ -116,17 +118,18 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
                 "color": "#84afa3"
             },
             {
-                "lightness": 52
+                "lightness": 32
             }
         ]
     },
     {
+	//////// THIS IS WHERE YOU CAN CHANGE BRIGHTNESS / SATURATION ///////
         "stylers": [
             {
-                "saturation": -17
+			   "saturation": -17
             },
             {
-                "gamma": 0.36
+                "gamma": 0.5
             }
         ]
     },
@@ -135,7 +138,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#3f518c"
+                //"color": "#3f518c"
+				 "visibility": "simplified"
             }
         ]
     }
@@ -411,7 +415,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			var request = {
 				location: $scope.lastPosition,
 				rankby : google.maps.places.RankBy.DISTANCE,
-				radius: 3000,
+				radius: radius,
 				types: ['restaurant','cafe', 'bar', 'food']
 			};
 				
@@ -421,17 +425,76 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			
 			// refreshes the map with new food places when the map is moved a certain amount
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > 1500){
+				
+				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > radius/3){
+					request.radius = radius;
+					console.log(radius); 
 					$scope.getUsersMealBuddies();
 					$scope.lastPosition = $scope.map.getCenter();
-					request.location=$scope.map.getCenter();
+					request.location=offsetCenter($scope.map.getCenter(),250,250);
 					service.radarSearch(request, fastCallback); 
 					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
 				}
 			});
-		
+			  // Limit the zoom level
+			google.maps.event.addListener($scope.map, 'zoom_changed', function() {
+	
+				if ($scope.map.getZoom() < minZoomLevel){
+					$scope.map.setZoom(minZoomLevel);
+					return;
+				}
+				var bounds = $scope.map.getBounds();
+				var sw = bounds.getSouthWest(); 
+				var ne = bounds.getNorthEast();
+
+				var screenWidthMeters = google.maps.geometry.spherical.computeDistanceBetween (sw, ne);
+				//console.log(screenWidthMeters	);		
+				radius = screenWidthMeters/4; 
+				
+					request.radius = radius;
+					console.log(radius); 
+					$scope.getUsersMealBuddies();
+					$scope.lastPosition = $scope.map.getCenter();
+					
+					request.location=offsetCenter($scope.map.getCenter(),radius/4,radius/4);
+					request.location.l
+					service.radarSearch(request, fastCallback); 
+					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
+				
+				
+			});
 			initializeSearchBar();
 		}
+		
+		
+		function offsetCenter(latlng,offsetx,offsety) {
+
+			// latlng is the apparent centre-point
+			// offsetx is the distance you want that point to move to the right, in pixels
+			// offsety is the distance you want that point to move upwards, in pixels
+			// offset can be negative
+			// offsetx and offsety are both optional
+
+			var scale = Math.pow(2, map.getZoom());
+			var nw = new google.maps.LatLng(
+				map.getBounds().getNorthEast().lat(),
+				map.getBounds().getSouthWest().lng()
+			);
+
+			var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+			var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+
+			var worldCoordinateNewCenter = new google.maps.Point(
+				worldCoordinateCenter.x - pixelOffset.x,
+				worldCoordinateCenter.y + pixelOffset.y
+			);
+
+			var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+			map.setCenter(newCenter);
+			
+			return newCenter;
+		}
+		
 		
 		// initializes and adds the search bar on the map
 		initializeSearchBar = function() {
@@ -493,12 +556,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		    	searchBox.setBounds(bounds);
 			});
 			
-		   // Limit the zoom level
-			google.maps.event.addListener($scope.map, 'zoom_changed', function() {
-				if ($scope.map.getZoom() < minZoomLevel){
-					$scope.map.setZoom(minZoomLevel);
-				}
-			});
+		 
 		}
 
 		// --- This is fed in the "result" of the search as an array, and for each a marker is placed 
