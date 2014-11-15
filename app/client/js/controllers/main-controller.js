@@ -71,7 +71,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				var mealData = angular.fromJson(data);
-				
 				$scope.currentPin.meals = [];  // Reset data
 				for (var i = 0; i < mealData.length; i++) {
 					$scope.currentPin.meals.push({"time": "", "key": "", "attendees": []});
@@ -151,6 +150,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				
 				//USER FEED BACK :: "already attending meal at that time"
 				//console.log("USER CANT: already attending meal at that time");
+				$scope.tellUser("You are already in a meal.  Please leave your other meal to join a new one.");
 				}
 			});
 		}
@@ -164,7 +164,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		
 		//callback from isUserAllowedToJoinMeal
 		function joinMeal(meal){
-			//Test if user can join meal
+			
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson(localStorage.user).key;
 				mealService.addUserToMeal(meal.key, key).success(function(data) {
@@ -179,9 +179,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				})
 			}
 		}
-
 		
-				
 		//Call from button to create meal
 		$scope.createMeal = function(meal) {
 			//Test if user can join meal

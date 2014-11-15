@@ -77,7 +77,7 @@
 							</a>
 						</li>
 						<!-- <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li> -->
-
+						
 						<li class="dropdown" ng-show="loginButtonVisible">
 							<a href="" class="dropdown-toggle" data-toggle="drowndown">
 								<span class="glyphicon glyphicon-log-in"></span> 
@@ -116,7 +116,24 @@
 			<!-- /.container-fluid -->
 		</nav>
 
-		<!-- ui-view is where the content of our webpage gets put -->
+		<div id="errorModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true"> x </span>
+							<span class="sr-only"> Close </span>
+						</button>
+						<h4 class="modal-title" id="mySmallModalabel"> {{tellUserTitle}} </h4>
+					</div>
+					<div id="errorMessage">
+						{{tellUserMessage}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ui-view is where the content of our webpage gets put using the state -->
 		<div ui-view=""></div>
 	</body>
 </html>
