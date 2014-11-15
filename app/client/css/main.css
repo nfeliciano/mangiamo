@@ -16,7 +16,7 @@
 
 #closeSidebar
 {
-	margin-bottom: 10px;
+	width: 100%;
 	padding: 10px;
 }
 
@@ -84,7 +84,7 @@
 
 .mealAttendeeSelf
 {
-	background-color: lightblue;
+	background-color: rgba(47, 95, 127, .3);
 	border-radius: 5px;
 	margin-bottom: 10px;
 	padding: 10px;

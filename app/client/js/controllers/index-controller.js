@@ -54,7 +54,10 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			else if (content == "intro") {
 				if ($scope.introVisible == true) {
 					$scope.sidebarVisible = false;
-					$scope.introVisible = true;
+					$scope.linksVisible = false;
+					$scope.mealsVisible = false;
+					$scope.introVisible = false;
+					
 				}
 				else
 				{
