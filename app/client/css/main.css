@@ -48,14 +48,18 @@
 
 /* EVERYTHING BELOW THIS COMMENT NEEDS TO BE CATEGORIZED AND VALIDATED AS VALID AND NECESSARY CODE */
 
-.text
+.linkHeader
 {
 	color: #2F5F7F;
 	text-align: center;
 	font-family: "Roboto", sans-serif;
-	padding: 20px 0 10px 0;
 	font-size: 1.2em;
 }
+
+/*.mealAttendee > span
+{
+	font-weight: bold;
+}*/
 
 #mapCanvas
 {
@@ -88,11 +92,6 @@
 	border-radius: 5px;
 	margin-bottom: 10px;
 	padding: 10px;
-}
-
-.mealAttendee > span
-{
-	font-weight: bold;
 }
 
 .attendeeIdentifer
@@ -143,7 +142,7 @@
 	margin-right: auto;
 }
 
-.listedMeal
+.accordionInfo
 {
 	text-align: left;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
