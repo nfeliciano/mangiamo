@@ -303,7 +303,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					sessionStorage.name = resp.result.displayName;
 
 					userService.findByGoogle(resp.result.id).success(function(data) {
-						if (data.length) {
+						if (data.length > 0) {
 							var user = data[0];
 							$scope.user = angular.toJson(user);
 							$location.path('main').replace();
