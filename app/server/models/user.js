@@ -4,7 +4,6 @@ var UserSchema = new Schema({
 	name: String,
 	key: { type: "string", unique: true },
 	facebookID: String,
-	googleID: String,
 	ageRange: String,
 	description: String,
 	profession: String,
