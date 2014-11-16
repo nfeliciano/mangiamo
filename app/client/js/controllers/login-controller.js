@@ -42,20 +42,15 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 		$scope.submitUserData = function() {
 			var name = null;
 			var facebookKey = null;
-			var googleKey = null;
 			if (sessionStorage.name) {
 				name = sessionStorage.name;
 				if (sessionStorage.facebookID) {
 					facebookKey = sessionStorage.facebookID;
-					googleKey = null;
-				}
-				if (sessionStorage.googleID) {
-					googleKey = sessionStorage.googleID;
 				}
 			}
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
 
-			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
+			userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
 				$scope.declareUser(data);
 				$location.path('main').replace();
 				$scope.toggleLinksButton(true);

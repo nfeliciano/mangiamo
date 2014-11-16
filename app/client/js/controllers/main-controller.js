@@ -177,7 +177,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		$scope.joinMeal = function(meal) {
 			if ($scope.user == null) {
-				$scope.tellUser('Please log in through either Facebook or Google to attend meals', 'Need an account');
+				$scope.tellUser('Please log in through Facebook to attend meals', 'Need an account');
 				return;
 			}
 			userService.getUserWithID(angular.fromJson($scope.user).key).success(function(data) {
@@ -251,7 +251,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		$scope.createMeal = function(mealTime) {
 			if ($scope.user == null) {
-				$scope.tellUser('Please log in through either Facebook or Google to attend meals', 'Need an account');
+				$scope.tellUser('Please log in through Facebook to attend meals', 'Need an account');
 				return;
 			}
 			userService.getUserWithID(angular.fromJson($scope.user).key).success(function(data) {

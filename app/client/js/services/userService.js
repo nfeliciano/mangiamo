@@ -7,7 +7,6 @@ app.factory('userService', ['$http', function($http, $resource) {
 	var user = '/api/users';
 	var userBuddies = '/api/users/buddies';
 	var facebookLogin = '/api/users/facebook';
-	var googleLogin = '/api/users/google';
 	var userMeals = '/api/users/meals';
 	var userDeleteMeals = '/api/users/deleteMeals';
 
@@ -42,9 +41,9 @@ app.factory('userService', ['$http', function($http, $resource) {
 	}
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
-	userService.addNewUser = function(name, facebookID, googleID, ageRange, description, profession, counter) {
+	userService.addNewUser = function(name, facebookID, ageRange, description, profession, counter) {
 		var userKey = generateUniqueKey();
-		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':null };
+		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':null };
 		var res =  $http.post(user, request);
 		if (counter++ == 10) {
 			alert("The Database is currently down.  Please try again later.");
@@ -54,15 +53,15 @@ app.factory('userService', ['$http', function($http, $resource) {
 			if (result != 'error') {
 				return result;
 			} else {
-				userService.addNewUser(name, facebookID, googleID, ageRange, description, profession, counter);
+				userService.addNewUser(name, facebookID, ageRange, description, profession, counter);
 			}
 		});
 		return res;
 	}
 
 	// Empty method. Will be used for updating a user's information.
-	userService.updateUser = function(userKey, name, facebookID, googleID, ageRange, description, profession, mealBuddies) {
-		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'googleID':googleID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':mealBuddies };
+	userService.updateUser = function(userKey, name, facebookID, ageRange, description, profession, mealBuddies) {
+		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':mealBuddies };
 		return $http.put(user, request);
 	}
 
@@ -73,10 +72,6 @@ app.factory('userService', ['$http', function($http, $resource) {
 
 	userService.findByFacebook = function(facebookID){
 		return $http.get(facebookLogin + '?facebookID=' + facebookID);
-	}
-
-	userService.findByGoogle = function(googleID){
-		return $http.get(googleLogin + '?googleID=' + googleID);
 	}
 
 	userService.addMealBuddy = function(buddyKey, mealBuddies, userKey) {

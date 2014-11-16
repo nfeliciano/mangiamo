@@ -50,7 +50,6 @@ app.post('/api/users', userController.create);
 app.put('/api/users', userController.update);
 app.get('/api/users/buddies', userController.getMealBuddies);
 app.get('/api/users/facebook', userController.findByFacebook);
-app.get('/api/users/google', userController.findByGoogle);
 app.put('/api/users/meals', userController.addMealToUser);
 app.put('/api/users/deleteMeals', userController.deleteMealFromUser);
 
