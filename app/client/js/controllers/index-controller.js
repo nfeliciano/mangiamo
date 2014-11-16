@@ -1,6 +1,8 @@
 app.controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
 		/* GLOBAL DATA START */
+		$scope.startEating = true;
+
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
 		$scope.mealBuddySuggestions = [];
@@ -16,6 +18,8 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 		$scope.tellUserTitle = "";
 		$scope.tellUserMessage = "";
+
+		$scope.user = null;
 		/* GLOBAL DATA END */
 
 		// REMOVE THIS
@@ -92,7 +96,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		// This allows the initial redirect when they come to the
 		// page based on whether or not they are logged in
 		$scope.init = function() {
-			if (userService.isUserLoggedIn()) {
+			if ($scope.user != null) {
 				$location.path('main').replace();
 			}
 			else {
@@ -100,6 +104,10 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			}
 		}
 		$scope.init();
+
+		$scope.declareUser = function(user) {
+			$scope.user = angular.toJson(user);
+		}
 
 		// Pass this function the title and message to be displayed to the user as an error message
 		$scope.tellUser = function(message, title) {
@@ -130,20 +138,27 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		}
 
 		$scope.logout = function() {
-			userService.logoutUser();
+			$scope.user = null;
+			sessionStorage.name = null;
+			sessionStorage.facebookID = null;
+			sessionStorage.googleID = null;
 			$location.path('login').replace();
 			FB.api('/me/permissions', 'delete', function(response) {});
 			gapi.auth.signOut();
 
 			$scope.toggleLoginButton(true);
 			$scope.toggleLogoutButton(false);
+			$scope.startEating = true;
 		}
 
 		// Populate MealBuddies, and MealBuddyRequests to be displayed in the Meal Buddies SideBar
 		$scope.populateMealBuddies = function() {
-			$scope.UID = angular.fromJson(localStorage.user).key;
+			if ($scope.user == null) {
+				return;
+			}
+			$scope.UID = angular.fromJson($scope.user).key;
 			// Grab the users MealBuddies from the database
-			userService.getMealBuddies().success( function(data1) {
+			userService.getMealBuddies($scope.UID).success( function(data1) {
 				$scope.mealBuddyRequests = [];
 				$scope.mealBuddies = [];
 				$scope.mealBuddySuggestions = [];
@@ -181,17 +196,20 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 
 						if (data.length > 0) {
 							var user = data[0];
-							localStorage.user = angular.toJson(user);
+							$scope.user = angular.toJson(user);
 							$location.path('main').replace();
 						} else {
 							if ($location.path() == '/login') {
-								$scope.$broadcast('showUserInfo', null);
-								if (!$scope.$$phase) {
-									$scope.$apply();
+								if ($scope.user == null) {
+									$scope.toggleLogoutButton(true);
+									$scope.toggleLoginButton(false);
 								}
-							}
-							else {
-								userService.addIDToUser('fb', sessionStorage.facebookID, sessionStorage.name);
+								$scope.startEating = false;
+							} else {
+								$location.path('login').replace();
+								$scope.startEating = false;
+								$scope.toggleLogoutButton(true);
+								$scope.toggleLoginButton(false);
 							}
 						}
 					});
@@ -287,17 +305,20 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					userService.findByGoogle(resp.result.id).success(function(data) {
 						if (data.length) {
 							var user = data[0];
-							localStorage.user = angular.toJson(user);
+							$scope.user = angular.toJson(user);
 							$location.path('main').replace();
 						} else {
 							if ($location.path() == '/login') {
-								$scope.$broadcast('showUserInfo', null);
-								if (!$scope.$$phase) {
-									$scope.$apply();
+								if ($scope.user == null) {
+									$scope.toggleLogoutButton(true);
+									$scope.toggleLoginButton(false);
 								}
-							}
-							else {
-								userService.addIDToUser('gg', sessionStorage.googleID, sessionStorage.name);
+								$scope.startEating = false;
+							} else {
+								$location.path('login').replace();
+								$scope.startEating = false;
+								$scope.toggleLogoutButton(true);
+								$scope.toggleLoginButton(false);
 							}
 						}
 					});
