@@ -153,7 +153,8 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		$scope.isThisMe = function(attendee)
 		{
-			return (angular.fromJson(localStorage.user).key == attendee.key);
+			console.log($scope.user);
+			return (angular.fromJson($scope.user).key == attendee.key);
 		}
 		
 		$scope.isThisMyFriend = function(attendee)

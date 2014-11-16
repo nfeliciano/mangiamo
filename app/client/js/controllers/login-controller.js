@@ -3,7 +3,6 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 		// Set the navbar to display the proper elements
 
 		$scope.toggleLinksButton(false);
-		console.log(sessionStorage.name);
 		if (sessionStorage.name == null || sessionStorage.name == undefined || sessionStorage.name == 'null') {
 			$scope.toggleLogoutButton(false);
 			$scope.toggleLoginButton(true);
