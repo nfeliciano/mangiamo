@@ -78,6 +78,12 @@
 	float: right;
 }
 
+#addANewFriend
+{
+	color: purple;
+	text-align: center;
+}
+
 .mealAttendee
 {
 	background-color: rgba(47, 95, 127, .1);
