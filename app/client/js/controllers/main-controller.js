@@ -16,6 +16,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 							  "place": null,
 							  "marker": null,
 							  "rating": "",
+							  "friends": [],
 							  "meals": [ /*{ "time": "",
 							  			     "key": "",
 							  			     "attendees": [] }*/
@@ -147,6 +148,28 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 					$scope.attendingMeal = true;
 					break;
 				}
+			}
+		}
+
+		$scope.isThisMe = function(attendee)
+		{
+			return (angular.fromJson(localStorage.user).key == attendee.key);
+		}
+		
+		$scope.isThisMyFriend = function(attendee)
+		{
+			if($scope.currentPin.marker.icon != '/img/restaur_selected_friend.png' &&
+				$scope.currentPin.marker.icon != '/img/restaur_going.png') {			
+				return false;
+			}
+			else{
+				console.log($scope.mealBuddies);
+				for(index in $scope.mealBuddies){
+					if($scope.mealBuddies[index][0].key == attendee.key){
+						return true;
+					}
+				}
+			return false;
 			}
 		}
 
@@ -554,17 +577,12 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 				loop1:
 				for (var i = 0; i < data.length; i++) {
-
 					numPeople += data[i].numPeople;
-
 					if(searchingForBuddy){
-
 						loop2:
 						for( var y = 0; y < $scope.mealBuddies.length; y++){
-
 							loop3:
-							for(var z = 0; z< data[i].people.length; z++){
-
+							for(var z = 0; z < data[i].people.length; z++){
 								if( $scope.mealBuddies[y][0].key == data[i].people[z].key) {
 									buddyWasFound = true;
 									searchingForBuddy = false;
@@ -700,7 +718,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			console.log("unload");
 			google.maps.event.clearInstanceListeners(window);
 			google.maps.event.clearInstanceListeners(document);
-			//google.maps.event.clearInstanceListeners(mapDiv);
 		}
 
 		$(window).bind('beforeunload', function(e) {

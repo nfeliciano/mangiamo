@@ -58,7 +58,10 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			else if (content == "intro") {
 				if ($scope.introVisible == true) {
 					$scope.sidebarVisible = false;
-					$scope.introVisible = true;
+					$scope.linksVisible = false;
+					$scope.mealsVisible = false;
+					$scope.introVisible = false;
+					
 				}
 				else
 				{
@@ -93,11 +96,11 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		// This allows the initial redirect when they come to the
 		// page based on whether or not they are logged in
 		$scope.init = function() {
-			if ($scope.user != null) {
-				$location.path('main').replace();
+			if ($scope.user == null) {
+				$location.path('login').replace();
 			}
 			else {
-				$location.path('login').replace();
+				$location.path('main').replace();
 			}
 		}
 		$scope.init();
@@ -300,7 +303,7 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 					sessionStorage.name = resp.result.displayName;
 
 					userService.findByGoogle(resp.result.id).success(function(data) {
-						if (data.length) {
+						if (data.length > 0) {
 							var user = data[0];
 							$scope.user = angular.toJson(user);
 							$location.path('main').replace();

@@ -32,10 +32,9 @@
 		<div id="inputContainer" ng-hide="startEating">
 			<!-- Request user information -->
 			<div id="userInfo">
-
-				<!-- NEED TO MAKE THIS CLICKABLE -->
-				<div id="info-exit"><span ng-click="startEating = !startEating" class="glyphicon glyphicon-remove"></span></div>
-
+				<div id="info-exit">
+					<span ng-click="startEating = !startEating" class="glyphicon glyphicon-remove"></span>
+				</div>	
 				<form ng-init="initLoginForm()" ng-submit="submitUserData()" >
 
 					<div id="userInfoTitle"> Some Basic Information </div>

@@ -1,19 +1,61 @@
 {
 	"meFactorAdjs": [
-		{"n": "1", "value": "Dubious"},
-		{"n": "2", "value": "Gregarious"},
-		{"n": "3", "value": "Harmonious"}
+		{"n": "1", "value": "Artistic"},
+		{"n": "2", "value": "Dubious"},
+		{"n": "3", "value": "Extreme"},
+		{"n": "4", "value": "Gregarious"},
+		{"n": "5", "value": "Grounded"},
+		{"n": "6", "value": "Harmonious"},
+		{"n": "7", "value": "Healthy"},
+		{"n": "8", "value": "Musical"},
+		{"n": "9", "value": "Offbeat"},
+		{"n": "10", "value": "Optimistic"},
+		{"n": "11", "value": "Outlandish"},
+		{"n": "12", "value": "Political"},
+		{"n": "13", "value": "Savvy"},
+		{"n": "14", "value": "Spiritual"},
+		{"n": "15", "value": "Sporatic"},
+		{"n": "16", "value": "Whimsical"},
+		{"n": "17", "value": "Zesty"}
 	],
 
 	"meFactorVerbs": [
-		{"n": "1", "value": "Biking"},
-		{"n": "2", "value": "Climbing"},
-		{"n": "3", "value": "Coding"}
+		{"n": "1", "value": "Acting"},
+		{"n": "2", "value": "Camping"},
+		{"n": "3", "value": "Coding"},
+		{"n": "4", "value": "Cycling"},
+		{"n": "5", "value": "Dancing"},
+		{"n": "6", "value": "Gaming"},
+		{"n": "7", "value": "Gardening"},
+		{"n": "8", "value": "Hiking"},
+		{"n": "9", "value": "Knitting"},
+		{"n": "10", "value": "Movie-watching"},
+		{"n": "11", "value": "Reading"},
+		{"n": "12", "value": "Running"},
+		{"n": "13", "value": "Skiing"},
+		{"n": "14", "value": "Surfing"},
+		{"n": "15", "value": "Swimming"},
+		{"n": "16", "value": "Traveling"},
+		{"n": "17", "value": "Writing"}
 	],
 
 	"meFactorNouns": [
+		{"n": "1", "value": "Activist"},
+		{"n": "1", "value": "Adventurer"},
+		{"n": "1", "value": "Advocate"},
+		{"n": "1", "value": "Aficionado"},
+		{"n": "1", "value": "Champion"},
+		{"n": "1", "value": "Connoisseur"},
+		{"n": "1", "value": "Debater"},
 		{"n": "1", "value": "Enthusiast"},
-		{"n": "2", "value": "Connoisseur"},
-		{"n": "3", "value": "Monkey"}
+		{"n": "1", "value": "Entrepreneur"},
+		{"n": "1", "value": "Expert"},
+		{"n": "1", "value": "Fan"},
+		{"n": "1", "value": "Hobbyist"},
+		{"n": "1", "value": "Monkey"},
+		{"n": "1", "value": "Novice"},
+		{"n": "1", "value": "Skeptic"},
+		{"n": "1", "value": "Specialist"},
+		{"n": "1", "value": "Wizard"}
 	]
 }
