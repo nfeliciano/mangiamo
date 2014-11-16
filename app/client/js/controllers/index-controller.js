@@ -96,11 +96,11 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 		// This allows the initial redirect when they come to the
 		// page based on whether or not they are logged in
 		$scope.init = function() {
-			if ($scope.user != null) {
-				$location.path('main').replace();
+			if ($scope.user == null) {
+				$location.path('login').replace();
 			}
 			else {
-				$location.path('login').replace();
+				$location.path('main').replace();
 			}
 		}
 		$scope.init();
