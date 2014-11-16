@@ -12,7 +12,7 @@
 		</p>
 	</div>
 	<!-- Formatting Div ; Adds right-side padding -->
-	<div class="col-xs-0 col-sm-3">	
+	<div class="col-xs-0 col-sm-3">
 	</div>
 	<!-- END ROW 1 -->
 
@@ -24,7 +24,7 @@
 	<div class="col-xs-12 col-sm-4">
 		<!-- Try It Out! -->
 		<div id="startEating" ng-show="startEating">
-			<button ng-click="startEating = !startEating" type="submit" class="btn btn-primary">
+			<button ng-click="tryApp()" type="submit" class="btn btn-primary">
 				<h4> Try linksupp <span class="underlined"> without an account! </span></h4>
 			</button>
 		</div>
@@ -32,10 +32,10 @@
 		<div id="inputContainer" ng-hide="startEating">
 			<!-- Request user information -->
 			<div id="userInfo">
-			
+
 				<!-- NEED TO MAKE THIS CLICKABLE -->
 				<div id="info-exit"><span ng-click="startEating = !startEating" class="glyphicon glyphicon-remove"></span></div>
-				
+
 				<form ng-init="initLoginForm()" ng-submit="submitUserData()" >
 
 					<div id="userInfoTitle"> Some Basic Information </div>
@@ -81,14 +81,14 @@
 					<div class="col-xs-3"></div>
 
 					<!-- fix float: left -->
-					<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Submit </button>		
+					<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Submit </button>
 				</form>
 			</div>
 		</div>
 	</div>
 	<!-- Formatting Div ; Adds right-side padding -->
-	<div class="col-xs-0 col-sm-3">	
+	<div class="col-xs-0 col-sm-3">
 	</div>
 	<!-- END ROW 2 -->
-	
+
 </div>
