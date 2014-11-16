@@ -153,7 +153,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		$scope.isThisMe = function(attendee)
 		{
-			console.log($scope.user);
 			if ($scope.user == null) {
 				return false
 			}
@@ -167,7 +166,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				return false;
 			}
 			else{
-				console.log($scope.mealBuddies);
 				for(index in $scope.mealBuddies){
 					if($scope.mealBuddies[index][0].key == attendee.key){
 						return true;
@@ -209,7 +207,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson($scope.user).key;
 				mealService.deleteUserFromMeal(meal.key, key).success( function(data) {
-					console.log($scope.currentPin.meals);
 					// Check if anyone is there
 					if ($scope.currentPin.meals.length == 1 && $scope.currentPin.meals[0].attendees.length == 1) {
 						$scope.currentPin.marker.setIcon('/img/restaur_selected.png');
@@ -719,7 +716,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		}
 
 		function unloadScript(){
-			console.log("unload");
 			google.maps.event.clearInstanceListeners(window);
 			google.maps.event.clearInstanceListeners(document);
 		}
@@ -728,7 +724,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 			if (1)
 			{
-				console.log("unload");
 				nukeAllMarkers();
 				$scope.map = null;
 				google.maps.event.clearInstanceListeners(window);
