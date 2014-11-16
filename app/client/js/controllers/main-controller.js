@@ -11,8 +11,6 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
 		$scope.attendingMeal = false;
 
-
-
 		var minZoomLevel = 13; // as far back as they can go
 		$scope.currentPin = { "name": "",
 							  "place": null,
@@ -26,10 +24,15 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 
 		$scope.mealTime = new Date();
 		/* GLOBAL DATA (In main-controller.js) END */
+
 		/* MAIN.HTML REFRESH CODE START (called on page refresh) */
 		// Set the navbar to display the proper elements
-		if ($scope.user != null) {
-			$scope.toggleLinksButton(true);
+		$scope.toggleLinksButton(true);
+		if ($scope.user == null) {
+			$scope.toggleLogoutButton(false);
+			$scope.toggleLoginButton(true);
+		}
+		else {
 			$scope.toggleLogoutButton(true);
 			$scope.toggleLoginButton(false);
 		}
@@ -37,8 +40,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		// Hide the sidebar on page load, then load the "intro" sidebar content
 		$scope.toggleSidebar(false);
 		$scope.setSidebarContent('intro');
-
 		/* MAIN.HTML REFRESH CODE END */
+
+
 		var mapOptions = {
 			zoomControlOptions: {
         		style: google.maps.ZoomControlStyle.LARGE,

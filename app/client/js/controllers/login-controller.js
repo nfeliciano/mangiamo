@@ -1,10 +1,16 @@
 app.controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
 		// Set the navbar to display the proper elements
+
+		$scope.toggleLinksButton(false);
+		console.log(sessionStorage.name);
 		if (sessionStorage.name == null || sessionStorage.name == undefined || sessionStorage.name == 'null') {
-			$scope.toggleLinksButton(false);
 			$scope.toggleLogoutButton(false);
 			$scope.toggleLoginButton(true);
+		}
+		else {
+			$scope.toggleLogoutButton(true);
+			$scope.toggleLoginButton(false);
 		}
 
 		// initForm populates local variables from local JSON files.  This speparates
