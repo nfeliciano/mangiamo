@@ -12,34 +12,32 @@
 			<span aria-hidden="true" class="pull-right"> x </span>
 			<span class="sr-only"> Close </span>
 		</button>
-
 		<!-- User Instructions -->
-		<div id="introContainer" ng-show="introVisible">
-			<head>
-			<h1>Help</h1>	
-			</head>
-		
-			<header>
-			<span class="glyphicon glyphicon-hand-up"></span>
-				Click a pin on the map
-			</header>
-			<header>
-				<span class="glyphicon glyphicon-cutlery"></span>
-				Create or join a meal
-			</header>
-			<header>
-				<span class="glyphicon glyphicon-search"></span>
-				Use the search bar to find your favourite locations
-			</header>
-			<header>
-				<span class="glyphicon glyphicon-link"></span>
-				Press Friends tab, add friends new and old
-			 </header>
-			
-			
+		<div id="introContainer" ng-show="introVisible">	
+			<div class="sidebarTitle">
+				Help
+			</div>	
 			<hr>
-			<h1> Legend </h1>
-			<img src="/img/legend.png">
+			<div>
+				<div>
+					<span class="glyphicon glyphicon-search"></span>
+					 Use the search box to find restaurants.
+				</div>
+				<div>
+				<span class="glyphicon glyphicon-hand-up"></span>
+					 Click a pin or marker on the map.
+				</div>
+				<div>
+					<span class="glyphicon glyphicon-cutlery"></span>
+					 Create or join a meal.
+				</div>
+				<div>
+					<span class="glyphicon glyphicon-user"></span>
+					 Press "Links" tab to add friends.
+				 </div>
+			</div>
+			<!-- <h1> Legend </h1> -->
+			<img src="/img/legend.png" id="legend">
 		</div>
 
 		<!-- Links -->
