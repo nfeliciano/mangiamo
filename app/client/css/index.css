@@ -28,7 +28,18 @@ body
 	-moz-filter: blur(4px);
 	-o-filter: blur(4px);
 	-ms-filter: blur(4px);
-	filter: blur(4px) brightness(0.8);
+	filter: blur(4px) brightness(1.0) opacity(0.1);
+}
+
+#whiteBlock
+{
+	background-color: white;
+	height: auto;  
+	margin: 0 auto; 
+    width: 100%; 
+    position: relative; 
+    box-shadow: 50px 0 0 rgba(0,0,0,0.8);
+    padding: 100px 0;
 }
 
 /* USER CONTACT FORM */
