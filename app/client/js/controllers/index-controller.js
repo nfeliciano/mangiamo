@@ -146,6 +146,11 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			FB.api('/me/permissions', 'delete', function(response) {});
 			gapi.auth.signOut();
 
+			// Clear all local data
+			$scope.mealBuddyRequests = [];
+			$scope.mealBuddies = [];
+			$scope.mealBuddySuggestions = [];
+
 			$scope.toggleLoginButton(true);
 			$scope.toggleLogoutButton(false);
 			$scope.startEating = true;

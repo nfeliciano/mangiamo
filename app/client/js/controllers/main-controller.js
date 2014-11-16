@@ -154,6 +154,9 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		$scope.isThisMe = function(attendee)
 		{
 			console.log($scope.user);
+			if ($scope.user == null) {
+				return false
+			}
 			return (angular.fromJson($scope.user).key == attendee.key);
 		}
 		
