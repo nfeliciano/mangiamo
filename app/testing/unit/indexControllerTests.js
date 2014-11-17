@@ -1,5 +1,5 @@
 describe('Unit: indexController', function() {
-    //beforeEach(module('mangiamo'));
+    beforeEach(module('mangiamo'));
 
     var ctrl, scope, location;
     beforeEach(inject(function($controller, $rootScope, $location) {
@@ -12,6 +12,19 @@ describe('Unit: indexController', function() {
 
     /*Tests to do*/
     //check that all global data is as it should be to start
+    it('should start with things completely uninitialized and empty', function() {
+        expect(scope.startEating).toBe(true);
+        // expect(scope.mealBuddyRequests.length).toEqual(0);
+        // expect(scope.mealBuddies.length).toEqual(0);
+        // expect(scope.mealBuddySuggestions.length).toEqual(0);
+        expect(scope.loginButtonVisible).toBeFalsy();
+        expect(scope.logoutButtonVisible).toBeFalsy();
+        expect(scope.linksButtonVisible).toBeFalsy();
+        expect(scope.sidebarVisible).toBeFalsy();
+        expect(scope.linksVisible).toBeFalsy();
+        expect(scope.mealsVisible).toBeFalsy();
+        expect(scope.introVisible).toBeFalsy();
+    });
 
     //check that togglesidebar shows the sidebar
 
