@@ -2,7 +2,7 @@
 #sidebarContainer
 {
 	position: absolute;
-	background-color: #EBE8DF;
+	background-color: #FAFAEE;
 	height: 100vh;
 	/* First 51px on the top is for the navbar */
 	padding: 51px 10px 0px 10px;
