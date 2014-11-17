@@ -347,6 +347,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 				$scope.getUsersMealsAttending();
 			}
 			$scope.lastPosition = new google.maps.LatLng(48.4449579, -123.33535710000001);   // This is the default position if Geolocation is enabled it is overwritten to the users location
+			handleNoGeolocation(true);
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
