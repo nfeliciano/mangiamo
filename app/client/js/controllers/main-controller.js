@@ -1,5 +1,5 @@
-app.controller('mainController', ['$scope', '$resource', '$location', '$modal', '$http', 'mealService', 'userService',
-	function ($scope, $resource, $location, $modal, $http, mealService, userService) {
+app.controller('mainController', ['$scope', '$location', '$modal', '$http', 'mealService', 'userService',
+	function ($scope, $location, $modal, $http, mealService, userService) {
 		/* GLOBAL DATA (In main-controller.js) START */
 		$scope.placedMarkers = [];
 		$scope.willBeDeletedMarkers = [];
@@ -158,11 +158,11 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 			}
 			return (angular.fromJson($scope.user).key == attendee.key);
 		}
-		
+
 		$scope.isThisMyFriend = function(attendee)
 		{
 			if($scope.currentPin.marker.icon != '/img/restaur_selected_friend.png' &&
-				$scope.currentPin.marker.icon != '/img/restaur_going.png') {			
+				$scope.currentPin.marker.icon != '/img/restaur_going.png') {
 				return false;
 			}
 			else{
@@ -701,7 +701,7 @@ app.controller('mainController', ['$scope', '$resource', '$location', '$modal', 
 		function handleNoGeolocation(errorFlag) {
 
 			if (errorFlag) {
-				var content = 'EnableGeolocation.';
+				// var content = 'EnableGeolocation.';
 			} else {
 				var content = 'Error: Your browser doesn\'t support geolocation.';
 			}
