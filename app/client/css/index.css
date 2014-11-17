@@ -56,6 +56,12 @@ body
 	color: darkgrey;
 }
 
+#navbarLogoImage
+{
+	width: auto;
+	height: 100%;
+}
+
 .navbar-brand 
 {
 	font-family: 'PT Sans', sans-serif;
