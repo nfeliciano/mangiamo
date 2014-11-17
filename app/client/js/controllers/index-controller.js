@@ -201,6 +201,8 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 							var user = data[0];
 							$scope.user = angular.toJson(user);
 							$location.path('main').replace();
+							$scope.toggleLogoutButton(true);
+							$scope.toggleLoginButton(false);
 						} else {
 							if ($location.path() == '/login') {
 								if ($scope.user == null) {
