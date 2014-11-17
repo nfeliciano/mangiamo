@@ -25,11 +25,11 @@ body
     /*background-color: rgba(44, 139, 207, 1);*/
     background-color: #183040;
 
-    -webkit-filter: blur(4px);
+/*    -webkit-filter: blur(4px);
 	-moz-filter: blur(4px);
 	-o-filter: blur(4px);
 	-ms-filter: blur(4px);
-	filter: blur(4px) brightness(1.0) opacity(0.1);
+	filter: blur(4px) brightness(1.0) opacity(0.1);*/
 }
 
 /* USER CONTACT FORM */
