@@ -2,10 +2,10 @@
 #sidebarContainer
 {
 	position: absolute;
-	background-color: #CCCCCC;
+	background-color: #FAFAEE;
 	height: 100vh;
 	/* First 51px on the top is for the navbar */
-	padding: 51px 0px 0px 0px;
+	padding: 51px 10px 0px 10px;
 
 	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
 	-moz-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
@@ -16,17 +16,23 @@
 
 #closeSidebar
 {
-	margin-bottom: 10px;
+	width: 100%;
 	padding: 10px;
 }
 
 	/* INTRO */
 	#introContainer
 	{
-		text-align: center;
+		/*text-align: center;*/
 		font-family: "Roboto", sans-serif;
 		color: #2F5F7F;
 	}
+
+	#introContainer > hr ~ div
+	{
+		padding: 0px 20px 20px 20px;
+	}
+
 	/* INTRO END */
 
 	/* LINKS */
@@ -41,6 +47,8 @@
 	{
 
 	}
+
+
 	/* MEALS END */
 /* SIDEBAR END */
 
@@ -48,14 +56,18 @@
 
 /* EVERYTHING BELOW THIS COMMENT NEEDS TO BE CATEGORIZED AND VALIDATED AS VALID AND NECESSARY CODE */
 
-.text
+.linkHeader
 {
 	color: #2F5F7F;
 	text-align: center;
 	font-family: "Roboto", sans-serif;
-	padding: 20px 0 10px 0;
 	font-size: 1.2em;
 }
+
+/*.mealAttendee > span
+{
+	font-weight: bold;
+}*/
 
 #mapCanvas
 {
@@ -69,10 +81,15 @@
 }
 
 /* MEAL BUDDIES */
-
 .mealBuddyButton
 {
 	float: right;
+}
+
+#addANewFriend
+{
+	color: rgba(47, 95, 127, 1);
+	text-align: center;
 }
 
 .mealAttendee
@@ -83,9 +100,18 @@
 	padding: 10px;
 }
 
-.mealAttendee > span
+.mealAttendeeSelf
 {
-	font-weight: bold;
+	background-color: rgba(47, 95, 127, .3);
+	border-radius: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+.attendeeIdentifer
+{
+	text-align: center;
+	font-size: 0.8em;
 }
 
 #mealsHeader
@@ -111,7 +137,6 @@
 /* MEAL INFORMATION START */
 #mealPlace
 {
-	background-color: #CCCCCC;
 	padding: 0px 0 60px 0;
 }
 
@@ -131,7 +156,7 @@
 	margin-right: auto;
 }
 
-.listedMeal
+.accordionInfo
 {
 	text-align: left;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);

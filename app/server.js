@@ -1,15 +1,19 @@
 var express 				= require('express'),
 	app						= express(),
+	cron		 			= require('cron'),
 	bodyParser 				= require('body-parser'),
 	mongoose 				= require('mongoose'),
 	config 					= require('./config'),
-	mealsController 		= require('./server/controllers/meals-controller');
-	userController			= require('./server/controllers/user-controller');
+	mealsController 		= require('./server/controllers/meals-controller'),
+	userController			= require('./server/controllers/user-controller'),
+	contactController		= require('./server/controllers/contact-controller'),
+	scheduler				= require('./server/controllers/scheduler.js'),
 	options 				= { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 10000 } },
                 				replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 10000 } } };
 
 // set the 'dbUrl' to the mongodb url that corresponds to the environment we are in
 app.set('dbUrl', config.db['development']);
+
 // connect mongoose to the mongo dbUrl
 mongoose.connect(app.get('dbUrl'), options);
 
@@ -33,9 +37,11 @@ app.use('/json', express.static(__dirname + '/client/json'));
 
 //REST API
 //Meals
+app.put('/api/meals/delete', mealsController.deleteMeal);
 app.put('/api/meals', mealsController.update);
 app.get('/api/meals', mealsController.list);
 app.get('/api/meals/people', mealsController.getPeople);
+app.put('/api/meals/people', mealsController.deletePeople);
 app.post('/api/meals', mealsController.create);
 
 //Users
@@ -44,8 +50,8 @@ app.post('/api/users', userController.create);
 app.put('/api/users', userController.update);
 app.get('/api/users/buddies', userController.getMealBuddies);
 app.get('/api/users/facebook', userController.findByFacebook);
-app.get('/api/users/google', userController.findByGoogle);
 app.put('/api/users/meals', userController.addMealToUser);
+app.put('/api/users/deleteMeals', userController.deleteMealFromUser);
 
 //Meal buddies stuff
 app.put('/api/users/buddies/request', userController.requestBuddy);
@@ -54,6 +60,9 @@ app.put('/api/users/buddies/suggest', userController.suggestBuddy);
 app.put('/api/users/buddies/suggest/stop', userController.stopSuggesting);
 app.put('/api/users/buddies/remove', userController.removeBuddy);
 app.put('/api/users/buddies/ignore', userController.ignoreBuddy);
+
+//Contact form
+app.post('/contact', contactController.sendEmail);
 
 app.listen(3000, function() {
 	console.log('I\'m listening');

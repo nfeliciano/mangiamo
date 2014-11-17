@@ -1,13 +1,18 @@
 app.controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
-		$scope.startEating = true;
-
 		// Set the navbar to display the proper elements
-		$scope.toggleLinksButton(false);
-		$scope.toggleLogoutButton(false);
-		$scope.toggleLoginButton(true);
 
-		// initForm populates local variables from local JSON files.  This speparates 
+		$scope.toggleLinksButton(false);
+		if (sessionStorage.name == null || sessionStorage.name == undefined || sessionStorage.name == 'null') {
+			$scope.toggleLogoutButton(false);
+			$scope.toggleLoginButton(true);
+		}
+		else {
+			$scope.toggleLogoutButton(true);
+			$scope.toggleLoginButton(false);
+		}
+
+		// initForm populates local variables from local JSON files.  This speparates
 		// a lot of data from html and Angular into appropriate JSON files.  The
 		// following "gets" allow angular to access these local JSON files
 		$scope.initLoginForm = function() {
@@ -24,6 +29,10 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 			});
 		};
 
+		$scope.tryApp = function() {
+			$location.path('main').replace();
+		}
+
 		// Generates a random integer between 1 and n
 		$scope.getRandomSpan = function(n){
 			return Math.floor((Math.random()*n)+1);
@@ -33,21 +42,20 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 		$scope.submitUserData = function() {
 			var name = null;
 			var facebookKey = null;
-			var googleKey = null;
 			if (sessionStorage.name) {
 				name = sessionStorage.name;
 				if (sessionStorage.facebookID) {
 					facebookKey = sessionStorage.facebookID;
-					googleKey = null;
-				}
-				if (sessionStorage.googleID) {
-					googleKey = sessionStorage.googleID;
 				}
 			}
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
 
-			userService.addNewUser(name, facebookKey, googleKey, $scope.dateRange, description, $scope.occupation, 0).success( function() {
+			userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
+				$scope.declareUser(data);
 				$location.path('main').replace();
+				$scope.toggleLinksButton(true);
+				$scope.toggleLogoutButton(true);
+				$scope.toggleLoginButton(false);
 			});
 		}
 
@@ -59,13 +67,9 @@ app.controller('loginController', ['$scope', '$location', '$http', 'userService'
 			return new Date(Date.parse(month +" 1, 2012")).getMonth()
 		}
 
-		$scope.$on('showUserInfo', function(event, args) {
-			$scope.startEating = false;
-		});
-
 		// This redirects back to main if the user tries to navigate here and they are already logged in
 		$scope.initLogin = function() {
-			if (userService.isUserLoggedIn()) {
+			if ($scope.user != null) {
 				$location.path('main').replace();
 			}
 		}

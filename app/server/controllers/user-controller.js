@@ -5,7 +5,6 @@ module.exports.create = function (req,res) {
 	var user = new User({
 		key: req.body.key,
 		facebookID: req.body.facebookID,
-		googleID: req.body.googleID,
 		name: req.body.name,
 		ageRange: req.body.ageRange,
 		description: req.body.description,
@@ -31,7 +30,6 @@ module.exports.update = function(req,res) {
 	var query = { key: req.body.key };
 	var update = { 	name: req.body.name,
 					facebookID: req.body.facebookID, 
-					googleID: req.body.googleID,
 					ageRange: req.body.ageRange,
 					description: req.body.description,
 					profession: req.body.profession,
@@ -44,12 +42,6 @@ module.exports.update = function(req,res) {
 
 module.exports.findByFacebook = function (req,res) {
 	User.find({facebookID:req.query.facebookID}, function (err, results) {
-		res.json(results);
-	});
-}
-
-module.exports.findByGoogle = function (req,res) {
-	User.find({googleID:req.query.googleID}, function (err, results) {
 		res.json(results);
 	});
 }
@@ -86,7 +78,17 @@ module.exports.list = function (req,res) {
 module.exports.addMealToUser = function (req,res) {
 	var query = { key: req.body.key };
 	var update = { mealsAttending: { "key" : req.body.mealkey } };
-	User.findOneAndUpdate(query, { $push : update }, function(err, results) {});
+	User.findOneAndUpdate(query, { $push : update }, function(err, results) {
+		res.json(results);
+	});
+}
+
+module.exports.deleteMealFromUser = function (req,res) {
+	var query = { key: req.body.key };
+	var update = { mealsAttending: { "key" : req.body.mealkey } };
+	User.findOneAndUpdate(query, { $pull : update }, function(err, results) {
+		res.json(results);
+	});
 }
 
 // We will now need some more methods
@@ -160,7 +162,9 @@ module.exports.stopSuggesting = function(req,res) {
 	User.findOneAndUpdate(query, { $pull : removeSuggested }, function(err, results) {});
 
 	var stopSuggesting = { 'mealBuddies.stopSuggesting' : buddyQuery };
-	User.findOneAndUpdate(query, { $push : stopSuggesting }, function(err, results) {});
+	User.findOneAndUpdate(query, { $push : stopSuggesting }, function(err, results) {
+		res.json(results);
+	});
 }
 
 // Cases: rejects a buddy request, deletes a buddy
