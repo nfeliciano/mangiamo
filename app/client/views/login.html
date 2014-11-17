@@ -1,93 +1,119 @@
 <div>
-	<!-- START ROW 1 -->
-	<!-- Formatting Div ; Adds left-side padding -->
-	<div class="col-xs-0 col-sm-3">
-	</div>
-	<!-- App description -->
-	<div class="col-xs-12 col-sm-6" ng-hide="startEating">
-	</div>
-	<div class="col-xs-12 col-sm-6" ng-show="startEating">
-		<p id="appDescription">
-			Expand your network by connecting with people who are looking to share a meal.
-		</p>
-	</div>
-	<!-- Formatting Div ; Adds right-side padding -->
-	<div class="col-xs-0 col-sm-3">
-	</div>
-	<!-- END ROW 1 -->
-
-	<!-- START ROW 2 -->
-	<!-- Formatting Div ; Adds left-side padding -->
-	<div class="col-xs-1 col-sm-4">
-	</div>
-	<!-- Main Login Content -->
-	<div class="col-xs-12 col-sm-4">
-		<!-- Try It Out! -->
-		<div id="startEating" ng-show="startEating">
-			<button ng-click="tryApp()" type="submit" class="btn btn-primary">
-				<h4> Try linksupp <span class="underlined"> without an account! </span></h4>
-			</button>
-		</div>
-		<!-- Login Form -->
-		<div id="inputContainer" ng-hide="startEating">
-			<!-- Request user information -->
-			<div id="userInfo">
-				<div id="info-exit">
-					<span ng-click="startEating = !startEating" class="glyphicon glyphicon-remove"></span>
-				</div>	
-				<form ng-init="initLoginForm()" ng-submit="submitUserData()" >
-
-					<div id="userInfoTitle"> Some Basic Information </div>
-					<span>Age Range</span>
-					<div id="dob">
-						<div class="col-sm-12">
-							<select ng-model="dateRange" ng-init="somethingHere = options[0]">
-								<option value="" disabled selected> Age Range </option>
-								<option ng-repeat="dateRange in dateRanges"> {{dateRange.value}} </option>
-							</select>
-						</div>
-					</div>
-					<span>Occupation</span>
-					<div id="occupation">
-						<div class="col-sm-12">
-							<select ng-model="occupation">
-								<option value="" disabled selected class="firstOption"> Occupation </option>
-								<option ng-repeat="occupation in occupations"> {{occupation.value}} </option>
-							</select>
-						</div>
-					</div>
-					<span>Describe Yourself!</span>
-					<div id="description">
-						<div class="col-sm-4">
-							<select ng-model="description1">
-								<option value="" disabled selected> Adjective </option>
-								<option ng-repeat="adj in meFactorAdjs"> {{adj.value}} </option>
-							</select>
-						</div>
-						<div class="col-sm-4">
-							<select ng-model="description2">
-								<option value="" disabled selected> Verb </option>
-								<option ng-repeat="verb in meFactorVerbs"> {{verb.value}} </option>
-							</select>
-						</div>
-						<div class="col-sm-4">
-							<select ng-model="description3">
-								<option value="" disabled selected> Noun </option>
-								<option ng-repeat="noun in meFactorNouns"> {{noun.value}} </option>
-							</select>
-						</div>
-					</div>
-					<div class="col-xs-3"></div>
-
-					<!-- fix float: left -->
-					<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Submit </button>
-				</form>
+	
+	<section id="whiteBlock" data-type="background">
+		<!-- START ROW 1 -->
+		<!-- Formatting Div ; Adds left-side padding -->
+		<div class="col-xs-0 col-sm-5">
+			<div class="hidden-xs col-sm-2 col-md-3 col-lg-4">
+			</div>
+			<div class="hidden-xs col-sm-10 col-md-9 col-lg-8">
+				<img src="img/logo_final.png" id="logoImage">
+			</div>
+			<div class="hidden-xs col-sm-0">
 			</div>
 		</div>
-	</div>
-	<!-- Formatting Div ; Adds right-side padding -->
-	<div class="col-xs-0 col-sm-3">
-	</div>
-	<!-- END ROW 2 -->
+		<!-- App description -->
+		<div class="col-xs-12 col-sm-6" ng-hide="startEating">
+		</div>
+		<div class="col-xs-12 col-sm-7 col-md-6" ng-show="startEating">
+			<div id="appDescription">
+				Expand your network by connecting with people who are looking to share a meal.
+				<ul id="appDescriptionList" class="hidden-">
+					<li> 
+						Where are <em>you</em> grabbing lunch today? Tell the Linksupp community by marking it on the map.
+					</li>
+					<li> 
+						Meet someone new! Join a meal time that someone else has already created and meet them there!
+					</li>
+					<li>
+						Add new friends (and import your Facebook friends) so you can see where they are planning on going for lunch - and then join them!
+					</li>
+				</ul>
+			</div>
+			<br>
+		</div>
+		<!-- Formatting Div ; Adds right-side padding -->
+		<div class="col-xs-0 col-sm-0 col-md-1">
+		</div>
+		<!-- END ROW 1 -->
 
+		<!-- START ROW 2 -->
+		<!-- Formatting Div ; Adds left-side padding -->
+		<div class="col-xs-0 col-sm-5">
+		</div>
+		<!-- Main Login Content -->
+		<div class="col-xs-12 col-sm-7 col-md-6">
+			<!-- Try It Out! -->
+			<div id="startEating" ng-show="startEating">
+				<button ng-click="tryApp()" type="submit" class="btn btn-primary">
+					<h4> Explore linksupp <span class="underlined"> without an account! </span></h4>
+				</button>
+			</div>
+			<!-- Login Form -->
+			<div id="inputContainer" ng-hide="startEating">
+				<!-- Request user information -->
+				<div id="userInfo">
+					<div id="info-exit">
+						<span ng-click="startEating = !startEating" class="glyphicon glyphicon-remove"></span>
+					</div>	
+					<form ng-init="initLoginForm()" ng-submit="submitUserData()" >
+
+						<div id="userInfoTitle"> Some Basic Information </div>
+						<span>Age Range</span>
+						<div id="dob">
+							<div class="col-sm-12">
+								<select ng-model="dateRange" ng-init="somethingHere = options[0]">
+									<option value="" disabled selected> Age Range </option>
+									<option ng-repeat="dateRange in dateRanges"> {{dateRange.value}} </option>
+								</select>
+							</div>
+						</div>
+						<span>Occupation</span>
+						<div id="occupation">
+							<div class="col-sm-12">
+								<select ng-model="occupation">
+									<option value="" disabled selected class="firstOption"> Occupation </option>
+									<option ng-repeat="occupation in occupations"> {{occupation.value}} </option>
+								</select>
+							</div>
+						</div>
+						<span>Describe Yourself!</span>
+						<div id="description">
+							<div class="col-sm-4">
+								<select ng-model="description1">
+									<option value="" disabled selected> Adjective </option>
+									<option ng-repeat="adj in meFactorAdjs"> {{adj.value}} </option>
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<select ng-model="description2">
+									<option value="" disabled selected> Verb </option>
+									<option ng-repeat="verb in meFactorVerbs"> {{verb.value}} </option>
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<select ng-model="description3">
+									<option value="" disabled selected> Noun </option>
+									<option ng-repeat="noun in meFactorNouns"> {{noun.value}} </option>
+								</select>
+							</div>
+						</div>
+						<div class="col-xs-3"></div>
+
+						<!-- fix float: left -->
+						<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Submit </button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- Formatting Div ; Adds right-side padding -->
+		<div class="col-xs-0 col-sm-0 col-md-1">
+		</div>
+		<!-- END ROW 2 -->
+	</section>
+
+	<section id="loginFooterSection" data-type="background">
+		<div id="footerFiller">
+		</div>
+	</section>
 </div>

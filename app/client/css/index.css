@@ -15,20 +15,21 @@ body
 	position: absolute;
 	height: 100vh;
 	width: 100vw;
-	background-image: url("/img/vic_background.jpg");
+/*	background-image: url("/img/vic_background.jpg");
 	background-repeat: no-repeat; 
     background-attachment: fixed;       
     webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
-    background-color: rgba(44, 139, 207, 1);
+    background-size: cover;*/
+    /*background-color: rgba(44, 139, 207, 1);*/
+    background-color: #183040;
 
-    -webkit-filter: blur(4px);
+/*    -webkit-filter: blur(4px);
 	-moz-filter: blur(4px);
 	-o-filter: blur(4px);
 	-ms-filter: blur(4px);
-	filter: blur(4px) brightness(0.8);
+	filter: blur(4px) brightness(1.0) opacity(0.1);*/
 }
 
 /* USER CONTACT FORM */
@@ -54,6 +55,12 @@ body
 .glyphicon-remove
 {
 	color: darkgrey;
+}
+
+#navbarLogoImage
+{
+	width: auto;
+	height: 100%;
 }
 
 .navbar-brand 
