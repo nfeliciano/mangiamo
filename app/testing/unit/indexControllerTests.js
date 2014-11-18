@@ -64,8 +64,33 @@ describe('Unit: indexController', function() {
     });
 
     //THIS WILL CHANGE: init
+    it('should properly redirect to login if $scope.user is null', function() {
+        expect(scope.user).toBeNull();
+        scope.init();
+        expect(location.path()).toBe('/login');
+    });
+
+    it('should properly redirect to main if $scope.user has an item', function() {
+        var name = "Test Name";
+        var key = "testy";
+        var user = { 'key' : key, 'name' : name };
+        scope.user = user;
+        scope.init();
+        expect(location.path()).toBe('/main');
+    });
 
     //check that logout does everything we want
+    it('should properly log out, clearing scope.user, session storage, and the path', function() {
+        var name = "Test Name";
+        var key = "testy";
+        var user = { 'key' : key, 'name' : name };
+        scope.user = user;
+        scope.init();
+        scope.logout();
+        expect(scope.user).toBeNull();
+        expect(sessionStorage.name).toBeNull();
+        expect(location.path()).toBe('/login');
+    });
 
     //inject a key into populate meal buddies and check that it populates the arrays
 
