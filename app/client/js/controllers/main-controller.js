@@ -11,6 +11,8 @@ app.controller('mainController', ['$scope', '$location', '$modal', '$http', 'mea
 		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
 		$scope.attendingMeal = false;
 
+		$scope.noMeals = true;
+
 		var minZoomLevel = 13; // as far back as they can go
 		$scope.currentPin = { "name": "",
 							  "place": null,
@@ -39,7 +41,6 @@ app.controller('mainController', ['$scope', '$location', '$modal', '$http', 'mea
 		}
 
 		// Hide the sidebar on page load, then load the "intro" sidebar content
-		$scope.toggleSidebar(false);
 		$scope.setSidebarContent('intro');
 		/* MAIN.HTML REFRESH CODE END */
 
@@ -65,6 +66,10 @@ app.controller('mainController', ['$scope', '$location', '$modal', '$http', 'mea
 			});
 		}
 
+		$scope.isUserLoggedIn = function () {
+			return ($scope.user != null);
+		}
+
 		$scope.updateMealInfo = function(place, marker) {
 			$scope.currentPin.name = place.name;
 			$scope.currentPin.place = place;
@@ -81,6 +86,10 @@ app.controller('mainController', ['$scope', '$location', '$modal', '$http', 'mea
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
 				var mealData = angular.fromJson(data);
 				$scope.currentPin.meals = [];  // Reset data
+				$scope.noMeals = true;
+				if (mealData.length > 0) {
+					$scope.noMeals = false;
+				}
 				for (var i = 0; i < mealData.length; i++) {
 					$scope.currentPin.meals.push({"time": "", "key": "", "attendees": []});
 

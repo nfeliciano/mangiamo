@@ -17,7 +17,7 @@
 #closeSidebar
 {
 	width: 100%;
-	padding: 10px;
+	padding: 10px 10px 0 10px;
 }
 
 	/* INTRO */
@@ -26,12 +26,13 @@
 		/*text-align: center;*/
 		font-family: "Roboto", sans-serif;
 		color: #2F5F7F;
+		padding-top: 25px;
 	}
 
-	#introContainer > hr ~ div
-	{
-		padding: 0px 20px 20px 20px;
-	}
+		#introContainer > hr ~ div
+		{
+			padding: 0px 20px 20px 20px;
+		}
 
 	/* INTRO END */
 
@@ -39,13 +40,14 @@
 	#linksContainer
 	{
 		text-align: center;
+		padding-top: 25px;
 	}
 	/* LINKS END */
 
 	/* MEALS */
 	#mealsContainer
 	{
-
+		padding-top: 25px;
 	}
 
 
@@ -55,6 +57,11 @@
 
 
 /* EVERYTHING BELOW THIS COMMENT NEEDS TO BE CATEGORIZED AND VALIDATED AS VALID AND NECESSARY CODE */
+
+hr
+{
+	border-color: #2F5F7F;
+}
 
 .linkHeader
 {
@@ -118,6 +125,14 @@
 {
 	color: #2F5F7F;
 	padding: 0 15px 5px 13px;
+	text-align: center;
+}
+
+#noMealsHeader
+{
+	color: #2F5F7F;
+	font-size: 1.6em;
+	padding: 20px;
 	text-align: center;
 }
 
