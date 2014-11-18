@@ -153,19 +153,20 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				$scope.mealBuddyRequests = [];
 				$scope.mealBuddies = [];
 				$scope.mealBuddySuggestions = [];
-				for (var i = 0; i < data1.accepted; i++) {
+				for (var i = 0; i < data1.accepted.length; i++) {
 					var mealBuddy = data1.accepted[i];
+					console.log(data1.accepted);
 					userService.getUserWithID(mealBuddy.key).success(function(data2) {
 						$scope.mealBuddies.push(data2);
 					});
 				}
-				for (var i = 0; i < data1.pending; i++) {
+				for (var i = 0; i < data1.pending.length; i++) {
 					var mealBuddy = data1.pending[i];
 					userService.getUserWithID(mealBuddy.key).success(function(data2) {
 						$scope.mealBuddyRequests.push(data2);
 					});
 				}
-				for (var i = 0; i < data1.suggested; i++) {
+				for (var i = 0; i < data1.suggested.length; i++) {
 					var mealBuddy = data1.suggested[i];
 					userService.getUserWithID(mealBuddy.key).success(function(data2) {
 						$scope.mealBuddySuggestions.push(data2);
