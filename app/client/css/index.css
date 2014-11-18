@@ -15,21 +15,7 @@ body
 	position: absolute;
 	height: 100vh;
 	width: 100vw;
-/*	background-image: url("/img/vic_background.jpg");
-	background-repeat: no-repeat; 
-    background-attachment: fixed;       
-    webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;*/
-    /*background-color: rgba(44, 139, 207, 1);*/
     background-color: #091C29;
-
-/*    -webkit-filter: blur(4px);
-	-moz-filter: blur(4px);
-	-o-filter: blur(4px);
-	-ms-filter: blur(4px);
-	filter: blur(4px) brightness(1.0) opacity(0.1);*/
 }
 
 /* USER CONTACT FORM */
