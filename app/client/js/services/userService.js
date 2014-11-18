@@ -1,9 +1,8 @@
 //To use this service, make sure you're adding 'userService' to a controller, like so:
-//	app.controller('mealsController', ['$scope', '$resource', 'userService', function ($scope, $resource, userService)
-//	and then, make sure that the controller uses: var User = $resource('/api/users');
+//	app.controller('mealsController', ['$scope', 'userService', function ($scope, userService)
 //This service will provide anything necessary when interacting with the backend for users. Adding, deleting, adding meal buddies, etc.
 
-app.factory('userService', ['$http', function($http, $resource) {
+app.factory('userService', ['$http', function($http) {
 	var user = '/api/users';
 	var userBuddies = '/api/users/buddies';
 	var facebookLogin = '/api/users/facebook';
