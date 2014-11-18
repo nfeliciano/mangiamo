@@ -1,4 +1,4 @@
-app.controller('loginController', ['$scope', '$location', '$http', 'userService',
+angular.module('linksupp').controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
 		// Set the navbar to display the proper elements
 

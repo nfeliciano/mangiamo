@@ -1,4 +1,4 @@
-app.controller('indexController', ['$scope', '$location', 'userService',
+angular.module('linksupp').controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
 		/* GLOBAL DATA START */
 		$scope.startEating = true;
