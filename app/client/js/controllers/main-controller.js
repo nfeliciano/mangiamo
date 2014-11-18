@@ -1,4 +1,4 @@
-app.controller('mainController', ['$scope', '$location', '$modal', '$http', 'mealService', 'userService',
+angular.module('linksupp').controller('mainController', ['$scope', '$location', '$modal', '$http', 'mealService', 'userService',
 	function ($scope, $location, $modal, $http, mealService, userService) {
 		/* GLOBAL DATA (In main-controller.js) START */
 		$scope.placedMarkers = [];
@@ -410,24 +410,24 @@ app.controller('mainController', ['$scope', '$location', '$modal', '$http', 'mea
 
 			// Limit the zoom level
 			google.maps.event.addListener($scope.map, 'zoom_changed', function() {
-	
+
 				if ($scope.map.getZoom() < minZoomLevel){
 					$scope.map.setZoom(minZoomLevel);
 					return;
 				}
 				var bounds = $scope.map.getBounds();
-				var sw = bounds.getSouthWest(); 
+				var sw = bounds.getSouthWest();
 				var ne = bounds.getNorthEast();
 
-				var screenWidthMeters = google.maps.geometry.spherical.computeDistanceBetween (sw, ne);	
+				var screenWidthMeters = google.maps.geometry.spherical.computeDistanceBetween (sw, ne);
 				request.bounds = $scope.map.getBounds();
-				
+
 					request.radius = radius;
 					$scope.lastPosition = $scope.map.getCenter();
-					
+
 					request.location=offsetCenter($scope.map.getCenter(),radius/4,radius/4);
 					// request.location.l
-					service.radarSearch(request, fastCallback); 
+					service.radarSearch(request, fastCallback);
 					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
 			});
 
@@ -457,7 +457,7 @@ app.controller('mainController', ['$scope', '$location', '$modal', '$http', 'mea
 			);
 
 			var newCenter = $scope.map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
-			
+
 			return newCenter;
 		}
 

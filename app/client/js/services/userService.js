@@ -2,7 +2,7 @@
 //	app.controller('mealsController', ['$scope', 'userService', function ($scope, userService)
 //This service will provide anything necessary when interacting with the backend for users. Adding, deleting, adding meal buddies, etc.
 
-app.factory('userService', ['$http', function($http) {
+angular.module('linksupp').factory('userService', ['$http', function($http) {
 	var user = '/api/users';
 	var userBuddies = '/api/users/buddies';
 	var facebookLogin = '/api/users/facebook';
