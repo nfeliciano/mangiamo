@@ -41,41 +41,29 @@ app.controller('indexController', ['$scope', '$location', 'userService',
 			}
 		}
 
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+
+		}
+
 		$scope.setSidebarContent = function(content) {
-			if (content == "links") {
-				if ($scope.linksVisible == true) {
-					$scope.sidebarVisible = false;
-					$scope.linksVisible = false;
-				}
-				else {
-					$scope.populateMealBuddies();
-					$scope.mealsVisible = false;
-					$scope.introVisible = false;
-					$scope.linksVisible = true;
-					$scope.sidebarVisible = true;
-				}
+			if (content == "links" && $scope.linksVisible == false) {
+				$scope.populateMealBuddies();
+				$scope.mealsVisible = false;
+				$scope.introVisible = false;
+				$scope.linksVisible = true;
+				$scope.sidebarVisible = true;
 			}
-			else if (content == "intro") {
-				if ($scope.introVisible == true) {
-					$scope.sidebarVisible = false;
-					$scope.linksVisible = false;
-					$scope.mealsVisible = false;
-					$scope.introVisible = false;
-					
-				}
-				else
-				{
-					$scope.linksVisible = false;
-					$scope.mealsVisible = false;
-					$scope.introVisible = true;
-					$scope.sidebarVisible = true;
-				}
-			}
-			else  // (content == "meals")
-			{
+			else if (content == "meals") {
 				$scope.linksVisible = false;
 				$scope.introVisible = false;
 				$scope.mealsVisible = true;
+				$scope.sidebarVisible = true;
+			}
+			else  // (content == "intro")
+			{
+				$scope.linksVisible = false;
+				$scope.mealsVisible = false;
+				$scope.introVisible = true;
 				$scope.sidebarVisible = true;
 			}
 		}
