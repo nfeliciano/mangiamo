@@ -19,11 +19,6 @@ app.factory('userService', ['$http', function($http) {
 
 	var userService = {};
 
-	// Gets all the users from the backend, no filtering. Can parse through them in results.
-	userService.getAllUsers = function() {
-		return $http.get(user);
-	}
-
 	// Gets a user from the backend with the specific ID.
 	userService.getUserWithID = function(key) {
 		return $http.get(user + '?key=' + key);

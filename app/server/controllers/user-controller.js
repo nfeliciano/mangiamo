@@ -68,9 +68,7 @@ module.exports.list = function (req,res) {
 		});
 	}
 	else {
-		User.find({}, function (err, results) {
-			res.json(results);
-		});
+		res.end();
 	}
 }
 
