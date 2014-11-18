@@ -4,10 +4,10 @@ var express 				= require('express'),
 	bodyParser 				= require('body-parser'),
 	mongoose 				= require('mongoose'),
 	config 					= require('./config'),
-	mealsController 		= require('./server/controllers/meals-controller'),
-	userController			= require('./server/controllers/user-controller'),
-	contactController		= require('./server/controllers/contact-controller'),
-	scheduler				= require('./server/controllers/scheduler.js'),
+	mealsController 		= require('./server/controllers/meals-controller');
+	userController			= require('./server/controllers/user-controller');
+	contactController		= require('./server/controllers/contact-controller');
+	scheduler				= require('./server/controllers/scheduler.js');
 	options 				= { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 10000 } },
                 				replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 10000 } } };
 
