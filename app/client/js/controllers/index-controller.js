@@ -125,7 +125,19 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 			}
 		}
 
+		$scope.postToFacebook = function(body, linkString) {
+			FB.api('/me/feed', 'post', { message: body, link: linkString }, function(response) {
+				if (!response || response.error) {
+					alert('Error occured');
+				}
+				else {
+					alert('Post ID: ' + response.id);
+				}
+			});
+		}
+
 		$scope.logout = function() {
+			$scope.postToFacebook('Testing links', 'www.linksupp.com');
 			$scope.user = null;
 			sessionStorage.name = null;
 			sessionStorage.facebookID = null;
