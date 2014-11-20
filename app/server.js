@@ -38,11 +38,11 @@ app.use('/json', express.static(__dirname + '/client/json'));
 //REST API
 //Meals
 app.put('/api/meals/delete', mealsController.deleteMeal);
-app.put('/api/meals', mealsController.update);
-app.get('/api/meals', mealsController.list);
-app.get('/api/meals/people', mealsController.getPeople);
+app.put('/api/meals/update', mealsController.update);
+app.post('/api/meals/get', mealsController.get);
+app.post('/api/meals/people', mealsController.getPeople);
 app.put('/api/meals/people', mealsController.deletePeople);
-app.post('/api/meals', mealsController.create);
+app.post('/api/meals/create', mealsController.create);
 
 //Users
 app.post('/api/users/get', userController.list);
