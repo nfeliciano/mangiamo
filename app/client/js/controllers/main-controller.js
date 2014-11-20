@@ -200,17 +200,21 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					return; // user cannot join
 				}
 				var key = angular.fromJson($scope.user).key;
-				mealService.addUserToMeal(meal.key, key).success(function(data) {
-					$scope.usersMealsAttending = meal;
-					$scope.currentPin.marker.setIcon('/img/restaur_going.png');
-					$scope.selectedMarkerOldIcon = '/img/restaur_going.png';
-					$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1;
-					$scope.currentPin.marker.label.setContent();
-					userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
-					userService.getUserWithID(key).success(function(data) {
-						meal.attendees.push(data[0]);
-					});
-				})
+				mealService.getMealDetails(meal.key).success(function(dat) {
+					if (dat) {
+						mealService.addUserToMeal(meal.key, key).success(function(data) {
+							$scope.usersMealsAttending = meal;
+							$scope.currentPin.marker.setIcon('/img/restaur_going.png');
+							$scope.selectedMarkerOldIcon = '/img/restaur_going.png';
+							$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1;
+							$scope.currentPin.marker.label.setContent();
+							userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
+							meal.attendees.push(angular.fromJson($scope.user));
+						});
+					} else {
+						$scope.tellUser("Sorry, someone must have left this meal before you joined", "This meal doesn't exist!");
+					}
+				});
 			});
 		}
 
@@ -220,7 +224,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				var key = angular.fromJson($scope.user).key;
 				mealService.deleteUserFromMeal(meal.key, key).success( function(data) {
 					// Check if anyone is there
-					if ($scope.currentPin.meals.length == 1 && $scope.currentPin.meals[0].attendees.length == 1) {
+					if ($scope.currentPin.meals.length == 1 && data.people.length == 0) {
 						$scope.currentPin.marker.setIcon('/img/restaur_selected.png');
 						$scope.selectedMarkerOldIcon = 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0';
 						$scope.currentPin.marker.labelContent = '';
@@ -285,8 +289,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					"We have to stop living in the past!");
 					return;
 				}
-
-				mealService.addNewMeal($scope.currentPin.place.place_id, 0, date, [], true).success(function(data) {
+				//$scope.currentPin.position
+				mealService.addNewMeal($scope.currentPin.place.place_id, 0, $scope.currentPin.marker.position.lat(), $scope.currentPin.marker.position.lng(), date, [], true).success(function(data) {
 					var key = angular.fromJson($scope.user).key;
 
 					mealService.addUserToMeal(data.key, key).success(function(meal) {
