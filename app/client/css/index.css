@@ -8,14 +8,7 @@ body
 {
 	height: 100%;
 	width: 100%;
-}
-
-.background2
-{
-	position: absolute;
-	height: 100vh;
-	width: 100vw;
-    background-color: #091C29;
+	background: url("../img/restaurant_icons.png") 100% 0 fixed;
 }
 
 /* USER CONTACT FORM */
@@ -56,7 +49,6 @@ body
 }
 
 .navbar-default {
-	/*background-color: #242451;*/
 	background-color: #2F5F7F;
 	border-color: #204060;
 }
