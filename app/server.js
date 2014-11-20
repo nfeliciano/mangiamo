@@ -45,11 +45,11 @@ app.put('/api/meals/people', mealsController.deletePeople);
 app.post('/api/meals', mealsController.create);
 
 //Users
-app.get('/api/users', userController.list);
-app.post('/api/users', userController.create);
+app.post('/api/users/get', userController.list);
+app.post('/api/users/create', userController.create);
 app.put('/api/users', userController.update);
-app.get('/api/users/buddies', userController.getMealBuddies);
-app.get('/api/users/facebook', userController.findByFacebook);
+app.post('/api/users/buddies', userController.getMealBuddies);
+app.post('/api/users/facebook', userController.findByFacebook);
 app.put('/api/users/meals', userController.addMealToUser);
 app.put('/api/users/deleteMeals', userController.deleteMealFromUser);
 
