@@ -284,8 +284,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					"We have to stop living in the past!");
 					return;
 				}
-
-				mealService.addNewMeal($scope.currentPin.place.place_id, 0, date, [], true).success(function(data) {
+				//$scope.currentPin.position
+				mealService.addNewMeal($scope.currentPin.place.place_id, 0, $scope.currentPin.marker.position.lat(), $scope.currentPin.marker.position.lng(), date, [], true).success(function(data) {
 					var key = angular.fromJson($scope.user).key;
 
 					mealService.addUserToMeal(data.key, key).success(function(meal) {
