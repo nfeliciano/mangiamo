@@ -3,7 +3,8 @@
 //This service will provide anything necessary when interacting with the backend for users. Adding, deleting, adding meal buddies, etc.
 
 angular.module('linksupp').factory('userService', ['$http', function($http) {
-	var user = '/api/users';
+	var user = '/api/users/create';
+	var userGet = '/api/users/get';
 	var userBuddies = '/api/users/buddies';
 	var facebookLogin = '/api/users/facebook';
 	var userMeals = '/api/users/meals';
@@ -21,7 +22,8 @@ angular.module('linksupp').factory('userService', ['$http', function($http) {
 
 	// Gets a user from the backend with the specific ID.
 	userService.getUserWithID = function(key) {
-		return $http.get(user + '?key=' + key);
+		var request = { "key" : key };
+		return $http.post(userGet, request);
 	}
 
 	userService.addMealToUser = function(mealKey, userKey) {
@@ -65,7 +67,8 @@ angular.module('linksupp').factory('userService', ['$http', function($http) {
 	}
 
 	userService.findByFacebook = function(facebookID){
-		return $http.get(facebookLogin + '?facebookID=' + facebookID);
+		var request = { "facebookID" : facebookID };
+		return $http.post(facebookLogin, request);
 	}
 
 	userService.addMealBuddy = function(buddyKey, mealBuddies, userKey) {
@@ -93,7 +96,8 @@ angular.module('linksupp').factory('userService', ['$http', function($http) {
 
 	// Returns an array of meal buddies. Empty array if no meal buddies exist.
 	userService.getMealBuddies = function(userKey) {
-		return $http.get(userBuddies + '?key=' + userKey);
+		var request = { "key" : userKey };
+		return $http.post(userBuddies, request);
 	}
 
 	// Confirms a meal buddy that has a pending request to the user.
