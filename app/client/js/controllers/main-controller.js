@@ -7,7 +7,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.dataBase = [];
 		$scope.usersMealsAttending = [];
 		$scope.selectedMarkerOldIcon = null;
-
+		$scope.staffPicks = [];
 		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
 		$scope.attendingMeal = false;
 
@@ -392,12 +392,12 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				types: ['restaurant','cafe']
 			};
 
-
 			var service = new google.maps.places.PlacesService($scope.map);
-			service.radarSearch(firstRequest, callback);
+			placeStaffPicks();
+		
 
 			// refreshes the map with new food places when the map is moved a certain amount
-			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
+		/*	google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > radius/3){
 					request.bounds = $scope.map.getBounds();
 					$scope.populateMealBuddies();
@@ -407,9 +407,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
 				}
 			});
-
+*/
 			// Limit the zoom level
-			google.maps.event.addListener($scope.map, 'zoom_changed', function() {
+		/*	google.maps.event.addListener($scope.map, 'zoom_changed', function() {
 
 				if ($scope.map.getZoom() < minZoomLevel){
 					$scope.map.setZoom(minZoomLevel);
@@ -426,10 +426,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					$scope.lastPosition = $scope.map.getCenter();
 
 					request.location=offsetCenter($scope.map.getCenter(),radius/4,radius/4);
-					// request.location.l
-					service.radarSearch(request, fastCallback);
-					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
-			});
+					//service.radarSearch(request, fastCallback);
+					
+				});*/
 
 			initializeSearchBar();
 		}
@@ -520,70 +519,123 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		    	var bounds = $scope.map.getBounds();
 		    	searchBox.setBounds(bounds);
 			});
-
 		}
 
-		// --- This is fed in the "result" of the search as an array, and for each a marker is placed
-		callback = function(results, status, pagination) {
-			if (status == google.maps.places.PlacesServiceStatus.OK) {
-
-				mealService.getAllMeals().success(function(data){
-					$scope.dataBase = null;
-					$scope.dataBase =data;
-
-					var hasMeal = false;
-					for (var i = 0; i < results.length; i++) { // Removed the checking because this method now only happens on the first load
-						hasMeal = false;
-						for( var x = 0; x < $scope.dataBase.length; x++){
-							if($scope.dataBase[x].placeID == results[i].place_id){
-								hasMeal = true;
-								break;
-							}
+		
+		tempStaffPickData = function(){
+		
+		var = dataType{
+			name: null,
+			place_id: null,
+			lat: null,
+			lng: null,
+			
+		}
+		
+		$scope.staffPick = {
+		
+		
+		
+		
+		
+		
+		}
+		
+		
+		
+		
+		
+		}
+		
+		tempStaffPickCreateData = fuction(){
+		
+		}
+		
+		
+		
+		
+		
+		placeStaffPicks = function(){
+			mealService.getAllMeals().success(function(data){
+				$scope.dataBase = null;
+				$scope.dataBase =data;
+				var hasMeal = false;
+				
+				if($scope.dataBase.length > 0){
+					console.log($scope.dataBase[0]);
+				}
+				
+				
+				//----Place Staff Picks WITH NO Meal-----
+				for (var i = 0; i < $scope.staffPicks.length; i++) {
+					hasMeal = false;
+					
+					//Search dataBase for this staffPick
+					for( var x = 0; x < $scope.dataBase.length; x++){
+						if($scope.dataBase[x].placeID ==  $scope.staffPicks[i].place_id){
+							hasMeal = true;
+							break;
 						}
-
-						if( hasMeal){
-							createMealMarker(results[i]);
-						}
-						else{
-							createDotMarker(results[i]);	// for each place in result create marker
-						}
-
 					}
-				});
-			}
-		}
-
-		fastCallback = function(results, status){
-
-			if (status == google.maps.places.PlacesServiceStatus.OK) {
-
-				mealService.getAllMeals().success(function(data){
-					nukeAllMarkers();
-					$scope.database =null; //think it might be a possible leak so for now do this
-					$scope.dataBase =data;
-
-					var hasMeal = false;
-					for (var i = 0; i < results.length; i++) { // Removed the checking because this method now only happens on the first load
-						hasMeal = false;
-						for( var x = 0; x < $scope.dataBase.length; x++){
-							if($scope.dataBase[x].placeID == results[i].place_id){
-								hasMeal = true;
-								break;
-							}
-						}
-
-						if( hasMeal){
-							createMealMarker(results[i]);
-						}
-						else{
-							createDotMarker(results[i]);	// for each place in result create marker
-						}
-
+					
+					//If no meal was found, create the star marker
+					if( !hasMeal){
+						createStarMarker(i);	
 					}
-				});
-			}
+				}	
 
+				//----Place Meals-----
+				for (var i = 0; i < $scope.dataBase.length; i++) { // Removed the checking because this method now only happens on the first load
+						createMealMarker($scope.dataBase[i], $scope.dataBase[i].lng(), $scope.dataBase[i].lat() );
+				}*/
+			});
 		}
+	
+		
+		updateMarkers =function(){
+		
+		}
+		
+		
+		
+		createStarMarker =function(i){
+		
+			var marker =  new MarkerWithLabel({
+				icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0',  //Red dot
+				map: $scope.map,
+				position: new google.maps.LatLng($scope.staffPicks[i].lat,$scope.staffPicks[i].lng),
+				draggable: false,    //property that allows user to move marker
+				raiseOnDrag: false,
+				labelContent: 0,
+				labelAnchor: new google.maps.Point(7, 33),    // anchors to
+				labelClass: 'labels', // the CSS class for the label
+
+				// Some additional properties of the markers so we can access them later
+				markerId : $scope.staffPicks[i].place_id,
+				hasMeal: false,
+			});
+			
+			$scope.placedMarkers.push(marker); // Array marker
+			google.maps.event.addListener(marker, 'click', function() {
+				updateMarkerIcon(marker);
+
+				var request = {
+					placeId:marker.markerId,
+				};
+				var service = new google.maps.places.PlacesService($scope.map);
+				service.getDetails(request,getPlaceDetails);
+
+				// Returns ALL the place details and information
+				function getPlaceDetails(place, status) {
+					if (status == google.maps.places.PlacesServiceStatus.OK) {
+						$scope.updateMealInfo(place, marker);
+					}
+				}
+			});
+		}
+		
+		
+		
 
 		createDotMarker = function(place){
 			var marker =  new MarkerWithLabel({
@@ -600,7 +652,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				markerId : place.place_id,
 				hasMeal: false,
 			});
-
+		
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
 				updateMarkerIcon(marker);
@@ -620,12 +672,13 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			});
 		}
 
-		createMealMarker = function(place){
+		createMealMarker = function(place, lng, lat){
 
 			var userIsGoing = false;
 
+			
 			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
-				if($scope.usersMealsAttending[i].key.substring(0,place.place_id.length) == place.place_id){
+				if($scope.usersMealsAttending[i].key == place.place_id){
 					userIsGoing = true;
 				}
 			}
@@ -687,7 +740,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					hasMeal: true,
 				});
 
-
+				
 				$scope.placedMarkers.push(marker); // Array marker
 				google.maps.event.addListener(marker, 'click', function() {
 					updateMarkerIcon(marker);
