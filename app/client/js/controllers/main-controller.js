@@ -81,7 +81,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				$scope.declareUser(data);
 				$scope.toggleLogoutButton(true);
 				$scope.toggleLoginButton(false);
-				// $('#userInformationModal').modal('hide');
+				$('#userInformationModal').modal('hide');
+				$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
 			});
 		}
 
@@ -225,8 +226,15 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.joinMeal = function(meal) {
+			// Check if user has given us "Basic Information"
 			if ($scope.user == null) {
-				$scope.tellUser('Please log in through Facebook to attend meals', 'Need an account');
+				// Check if user has logged in with facebook
+				if (sessionStorage.facebookID == undefined || sessionStorage.facebookID == 'null') {
+					$scope.tellUser('Please log in through Facebook to Join meals', 'Need an Account');
+				}
+				else {
+					$('#userInformationModal').modal();
+				}
 				return;
 			}
 			userService.getUserWithID(angular.fromJson($scope.user).key).success(function(data) {
@@ -301,6 +309,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			}
 		}
 		
+		// The following code runs when the userInformationModal closes, so we can tell the user something
+		// It doesn't function as expected, and I have no idea why.  Someone take a look at it.
 		// $('#userInformationModal').on('hidden.bs.modal', function (event) {
 		// 	console.log("HERE");
 		// 	if ($scope.user != null) {
@@ -313,10 +323,10 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			if ($scope.user == null) {
 				// Check if user has logged in with facebook
 				if (sessionStorage.facebookID == undefined || sessionStorage.facebookID == 'null') {
-					$scope.tellUser('Please log in through Facebook to attend meals', 'Need an account');
+					$scope.tellUser('Please log in through Facebook to Create meals', 'Need an Account');
 				}
 				else {
-					// $('#userInformationModal').modal();
+					$('#userInformationModal').modal();
 				}
 				return;
 			}

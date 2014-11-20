@@ -113,8 +113,6 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		$scope.tellUser = function(message, title) {
 			$scope.tellUserTitle = typeof(title) !== 'undefined' ? title : "Oops! We've Encountered a Problem.";
 			$scope.tellUserMessage = message;
-
-			console.log($scope.tellUserTitle + ' : ' + $scope.tellUserMessage);
 			$('#errorModal').modal();
 		}
 
