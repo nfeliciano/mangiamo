@@ -381,7 +381,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				location: $scope.lastPosition,
 				rankby : google.maps.places.RankBy.DISTANCE,
 				radius: radius,
-				types: ['restaurant','cafe', 'bar', 'food']
+				types: ['restaurant','cafe']
 			};
 
 				//Form request for location search
@@ -389,7 +389,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				location: $scope.lastPosition,
 				rankby : google.maps.places.RankBy.DISTANCE,
 				bounds: $scope.map.getBounds(),
-				types: ['restaurant','cafe', 'bar', 'food']
+				types: ['restaurant','cafe']
 			};
 
 
