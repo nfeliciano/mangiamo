@@ -11,7 +11,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		$scope.logoutButtonVisible;
 
 		$scope.sidebarVisible = false;
-		$scope.staffVisible = false;
+		$scope.recomVisible = false;
 		$scope.linksVisible = false;
 		$scope.mealsVisible = false;
 		$scope.introVisible = false;
@@ -32,11 +32,11 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
-				$scope.staffVisible = true;
+				$scope.recomVisible = true;
 			}
 			else { // (show == false)
 				$scope.sidebarVisible = false;
-				$scope.staffVisible = true;
+				$scope.recomVisible = true;
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
@@ -52,29 +52,29 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				$scope.populateMealBuddies();
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
-				$scope.staffVisible = false;
+				$scope.recomVisible = false;
 				$scope.linksVisible = true;
 				$scope.sidebarVisible = true;
 			}
 			else if (content == "intro" && $scope.introVisible == false) {
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
-				$scope.staffVisible = false;
+				$scope.recomVisible = false;
 				$scope.introVisible = true;
 				$scope.sidebarVisible = true;
 			}
 			else if (content == "meals") {
 				$scope.linksVisible = false;
 				$scope.introVisible = false;
-				$scope.staffVisible = false;
+				$scope.recomVisible = false;
 				$scope.mealsVisible = true;
 				$scope.sidebarVisible = true;
 			}
-			else {  // (content == "staff")
+			else {  // (content == "recom")
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
-				$scope.staffVisible = true;
+				$scope.recomVisible = true;
 				$scope.sidebarVisible = true;
 			}
 		}

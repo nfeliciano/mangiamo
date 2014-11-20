@@ -7,6 +7,10 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.dataBase = [];
 		$scope.usersMealsAttending = [];
 		$scope.selectedMarkerOldIcon = null;
+		$scope.recomMeals = [];
+
+		// FOR TESTING PURPOSES ONLY
+		$scope.recomMeals = [];
 
 		$scope.mealTime = new Date();
 
@@ -45,7 +49,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		// Hide the sidebar on page load, then load the "intro" sidebar content
-		$scope.setSidebarContent('staff');
+		$scope.setSidebarContent('recom');
 		/* MAIN.HTML REFRESH CODE END */
 
 		// initForm populates local variables from local JSON files.  This speparates
@@ -64,6 +68,15 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				$scope.meFactorNouns = data.meFactorNouns;
 			});
 		};
+
+		$scope.initRecomMeals = function() {
+			$scope.recomMeals = [];
+			// Database call and appropriate call to populate $scope.recomMeals with:
+			// 1) Meals with only 1 person attending, if $scope.recomMeals.length < 10, then
+			// 2) Meals with only 2 people attending, if $scope.recomMeals.length < 10, then
+			// 3) Meals with only 3 people attending, if $scope.recomMeals.length < 10, then
+			// 4) Recommended Meal locations with 0 people attending (guaranteed 10 meal locations)
+		}
 
 		// This function submits the user data to the database, and redirects the user
 		$scope.submitUserData = function() {

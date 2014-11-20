@@ -1,3 +1,20 @@
+/* USER HELP */
+.helpDiv
+{
+	position: absolute;
+}
+
+#helpDiv1
+{
+	left: 50%;
+	height: 100px;
+	width: 200px;
+	z-index: 10;
+
+	background-color: black;
+}
+/* USER HELP END */
+
 /* SIDEBAR */
 #sidebarContainer
 {
@@ -5,7 +22,7 @@
 	background-color: #FAFAEE;
 	height: 100vh;
 	/* First 51px on the top is for the navbar */
-	padding: 51px 10px 0px 10px;
+	padding: 76px 10px 0px 10px;
 
 	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
 	-moz-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
@@ -19,6 +36,10 @@
 	width: 100%;
 	padding: 10px 10px 0 10px;
 }
+	/* RECOMMENDED MEALS */
+
+	/* RECOMMENDED MEALS END */
+
 
 	/* INTRO */
 	#introContainer
@@ -26,13 +47,12 @@
 		/*text-align: center;*/
 		font-family: "Roboto", sans-serif;
 		color: #2F5F7F;
-		padding-top: 25px;
 	}
 
-		#introContainer > hr ~ div
-		{
-			padding: 0px 20px 20px 20px;
-		}
+	#introContainer > hr ~ div
+	{
+		padding: 0px 20px 20px 20px;
+	}
 
 	/* INTRO END */
 
@@ -40,17 +60,13 @@
 	#linksContainer
 	{
 		text-align: center;
-		padding-top: 25px;
 	}
 	/* LINKS END */
 
 	/* MEALS */
 	#mealsContainer
 	{
-		padding-top: 25px;
 	}
-
-
 	/* MEALS END */
 /* SIDEBAR END */
 

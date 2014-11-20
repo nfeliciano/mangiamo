@@ -1,4 +1,16 @@
 <div ng-controller="mainController" ng-init="initialize()">
+	<!-- User Guidance Pop-Ups -->
+	<div>
+		<!-- Step 1: Select the restaurant you want to have lunch at.  Looking 
+		for a place not currently being displayed?  Try the Search Bar above. -->
+		<div class="helpDiv" id="helpDiv1">
+			<div class="arrow" style="top: 50%">
+				
+			</div>
+			
+		</div>
+	</div>
+
 	<!-- Map -->
 	<div id="mapContainer" class="col-xs-12">
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -14,8 +26,27 @@
 		</button>
 
 		<!-- Recommended Meals -->
-		<div id="staffContainer" ng-show="staffVisible">
-			MEAL SUGGESTIONS
+		<div id="recomContainer" ng-init="initRecomMeals()" ng-show="recomVisible">
+			<div class="sidebarTitle">
+				Recommended
+			</div>	
+			<hr>
+			<accordion close-others="true">
+				<accordion-group class="accordionInfo" is-open="status.open" ng-repeat="recomMeal in recomMeals">
+					<accordion-heading>
+						<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</accordion-heading>
+					<div class="mealAttendee">
+						I am a <strong>{{mealBuddy[0].description}}</strong> with a profession in 
+						<strong>{{mealBuddy[0].profession}}</strong> and I am between 
+						<strong>{{mealBuddy[0].ageRange}}</strong>.
+					</div>
+					<button class="btn btn-default btn-sm pull-right" ng-click="removeMealBuddy(mealBuddy, false)"> Remove </button>
+				</accordion-group>
+			</accordion>
+			<button class="btn btn-default button col-xs-5" ng-click="" > Meet New People </button>
+			<div class="col-xs-2"></div>
+			<button class="btn btn-default button col-xs-5" ng-click="" > Lunch With Friends </button>
 		</div>
 
 		<!-- User Instructions -->
