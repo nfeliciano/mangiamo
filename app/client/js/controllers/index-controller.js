@@ -7,11 +7,12 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		$scope.mealBuddies = [];
 		$scope.mealBuddySuggestions = [];
 
+		$scope.utilityButtonsVisible;
 		$scope.loginButtonVisible;
 		$scope.logoutButtonVisible;
-		$scope.linksButtonVisible;
 
 		$scope.sidebarVisible = false;
+		$scope.staffVisible = false;
 		$scope.linksVisible = false;
 		$scope.mealsVisible = false;
 		$scope.introVisible = false;
@@ -28,48 +29,59 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		/* GLOBAL ACCESS FUNCTIONS START */
 		$scope.toggleSidebar = function(show) {
 			if (show == true) {
+				$scope.sidebarVisible = false;
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
-				$scope.introVisible = true;
-				$scope.sidebarVisible = true;
+				$scope.introVisible = false;
+				$scope.staffVisible = true;
 			}
 			else { // (show == false)
 				$scope.sidebarVisible = false;
+				$scope.staffVisible = true;
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
 			}
 		}
 
-		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		// if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 
-		}
+		// }
 
 		$scope.setSidebarContent = function(content) {
 			if (content == "links" && $scope.linksVisible == false) {
 				$scope.populateMealBuddies();
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
+				$scope.staffVisible = false;
 				$scope.linksVisible = true;
+				$scope.sidebarVisible = true;
+			}
+			else if (content == "intro" && $scope.introVisible == false) {
+				$scope.linksVisible = false;
+				$scope.mealsVisible = false;
+				$scope.staffVisible = false;
+				$scope.introVisible = true;
 				$scope.sidebarVisible = true;
 			}
 			else if (content == "meals") {
 				$scope.linksVisible = false;
 				$scope.introVisible = false;
+				$scope.staffVisible = false;
 				$scope.mealsVisible = true;
 				$scope.sidebarVisible = true;
 			}
-			else  // (content == "intro")
-			{
+			else {  // (content == "staff")
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
-				$scope.introVisible = true;
+				$scope.introVisible = false;
+				$scope.staffVisible = true;
 				$scope.sidebarVisible = true;
 			}
 		}
 
-		$scope.toggleLinksButton = function(show) {
-			$scope.linksButtonVisible = show;
+		$scope.toggleUtilityButtons = function(show) {
+			$scope.utilityButtonsVisible = show;
 		}
 
 		$scope.toggleLoginButton = function(show) {
@@ -79,7 +91,6 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		$scope.toggleLogoutButton = function(show) {
 			$scope.logoutButtonVisible = show;
 		}
-		/* GLOBAL ACESS FUNCTIONS END */
 
 		// This allows the initial redirect when they come to the
 		// page based on whether or not they are logged in
@@ -93,8 +104,10 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		}
 		$scope.init();
 
-		$scope.declareUser = function(user) {
-			$scope.user = angular.toJson(user);
+		/* GLOBAL ACESS FUNCTIONS END */
+
+		$scope.declareUser = function(userData) {
+			$scope.user = angular.toJson(userData);
 		}
 
 		// Pass this function the title and message to be displayed to the user as an error message
@@ -137,8 +150,6 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 			$scope.mealBuddies = [];
 			$scope.mealBuddySuggestions = [];
 
-			$scope.toggleLoginButton(true);
-			$scope.toggleLogoutButton(false);
 			$scope.startEating = true;
 		}
 
@@ -187,26 +198,18 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 					sessionStorage.name  =response.name;
 
 					userService.findByFacebook(response.id).success(function(data) {
-
-						if (data.length > 0) {
-							var user = data[0];
-							$scope.user = angular.toJson(user);
+						if (data.length > 0) {  // Returning user who has already logged in with facebook
+							var userData = data[0];
+							$scope.user = angular.toJson(userData);
 							$location.path('main').replace();
 							$scope.toggleLogoutButton(true);
 							$scope.toggleLoginButton(false);
-						} else {
-							if ($location.path() == '/login') {
-								if ($scope.user == null) {
-									$scope.toggleLogoutButton(true);
-									$scope.toggleLoginButton(false);
-								}
-								$scope.startEating = false;
-							} else {
-								$location.path('login').replace();
-								$scope.startEating = false;
-								$scope.toggleLogoutButton(true);
-								$scope.toggleLoginButton(false);
-							}
+						} 
+						else {  // User is logging in to facebook for the first time
+							$location.path('login').replace();
+							$scope.toggleLogoutButton(true);
+							$scope.toggleLoginButton(false);
+							$scope.startEating = false;
 						}
 					});
 				});

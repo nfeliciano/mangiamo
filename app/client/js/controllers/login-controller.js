@@ -1,16 +1,9 @@
 angular.module('linksupp').controller('loginController', ['$scope', '$location', '$http', 'userService',
 	function ($scope, $location, $http, userService) {
 		// Set the navbar to display the proper elements
-
-		$scope.toggleLinksButton(false);
-		if (sessionStorage.name == null || sessionStorage.name == undefined || sessionStorage.name == 'null') {
-			$scope.toggleLogoutButton(false);
-			$scope.toggleLoginButton(true);
-		}
-		else {
-			$scope.toggleLogoutButton(true);
-			$scope.toggleLoginButton(false);
-		}
+		$scope.toggleUtilityButtons(false);
+		$scope.toggleLogoutButton(false);
+		$scope.toggleLoginButton(true);
 
 		// initForm populates local variables from local JSON files.  This speparates
 		// a lot of data from html and Angular into appropriate JSON files.  The
@@ -53,9 +46,6 @@ angular.module('linksupp').controller('loginController', ['$scope', '$location',
 			userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
 				$scope.declareUser(data);
 				$location.path('main').replace();
-				$scope.toggleLinksButton(true);
-				$scope.toggleLogoutButton(true);
-				$scope.toggleLoginButton(false);
 			});
 		}
 

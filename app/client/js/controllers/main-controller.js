@@ -32,7 +32,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		/* MAIN.HTML REFRESH CODE START (called on page refresh) */
 		// Set the navbar to display the proper elements
-		$scope.toggleLinksButton(true);
+		$scope.toggleUtilityButtons(true);
+
 		if ($scope.user == null) {
 			$scope.toggleLogoutButton(false);
 			$scope.toggleLoginButton(true);

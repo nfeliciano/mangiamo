@@ -12,8 +12,14 @@
 			<span aria-hidden="true" class="pull-right"> x </span>
 			<span class="sr-only"> Close </span>
 		</button>
+
+		<!-- Recommended Meals -->
+		<div id="staffContainer" ng-show="staffVisible">
+			MEAL SUGGESTIONS
+		</div>
+
 		<!-- User Instructions -->
-		<div id="introContainer" ng-show="introVisible">	
+		<div id="introContainer" ng-show="introVisible">
 			<div class="sidebarTitle">
 				Help
 			</div>	
@@ -112,7 +118,6 @@
 				</accordion>
 			</div>
 		</div>
-		
 
 		<!-- Meal Information -->
 		<div id="mealsContainer" ng-show="mealsVisible">
