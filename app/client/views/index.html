@@ -64,18 +64,26 @@
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="" ng-show="linksButtonVisible" ng-click="setSidebarContent('links')">
+							<a href="" ng-show="utilityButtonsVisible" ng-click="setSidebarContent('staff')">
+								<span class="glyphicon glyphicon-ok"></span>
+								Staff Picks
+							</a>
+						</li>
+						
+						<li>
+							<a href="" ng-show="utilityButtonsVisible" ng-click="setSidebarContent('links')">
 								<span class="glyphicon glyphicon-user"></span>
 								Links
 							</a>
 						</li>
-						<!-- <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li> -->
+
 						<li>
-							<a href="" ng-show="linksButtonVisible" ng-click="setSidebarContent('intro')">
+							<a href="" ng-show="utilityButtonsVisible" ng-click="setSidebarContent('intro')">
 								<span class="glyphicon glyphicon-question-sign"></span>
 								Help
 							</a>
 						</li>
+
 						<li>
 							<a href="" ng-click="contact()">
 								<span class="glyphicon glyphicon-envelope"></span>
