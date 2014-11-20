@@ -8,6 +8,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.usersMealsAttending = [];
 		$scope.selectedMarkerOldIcon = null;
 
+		$scope.mealTime = new Date();
+
 		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
 		$scope.attendingMeal = false;
 
@@ -27,14 +29,13 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 							  		   ]
 							};
 
-		$scope.mealTime = new Date();
 		/* GLOBAL DATA (In main-controller.js) END */
 
 		/* MAIN.HTML REFRESH CODE START (called on page refresh) */
 		// Set the navbar to display the proper elements
 		$scope.toggleUtilityButtons(true);
 
-		if ($scope.user == null) {
+		if (sessionStorage.facebookID == null || sessionStorage.facebookID == 'null') {
 			$scope.toggleLogoutButton(false);
 			$scope.toggleLoginButton(true);
 		}
@@ -44,9 +45,45 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		// Hide the sidebar on page load, then load the "intro" sidebar content
-		$scope.setSidebarContent('intro');
+		$scope.setSidebarContent('staff');
 		/* MAIN.HTML REFRESH CODE END */
 
+		// initForm populates local variables from local JSON files.  This speparates
+		// a lot of data from html and Angular into appropriate JSON files.  The
+		// following "gets" allow angular to access these local JSON files
+		$scope.initLoginForm = function() {
+			$http.get('/json/occupations.json').success( function(data) {
+				$scope.occupations = data.occupations;
+			});
+			$http.get('/json/dateRanges.json').success( function(data) {
+				$scope.dateRanges = data.dateRanges;
+			});
+			$http.get('/json/meFactors.json').success( function(data) {
+				$scope.meFactorAdjs = data.meFactorAdjs;
+				$scope.meFactorVerbs = data.meFactorVerbs;
+				$scope.meFactorNouns = data.meFactorNouns;
+			});
+		};
+
+		// This function submits the user data to the database, and redirects the user
+		$scope.submitUserData = function() {
+			var name = null;
+			var facebookKey = null;
+			if (sessionStorage.name) {
+				name = sessionStorage.name;
+				if (sessionStorage.facebookID) {
+					facebookKey = sessionStorage.facebookID;
+				}
+			}
+			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
+
+			userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
+				$scope.declareUser(data);
+				$scope.toggleLogoutButton(true);
+				$scope.toggleLoginButton(false);
+				// $('#userInformationModal').modal('hide');
+			});
+		}
 
 		var mapOptions = {
 			zoomControlOptions: {
@@ -263,17 +300,31 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				});
 			}
 		}
-		// TODO - if meal no longer has any attendees, perform further changes - TODO
+		
+		// $('#userInformationModal').on('hidden.bs.modal', function (event) {
+		// 	console.log("HERE");
+		// 	if ($scope.user != null) {
+		// 		$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
+		// 	}
+		// })
 
 		$scope.createMeal = function(mealTime) {
+			// Check if user has given us "Basic Information"
 			if ($scope.user == null) {
-				$scope.tellUser('Please log in through Facebook to attend meals', 'Need an account');
+				// Check if user has logged in with facebook
+				if (sessionStorage.facebookID == undefined || sessionStorage.facebookID == 'null') {
+					$scope.tellUser('Please log in through Facebook to attend meals', 'Need an account');
+				}
+				else {
+					// $('#userInformationModal').modal();
+				}
 				return;
 			}
+
 			userService.getUserWithID(angular.fromJson($scope.user).key).success(function(data) {
 				$scope.usersMealsAttending = data[0].mealsAttending;
 
-				//hard code limit 1
+				// Users are not allow to join more than 1 meal at a time
 				if($scope.usersMealsAttending.length > 0){
 					$scope.tellUser("You are already in a meal.  Please leave your other meal to create a new meal.");
 					return; // user cannot join
@@ -791,21 +842,16 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$(window).bind('beforeunload', function(e) {
+			nukeAllMarkers();
+			$scope.map = null;
+			google.maps.event.clearInstanceListeners(window);
+			google.maps.event.clearInstanceListeners(document);
 
-			if (1)
-			{
-				nukeAllMarkers();
-				$scope.map = null;
-				google.maps.event.clearInstanceListeners(window);
-				google.maps.event.clearInstanceListeners(document);
-
-				$scope.placedMarkers = null;
-				$scope.willBeDeletedMarkers = null;
-				$scope.lastPosition = null;
-				$scope.dataBase = null;
-				$scope.selectedMarkerOldIcon = null;
-				$scope.usersMealsAttending = null;
-
-			}
+			$scope.placedMarkers = null;
+			$scope.willBeDeletedMarkers = null;
+			$scope.lastPosition = null;
+			$scope.dataBase = null;
+			$scope.selectedMarkerOldIcon = null;
+			$scope.usersMealsAttending = null;
 		});
 }]);

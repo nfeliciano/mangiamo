@@ -123,8 +123,98 @@
 		</nav>
 
 		<!-- MODALS -->
+		<!-- Error / User Feedback Modal -->
+		<div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true"> x </span>
+							<span class="sr-only"> Close </span>
+						</button>
+						<h4 class="modal-title" id="mySmallModalabel"> {{tellUserTitle}} </h4>
+					</div>
+					<br>
+					<div>
+						{{tellUserMessage}}  HELLO
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Further Information -->
+		<div id="userInformationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" ng-controller="mainController">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true"> x </span>
+							<span class="sr-only"> Close </span>
+						</button>
+						<h4 class="modal-title" id="mySmallModalLabel"> Some Basic Information </h4>
+					</div>
+					<div class="extraInfo">
+						We need additional information (once!) so that you can find meals
+						based on common ground with other Linksupp users.
+					</div>
+
+					<!-- Request user information -->
+					<div>
+						<form ng-init="initLoginForm()" ng-submit="submitUserData()" >
+							<div id="userInfo">
+								<span> Age Range </span>
+								<div id="dob">
+									<div class="col-sm-12">
+										<select ng-model="dateRange" ng-init="somethingHere = options[0]">
+											<option value="" disabled selected> Age Range </option>
+											<option ng-repeat="dateRange in dateRanges"> {{dateRange.value}} </option>
+										</select>
+									</div>
+								</div>
+								<span> Occupation </span>
+								<div id="occupation">
+									<div class="col-sm-12">
+										<select ng-model="occupation">
+											<option value="" disabled selected class="firstOption"> Occupation </option>
+											<option ng-repeat="occupation in occupations"> {{occupation.value}} </option>
+										</select>
+									</div>
+								</div>
+								<span> Describe Yourself! </span>
+								<div id="description">
+									<div class="col-sm-4">
+										<select ng-model="description1">
+											<option value="" disabled selected> Adjective </option>
+											<option ng-repeat="adj in meFactorAdjs"> {{adj.value}} </option>
+										</select>
+									</div>
+									<div class="col-sm-4">
+										<select ng-model="description2">
+											<option value="" disabled selected> Verb </option>
+											<option ng-repeat="verb in meFactorVerbs"> {{verb.value}} </option>
+										</select>
+									</div>
+									<div class="col-sm-4">
+										<select ng-model="description3">
+											<option value="" disabled selected> Noun </option>
+											<option ng-repeat="noun in meFactorNouns"> {{noun.value}} </option>
+										</select>
+									</div>
+								</div>
+								<div class="col-xs-3"></div>
+							</div>
+
+							<!-- fix float: left -->
+							<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Submit </button>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
 		<!-- Contact Us Modal -->
-		<div id="contactModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div id="contactModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
 			<div class="modal-dialog modal-md">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -142,12 +232,10 @@
 							<div class="form-group">
 								<input class="form-control" type="email" name="contactEmail"
 									placeholder="Your Email" required ng-model="contactEmail" />
-								<!-- <span class="help-block" ng-show="contactForm.contactMessage.$error.required">Required</span> -->
 							</div>
 							<div class="form-group">
 								<textarea class="form-control" type="text" name="contactMessage"
 									placeholder="Your Message" rows="5" required ng-model="contactMessage"/></textarea>
-									<!-- <span class="help-block" ng-show="contactForm.contactMessage.$error.required">Required</span> -->
 							</div>
 							<button class="btn btn-default button" ng-click="sendMessage()"> Send Feedback </button>
 						</form>
@@ -155,25 +243,8 @@
 				</div>
 			</div>
 		</div>
+		<!-- MODALS END -->
 
-		<!-- Error / User Feedback Modal -->
-		<div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-md">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true"> x </span>
-							<span class="sr-only"> Close </span>
-						</button>
-						<h4 class="modal-title" id="mySmallModalabel"> {{tellUserTitle}} </h4>
-					</div>
-					<br>
-					<div>
-						{{tellUserMessage}}
-					</div>
-				</div>
-			</div>
-		</div>
 		<!-- ui-view is where the content of our webpage gets put using the state -->
 		<div ui-view=""></div>
 	</body>

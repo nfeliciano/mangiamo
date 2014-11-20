@@ -1,7 +1,6 @@
 angular.module('linksupp').controller('indexController', ['$scope', '$location', 'userService',
 	function ($scope, $location, userService) {
 		/* GLOBAL DATA START */
-		$scope.startEating = true;
 
 		$scope.mealBuddyRequests = [];
 		$scope.mealBuddies = [];
@@ -114,6 +113,8 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		$scope.tellUser = function(message, title) {
 			$scope.tellUserTitle = typeof(title) !== 'undefined' ? title : "Oops! We've Encountered a Problem.";
 			$scope.tellUserMessage = message;
+
+			console.log($scope.tellUserTitle + ' : ' + $scope.tellUserMessage);
 			$('#errorModal').modal();
 		}
 
@@ -149,8 +150,6 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 			$scope.mealBuddyRequests = [];
 			$scope.mealBuddies = [];
 			$scope.mealBuddySuggestions = [];
-
-			$scope.startEating = true;
 		}
 
 		// Populate MealBuddies, and MealBuddyRequests to be displayed in the Meal Buddies SideBar
@@ -201,16 +200,15 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 						if (data.length > 0) {  // Returning user who has already logged in with facebook
 							var userData = data[0];
 							$scope.user = angular.toJson(userData);
-							$location.path('main').replace();
-							$scope.toggleLogoutButton(true);
-							$scope.toggleLoginButton(false);
+							
 						} 
 						else {  // User is logging in to facebook for the first time
-							$location.path('login').replace();
-							$scope.toggleLogoutButton(true);
-							$scope.toggleLoginButton(false);
-							$scope.startEating = false;
+
 						}
+						
+						$location.path('main').replace();
+						$scope.toggleLogoutButton(true);
+						$scope.toggleLoginButton(false);
 					});
 				});
 
