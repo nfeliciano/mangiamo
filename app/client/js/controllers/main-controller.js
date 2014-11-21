@@ -67,6 +67,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		// This function submits the user data to the database, and redirects the user
 		$scope.submitUserData = function() {
+			// $scope.submittingUser = true;
 			var name = null;
 			var facebookKey = null;
 			if (sessionStorage.name) {
@@ -76,14 +77,24 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				}
 			}
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
-
-			userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
-				$scope.declareUser(data);
-				$scope.toggleLogoutButton(true);
-				$scope.toggleLoginButton(false);
-				$('#userInformationModal').modal('hide');
-				$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
-			});
+			if ( description == 'badUserForm' ) {
+				$scope.tellUser('You need to Describe Yourself!', 'Incomplete Form');
+			}
+			else if (!$scope.dateRange) {
+				$scope.tellUser('Don\'t worry about it, we\'ll keep your age a secret!', 'Incomplete Form');
+			}
+			else if (!$scope.occupation) {
+				$scope.tellUser('Sorry we didn\'t supply "Neglectful Form Filler" as an option, please select one of the supplied options', 'Incomplete Form');
+			}
+			else {
+				userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
+					$scope.declareUser(data);
+					$scope.toggleLogoutButton(true);
+					$scope.toggleLoginButton(false);
+					$('#userInformationModal').modal('hide');
+					$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
+				});
+			}	
 		}
 
 		var mapOptions = {
@@ -107,8 +118,12 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			});
 		}
 
-		$scope.isUserLoggedIn = function () {
+		$scope.isUserInDatabase = function () {
 			return ($scope.user != null);
+		}
+
+		$scope.isUserLoggedIn = function() {
+			return (sessionStorage.facebookID != undefined && sessionStorage.facebookID != 'null');
 		}
 
 		$scope.updateMealInfo = function(place, marker) {

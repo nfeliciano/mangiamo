@@ -15,6 +15,9 @@ angular.module('linksupp').controller('loginController', ['$scope', '$location',
 		}
 
 		getDescriptionFromStrings = function(stringOne, stringTwo, stringThree) {
+			if (!stringOne || !stringTwo || !stringThree) {
+				return 'badUserForm';
+			}
 			return stringOne.replace(/\s+/g, '') + " " + stringTwo.replace(/\s+/g, '') + " " + stringThree.replace(/\s+/g, '');
 		}
 

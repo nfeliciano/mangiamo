@@ -201,10 +201,12 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 							
 						} 
 						else {  // User is logging in to facebook for the first time
-
+							// MODAL CALL
+							$('#userInformationModal').modal();
 						}
-						
-						$location.path('main').replace();
+						if ($location.path() == '/login') {
+							$location.path('main').replace();
+						}
 						$scope.toggleLogoutButton(true);
 						$scope.toggleLoginButton(false);
 					});

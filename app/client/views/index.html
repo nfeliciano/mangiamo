@@ -42,24 +42,6 @@
 
 	<body ng-controller="indexController">
 		<!-- MODALS -->
-		<!-- Error / User Feedback Modal -->
-		<div id="errorModal" class="modal fade" tabindex="-1" role="dialog">
-			<div class="modal-dialog modal-md">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true"> x </span>
-							<span class="sr-only"> Close </span>
-						</button>
-						<h4 class="modal-title" id="mySmallModalabel"> {{tellUserTitle}} </h4>
-					</div>
-					<br>
-					<div>
-						{{tellUserMessage}}
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<!-- Further Information -->
 		<div id="userInformationModal" class="modal fade" tabindex="-1" ng-controller="mainController">
@@ -73,7 +55,7 @@
 						<h4 class="modal-title" id="mySmallModalLabel"> Some Basic Information </h4>
 					</div>
 					<div class="extraInfo">
-						We need additional information (once!) so that you can find meals
+						We need additional information (<u> just once! </u>) so that you can find meals
 						based on common ground with other Linksupp users.
 					</div>
 
@@ -124,10 +106,29 @@
 							</div>
 
 							<!-- fix float: left -->
-							<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Submit </button>
+							<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6" ng-disabled="submittingUser"> Submit </button>
 						</form>
 					</div>
 
+				</div>
+			</div>
+		</div>
+
+		<!-- Error / User Feedback Modal -->
+		<div id="errorModal" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true"> x </span>
+							<span class="sr-only"> Close </span>
+						</button>
+						<h4 class="modal-title" id="mySmallModalabel"> {{tellUserTitle}} </h4>
+					</div>
+					<br>
+					<div>
+						{{tellUserMessage}}
+					</div>
 				</div>
 			</div>
 		</div>
