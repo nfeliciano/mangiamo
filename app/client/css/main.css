@@ -20,6 +20,14 @@
 	padding: 10px 10px 0 10px;
 }
 
+#sidebarContentHeader
+{
+	color: #2F5F7F;
+	font-size: 1.6em;
+	padding: 20px;
+	text-align: center;
+}
+
 	/* INTRO */
 	#introContainer
 	{
@@ -125,14 +133,6 @@ hr
 {
 	color: #2F5F7F;
 	padding: 0 15px 5px 13px;
-	text-align: center;
-}
-
-#noMealsHeader
-{
-	color: #2F5F7F;
-	font-size: 1.6em;
-	padding: 20px;
 	text-align: center;
 }
 

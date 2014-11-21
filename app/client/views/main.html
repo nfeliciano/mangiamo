@@ -49,14 +49,21 @@
 		<!-- Links -->
 		<div id="linksContainer"  ng-show="linksVisible">
 
-			<div ng-hide="isUserLoggedIn()">
+			<div ng-hide="isUserInDatabase()">
 				<div class="sidebarTitle"> Links </div>
 				<hr>
-				<div id="noMealsHeader">
-					Please Log In with Facebook to Find and Add Links!
+				<div id="sidebarContentHeader">
+					<div ng-hide="isUserLoggedIn()">
+						Please Log In with Facebook Find and Add Links!
+					</div>
+					<div ng-show="isUserLoggedIn()">
+						<button type="button" class="btn btn-block btn-default button" data-toggle="modal" data-target="#userInformationModal">
+							Just One More Step
+						</button>
+					</div>
 				</div>
 			</div>
-			<div ng-show="isUserLoggedIn()">
+			<div ng-show="isUserInDatabase()">
 				<div class="sidebarTitle"> Links </div>
 				<hr>
 				<accordion close-others="true">
@@ -174,12 +181,13 @@
 					</accordion-group>
 				</accordion>
 				<div id="createMealContainer" ng-show="noMeals">
-					<div id="noMealsHeader">
+					<div id="sidebarContentHeader">
 						Be the First to Create a Meal Here!
 					</div>
 					<div id="timeTicker">
 						<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
 					</div>
+
 					<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime)"> Create a New Meal </button>
 				</div>
 			</div>
