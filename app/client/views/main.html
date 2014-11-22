@@ -130,8 +130,12 @@
 		<div id="mealsContainer" ng-show="mealsVisible">
 			<!-- Location -->
 			<div id="mealPlace">
-				<div class="sidebarTitle">
-					{{currentPin.name}}
+				<div id="mealsFullTop">
+					<div class="sidebarMealsTitle">
+						{{currentPin.name}}
+					</div>
+					<!-- <img ng-src="{{currentPin.place.photos[0].getUrl({'maxwidth': 350, 'maxHeight': 350})}}" class="mealImage hidden-xs"> -->
+					<img ng-src="{{currentPin.placeImgUrl}}" class="mealImage hidden-xs">
 				</div>
 				<hr>
 				<!-- Existing Meals -->
