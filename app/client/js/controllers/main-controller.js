@@ -2,12 +2,14 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 	function ($scope, $location, $modal, $http, mealService, userService) {
 		/* GLOBAL DATA (In main-controller.js) START */
 		$scope.placedMarkers = [];
+		$scope.placedSearchMarkers = [];
 		$scope.willBeDeletedMarkers = [];
 		$scope.lastPosition = new google.maps.LatLng();
 		$scope.dataBase = [];
 		$scope.usersMealsAttending = [];
 		$scope.selectedMarkerOldIcon = null;
 		$scope.staffPicks = [];
+		
 		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
 		$scope.attendingMeal = false;
 
@@ -74,6 +76,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.updateMealInfo = function(place, marker) {
+			console.log("update Meal info");
 			$scope.currentPin.name = place.name;
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
@@ -398,6 +401,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			};
 
 			var service = new google.maps.places.PlacesService($scope.map);
+			setStaffPickData();
 			placeStaffPicks();
 		
 
@@ -467,7 +471,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		// initializes and adds the search bar on the map
 		initializeSearchBar = function() {
-			var markers = [];
+		
 			// Create the search box and link it to the UI element.
 			var input = /** @type {HTMLInputElement} */(
 		    	document.getElementById('pac-input'));
@@ -486,33 +490,14 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				  return;
 				}
 
-				for (var i = 0, marker; marker = markers[i]; i++) {
-				  marker.setMap(null);
-				}
-
+				clearSearchMarkers(); //Clear search markers
+				
 				// For each place, get the icon, place name, and location.
-				markers = [];
 				var bounds = new google.maps.LatLngBounds();
 
 				for (var i = 0, place; place = places[i]; i++) {
-					var image = {
-						url: place.icon,
-						size: new google.maps.Size(71, 71),
-						origin: new google.maps.Point(0, 0),
-						anchor: new google.maps.Point(17, 34),
-						scaledSize: new google.maps.Size(25, 25)
-					};
-
-					// Create a marker for each place.
-					var marker = new google.maps.Marker({
-						map: $scope.map,
-						icon: image,
-						title: place.name,
-						position: place.geometry.location
-					});
-
-					markers.push(marker);
-					bounds.extend(place.geometry.location);
+					createSearchMarker(place);
+					bounds.extend(place.geometry.location); //update aggregate bounds
 				}
 				$scope.map.fitBounds(bounds);
 				$scope.map.setZoom(15);
@@ -527,57 +512,125 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		
-		tempStaffPickData = function(){
-		
-		var = dataType{
-			name: null,
-			place_id: null,
-			lat: null,
-			lng: null,
+	setStaffPickData = function(){
+	
+		//PLACE ID:
+		// Lat
+		// LNG
+		$scope.staffPicks = [
 			
+			//Felicita's Pub,
+			[
+			"ChIJ0V0mUoV0j1QRzTZ7n46_lVU",
+			48.465034,
+			-123.30817300000001,
+			],
+		
+			//Bin 4 Burger Lounge,
+			[
+			"ChIJo84EMY90j1QRc1_M3vZH008",
+			48.425204,
+			-123.356989,
+			],
+			
+			//Pho Boi (Fort Street),
+			[ "ChIJ1VgF-490j1QRzCl97_xiRwE",
+			48.424287,
+			-123.36355400000002,
+			]
+			//Prima Strada Pizzeria(Cook Street),
+			,[ "ChIJ_dqgaXlzj1QRcCuocUFfOYo",
+			48.414001,
+			-123.35702700000002,
+			]
+			//Pig BBQ Joint (Downtown),
+			,[ "ChIJ71eiX4V0j1QR5eilmkVgoGA",
+			48.426808,
+			-123.36186499999997,
+			]
+			//Maude Hunter's Pub,
+			,[ "ChIJddqw3eVzj1QRU6olvYEGQ0U",
+			48.462462,
+			-123.33311800000001,
+			]
+			//Foo Asian Street Food,
+			,[ "ChIJEQZYd4V0j1QRItiWO8aOx5o",
+			48.42571,
+			-123.36255499999999,
+			]
+			//Noodle Box (Uptown),
+			,[ "ChIJexReD6Jzj1QRl3OXqtP60LA",
+			48.454071,
+			-123.37576899999999,
+			]
+			//Vis-a-Vis,
+			,[ "ChIJkwa9BEF0j1QRuyLcZZ-vKkg",
+			48.426599,
+			-123.314975,
+			]
+			//Hillside Coffee and Tea,
+			,[ "ChIJN2zJW3V0j1QRARHjmDjMq9g",
+			48.445027,
+			-123.33439699999997,
+			]
+			//La Taquisa (Esquimalt),
+			,[ "ChIJJwDDUGJzj1QR7J26pcSNzoo",
+			48.432653,
+			-123.381057,
+			]
+			//Spinnakers Gastro Brewpub,
+			,[ "ChIJ8UwCKJ50j1QRykJnBrbQRM0",
+			48.429282,
+			-123.38452799999999,
+			]
+			//Hecklers Bar and Grill,
+			,[ "ChIJ42-Zs3Fzj1QRn8Pt-HGMaJ4",
+			48.443056,
+			-123.385962,
+			]
+			//Beacon Drive In Ltd,
+			,[ "ChIJTTkdD8B0j1QRWqg-MLRfPUE",
+			48.443056,
+			-123.385962,
+			]
+			//Bon Sushi (Oak Bay),
+			,[ "ChIJ22cgcUF0j1QRo--FDGoEkKg",
+			48.426098,
+			-123.31575399999997,
+			]
+			//Macchiatto Caffe (Johnson Street),
+			,[ "ChIJGdAln5p0j1QRH-saH2_mMJo",
+			48.426888,
+			-123.361718,
+			]
+			//Famoso Neopolitan Pizzeria,
+			,[ "ChIJG3x3Upt0j1QRDCTKxRHT9xg",
+			48.427763,
+			-123.36904199999998,
+			]
+			]
 		}
 		
-		$scope.staffPick = {
-		
-		
-		
-		
-		
-		
-		}
-		
-		
-		
-		
-		
-		}
-		
-		tempStaffPickCreateData = fuction(){
-		
-		}
-		
-		
-		
-		
-		
+
 		placeStaffPicks = function(){
 			mealService.getAllMeals().success(function(data){
 				$scope.dataBase = null;
 				$scope.dataBase =data;
+				
+				console.log($scope.dataBase);
+				
 				var hasMeal = false;
-				
-				if($scope.dataBase.length > 0){
-					console.log($scope.dataBase[0]);
-				}
-				
-				
+				//console.log($scope.staffPicks);
+				//console.log("success");
+				//console.log("length  ", $scope.staffPicks.length);
 				//----Place Staff Picks WITH NO Meal-----
 				for (var i = 0; i < $scope.staffPicks.length; i++) {
 					hasMeal = false;
 					
 					//Search dataBase for this staffPick
 					for( var x = 0; x < $scope.dataBase.length; x++){
-						if($scope.dataBase[x].placeID ==  $scope.staffPicks[i].place_id){
+						if($scope.dataBase[x].placeID ==  $scope.staffPicks[i][0]){
+							//console.log("heyo");
 							hasMeal = true;
 							break;
 						}
@@ -585,17 +638,61 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					
 					//If no meal was found, create the star marker
 					if( !hasMeal){
+						//console.log("blam");
 						createStarMarker(i);	
 					}
 				}	
 
-				//----Place Meals-----
-				for (var i = 0; i < $scope.dataBase.length; i++) { // Removed the checking because this method now only happens on the first load
-						createMealMarker($scope.dataBase[i], $scope.dataBase[i].lng(), $scope.dataBase[i].lat() );
-				}*/
+				placeMeals();
 			});
 		}
 	
+		
+		
+		//For every meal, check if a marker at that loctaion is already placed or nukeAllMarkers
+		//Then if its unique getNumber of People
+		//Then place a new marker
+		placeMeals = function(){
+			
+			var key;
+			for( var i = 0; i < $scope.dataBase.length; i++){
+				key = $scope.dataBase[i].placeID;
+				
+					console.log("key = ", key);
+					if( checkNewKey(key)){
+						console.log("check check");
+						var number = getNumberOfPeople(key);
+						placeMealMarker(i,number);
+						//createMealMarker(
+					}	
+			}
+		}
+		
+		
+		//If key has been placed, return false
+		//else return true
+		checkNewKey = function(key){
+			for( var i = 0; i < $scope.placedMarkers.length; i++){
+				
+				if( key == $scope.placedMarkers.markerId){
+					return false;	//meal at this place has been placed
+				}
+			}
+			return true;	//no meal at this place has been placed
+		}
+		
+		getNumberOfPeople = function(key){
+			var numPeople = 0;
+			
+			for( var i = 0; i < $scope.dataBase.length; i++){
+				
+				if( key == $scope.dataBase[i].placeID){
+					numPeople += $scope.dataBase[i].numPeople;
+				}
+			}
+			return numPeople;
+		}
+			
 		
 		updateMarkers =function(){
 		
@@ -605,18 +702,18 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		
 		createStarMarker =function(i){
 		
+			//console.log(i);
 			var marker =  new MarkerWithLabel({
 				icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0',  //Red dot
 				map: $scope.map,
-				position: new google.maps.LatLng($scope.staffPicks[i].lat,$scope.staffPicks[i].lng),
+				position: new google.maps.LatLng($scope.staffPicks[i][1],$scope.staffPicks[i][2]),
 				draggable: false,    //property that allows user to move marker
 				raiseOnDrag: false,
-				labelContent: 0,
 				labelAnchor: new google.maps.Point(7, 33),    // anchors to
 				labelClass: 'labels', // the CSS class for the label
 
 				// Some additional properties of the markers so we can access them later
-				markerId : $scope.staffPicks[i].place_id,
+				markerId : $scope.staffPicks[i][0],
 				hasMeal: false,
 			});
 			
@@ -637,6 +734,142 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					}
 				}
 			});
+		}
+		
+		
+		placeMealMarker= function(i,numPeople){
+			console.log("meal marker  i = ", i, "  people = ", numPeople);
+		/*
+			var userIsGoing = false;
+			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
+				if($scope.usersMealsAttending[i].key == place.place_id){
+					userIsGoing = true;
+				}
+			}
+
+			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
+
+				var numPeople = 0;
+				var searchingForBuddy = true;
+				var buddyWasFound = false;
+
+				//see if user has friends
+				if(  $scope.mealBuddies.length == 0 ){
+					searchingForBuddy = false;
+				}
+
+				loop1:
+				for (var i = 0; i < data.length; i++) {
+					numPeople += data[i].numPeople;
+					if(searchingForBuddy){
+						loop2:
+						for( var y = 0; y < $scope.mealBuddies.length; y++){
+							loop3:
+							for(var z = 0; z < data[i].people.length; z++){
+								if( $scope.mealBuddies[y][0].key == data[i].people[z].key) {
+									buddyWasFound = true;
+									searchingForBuddy = false;
+									break loop2;
+								}
+							}
+						}
+					}
+				}
+*/
+				var icon = '/img/restaurant.png'; //default meal marker
+
+				/*if( buddyWasFound && userIsGoing){
+					icon = user is going and buddy
+				} else*/
+	/*			if( userIsGoing){
+					icon = '/img/restaur_going.png';
+				}
+				else if( buddyWasFound){
+					icon = '/img/restaur_friend.png'; // friend going marker
+				}
+*/
+				// This is the Mangiamo Meal marker, ie there is a meal here
+				var marker =  new MarkerWithLabel({
+					icon: icon,
+					map: $scope.map,
+					position:  new google.maps.LatLng($scope.dataBase[i].lat,$scope.dataBase[i].lng),
+					draggable: false,    //property that allows user to move marker
+					raiseOnDrag: false,
+					labelContent:numPeople,
+					labelAnchor: new google.maps.Point(7, 33),    // anchors to
+					labelClass: "labels", // the CSS class for the label
+
+					// Some additional properties of the markers so we can access them later
+					markerId :$scope.dataBase[i].placeID,
+					hasMeal: true,
+				});
+
+				console.log(marker.position);
+				$scope.placedMarkers.push(marker); // Array marker
+				google.maps.event.addListener(marker, 'click', function() {
+					updateMarkerIcon(marker);
+
+					var request = {
+						placeId:marker.markerId,
+					};
+					var service = new google.maps.places.PlacesService($scope.map);
+					service.getDetails(request,getPlaceDetails);
+
+					// Returns ALL the place details and information
+					function getPlaceDetails(place, status) {
+						if (status == google.maps.places.PlacesServiceStatus.OK) {
+							console.log(place);
+							$scope.updateMealInfo(place, marker);
+						}
+					}
+				});
+			//});
+		}
+
+		
+		createSearchMarker = function(place){
+		
+				var image = {
+						url: place.icon,
+						size: new google.maps.Size(71, 71),
+						origin: new google.maps.Point(0, 0),
+						anchor: new google.maps.Point(17, 34),
+						scaledSize: new google.maps.Size(25, 25)
+					};
+
+				var marker =  new MarkerWithLabel({
+					icon: image,
+					map: $scope.map,
+					position: place.geometry.location,
+					draggable: false,    //property that allows user to move marker
+					raiseOnDrag: false,
+					//labelContent: , 
+					labelAnchor: new google.maps.Point(7, 33),    // anchors to
+					labelClass: 'labels', // the CSS class for the label
+
+					// Some additional properties of the markers so we can access them later
+					markerId : place.place_id,
+					hasMeal: false,
+				});
+			
+				google.maps.event.addListener(marker, 'click', function() {
+					updateMarkerIcon(marker);
+
+					var request = {
+						placeId:marker.markerId,
+					};
+					var service = new google.maps.places.PlacesService($scope.map);
+					service.getDetails(request,getPlaceDetails);
+
+					// Returns ALL the place details and information
+					function getPlaceDetails(place, status) {
+						if (status == google.maps.places.PlacesServiceStatus.OK) {
+							$scope.updateMealInfo(place, marker);
+						}
+					}
+				});
+				
+				$scope.placedSearchMarkers.push(marker);
 		}
 		
 		
@@ -680,8 +913,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		createMealMarker = function(place, lng, lat){
 
 			var userIsGoing = false;
-
-			
 			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
 				if($scope.usersMealsAttending[i].key == place.place_id){
 					userIsGoing = true;
@@ -819,6 +1050,15 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			$scope.placedMarkers = [];
 		}
 
+		//
+		function clearSearchMarkers(){
+			for (var i = 0; i < $scope.placedSearchMarkers.length; i++ ) {
+				$scope.placedSearchMarkers[i].setMap(null);
+			}
+			$scope.placedSearchMarkers = [];
+		
+		}
+		
 		// In the event that the browser cannot or user chooses not to support geolocation, this is how that's handled
 		function handleNoGeolocation(errorFlag) {
 
