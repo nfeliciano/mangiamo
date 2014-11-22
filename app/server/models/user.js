@@ -7,6 +7,7 @@ var UserSchema = new Schema({
 	ageRange: String,
 	description: String,
 	profession: String,
+	email: String,
 	mealsAttending: [ { key: { type: "string" } } ],
 	mealBuddies: {
 		accepted: [{ key: { type: "string" } }],
