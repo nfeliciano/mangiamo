@@ -22,6 +22,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		var minZoomLevel = 13; // as far back as they can go
 		$scope.currentPin = { "name": "",
 							  "place": null,
+							  "placeImgUrl": null,
 							  "marker": null,
 							  "rating": "",
 							  "friends": [],
@@ -138,6 +139,13 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
 			$scope.currentPin.meals = [];
+
+			if(place.photos){				
+				$scope.currentPin.placeImgUrl = place.photos[0].getUrl({'maxwidth': 350, 'maxHeight': 350});
+			}
+			else{
+				$scope.currentPin.placeImgUrl = "/img/logo-banner.png";
+			}
 
 			//Force minutes to start at 00
 			var d = new Date();
