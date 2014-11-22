@@ -137,7 +137,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				$scope.currentPin.placeImgUrl = place.photos[0].getUrl({'maxwidth': 350, 'maxHeight': 350});
 			}
 			else{
-				$scope.currentPin.placeImgUrl = "/img/legend.png";
+				$scope.currentPin.placeImgUrl = "/img/logo-banner.png";
 			}
 
 			//Force minutes to start at 00
