@@ -10,9 +10,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.mealTime = new Date();
 
-		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
-		$scope.attendingMeal = false;
-
 		var radius = 3000;
 		var lastZoomLevel = 13;
 		$scope.noMeals = true;
@@ -94,7 +91,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					$('#userInformationModal').modal('hide');
 					$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
 				});
-			}	
+			}
 		}
 
 		var mapOptions = {
@@ -183,6 +180,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					/* DATE CALCULATION END */
 					$scope.currentPin.meals[i].time = hour + ":" + minute + " " + meridiem;
 					$scope.currentPin.meals[i].key = mealData[i].key;
+					$scope.currentPin.meals[i].attendingMeal = false;
 					$scope.populateAttendees(mealData, i);
 				}
 			});
@@ -204,13 +202,12 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.isUserAttendingMeal = function(meal){
-			$scope.attendingMeal = false;
 			for (var i=0; i<meal.attendees.length; i++){
 				if ($scope.user == null) {
 					return;
 				}
 				if (meal.attendees[i].key == angular.fromJson($scope.user).key){
-					$scope.attendingMeal = true;
+					meal.attendingMeal = true;
 					break;
 				}
 			}
@@ -323,7 +320,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				});
 			}
 		}
-		
+
 		// The following code runs when the userInformationModal closes, so we can tell the user something
 		// It doesn't function as expected, and I have no idea why.  Someone take a look at it.
 		// $('#userInformationModal').on('hidden.bs.modal', function (event) {
