@@ -8,14 +8,7 @@ body
 {
 	height: 100%;
 	width: 100%;
-}
-
-.background2
-{
-	position: absolute;
-	height: 100vh;
-	width: 100vw;
-    background-color: #091C29;
+	background: url("../img/restaurant_icons.png") 100% 0 fixed;
 }
 
 /* USER CONTACT FORM */
@@ -24,6 +17,40 @@ body
 	padding: 20px;
 }
 /* USER CONTACT FORM END */
+
+/* USER INFORMATION MODAL */
+#userInformationModal .modal-content
+{
+	padding: 20px;
+}
+
+#userInfo
+{
+	padding: 20px 20px 43px 20px;
+	background-color: rgba(47, 95, 127, .1);
+	border-radius: 5px;
+}
+
+.extraInfo
+{
+	padding: 20px;
+	font-style: italic;
+}
+
+#userInfo > span
+{
+	font-size: 1.2em;
+	padding-left: 5px;
+	color: black;
+}
+
+#userInfo > div > div > select
+{
+	width: 100%;
+	padding: 2px;
+	margin: 0px 0px 5px 0px;
+}
+/* USER INFORMATION MODAL END */
 
 /* USER FEEDBACK MODAL */
 #errorModal .modal-content
@@ -56,7 +83,6 @@ body
 }
 
 .navbar-default {
-	/*background-color: #242451;*/
 	background-color: #2F5F7F;
 	border-color: #204060;
 }

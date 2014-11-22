@@ -48,8 +48,8 @@ module.exports.deletePeople = function (req,res) {
 
 // Returns an array of the people attending a meal
 module.exports.getPeople = function (req,res) {
-	if (req.query.key != null) {
-		Meal.find({key:req.query.key}, function(err, results) {
+	if (req.body.key != null) {
+		Meal.find({key:req.body.key}, function(err, results) {
 			if(results.length == 0){
 				res.json(results);
 			}
@@ -66,7 +66,25 @@ module.exports.deleteMeal = function (req,res) {
 	});
 }
 
-// Returns an array of meals. If we're not seeking a specific placeID, it returns all meals. 
+module.exports.get = function(req,res) {
+	if (req.body.placeID != null) {
+		Meal.find({placeID:req.body.placeID}, function(err, results) {
+			res.json(results);
+		});
+	}
+	else if (req.body.key != null) {
+		Meal.find({key:req.body.key}, function(err, results) {
+			res.json(results);
+		});
+	}
+	else {
+		Meal.find({}, function (err, results) {
+			res.json(results);
+		});
+	}
+}
+
+// Returns an array of meals. If we're not seeking a specific placeID, it returns all meals.
 // If we pass in a placeID, it returns all meals in that location
 // If we pass in a key, it returns the only meal in that key
 module.exports.list = function (req,res) {

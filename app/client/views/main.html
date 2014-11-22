@@ -22,7 +22,7 @@
 		<div id="introContainer" ng-show="introVisible">
 			<div class="sidebarTitle">
 				Help
-			</div>	
+			</div>
 			<hr>
 			<div>
 				<div>
@@ -49,14 +49,21 @@
 		<!-- Links -->
 		<div id="linksContainer"  ng-show="linksVisible">
 
-			<div ng-hide="isUserLoggedIn()">
+			<div ng-hide="isUserInDatabase()">
 				<div class="sidebarTitle"> Links </div>
 				<hr>
-				<div id="noMealsHeader">
-					Please Log In with Facebook to Find and Add Links!
+				<div id="sidebarContentHeader">
+					<div ng-hide="isUserLoggedIn()">
+						Please Log In with Facebook Find and Add Links!
+					</div>
+					<div ng-show="isUserLoggedIn()">
+						<button type="button" class="btn btn-block btn-default button" data-toggle="modal" data-target="#userInformationModal">
+							Just One More Step
+						</button>
+					</div>
 				</div>
 			</div>
-			<div ng-show="isUserLoggedIn()">
+			<div ng-show="isUserInDatabase()">
 				<div class="sidebarTitle"> Links </div>
 				<hr>
 				<accordion close-others="true">
@@ -66,8 +73,8 @@
 							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 						</accordion-heading>
 						<div class="mealAttendee">
-							I am a <strong>{{mealBuddy[0].description}}</strong> with a profession in 
-							<strong>{{mealBuddy[0].profession}}</strong> and I am between 
+							I am a <strong>{{mealBuddy[0].description}}</strong> with a profession in
+							<strong>{{mealBuddy[0].profession}}</strong> and I am between
 							<strong>{{mealBuddy[0].ageRange}}</strong>.
 						</div>
 						<button class="btn btn-default btn-sm pull-right" ng-click="removeMealBuddy(mealBuddy, false)"> Remove </button>
@@ -82,7 +89,7 @@
 							<form>
 								<input type="text" placeholder="Enter a friend's ID" ng-model="newMealBuddy"><br>
 								<button id="friendAdder" class="btn btn-primary" ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>
-							</form>	
+							</form>
 						</accordion-group>
 				</accordion>
 
@@ -93,8 +100,8 @@
 							{{mealBuddyRequest[0].name}}
 							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 						</accordion-heading>
-						I am a <strong>{{mealBuddyRequest[0].description}}</strong> with a profession in 
-						<strong>{{mealBuddyRequest[0].profession}}</strong> and I am between 
+						I am a <strong>{{mealBuddyRequest[0].description}}</strong> with a profession in
+						<strong>{{mealBuddyRequest[0].profession}}</strong> and I am between
 						<strong>{{mealBuddyRequest[0].ageRange}}</strong>.
 						<button class="btn btn-default btn-sm" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
 						<button class="btn btn-default btn-sm" ng-click="removeMealBuddy(mealBuddyRequest)"> Decline </button>
@@ -129,7 +136,7 @@
 				<hr>
 				<!-- Existing Meals -->
 				<div id="mealsHeader" ng-hide="noMeals">
-					<span class="pull-left"> Meal Time </span> 
+					<span class="pull-left"> Meal Time </span>
 					Attendees
 					<span class="pull-right"> Info </span>
 				</div>
@@ -148,13 +155,13 @@
 							<div class="mealAttendee" ng-class="{mealAttendeeSelf: isThisMe(attendee)}">
 								<div class="attendeeIdentifer" ng-show="isThisMe(attendee)">- This is You! -</div>
 								<div class="attendeeIdentifer" ng-show="isThisMyFriend(attendee)">- {{ attendee.name }} -</div>
-								I am a <strong>{{attendee.description}}</strong> with a profession in 
-								<strong>{{attendee.profession}}</strong> and I am between 
+								I am a <strong>{{attendee.description}}</strong> with a profession in
+								<strong>{{attendee.profession}}</strong> and I am between
 								<strong>{{attendee.ageRange}}</strong>.
 							</div>
 						</div>
-						<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)" ng-hide="attendingMeal"> Join Meal </button>
-						<button class="btn btn-block btn-danger" ng-click="leaveMeal(meal)" ng-show="attendingMeal"> Leave Meal </button>
+						<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)" ng-hide="meal.attendingMeal"> Join Meal </button>
+						<button class="btn btn-block btn-danger" ng-click="leaveMeal(meal)" ng-show="meal.attendingMeal"> Leave Meal </button>
 					</accordion-group>
 					<accordion-group class="accordionInfo" ng-hide="noMeals">
 						<!-- Create Meal -->
@@ -174,12 +181,13 @@
 					</accordion-group>
 				</accordion>
 				<div id="createMealContainer" ng-show="noMeals">
-					<div id="noMealsHeader">
+					<div id="sidebarContentHeader">
 						Be the First to Create a Meal Here!
 					</div>
 					<div id="timeTicker">
 						<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
 					</div>
+
 					<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime)"> Create a New Meal </button>
 				</div>
 			</div>
