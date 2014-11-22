@@ -9,7 +9,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.selectedMarkerOldIcon = null;
 		$scope.isTomorrow = false;
 
-		$scope.mealTime = new Date();
+		$scope.mealTime = {time: new Date()};
 
 		var radius = 3000;
 		var lastZoomLevel = 13;
@@ -138,7 +138,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var d = new Date();
 			d.setMinutes(0);
 			d.setHours(d.getHours() + 1);
-			$scope.mealTime = d;
+			$scope.mealTime.time = d;
 
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
@@ -183,6 +183,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 					hour = hour.toString();
 					/* DATE CALCULATION END */
+					$scope.currentPin.meals[i].date = mealDate.getDate();
 					$scope.currentPin.meals[i].time = hour + ":" + minute + " " + meridiem;
 					$scope.currentPin.meals[i].key = mealData[i].key;
 					$scope.currentPin.meals[i].tomorrow = '';
@@ -348,9 +349,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		// 	}
 		// })
 
-		$scope.$watch('mealTime', function() {
+		$scope.$watch('mealTime.time', function() {
 			var currentTime = new Date();
-			if (currentTime > $scope.mealTime) {
+			if (currentTime > $scope.mealTime.time) {
 				$scope.isTomorrow = true;
 			} else {
 				$scope.isTomorrow = false;
