@@ -133,7 +133,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			$scope.currentPin.marker = marker;
 			$scope.currentPin.meals = [];
 
-			// console.log(place.photos);
 			if(place.photos){				
 				$scope.currentPin.placeImgUrl = place.photos[0].getUrl({'maxwidth': 350, 'maxHeight': 350});
 			}
