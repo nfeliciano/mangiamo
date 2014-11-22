@@ -190,9 +190,10 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 			// Full docs on the response object can be found in the documentation
 			// for FB.getLoginStatus().
 			if (response.status === 'connected') {
-				FB.api('/me', {fields: 'name'}, function(response) {
+				FB.api('/me', {}, function(response) {
 					sessionStorage.facebookID = response.id;
-					sessionStorage.name  =response.name;
+					sessionStorage.name  = response.name;
+					sessionStorage.email = response.email;
 
 					userService.findByFacebook(response.id).success(function(data) {
 						if (data.length > 0) {  // Returning user who has already logged in with facebook

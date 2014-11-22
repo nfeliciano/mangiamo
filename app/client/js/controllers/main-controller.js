@@ -70,10 +70,14 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			// $scope.submittingUser = true;
 			var name = null;
 			var facebookKey = null;
+			var email = null;
 			if (sessionStorage.name) {
 				name = sessionStorage.name;
 				if (sessionStorage.facebookID) {
 					facebookKey = sessionStorage.facebookID;
+					if (sessionStorage.email) {
+						email = sessionStorage.email;
+					}
 				}
 			}
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
@@ -87,7 +91,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				$scope.tellUser('Sorry we didn\'t supply "Neglectful Form Filler" as an option, please select one of the supplied options', 'Incomplete Form');
 			}
 			else {
-				userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
+				userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, email, 0).success( function(data) {
 					$scope.declareUser(data);
 					$scope.toggleLogoutButton(true);
 					$scope.toggleLoginButton(false);
