@@ -9,6 +9,7 @@ module.exports.create = function (req,res) {
 		ageRange: req.body.ageRange,
 		description: req.body.description,
 		profession: req.body.profession,
+		email: req.body.email,
 		mealBuddies: req.body.mealBuddies,
 	});
 
@@ -33,6 +34,7 @@ module.exports.update = function(req,res) {
 					ageRange: req.body.ageRange,
 					description: req.body.description,
 					profession: req.body.profession,
+					email: req.body.email,
 					mealBuddies: req.body.mealBuddies,
 				};
 	User.findOneAndUpdate(query, { $set : update }, function(err, results) {

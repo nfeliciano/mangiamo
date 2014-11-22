@@ -160,8 +160,8 @@
 								<strong>{{attendee.ageRange}}</strong>.
 							</div>
 						</div>
-						<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)" ng-hide="attendingMeal"> Join Meal </button>
-						<button class="btn btn-block btn-danger" ng-click="leaveMeal(meal)" ng-show="attendingMeal"> Leave Meal </button>
+						<button class="btn btn-block btn-default button" ng-click="joinMeal(meal)" ng-hide="meal.attendingMeal"> Join Meal </button>
+						<button class="btn btn-block btn-danger" ng-click="leaveMeal(meal)" ng-show="meal.attendingMeal"> Leave Meal </button>
 					</accordion-group>
 					<accordion-group class="accordionInfo" ng-hide="noMeals">
 						<!-- Create Meal -->

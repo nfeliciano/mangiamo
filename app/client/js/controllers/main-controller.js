@@ -11,9 +11,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.mealTime = new Date();
 
-		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
-		$scope.attendingMeal = false;
-
 		var radius = 3000;
 		var lastZoomLevel = 13;
 		$scope.noMeals = true;
@@ -71,10 +68,14 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			// $scope.submittingUser = true;
 			var name = null;
 			var facebookKey = null;
+			var email = null;
 			if (sessionStorage.name) {
 				name = sessionStorage.name;
 				if (sessionStorage.facebookID) {
 					facebookKey = sessionStorage.facebookID;
+					if (sessionStorage.email) {
+						email = sessionStorage.email;
+					}
 				}
 			}
 			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
@@ -88,7 +89,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				$scope.tellUser('Sorry we didn\'t supply "Neglectful Form Filler" as an option, please select one of the supplied options', 'Incomplete Form');
 			}
 			else {
-				userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, 0).success( function(data) {
+				userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, email, 0).success( function(data) {
 					$scope.declareUser(data);
 					$scope.toggleLogoutButton(true);
 					$scope.toggleLoginButton(false);
@@ -185,6 +186,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					$scope.currentPin.meals[i].time = hour + ":" + minute + " " + meridiem;
 					$scope.currentPin.meals[i].key = mealData[i].key;
 					$scope.currentPin.meals[i].tomorrow = '';
+					$scope.currentPin.meals[i].attendingMeal = false;
 					$scope.populateAttendees(mealData, i);
 
 					var originalHour = parseInt(hour);
@@ -215,13 +217,12 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.isUserAttendingMeal = function(meal){
-			$scope.attendingMeal = false;
 			for (var i=0; i<meal.attendees.length; i++){
 				if ($scope.user == null) {
 					return;
 				}
 				if (meal.attendees[i].key == angular.fromJson($scope.user).key){
-					$scope.attendingMeal = true;
+					meal.attendingMeal = true;
 					break;
 				}
 			}
@@ -304,6 +305,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						mealService.deleteMeal(meal.key);
 					}
 					else {
+						if (data.people.length == 0) {
+							mealService.deleteMeal(meal.key);
+						}
 						// Check if a friend is there
 						// Loop through your friends
 						break1:

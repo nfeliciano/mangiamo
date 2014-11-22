@@ -37,9 +37,9 @@ angular.module('linksupp').factory('userService', ['$http', function($http) {
 	}
 
 	// Creates a new user and adds it onto the backend. Name can be null (which is an anonymous user)
-	userService.addNewUser = function(name, facebookID, ageRange, description, profession, counter) {
+	userService.addNewUser = function(name, facebookID, ageRange, description, profession, email, counter) {
 		var userKey = generateUniqueKey();
-		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':null };
+		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'email':email, 'mealBuddies':null };
 		var res =  $http.post(user, request);
 		if (counter++ == 10) {
 			alert("The Database is currently down.  Please try again later.");
@@ -49,7 +49,7 @@ angular.module('linksupp').factory('userService', ['$http', function($http) {
 			if (result != 'error') {
 				return result;
 			} else {
-				userService.addNewUser(name, facebookID, ageRange, description, profession, counter);
+				userService.addNewUser(name, facebookID, ageRange, description, profession, email, counter);
 			}
 		});
 		return res;
@@ -57,7 +57,7 @@ angular.module('linksupp').factory('userService', ['$http', function($http) {
 
 	// Empty method. Will be used for updating a user's information.
 	userService.updateUser = function(userKey, name, facebookID, ageRange, description, profession, mealBuddies) {
-		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'mealBuddies':mealBuddies };
+		var request = { 'key':userKey, 'name':name, 'facebookID':facebookID, 'ageRange':ageRange, 'description':description, 'profession':profession, 'email':email, 'mealBuddies':mealBuddies };
 		return $http.put(user, request);
 	}
 
