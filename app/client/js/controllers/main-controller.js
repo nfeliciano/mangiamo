@@ -290,6 +290,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						mealService.deleteMeal(meal.key);
 					}
 					else {
+						if (data.people.length == 0) {
+							mealService.deleteMeal(meal.key);
+						}
 						// Check if a friend is there
 						// Loop through your friends
 						break1:
