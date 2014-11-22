@@ -48,14 +48,14 @@
 	#linksContainer
 	{
 		text-align: center;
-		/*padding-top: 25px;*/
+		
 	}
 	/* LINKS END */
 
 	/* MEALS */
 	#mealsContainer
 	{
-		/*padding-top: 25px;*/
+		
 	}
 
 
@@ -79,11 +79,6 @@ hr
 	font-family: "Roboto", sans-serif;
 	font-size: 1.2em;
 }
-
-/*.mealAttendee > span
-{
-	font-weight: bold;
-}*/
 
 #mapCanvas
 {
@@ -227,19 +222,16 @@ hr
 
 	background-color: rgba(0,0,0,0.8);
 	color: white;
-	/*opacity: 0.5;*/
 }
 
 .mealImage
 {
 	width:100%;
 	height:auto;
-	/*max-height: */
 }
 
 #mapContainer
 {
-	/*transition:all linear 0.5s;*/
 	height: 100vh;
 	position: relative;
 	padding: 51px 0px 0px 0px;
