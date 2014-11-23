@@ -163,13 +163,13 @@
 					<span class="pull-right"> Info </span>
 				</div>
 				<accordion close-others="true">
-					<accordion-group class="accordionInfo" is-open="status.open" ng-repeat="meal in currentPin.meals | orderBy:'time'">
+					<accordion-group class="accordionInfo" is-open="status.open" ng-repeat="meal in currentPin.meals | orderBy:['date','time']">
 						<accordion-heading>
 							<div id="mealInfoHeader">
 								<div>
 									{{meal.attendees.length}}
 								</div>
-								{{meal.time}}
+								{{meal.time}} <span>{{meal.tomorrow}}</span>
 								<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 							</div>
 						</accordion-heading>
@@ -196,21 +196,26 @@
 								<i class="pull-right glyphicon glyphicon-plus"></i>
 							</div>
 						</accordion-heading>
-						<div id="timeTicker">
-							<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+						<div id="timeDay">
+							{{timeDay}}
 						</div>
-						<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime)"> Create a New Meal </button>
+						<div id="timeTicker">
+							<timepicker id="mealTimePicker" ng-model="mealTime.time" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+						</div>
+						<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime.time)"> Create a New Meal </button>
 					</accordion-group>
 				</accordion>
 				<div id="createMealContainer" ng-show="noMeals">
 					<div id="sidebarContentHeader">
 						Be the First to Create a Meal Here!
 					</div>
-					<div id="timeTicker">
-						<timepicker id="mealTimePicker" ng-model="mealTime" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+					<div id="timeDay">
+						{{timeDay}}
 					</div>
-
-					<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime)"> Create a New Meal </button>
+					<div>
+						<timepicker id="mealTimePicker" ng-model="mealTime.time" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+					</div>
+					<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime.time)"> Create a New Meal </button>
 				</div>
 			</div>
 		</div>
