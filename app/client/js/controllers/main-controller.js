@@ -69,7 +69,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		};
 
 		$scope.initRecomMeals = function() {
-			// $scope.dataBase = [];
+			$scope.dataBase = [];
 			// refresh everything
 		}
 
@@ -711,8 +711,15 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		placeStaffPicks = function(){
 			mealService.getAllMeals().success(function(data){
+
 				$scope.dataBase = null;
 				$scope.dataBase = data;
+
+				// var mealDate = new Date(mealData[i].time.substring(0, 4),
+				// 							(parseInt(mealData[i].time.substring(5, 7)) - 1),
+				// 							mealData[i].time.substring(8, 10),
+				// 							mealData[i].time.substring(11, 13),
+				// 							mealData[i].time.substring(14, 16));
 				
 				var hasMeal = false;
 				//console.log($scope.staffPicks);
