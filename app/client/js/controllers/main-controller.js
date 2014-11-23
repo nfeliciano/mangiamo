@@ -134,7 +134,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.updateMealInfo = function(place, marker) {
-			console.log("update Meal info");
+	
 			$scope.currentPin.name = place.name;
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
@@ -451,6 +451,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		// initializes the google map and populates it with food places
 		$scope.initialize = function() {
+		
 			$scope.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 			if ($scope.user != null) {
 				$scope.populateMealBuddies();
@@ -493,7 +494,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 			var service = new google.maps.places.PlacesService($scope.map);
 			setStaffPickData();
-			placeStaffPicks();
+			placeAllMarkers();
 		
 
 			// refreshes the map with new food places when the map is moved a certain amount
@@ -702,40 +703,40 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			]
 		}
 		
-
-		placeStaffPicks = function(){
+		//Places all markers 
+		placeAllMarkers = function(){
+		
 			mealService.getAllMeals().success(function(data){
 				$scope.dataBase = null;
 				$scope.dataBase =data;
 				
-				console.log($scope.dataBase);
-				
-				var hasMeal = false;
-				//console.log($scope.staffPicks);
-				//console.log("success");
-				//console.log("length  ", $scope.staffPicks.length);
-				//----Place Staff Picks WITH NO Meal-----
-				for (var i = 0; i < $scope.staffPicks.length; i++) {
-					hasMeal = false;
-					
-					//Search dataBase for this staffPick
-					for( var x = 0; x < $scope.dataBase.length; x++){
-						if($scope.dataBase[x].placeID ==  $scope.staffPicks[i][0]){
-							//console.log("heyo");
-							hasMeal = true;
-							break;
-						}
-					}
-					
-					//If no meal was found, create the star marker
-					if( !hasMeal){
-						//console.log("blam");
-						createStarMarker(i);	
-					}
-				}	
-
-				placeMeals();
+				placeStaffPicks();	 //places any staff pick with no meal
+				placeMeals();	// places ALL meals
 			});
+		}
+		
+		//places all staff picks with no meals
+		placeStaffPicks = function(){
+		
+			var hasMeal = false;
+			
+			//----Place Staff Picks WITH NO Meal-----
+			for (var i = 0; i < $scope.staffPicks.length; i++) {
+				hasMeal = false;
+				
+				//Search dataBase for this staffPick
+				for( var x = 0; x < $scope.dataBase.length; x++){
+					if(!($scope.dataBase[x].placeID !=  $scope.staffPicks[i][0])){
+						hasMeal = true;
+						break;
+					}
+				}
+				
+				//If no meal was found, create the star marker
+				if( !hasMeal){
+					createStarMarker(i);	
+				}
+			}	
 		}
 	
 		
@@ -748,15 +749,21 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var key;
 			for( var i = 0; i < $scope.dataBase.length; i++){
 				key = $scope.dataBase[i].placeID;
-				
-					console.log("key = ", key);
 					if( checkNewKey(key)){
-						console.log("check check");
-						var number = getNumberOfPeople(key);
-						placeMealMarker(i,number);
-						//createMealMarker(
+						//var number = getNumberOfPeople(key);
+						placeMealMarker($scope.dataBase[i].lat,$scope.dataBase[i].lng,key);
 					}	
 			}
+		}
+		
+		//key is staff pick. If key is in staff picks returns true
+		checkIsStaffPick = function(key){
+			for (var i = 0; i < $scope.staffPicks.length; i++) {
+				if(!(key !=  $scope.staffPicks[i][0])){
+					return true; 						//key is in staff picks
+				}
+			}
+			return false;	//key not in staff picks
 		}
 		
 		
@@ -764,7 +771,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//else return true
 		checkNewKey = function(key){
 			for( var i = 0; i < $scope.placedMarkers.length; i++){
-				
 				if( key == $scope.placedMarkers.markerId){
 					return false;	//meal at this place has been placed
 				}
@@ -786,6 +792,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			
 		
 		updateMarkers =function(){
+			nukeAllMarkers();
+			//placeS
 		
 		}
 		
@@ -793,7 +801,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		
 		createStarMarker =function(i){
 		
-			//console.log(i);
 			var marker =  new MarkerWithLabel({
 				icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0',  //Red dot
 				map: $scope.map,
@@ -828,30 +835,35 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 		
 		
-		placeMealMarker= function(i,numPeople){
-			console.log("meal marker  i = ", i, "  people = ", numPeople);
-		/*
+		placeMealMarker= function(lat,lng,key){
+		
 			var userIsGoing = false;
-			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
-				if($scope.usersMealsAttending[i].key == place.place_id){
-					userIsGoing = true;
-				}
+			var numPeople = 0;
+			var searchingForBuddy = true;
+			var buddyWasFound = false;
+			
+			//see if user is attending
+			
+			if(($scope.usersMealsAttending.length >0 ) &&( $scope.usersMealsAttending[0].key == place.place_id)){
+				userIsGoing = true;
 			}
-
-			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
-
-				var numPeople = 0;
-				var searchingForBuddy = true;
-				var buddyWasFound = false;
-
-				//see if user has friends
-				if(  $scope.mealBuddies.length == 0 ){
-					searchingForBuddy = false;
-				}
-
-				loop1:
-				for (var i = 0; i < data.length; i++) {
-					numPeople += data[i].numPeople;
+			
+			//see if user has friends
+			if(  $scope.mealBuddies.length == 0 ){
+				
+				console.log("Problem asyc mealbuddies happens to slow ",$scope.mealBuddies);
+				searchingForBuddy = false;
+			}
+			
+			loop1:
+			for (var i = 0; i < $scope.dataBase.length; i++) {
+			
+				//Find if meal is the same location as the pin
+				if(!(key != $scope.dataBase[i].placeID)){ //not equal faster than equality, odds are majority of meals are not equal which compounds this gain
+			
+					numPeople += $scope.dataBase[i].numPeople; // increment numPeople
+					
+					//Find if any of the goers is a friend
 					if(searchingForBuddy){
 						loop2:
 						for( var y = 0; y < $scope.mealBuddies.length; y++){
@@ -866,55 +878,53 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						}
 					}
 				}
-*/
-				var icon = '/img/restaurant.png'; //default meal marker
+			}
 
-				/*if( buddyWasFound && userIsGoing){
-					icon = user is going and buddy
-				} else*/
-	/*			if( userIsGoing){
-					icon = '/img/restaur_going.png';
-				}
-				else if( buddyWasFound){
-					icon = '/img/restaur_friend.png'; // friend going marker
-				}
-*/
-				// This is the Mangiamo Meal marker, ie there is a meal here
-				var marker =  new MarkerWithLabel({
-					icon: icon,
-					map: $scope.map,
-					position:  new google.maps.LatLng($scope.dataBase[i].lat,$scope.dataBase[i].lng),
-					draggable: false,    //property that allows user to move marker
-					raiseOnDrag: false,
-					labelContent:numPeople,
-					labelAnchor: new google.maps.Point(7, 33),    // anchors to
-					labelClass: "labels", // the CSS class for the label
+			var icon = '/img/restaurant.png'; //default meal marker
 
-					// Some additional properties of the markers so we can access them later
-					markerId :$scope.dataBase[i].placeID,
-					hasMeal: true,
-				});
+			/*if( buddyWasFound && userIsGoing){
+				icon = user is going and buddy
+			} else*/
+			if( userIsGoing){
+				icon = '/img/restaur_going.png';
+			}
+			else if( buddyWasFound){
+				icon = '/img/restaur_friend.png'; // friend going marker
+			}
 
-				console.log(marker.position);
-				$scope.placedMarkers.push(marker); // Array marker
-				google.maps.event.addListener(marker, 'click', function() {
-					updateMarkerIcon(marker);
+			// This is the Mangiamo Meal marker, ie there is a meal here
+			var marker =  new MarkerWithLabel({
+				icon: icon,
+				map: $scope.map,
+				position:  new google.maps.LatLng(lat,lng),
+				draggable: false,    //property that allows user to move marker
+				raiseOnDrag: false,
+				labelContent:numPeople,
+				labelAnchor: new google.maps.Point(7, 33),    // anchors to
+				labelClass: "labels", // the CSS class for the label
 
-					var request = {
-						placeId:marker.markerId,
-					};
-					var service = new google.maps.places.PlacesService($scope.map);
-					service.getDetails(request,getPlaceDetails);
+				// Some additional properties of the markers so we can access them later
+				markerId :key,
+				hasMeal: true,
+			});
 
-					// Returns ALL the place details and information
-					function getPlaceDetails(place, status) {
-						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							console.log(place);
-							$scope.updateMealInfo(place, marker);
-						}
+			$scope.placedMarkers.push(marker); // Array marker
+			google.maps.event.addListener(marker, 'click', function() {
+				updateMarkerIcon(marker);
+
+				var request = {
+					placeId:marker.markerId,
+				};
+				var service = new google.maps.places.PlacesService($scope.map);
+				service.getDetails(request,getPlaceDetails);
+
+				// Returns ALL the place details and information
+				function getPlaceDetails(place, status) {
+					if (status == google.maps.places.PlacesServiceStatus.OK) {
+						$scope.updateMealInfo(place, marker);
 					}
-				});
-			//});
+				}
+			});
 		}
 
 		
@@ -923,7 +933,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				var image = {
 						url: place.icon,
 						size: new google.maps.Size(71, 71),
-						origin: new google.maps.Point(0, 0),
+						origin: new google.maps.Point(5, -15),
 						anchor: new google.maps.Point(17, 34),
 						scaledSize: new google.maps.Size(25, 25)
 					};
