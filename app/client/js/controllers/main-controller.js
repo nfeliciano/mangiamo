@@ -75,22 +75,30 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.isToday = function(time) {
 			var currentDate = new Date();
+			var mealDate = new Date(time.getTime());
 
-			console.log("Meal Time   : " + time);
+			console.log("Meal Time   : " + mealDate);
 			console.log("Current Time: " + currentDate);
 
 
 			var timeOffset = currentDate.getTimezoneOffset();
+
+			console.log("TIMEZONE OFFSET: " + timeOffset);
+
 			var hourOffset = Math.floor(timeOffset / 60);
 			var minuteOffset = timeOffset % 60;
 
-			time.setHours(time.getHours() + hourOffset);
-			time.setMinutes(time.getMinutes() + minuteOffset);
-			currentDate.setDate(time.getDate());
-			// console.log(currentDate); 
-			// console.log(time); 
-			// console.log(time > currentDate);
-			return (time > currentDate);
+			currentDate.setDate(mealDate.getDate());
+			currentDate.setMonth(mealDate.getMonth());
+
+			mealDate.setHours(mealDate.getHours() - hourOffset);
+			mealDate.setMinutes(mealDate.getMinutes() - minuteOffset);
+
+			console.log("Meal Time (UPDATE)   :" + mealDate); 
+			console.log("Current Time (UPDATE):" + currentDate); 
+			
+			console.log(mealDate > currentDate);
+			return (mealDate > currentDate);
 		}
 
 		// This function submits the user data to the database, and redirects the user
