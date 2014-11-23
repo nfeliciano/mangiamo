@@ -731,7 +731,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				$scope.dataBase = data;
 
 				for(var i=0; i<$scope.dataBase.length; i++) {
-					$scope.dataBase[i].time = new Date($scope.dataBase[i].time.substring(0, 4),
+					$scope.dataBase[i].timeObj = new Date($scope.dataBase[i].time.substring(0, 4),
 												(parseInt($scope.dataBase[i].time.substring(5, 7)) - 1),
 												$scope.dataBase[i].time.substring(8, 10),
 												$scope.dataBase[i].time.substring(11, 13),
@@ -739,8 +739,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 					var hourOffset = Math.floor(480 / 60); // add getTimezoneOffset()
 					var minuteOffset = (480 % 60);
-					var hour = ((($scope.dataBase[i].time.getHours() - hourOffset) + 24) % 24);
-					var minute = ((($scope.dataBase[i].time.getMinutes() - minuteOffset) + 60) % 60);
+					var hour = ((($scope.dataBase[i].timeObj.getHours() - hourOffset) + 24) % 24);
+					var minute = ((($scope.dataBase[i].timeObj.getMinutes() - minuteOffset) + 60) % 60);
 					minute = minute.toString();
 
 					// Convert "0" into "00"
@@ -759,7 +759,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					if (hour == 0) {
 						hour = 12;
 					}
-
 					$scope.dataBase[i].time = hour + ":" + minute + " " + meridiem;
 
 					console.log($scope.dataBase[i].time);
