@@ -19,8 +19,15 @@
 				Recommended
 			</div>
 			<hr>
-			<div ng-repeat="mealSuggestion in dataBase | orderBy:'numPeople'">
-				|PICTURE| {{mealSuggestion.name}}
+			<div ng-repeat="mealSuggestion in dataBase | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion.key)">
+				<div class="pull-left recomMealImageDiv">
+					<img src="{{mealSuggestion.imgURL}}">
+				</div>
+				<div class="pull-left recomMealInfo">
+					<span class="recomMealTitle">{{mealSuggestion.name}}</span>
+					<br>
+					<span> # attending at ##:## #M (tomorrow)</span>
+				</div>
 				<!-- other info -->
 			</div>
 		</div>
@@ -92,7 +99,11 @@
 							<em> Add a New Friend! </em>
 							<i class="pull-right glyphicon glyphicon-plus"></i>
 							</accordion-heading>
-							<span > Your ID is: {{UID}} </span>
+								<span> 
+									Your ID is: <strong>{{UID}}</strong>
+									<br>
+									Give it to a friend for them to add you! 
+								</span>
 							<form>
 								<input type="text" placeholder="Enter a friend's ID" ng-model="newMealBuddy"><br>
 								<button id="friendAdder" class="btn btn-primary" ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>

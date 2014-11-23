@@ -145,6 +145,42 @@ hr
 }
 /* END FRIENDS */
 
+/*RECOM START*/
+
+.recomMeal
+{
+	height: 30px;
+	font-family: "Roboto", sans-serif;
+	font-size: 16px;
+	background-color: #CCCCCC;
+	padding-top: 2px;
+}
+
+.recomMealImageDiv
+{
+	width: 30px;
+	height: 100%;
+	overflow: hidden;
+}
+
+.recomMeal > div > img
+{
+	height: 100%;
+	width: auto;
+}
+
+.recomMealInfo
+{
+	padding: 0px 5px 1px 5px;
+}
+
+.recomMealTitle
+{
+	font-size: 18px;
+}
+
+/*RECOM END*/
+
 /* MEAL INFORMATION START */
 #mealPlace
 {

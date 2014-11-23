@@ -69,9 +69,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		};
 
 		$scope.initRecomMeals = function() {
-			$scope.dataBase = [];
+			// $scope.dataBase = [];
 			// refresh everything
-
 		}
 
 		// This function submits the user data to the database, and redirects the user
