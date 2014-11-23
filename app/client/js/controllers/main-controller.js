@@ -76,6 +76,11 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.isToday = function(time) {
 			var currentDate = new Date();
+
+			console.log("Meal Time   : " + time);
+			console.log("Current Time: " + currentDate);
+
+
 			var timeOffset = currentDate.getTimezoneOffset();
 			var hourOffset = Math.floor(timeOffset / 60);
 			var minuteOffset = timeOffset % 60;
@@ -83,8 +88,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			time.setHours(time.getHours() + hourOffset);
 			time.setMinutes(time.getMinutes() + minuteOffset);
 			currentDate.setDate(time.getDate());
-			console.log(currentDate); 
-			console.log(time); 
+			// console.log(currentDate); 
+			// console.log(time); 
 			// console.log(time > currentDate);
 			return (time > currentDate);
 		}
@@ -774,7 +779,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					}
 					$scope.dataBase[i].time = hour + ":" + minute + " " + meridiem;
 
-					console.log($scope.dataBase[i].time);
+					// console.log($scope.dataBase[i].time);
 					// console.log($scope.dataBase[i].time.substring(0, 4));
 					// console.log(parseInt($scope.dataBase[i].time.substring(5, 7)) - 1);
 					// console.log($scope.dataBase[i].time.substring(8, 10));
