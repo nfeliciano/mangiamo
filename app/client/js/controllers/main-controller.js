@@ -77,10 +77,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var currentDate = new Date();
 			var mealDate = new Date(time.getTime());
 
-			console.log("Meal Time   : " + mealDate);
-			console.log("Current Time: " + currentDate);
-
-
 			var timeOffset = currentDate.getTimezoneOffset();
 
 			console.log("TIMEZONE OFFSET: " + timeOffset);
@@ -94,9 +90,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			mealDate.setHours(mealDate.getHours() - hourOffset);
 			mealDate.setMinutes(mealDate.getMinutes() - minuteOffset);
 
-			console.log("Meal Time (UPDATE)   :" + mealDate); 
-			console.log("Current Time (UPDATE):" + currentDate); 
-			
 			console.log(mealDate > currentDate);
 			return (mealDate > currentDate);
 		}
@@ -444,7 +437,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 									day,
 									mealTime.getHours(),
 									mealTime.getMinutes(), 0, 0);
-				mealService.addNewMeal($scope.currentPin.place.place_id, 0, $scope.currentPin.marker.position.lat(), $scope.currentPin.marker.position.lng(), date, $scope.currentPin.place.photos[0].getUrl({'maxwidth': 150, 'maxHeight': 150}), $scope.currentPin.place.name, [], true).success(function(data) {
+				mealService.addNewMeal($scope.currentPin.place.place_id, 0, $scope.currentPin.marker.position.lat(), $scope.currentPin.marker.position.lng(), date, $scope.currentPin.placeImgUrl, $scope.currentPin.place.name, [], true).success(function(data) {
 					var key = angular.fromJson($scope.user).key;
 
 					mealService.addUserToMeal(data.key, key).success(function(meal) {
