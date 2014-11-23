@@ -1,6 +1,8 @@
 var express 				= require('express'),
 	app						= express(),
 	cron		 			= require('cron'),
+	server					= require('http').createServer(app),
+	io						= require('socket.io')(server),
 	bodyParser 				= require('body-parser'),
 	mongoose 				= require('mongoose'),
 	config 					= require('./config'),
@@ -64,6 +66,7 @@ app.put('/api/users/buddies/ignore', userController.ignoreBuddy);
 //Contact form
 app.post('/contact', contactController.sendEmail);
 
-app.listen(3000, function() {
+// app.listen(3000, function() {
+server.listen(3000, function() {
 	console.log('I\'m listening');
 })

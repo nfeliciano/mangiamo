@@ -406,6 +406,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.addFriendFromFacebookID = function(facebookID){
 			userService.findByFacebook(facebookID).success(function(data) {
+				$scope.socket.emit('refresh buddies');
 				$scope.addFriend(data[0].key);
 			});
 		}

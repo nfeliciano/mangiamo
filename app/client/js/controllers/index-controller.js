@@ -25,6 +25,8 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		// REMOVE THIS
 		$scope.UID = '';
 
+		$scope.socket = io();
+
 		/* GLOBAL ACCESS FUNCTIONS START */
 		$scope.toggleSidebar = function(show) {
 			if (show == true) {
@@ -182,6 +184,15 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 			});
 		}
 
+		$scope.socket.on('refresh meals', function() {
+			console.log('MEALS');
+		});
+
+		$scope.socket.on('refresh buddies', function() {
+			console.log('USERS');
+			$scope.populateMealBuddies();
+		})
+
 		/* Facebook Integration Stuff */
 		// This is called with the results from from FB.getLoginStatus().
 		statusChangeCallback = function(response) {
@@ -199,8 +210,8 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 						if (data.length > 0) {  // Returning user who has already logged in with facebook
 							var userData = data[0];
 							$scope.user = angular.toJson(userData);
-							
-						} 
+
+						}
 						else {  // User is logging in to facebook for the first time
 							// MODAL CALL
 							$('#userInformationModal').modal();
