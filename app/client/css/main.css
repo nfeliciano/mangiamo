@@ -193,6 +193,7 @@ hr
 	height: 30px;
 	overflow: hidden;
 	border: 1px solid #AAAAAA;
+
 }
 
 .recomMealImage
@@ -201,17 +202,9 @@ hr
 	height: auto;
 }
 
-.recomMeal > div > img
-{
-	height: 100%;
-	width: auto;
-	/*padding: 5px;*/
-}
-
 .recomMealInfo
 {
 	padding: 0px 5px 1px 40px;
-	/*margin-left: 10px;*/
 }
 
 .recomMealTitle
