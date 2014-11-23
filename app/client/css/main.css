@@ -28,6 +28,12 @@
 	text-align: center;
 }
 
+.back-to-map
+{
+	font-size: 14px;
+	margin-bottom: 4px;
+}
+
 	/* INTRO */
 	#introContainer
 	{
@@ -123,6 +129,15 @@ hr
 {
 	text-align: center;
 	font-size: 0.8em;
+	margin-bottom: 4px;
+}
+
+.specialAttendee
+{
+	background-color: rgba(255,255,255, 0.7);
+	border: 1px solid grey;
+	border-radius: 50%;
+	padding: 4px;
 }
 
 #mealsHeader
@@ -151,10 +166,87 @@ hr
 }
 /* END FRIENDS */
 
+/*RECOM START*/
+
+.recomMeal
+{
+	margin: 2px 20px 10px 20px;
+	font-family: "Roboto", sans-serif;
+	font-size: 16px;
+	background-color: #DDDDDD;
+	border: 1px solid #AAAAAA; 
+	border-radius: 5px;
+	padding: 5px;
+
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	box-shadow: 0 1px 1px rgba(0,0,0, .5);
+}
+
+.recomMeal:hover
+{
+	background-color: #AAAAAA;
+}
+
+.recomMeal:focus
+{
+	background-color: #BBBBBB;
+}
+
+.recomMealImageDiv
+{
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	border: 1px solid #AAAAAA;
+
+}
+
+.recomMealImage
+{
+	width: 100%;
+	height: auto;
+}
+
+.recomMealInfo
+{
+	padding: 0px 5px 1px 40px;
+}
+
+.recomMealTitle
+{
+	font-size: 18px;
+}
+
+.noSuggestedMessage
+{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.linksInstructions
+{
+	margin: 20px 0px 10px 0px;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+/*RECOM END*/
+
 /* MEAL INFORMATION START */
 #timeDay
 {
+	text-align: center;
 	color: rgb(47, 95, 127);
+}
+
+.contentInstructions
+{
+	text-align: center;
+	font-family: "PT Sans", sans-serif;
+	font-size: 18px;
+	padding-bottom: 10px;
+	/*background-color: red;*/
 }
 
 #mealPlace
@@ -180,6 +272,8 @@ hr
 
 .accordionInfo
 {
+	margin: 0px 20px 0px 20px;
+	/*background-color: #EEEEEE;*/
 	text-align: left;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
 	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
@@ -195,6 +289,11 @@ hr
 {
 	background-color: #2F5F7F;
 	color: white;
+}
+
+.padding20
+{
+	padding: 0px 20px 0px 20px;
 }
 /* MEAL INFORMATION END */
 
@@ -215,6 +314,7 @@ hr
 {
 	overflow: hidden;
 	max-height: 200px;
+	width: 100%;
 }
 
 .sidebarMealsTitle
@@ -234,6 +334,7 @@ hr
 {
 	width:100%;
 	height:auto;
+	min-height: 200px;
 }
 
 #mapContainer

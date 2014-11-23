@@ -45,8 +45,8 @@ angular.module('linksupp').factory('mealService', ['$http', function($http) {
 	}
 
 	// Adds a new meal to the database with the key placeID-time
-	mealService.addNewMeal = function(placeID, numPeople, lat, lng, time, people, active) {
-		var request = {"key":placeID + "-" + time, "time":time, "numPeople":numPeople, "lat":lat, "lng":lng, "placeID":placeID, "people":people, "active":active};
+	mealService.addNewMeal = function(placeID, numPeople, lat, lng, time, imgURL, name, people, active) {
+		var request = {"key":placeID + "-" + time, "time":time, "imgURL":imgURL, "name":name, "numPeople":numPeople, "lat":lat, "lng":lng, "placeID":placeID, "people":people, "active":active};
 		return $http.post(mealCreate, request);
 	}
 

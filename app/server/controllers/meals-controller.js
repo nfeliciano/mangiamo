@@ -6,6 +6,8 @@ module.exports.create = function (req,res) {
 		key: req.body.key,
 		placeID: req.body.placeID,
 		time: req.body.time,
+		imgURL: req.body.imgURL,
+		name: req.body.name,
 		lat: req.body.lat,
 		lng: req.body.lng,
 		numPeople: req.body.numPeople,
