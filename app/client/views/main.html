@@ -19,7 +19,7 @@
 				Suggested
 			</div>
 			<hr>
-			<div ng-repeat="mealSuggestion in dataBase | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion.key)">
+			<div ng-repeat="mealSuggestion in dataBase | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion)">
 				<div class="pull-left recomMealImageDiv">
 					<img src="{{mealSuggestion.imgURL}}">
 				</div>
