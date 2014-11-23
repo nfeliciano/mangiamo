@@ -25,7 +25,11 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		// REMOVE THIS
 		$scope.UID = '';
 
-		$scope.socket = io();
+		var socket = io.connect();
+
+		socket.on('message', function(data) {
+			console.log(data.message);
+		});
 
 		/* GLOBAL ACCESS FUNCTIONS START */
 		$scope.toggleSidebar = function(show) {
@@ -119,6 +123,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		}
 
 		$scope.contact = function() {
+			socket.emit('msg', {'message': 'hi there'});
 			$scope.contactMessage = "";
 			$scope.contactEmail = "";
 			$('#contactModal').modal();
@@ -183,15 +188,6 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				}
 			});
 		}
-
-		$scope.socket.on('refresh meals', function() {
-			console.log('MEALS');
-		});
-
-		$scope.socket.on('refresh buddies', function() {
-			console.log('USERS');
-			$scope.populateMealBuddies();
-		})
 
 		/* Facebook Integration Stuff */
 		// This is called with the results from from FB.getLoginStatus().

@@ -2,7 +2,7 @@ var express 				= require('express'),
 	app						= express(),
 	cron		 			= require('cron'),
 	server					= require('http').createServer(app),
-	io						= require('socket.io')(server),
+	io						= require('socket.io'),
 	bodyParser 				= require('body-parser'),
 	mongoose 				= require('mongoose'),
 	config 					= require('./config'),
@@ -70,3 +70,13 @@ app.post('/contact', contactController.sendEmail);
 server.listen(3000, function() {
 	console.log('I\'m listening');
 })
+
+io = io.listen(server);
+
+io.sockets.on('connection', function(socket) {
+	socket.emit('message', {'message': 'hello world'});
+
+	socket.on('msg', function(data) {
+		console.log(data.message);
+	})
+});
