@@ -718,8 +718,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			]
 			//Beacon Drive In Ltd,
 			,[ "ChIJTTkdD8B0j1QRWqg-MLRfPUE",
-			48.443056,
-			-123.385962,
+			48.411565,
+			-123.368673,
 			]
 			//Bon Sushi (Oak Bay),
 			,[ "ChIJ22cgcUF0j1QRo--FDGoEkKg",
