@@ -496,7 +496,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			setStaffPickData();
 			placeAllMarkers();
 		
-			$scope.mapUpdater = setInterval(function(){updateMap()}, 30000); //Every 30 seconds, delete all markers, download whole database, create new markers
+			$scope.mapUpdater = setInterval(function(){updateMap()}, 10000); //Every 30 seconds, delete all markers, download whole database, create new markers
 			// refreshes the map with new food places when the map is moved a certain amount
 		/*	google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > radius/3){
@@ -589,7 +589,14 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 				for (var i = 0, place; place = places[i]; i++) {
 					createSearchMarker(place);
+					
 					bounds.extend(place.geometry.location); //update aggregate bounds
+				}
+				
+				//programmatically click it (only if specific restaurant)
+				if(places.length ==1){
+					google.maps.event.trigger($scope.placedSearchMarkers[0], 'click');	
+				
 				}
 				$scope.map.fitBounds(bounds);
 				$scope.map.setZoom(15);
@@ -734,7 +741,11 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				
 				//If no meal was found, create the star marker
 				if( !hasMeal){
-					createStarMarker(i);	
+					createStarMarker(i);
+					//programmatically click it
+					if(($scope.currentPin.marker != null) &&( $scope.currentPin.marker.markerId == $scope.placedMarkers[$scope.placedMarkers.length -1].markerID)){
+						google.maps.event.trigger($scope.placedMarkers[$scope.placedMarkers.length -1], 'click');	
+					}					
 				}
 			}	
 		}
@@ -744,11 +755,18 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//Then if its unique getNumber of People
 		//Then place a new marker
 		placeMeals = function(){
+			
+			//console.log("current pin id ", $scope.currentPin.marker.markerId);
 			var placeID;
 			for( var i = 0; i < $scope.dataBase.length; i++){
 				placeID = $scope.dataBase[i].placeID;
 					if( checkNewPlaceID(placeID)){
 						placeMealMarker($scope.dataBase[i].lat,$scope.dataBase[i].lng,placeID);
+						
+						//programmatically click it
+						if(($scope.currentPin.marker != null) &&( $scope.currentPin.marker.markerId == placeID)){
+							google.maps.event.trigger($scope.placedMarkers[$scope.placedMarkers.length -1], 'click');	
+						}
 					}	
 			}
 		}
@@ -796,16 +814,20 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		
 		checkSelectedMarker = function(){
 			var found = false;
-			for( var i=0; i<$scope.placedMarkers.length; i++){
-			
-				if( $scope.currentPin.markerId == $scope.placedMarkers[i].markerId){
-					found = true;
+			if($scope.currentPin.marker != null){
+				for( var i=0; i<$scope.placedMarkers.length; i++){
+				
+					if( $scope.currentPin.markerId == $scope.placedMarkers[i].markerId){
+						found = true;
+					}
 				}
-			}
-			
-			if(!found){
-				console.log("re-place selected on map" ,$scope.currentPin);
-				//$scope.placedMarkers.push($scope.currentPin);
+				
+				if(!found){
+					
+					$scope.currentPin.marker.setMap($scope.map);
+					
+					$scope.placedMarkers.push($scope.currentPin.marker);
+				}
 			}
 		}
 		
@@ -1027,6 +1049,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//paramater is the new selected marker,
 		// function updates old marker to its old image, and update new to new image
 		updateMarkerIcon = function(marker) {
+			console.log("update marker");
 		  	// At this point, currentPin is still the old marker, so check icons
 			// if the old one exists, return it to normal
 			if($scope.currentPin.marker != null){
@@ -1057,6 +1080,11 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			case '/img/restaur_going.png':
 				marker.setIcon('/img/restaur_going.png');
 				break;
+			
+			default:
+				marker.setIcon('/img/restaur_selected.png');
+				break;
+			
 			}
 		}
 
