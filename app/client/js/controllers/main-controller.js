@@ -110,7 +110,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
         		position: google.maps.ControlPosition.RIGHT_CENTER},
         	panControlOptions: {
         		position: google.maps.ControlPosition.RIGHT_CENTER},
-        	zoom: 14,
+        	zoom: 13,
 			streetViewControl: false
         }
 
@@ -739,51 +739,48 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			}	
 		}
 	
-		
-		
+	
 		//For every meal, check if a marker at that loctaion is already placed or nukeAllMarkers
 		//Then if its unique getNumber of People
 		//Then place a new marker
 		placeMeals = function(){
-			
-			var key;
+			var placeID;
 			for( var i = 0; i < $scope.dataBase.length; i++){
-				key = $scope.dataBase[i].placeID;
-					if( checkNewKey(key)){
-						//var number = getNumberOfPeople(key);
-						placeMealMarker($scope.dataBase[i].lat,$scope.dataBase[i].lng,key);
+				placeID = $scope.dataBase[i].placeID;
+					if( checkNewPlaceID(placeID)){
+						placeMealMarker($scope.dataBase[i].lat,$scope.dataBase[i].lng,placeID);
 					}	
 			}
 		}
 		
-		//key is staff pick. If key is in staff picks returns true
-		checkIsStaffPick = function(key){
+		//placeID is staff pick. If placeID is in staff picks returns true
+		checkIsStaffPick = function(placeID){
 			for (var i = 0; i < $scope.staffPicks.length; i++) {
-				if(!(key !=  $scope.staffPicks[i][0])){
-					return true; 						//key is in staff picks
+				if(!(placeID !=  $scope.staffPicks[i][0])){
+					return true; 						//placeID is in staff picks
 				}
 			}
-			return false;	//key not in staff picks
+			return false;	//placeID not in staff picks
 		}
 		
 		
-		//If key has been placed, return false
+		//If placeID has been placed, return false
 		//else return true
-		checkNewKey = function(key){
+		checkNewPlaceID = function(placeID){
 			for( var i = 0; i < $scope.placedMarkers.length; i++){
-				if( key == $scope.placedMarkers.markerId){
+				if( placeID == $scope.placedMarkers.markerId){
 					return false;	//meal at this place has been placed
 				}
 			}
 			return true;	//no meal at this place has been placed
 		}
 		
-		getNumberOfPeople = function(key){
+		getNumberOfPeople = function(placeID){
 			var numPeople = 0;
 			
 			for( var i = 0; i < $scope.dataBase.length; i++){
 				
-				if( key == $scope.dataBase[i].placeID){
+				if( placeID == $scope.dataBase[i].placeID){
 					numPeople += $scope.dataBase[i].numPeople;
 				}
 			}
@@ -792,9 +789,24 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			
 		
 		updateMap =function(){
-			console.log("update map");
 			nukeAllMarkers();
 			placeAllMarkers();
+			checkSelectedMarker();
+		}
+		
+		checkSelectedMarker = function(){
+			var found = false;
+			for( var i=0; i<$scope.placedMarkers.length; i++){
+			
+				if( $scope.currentPin.markerId == $scope.placedMarkers[i].markerId){
+					found = true;
+				}
+			}
+			
+			if(!found){
+				console.log("re-place selected on map" ,$scope.currentPin);
+				//$scope.placedMarkers.push($scope.currentPin);
+			}
 		}
 		
 		
@@ -835,7 +847,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 		
 		
-		placeMealMarker= function(lat,lng,key){
+		placeMealMarker= function(lat,lng,placeID){
 		
 			var userIsGoing = false;
 			var numPeople = 0;
@@ -843,8 +855,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var buddyWasFound = false;
 			
 			//see if user is attending
-			
-			if(($scope.usersMealsAttending.length >0 ) &&( $scope.usersMealsAttending[0].key == place.place_id)){
+			if(($scope.usersMealsAttending.length >0 ) &&( $scope.usersMealsAttending[0].key.substring(0,27) == placeID)){
 				userIsGoing = true;
 			}
 			
@@ -859,7 +870,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			for (var i = 0; i < $scope.dataBase.length; i++) {
 			
 				//Find if meal is the same location as the pin
-				if(!(key != $scope.dataBase[i].placeID)){ //not equal faster than equality, odds are majority of meals are not equal which compounds this gain
+				if(!(placeID != $scope.dataBase[i].placeID)){ //not equal faster than equality, odds are majority of meals are not equal which compounds this gain
 			
 					numPeople += $scope.dataBase[i].numPeople; // increment numPeople
 					
@@ -904,7 +915,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				labelClass: "labels", // the CSS class for the label
 
 				// Some additional properties of the markers so we can access them later
-				markerId :key,
+				markerId :placeID,
 				hasMeal: true,
 			});
 
