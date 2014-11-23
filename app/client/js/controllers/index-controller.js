@@ -1,5 +1,5 @@
-angular.module('linksupp').controller('indexController', ['$scope', '$location', 'userService',
-	function ($scope, $location, userService) {
+angular.module('linksupp').controller('indexController', ['$scope', '$location', 'userService', '$rootScope',
+	function ($scope, $location, userService, $rootScope) {
 		/* GLOBAL DATA START */
 
 		$scope.mealBuddyRequests = [];
@@ -94,12 +94,14 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		// This allows the initial redirect when they come to the
 		// page based on whether or not they are logged in
 		$scope.init = function() {
-			if ($scope.user == null) {
-				$location.path('login').replace();
-			}
-			else {
-				$location.path('main').replace();
-			}
+			setTimeout(function() {
+				if ($location.path() == '/login' || $location.path() == '/main') {
+					return;
+				}
+				$rootScope.$apply(function() {
+					$location.path('login').replace();
+				});
+			}, 2500);
 		}
 		$scope.init();
 
@@ -201,8 +203,8 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 						if (data.length > 0) {  // Returning user who has already logged in with facebook
 							var userData = data[0];
 							$scope.user = angular.toJson(userData);
-							
-						} 
+							$location.path('main').replace();
+						}
 						else {  // User is logging in to facebook for the first time
 							// MODAL CALL
 							$('#userInformationModal').modal();
@@ -221,11 +223,17 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				// ie. change the page to the map.
 			}
 			else if (response.status === 'not_authorized') {
-				// The person is logged into Facebook, but not your app.
+				// The person is logged into Facebook, but not your app
+				$rootScope.$apply(function() {
+					$location.path('login').replace();
+				});
 			}
 			else {
 				// The person is not logged into Facebook, so we're not sure if
 				// they are logged into this app or not.
+				$rootScope.$apply(function() {
+					$location.path('login').replace();
+				});
 			}
 		}
 
