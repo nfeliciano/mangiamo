@@ -730,11 +730,47 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				$scope.dataBase = null;
 				$scope.dataBase = data;
 
-				// var mealDate = new Date(mealData[i].time.substring(0, 4),
-				// 							(parseInt(mealData[i].time.substring(5, 7)) - 1),
-				// 							mealData[i].time.substring(8, 10),
-				// 							mealData[i].time.substring(11, 13),
-				// 							mealData[i].time.substring(14, 16));
+				for(var i=0; i<$scope.dataBase.length; i++) {
+					$scope.dataBase[i].time = new Date($scope.dataBase[i].time.substring(0, 4),
+												(parseInt($scope.dataBase[i].time.substring(5, 7)) - 1),
+												$scope.dataBase[i].time.substring(8, 10),
+												$scope.dataBase[i].time.substring(11, 13),
+												$scope.dataBase[i].time.substring(14, 16));
+
+					var hourOffset = Math.floor(480 / 60); // add getTimezoneOffset()
+					var minuteOffset = (480 % 60);
+					var hour = ((($scope.dataBase[i].time.getHours() - hourOffset) + 24) % 24);
+					var minute = ((($scope.dataBase[i].time.getMinutes() - minuteOffset) + 60) % 60);
+					minute = minute.toString();
+
+					// Convert "0" into "00"
+					if (minute.length == 1) {
+						minute = "0" + minute;
+					}
+
+					// Set AM or PM
+					var meridiem = "am";
+					if (hour >= 12) {
+						meridiem = "pm";
+					}
+
+					// Set 24 hour to 12 hour
+					hour = (hour % 12);
+					if (hour == 0) {
+						hour = 12;
+					}
+
+					$scope.dataBase[i].time = hour + ":" + minute + " " + meridiem;
+
+					console.log($scope.dataBase[i].time);
+					// console.log($scope.dataBase[i].time.substring(0, 4));
+					// console.log(parseInt($scope.dataBase[i].time.substring(5, 7)) - 1);
+					// console.log($scope.dataBase[i].time.substring(8, 10));
+					// console.log($scope.dataBase[i].time.substring(11, 13));
+					// console.log($scope.dataBase[i].time.substring(14, 16));				
+
+				}
+
 				
 				var hasMeal = false;
 				//console.log($scope.staffPicks);

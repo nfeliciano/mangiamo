@@ -149,7 +149,8 @@ hr
 
 .recomMeal
 {
-	min-height: 30px;
+	/*height: 30px;*/
+	margin: 2px 20px 2px 20px;
 	font-family: "Roboto", sans-serif;
 	font-size: 16px;
 	background-color: #CCCCCC;
@@ -161,18 +162,20 @@ hr
 	width: 30px;
 	height: 30px;
 	overflow: hidden;
+	/*padding: 5px;*/
 }
 
 .recomMeal > div > img
 {
 	height: 100%;
 	width: auto;
+	/*padding: 5px;*/
 }
 
 .recomMealInfo
 {
-	padding: 0px 5px 1px 5px;
-	/*text-wrap: ;*/
+	padding: 0px 5px 1px 40px;
+	/*margin-left: 10px;*/
 }
 
 .recomMealTitle
