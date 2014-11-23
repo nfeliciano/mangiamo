@@ -9,7 +9,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.usersMealsAttending = [];
 		$scope.selectedMarkerOldIcon = null;
 		$scope.staffPicks = [];
-		
+		$scope.mapUpdater =null;
 		// TEST NG-SHOW BOOLEAN FOR LEAVING MEAL IN main.html
 		$scope.attendingMeal = false;
 		$scope.mealTime = new Date();
@@ -496,7 +496,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			setStaffPickData();
 			placeAllMarkers();
 		
-
+			$scope.mapUpdater = setInterval(function(){updateMap()}, 30000); //Every 30 seconds, delete all markers, download whole database, create new markers
 			// refreshes the map with new food places when the map is moved a certain amount
 		/*	google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > radius/3){
@@ -791,10 +791,10 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 			
 		
-		updateMarkers =function(){
+		updateMap =function(){
+			console.log("update map");
 			nukeAllMarkers();
-			//placeS
-		
+			placeAllMarkers();
 		}
 		
 		
@@ -868,8 +868,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						loop2:
 						for( var y = 0; y < $scope.mealBuddies.length; y++){
 							loop3:
-							for(var z = 0; z < data[i].people.length; z++){
-								if( $scope.mealBuddies[y][0].key == data[i].people[z].key) {
+							for(var z = 0; z < $scope.dataBase[i].people.length; z++){
+								if( $scope.mealBuddies[y][0].key == $scope.dataBase[i].people[z].key) {
 									buddyWasFound = true;
 									searchingForBuddy = false;
 									break loop2;
@@ -1011,92 +1011,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			});
 		}
 
-		createMealMarker = function(place, lng, lat){
 
-			var userIsGoing = false;
-			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
-				if($scope.usersMealsAttending[i].key == place.place_id){
-					userIsGoing = true;
-				}
-			}
-
-			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
-
-				var numPeople = 0;
-				var searchingForBuddy = true;
-				var buddyWasFound = false;
-
-				//see if user has friends
-				if(  $scope.mealBuddies.length == 0 ){
-					searchingForBuddy = false;
-				}
-
-				loop1:
-				for (var i = 0; i < data.length; i++) {
-					numPeople += data[i].numPeople;
-					if(searchingForBuddy){
-						loop2:
-						for( var y = 0; y < $scope.mealBuddies.length; y++){
-							loop3:
-							for(var z = 0; z < data[i].people.length; z++){
-								if( $scope.mealBuddies[y][0].key == data[i].people[z].key) {
-									buddyWasFound = true;
-									searchingForBuddy = false;
-									break loop2;
-								}
-							}
-						}
-					}
-				}
-
-				var icon = '/img/restaurant.png'; //default meal marker
-
-				/*if( buddyWasFound && userIsGoing){
-					icon = user is going and buddy
-				} else*/
-				if( userIsGoing){
-					icon = '/img/restaur_going.png';
-				}
-				else if( buddyWasFound){
-					icon = '/img/restaur_friend.png'; // friend going marker
-				}
-
-				// This is the Mangiamo Meal marker, ie there is a meal here
-				var marker =  new MarkerWithLabel({
-					icon: icon,
-					map: $scope.map,
-					position:  place.geometry.location,
-					draggable: false,    //property that allows user to move marker
-					raiseOnDrag: false,
-					labelContent:numPeople,
-					labelAnchor: new google.maps.Point(7, 33),    // anchors to
-					labelClass: "labels", // the CSS class for the label
-
-					// Some additional properties of the markers so we can access them later
-					markerId : place.place_id,
-					hasMeal: true,
-				});
-
-				
-				$scope.placedMarkers.push(marker); // Array marker
-				google.maps.event.addListener(marker, 'click', function() {
-					updateMarkerIcon(marker);
-
-					var request = {
-						placeId:marker.markerId,
-					};
-					var service = new google.maps.places.PlacesService($scope.map);
-					service.getDetails(request,getPlaceDetails);
-
-					// Returns ALL the place details and information
-					function getPlaceDetails(place, status) {
-						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.updateMealInfo(place, marker);
-						}
-					}
-				});
-			});
-		}
 
 		//paramater is the new selected marker,
 		// function updates old marker to its old image, and update new to new image
