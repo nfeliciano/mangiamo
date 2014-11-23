@@ -14,9 +14,9 @@
 		</button>
 
 		<!-- Recommended Meals -->
-		<div id="recomContainer" ng-init="initRecomMeals()" ng-show="recomVisible">
+		<div id="recomContainer" ng-show="recomVisible">
 			<div class="sidebarTitle">
-				Suggested
+				We Suggest
 			</div>
 			<hr>
 			<div class="contentInstructions">
@@ -87,11 +87,16 @@
 			<div ng-show="isUserInDatabase()">
 				<div class="sidebarTitle"> Links </div>
 				<hr>
+				<div class="linksInstructions padding20">
+					Meet someone new at lunch? Add them as a Link! 
+					<br>
+					Use 'Find Facebook Friends' to see if your friends are using Linksupp.
+				</div>
 				<accordion close-others="true">
 					<accordion-group class="accordionInfo" id="addANewFriend">
 						<!-- Add a New Friend -->
 						<accordion-heading>
-						<em> Add a New Friend! </em>
+						<em> Add a New Link! </em>
 						<i class="pull-right glyphicon glyphicon-plus"></i>
 						</accordion-heading>
 							<span> 
