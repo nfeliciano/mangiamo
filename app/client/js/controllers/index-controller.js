@@ -163,9 +163,11 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				$scope.mealBuddyRequests = [];
 				$scope.mealBuddies = [];
 				$scope.mealBuddySuggestions = [];
+				
+		
 				for (var i = 0; i < data1.accepted.length; i++) {
 					var mealBuddy = data1.accepted[i];
-					userService.getUserWithID(mealBuddy.key).success(function(data2) {
+					userService.getUserWithID(mealBuddy.key).success(function(data2) {			
 						$scope.mealBuddies.push(data2);
 					});
 				}
@@ -212,6 +214,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 						}
 						$scope.toggleLogoutButton(true);
 						$scope.toggleLoginButton(false);
+						$scope.populateMealBuddies();
 					});
 				});
 
