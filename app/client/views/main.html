@@ -1,7 +1,7 @@
 <div ng-controller="mainController" ng-init="initialize()">
 	<!-- Map -->
 	<div id="mapContainer" class="col-xs-12">
-		<input id="pac-input" class="controls" type="text" placeholder="Where do you want to eat?">
+		<input id="pac-input" class="controls" type="text" placeholder="Where do you want to grab lunch?">
 		<div id="mapCanvas"></div>
 	</div>
 
@@ -31,8 +31,18 @@
 					<br>
 					<span> {{mealSuggestion.numPeople}} attending at {{mealSuggestion.time}} <span ng-hide="isToday(mealSuggestion.timeObj)">(tomorrow)</span></span>
 				</div>
-				<!-- other info -->
 			</div>
+			<!-- This doesn't work yet since staffPicks is just coordinate data -->
+<!-- 			<div ng-repeat="staffMeal in staffPicks | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(staffMeal)">
+				<div class="pull-left recomMealImageDiv">
+					<img src="{{staffMeal.imgURL}}">
+				</div>
+				<div class="recomMealInfo">
+					<span class="recomMealTitle">{{staffMeal.name}}</span>
+					<br>
+					<span> {{staffMeal.numPeople}} attending at {{staffMeal.time}} <span ng-hide="isToday(staffMeal.timeObj)">(tomorrow)</span></span>
+				</div>
+			</div> -->
 		</div>
 
 		<!-- User Instructions -->
