@@ -79,8 +79,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 			var timeOffset = currentDate.getTimezoneOffset();
 
-			console.log("TIMEZONE OFFSET: " + timeOffset);
-
 			var hourOffset = Math.floor(timeOffset / 60);
 			var minuteOffset = timeOffset % 60;
 
@@ -90,7 +88,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			mealDate.setHours(mealDate.getHours() - hourOffset);
 			mealDate.setMinutes(mealDate.getMinutes() - minuteOffset);
 
-			console.log(mealDate > currentDate);
 			return (mealDate > currentDate);
 		}
 
@@ -467,7 +464,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			// Find and programatically click the marker
 			for(var i = 0; i < $scope.placedMarkers.length; i++) {
 				if(meal.placeID == $scope.placedMarkers[i].markerId){
-					console.log("YO");
 					google.maps.event.trigger($scope.placedMarkers[i], 'click');
 					break;
 				}
