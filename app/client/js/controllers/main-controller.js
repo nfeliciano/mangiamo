@@ -7,8 +7,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.dataBase = [];
 		$scope.usersMealsAttending = [];
 		$scope.selectedMarkerOldIcon = null;
+		$scope.isTomorrow = "Today at:";
 
-		$scope.mealTime = new Date();
+		$scope.mealTime = {time: new Date()};
 
 		var radius = 3000;
 		var lastZoomLevel = 13;
@@ -145,7 +146,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var d = new Date();
 			d.setMinutes(0);
 			d.setHours(d.getHours() + 1);
-			$scope.mealTime = d;
+			$scope.mealTime.time = d;
 
 			// Populate $scope.currentPin.meals
 			mealService.getMealsAtPlaceID(place.place_id).success(function(data) {
@@ -190,10 +191,21 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 					hour = hour.toString();
 					/* DATE CALCULATION END */
+					$scope.currentPin.meals[i].date = mealDate.getDate();
 					$scope.currentPin.meals[i].time = hour + ":" + minute + " " + meridiem;
 					$scope.currentPin.meals[i].key = mealData[i].key;
+					$scope.currentPin.meals[i].tomorrow = '';
 					$scope.currentPin.meals[i].attendingMeal = false;
 					$scope.populateAttendees(mealData, i);
+
+					var originalHour = parseInt(hour);
+					if (meridiem == 'pm') originalHour += 12;
+					var currentTime = new Date();
+					if (currentTime.getHours() > originalHour) {
+						$scope.currentPin.meals[i].tomorrow = 'tmrw';
+					} else if (currentTime.getHours() == originalHour && currentTime.getMinutes() > minute) {
+						$scope.currentPin.meals[i].tomorrow = 'tmrw';
+					}
 				}
 			});
 			$scope.setSidebarContent('meals');
@@ -345,6 +357,17 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		// 	}
 		// })
 
+		$scope.$watch('mealTime.time', function() {
+			var currentTime = new Date();
+			if (currentTime > $scope.mealTime.time) {
+				$scope.timeDay = "Tomorrow at:";
+				// $scope.isTomorrow = true;
+			} else {
+				$scope.timeDay = "Today at:";
+				// $scope.isTomorrow = false;
+			}
+		});
+
 		$scope.createMeal = function(mealTime) {
 			// Check if user has given us "Basic Information"
 			if ($scope.user == null) {
@@ -367,17 +390,15 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					return; // user cannot join
 				}
 				var currentTime = new Date();
+				var day = currentTime.getDate();
+				if ($scope.timeDay == "Tomorrow at:") {
+					day = currentTime.getDate()+1;
+				}
 				var date = new Date(currentTime.getFullYear(),
 									currentTime.getMonth(),
-									currentTime.getDate(),
+									day,
 									mealTime.getHours(),
 									mealTime.getMinutes(), 0, 0);
-				if (currentTime > date) {
-					$scope.tellUser("You've tried to create a meal at a time that has already passed. You can only create meals for this day - if you're trying to create a meal for tomorrow, please try again after midnight.",
-					"We have to stop living in the past!");
-					return;
-				}
-				//$scope.currentPin.position
 				mealService.addNewMeal($scope.currentPin.place.place_id, 0, $scope.currentPin.marker.position.lat(), $scope.currentPin.marker.position.lng(), date, [], true).success(function(data) {
 					var key = angular.fromJson($scope.user).key;
 
