@@ -301,7 +301,12 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					// Check if anyone is there
 					if ($scope.currentPin.meals.length == 1 && data.people.length == 0) {
 						$scope.currentPin.marker.setIcon('/img/restaur_selected.png');
-						$scope.selectedMarkerOldIcon = 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0';
+						
+						if(checkIsStaffPick($scope.currentPin.marker.markerId)){
+							$scope.selectedMarkerOldIcon = '/img/staffPick.png';
+						}else{
+							$scope.selectedMarkerOldIcon = 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0';
+						}
 						$scope.currentPin.marker.labelContent = '';
 						$scope.currentPin.marker.label.setContent();
 
@@ -496,7 +501,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			setStaffPickData();
 			placeAllMarkers();
 		
-			$scope.mapUpdater = setInterval(function(){updateMap()}, 10000); //Every 30 seconds, delete all markers, download whole database, create new markers
+			$scope.mapUpdater = setInterval(function(){updateMap()}, 30000); //Every 30 seconds, delete all markers, download whole database, create new markers
 			// refreshes the map with new food places when the map is moved a certain amount
 		/*	google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > radius/3){
@@ -836,7 +841,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		createStarMarker =function(i){
 		
 			var marker =  new MarkerWithLabel({
-				icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0',  //Red dot
+				icon: '/img/staffPick.png',  //staff pick image
 				map: $scope.map,
 				position: new google.maps.LatLng($scope.staffPicks[i][1],$scope.staffPicks[i][2]),
 				draggable: false,    //property that allows user to move marker
@@ -914,7 +919,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			}
 
 			var icon = '/img/restaurant.png'; //default meal marker
-
+			
 			/*if( buddyWasFound && userIsGoing){
 				icon = user is going and buddy
 			} else*/
@@ -1062,6 +1067,10 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 			switch(marker.icon){
 
+			case '/img/staffPick.png': //staff pick
+				marker.setIcon('/img/restaur_selected.png');
+				break;
+				
 			//Red dot
 			case 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0':
 				marker.setIcon('/img/restaur_selected.png');
