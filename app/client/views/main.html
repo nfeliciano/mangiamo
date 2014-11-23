@@ -14,10 +14,14 @@
 		</button>
 
 		<!-- Recommended Meals -->
-		<div id="staffContainer" ng-show="staffVisible">
-			MEAL SUGGESTIONS
+		<div id="recomContainer" ng-init="initRecomMeals()" ng-hide="recomVisible">
+			<div class="sidebarTitle">
+				Recommended
+			</div>
+			<hr>
 			<div ng-repeat="mealSuggestion in dataBase | orderBy:'numPeople'">
-				{{mealSuggestion.name}}
+				|PICTURE| {{mealSuggestion.name}}
+				<!-- other info -->
 			</div>
 		</div>
 
