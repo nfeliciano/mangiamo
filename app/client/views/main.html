@@ -26,7 +26,7 @@
 				<div class="recomMealInfo">
 					<span class="recomMealTitle">{{mealSuggestion.name}}</span>
 					<br>
-					<span> {{mealSuggestion.numPeople}} attending at {{mealSuggestion.time}} (tomorrow)</span>
+					<span> {{mealSuggestion.numPeople}} attending at {{mealSuggestion.time}} <span ng-hide="isToday(mealSuggestion.timeObj)">(tomorrow)</span></span>
 				</div>
 				<!-- other info -->
 			</div>

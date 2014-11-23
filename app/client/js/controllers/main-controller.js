@@ -70,7 +70,23 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.initRecomMeals = function() {
 			$scope.dataBase = [];
-			// refresh everything
+			setStaffPickData();
+			placeStaffPicks();
+		}
+
+		$scope.isToday = function(time) {
+			var currentDate = new Date();
+			var timeOffset = currentDate.getTimezoneOffset();
+			var hourOffset = Math.floor(timeOffset / 60);
+			var minuteOffset = timeOffset % 60;
+
+			time.setHours(time.getHours() + hourOffset);
+			time.setMinutes(time.getMinutes() + minuteOffset);
+			currentDate.setDate(time.getDate());
+			console.log(currentDate); 
+			console.log(time); 
+			// console.log(time > currentDate);
+			return (time > currentDate);
 		}
 
 		// This function submits the user data to the database, and redirects the user
@@ -512,10 +528,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				types: ['restaurant','cafe']
 			};
 
-			var service = new google.maps.places.PlacesService($scope.map);
-			setStaffPickData();
-			placeStaffPicks();
-		
+			var service = new google.maps.places.PlacesService($scope.map);		
 
 			// refreshes the map with new food places when the map is moved a certain amount
 		/*	google.maps.event.addListener($scope.map, 'bounds_changed', function() {

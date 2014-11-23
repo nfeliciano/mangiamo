@@ -149,14 +149,27 @@ hr
 
 .recomMeal
 {
-	/*height: 30px;*/
-	margin: 2px 20px 2px 20px;
+	margin: 2px 20px 10px 20px;
 	font-family: "Roboto", sans-serif;
 	font-size: 16px;
 	background-color: #CCCCCC;
-	border 
-	border-color: #AAAAAA;
-	padding: 5px 0px 5px 0px;
+	border: 1px solid #AAAAAA; 
+	border-radius: 5px;
+	padding: 5px;
+
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	box-shadow: 0 1px 1px rgba(0,0,0, .5);
+}
+
+.recomMeal:hover
+{
+	background-color: #AAAAAA;
+}
+
+.recomMeal:focus
+{
+	background-color: #BBBBBB;
 }
 
 .recomMealImageDiv
@@ -164,7 +177,7 @@ hr
 	width: 30px;
 	height: 30px;
 	overflow: hidden;
-	/*padding: 5px;*/
+	border: 1px solid #AAAAAA;
 }
 
 .recomMeal > div > img
