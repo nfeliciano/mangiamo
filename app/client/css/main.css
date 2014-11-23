@@ -123,6 +123,15 @@ hr
 {
 	text-align: center;
 	font-size: 0.8em;
+	margin-bottom: 4px;
+}
+
+.specialAttendee
+{
+	background-color: rgba(255,255,255, 0.7);
+	border: 1px solid grey;
+	border-radius: 50%;
+	padding: 4px;
 }
 
 #mealsHeader
@@ -158,7 +167,7 @@ hr
 	margin: 2px 20px 10px 20px;
 	font-family: "Roboto", sans-serif;
 	font-size: 16px;
-	background-color: #CCCCCC;
+	background-color: #DDDDDD;
 	border: 1px solid #AAAAAA; 
 	border-radius: 5px;
 	padding: 5px;
@@ -213,6 +222,15 @@ hr
 	color: rgb(47, 95, 127);
 }
 
+.contentInstructions
+{
+	text-align: center;
+	font-family: "PT Sans", sans-serif;
+	font-size: 18px;
+	padding-bottom: 10px;
+	/*background-color: red;*/
+}
+
 #mealPlace
 {
 	padding: 0px 0 60px 0;
@@ -236,6 +254,8 @@ hr
 
 .accordionInfo
 {
+	margin: 0px 20px 0px 20px;
+	/*background-color: #EEEEEE;*/
 	text-align: left;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
 	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
@@ -251,6 +271,11 @@ hr
 {
 	background-color: #2F5F7F;
 	color: white;
+}
+
+.padding20
+{
+	padding: 0px 20px 0px 20px;
 }
 /* MEAL INFORMATION END */
 
@@ -271,6 +296,7 @@ hr
 {
 	overflow: hidden;
 	max-height: 200px;
+	width: 100%;
 }
 
 .sidebarMealsTitle

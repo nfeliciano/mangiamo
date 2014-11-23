@@ -1,7 +1,7 @@
 <div ng-controller="mainController" ng-init="initialize()">
 	<!-- Map -->
 	<div id="mapContainer" class="col-xs-12">
-		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+		<input id="pac-input" class="controls" type="text" placeholder="Where do you want to eat?">
 		<div id="mapCanvas"></div>
 	</div>
 
@@ -19,6 +19,9 @@
 				Suggested
 			</div>
 			<hr>
+			<div class="contentInstructions">
+				Indecisive? Check out one of these places:
+			</div>
 			<div ng-repeat="mealSuggestion in dataBase | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion)">
 				<div class="pull-left recomMealImageDiv">
 					<img src="{{mealSuggestion.imgURL}}">
@@ -38,26 +41,28 @@
 				Help
 			</div>
 			<hr>
-			<div>
-				<div>
+			<div class="padding20">
+				<div class="padding20">
 					<span class="glyphicon glyphicon-search"></span>
 					 Use the search box to find restaurants.
 				</div>
-				<div>
+				<div class="padding20">
 				<span class="glyphicon glyphicon-hand-up"></span>
 					 Click a pin or marker on the map.
 				</div>
-				<div>
+				<div class="padding20">
 					<span class="glyphicon glyphicon-cutlery"></span>
 					 Create or join a meal.
 				</div>
-				<div>
+				<div class="padding20">
 					<span class="glyphicon glyphicon-user"></span>
 					 Press "Links" tab to add friends.
 				 </div>
 			</div>
 			<!-- <h1> Legend </h1> -->
-			<img src="/img/legend.png" id="legend">
+			<div class="padding20">
+				<img src="/img/legend.png" id="legend">
+			</div>
 		</div>
 
 		<!-- Links -->
@@ -81,6 +86,24 @@
 				<div class="sidebarTitle"> Links </div>
 				<hr>
 				<accordion close-others="true">
+					<accordion-group class="accordionInfo" id="addANewFriend">
+						<!-- Add a New Friend -->
+						<accordion-heading>
+						<em> Add a New Friend! </em>
+						<i class="pull-right glyphicon glyphicon-plus"></i>
+						</accordion-heading>
+							<span> 
+								Your ID is: <strong>{{UID}}</strong>
+								<br>
+								Give your ID to a friend so they can add you! 
+								<br>
+								<br>
+							</span>
+						<form>
+							<input type="text" placeholder="Enter a friend's ID" ng-model="newMealBuddy"><br>
+							<button id="friendAdder" class="btn btn-primary" ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>
+						</form>
+					</accordion-group>
 					<accordion-group class="accordionInfo" is-open="status.open" ng-repeat="mealBuddy in mealBuddies">
 						<accordion-heading>
 							{{mealBuddy[0].name}}
@@ -93,22 +116,6 @@
 						</div>
 						<button class="btn btn-default btn-sm pull-right" ng-click="removeMealBuddy(mealBuddy, false)"> Remove </button>
 					</accordion-group>
-					<accordion-group class="accordionInfo" id="addANewFriend">
-							<!-- Add a New Friend -->
-							<accordion-heading>
-							<em> Add a New Friend! </em>
-							<i class="pull-right glyphicon glyphicon-plus"></i>
-							</accordion-heading>
-								<span> 
-									Your ID is: <strong>{{UID}}</strong>
-									<br>
-									Give it to a friend for them to add you! 
-								</span>
-							<form>
-								<input type="text" placeholder="Enter a friend's ID" ng-model="newMealBuddy"><br>
-								<button id="friendAdder" class="btn btn-primary" ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>
-							</form>
-						</accordion-group>
 				</accordion>
 
 				<p class="linkHeader"> Requests </p>
@@ -148,15 +155,23 @@
 		<div id="mealsContainer" ng-show="mealsVisible">
 			<!-- Location -->
 			<div id="mealPlace">
-				<div id="mealsFullTop">
+				<div id="mealsFullTop" class="hidden-xs">
 					<div class="sidebarMealsTitle">
 						{{currentPin.name}}
 					</div>
 					<!-- <img ng-src="{{currentPin.place.photos[0].getUrl({'maxwidth': 350, 'maxHeight': 350})}}" class="mealImage hidden-xs"> -->
-					<img ng-src="{{currentPin.placeImgUrl}}" class="mealImage hidden-xs">
+					<div class="mealImage">
+						<img ng-src="{{currentPin.placeImgUrl}}" class="mealImage">
+					</div>
+				</div>
+				<div class="sidebarTitle visible-xs">
+					{{currentPin.name}}
 				</div>
 				<hr>
 				<!-- Existing Meals -->
+				<div class="contentInstructions" ng-hide="noMeals">
+					Pick a time below to see who's going:
+				</div>
 				<div id="mealsHeader" ng-hide="noMeals">
 					<span class="pull-left"> Meal Time </span>
 					Attendees
@@ -175,8 +190,14 @@
 						</accordion-heading>
 						<div ng-repeat="attendee in meal.attendees" ng-init="isUserAttendingMeal(meal)">
 							<div class="mealAttendee" ng-class="{mealAttendeeSelf: isThisMe(attendee)}">
-								<div class="attendeeIdentifer" ng-show="isThisMe(attendee)">- This is You! -</div>
-								<div class="attendeeIdentifer" ng-show="isThisMyFriend(attendee)">- {{ attendee.name }} -</div>
+								<div class="attendeeIdentifer" ng-show="isThisMe(attendee)">
+									<span class="specialAttendee">- This is You! -</span>
+									<br>
+								</div>
+								<div class="attendeeIdentifer" ng-show="isThisMyFriend(attendee)">
+									<span class="specialAttendee">- {{ attendee.name }} -</span>
+									<br>
+								</div>
 								I am a <strong>{{attendee.description}}</strong> with a profession in
 								<strong>{{attendee.profession}}</strong> and I am between
 								<strong>{{attendee.ageRange}}</strong>.
@@ -215,7 +236,9 @@
 					<div>
 						<timepicker id="mealTimePicker" ng-model="mealTime.time" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
 					</div>
-					<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime.time)"> Create a New Meal </button>
+					<div class="padding20">
+						<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime.time)"> Create a New Meal </button>
+					</div>
 				</div>
 			</div>
 		</div>

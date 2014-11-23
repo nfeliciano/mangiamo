@@ -144,6 +144,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
         	panControlOptions: {
         		position: google.maps.ControlPosition.RIGHT_CENTER},
         	zoom: 13,
+        	mapTypeControlOptions: {
+		      mapTypeIds: [google.maps.MapTypeId.ROADMAP]
+		    },
 			streetViewControl: false
         }
 
@@ -173,7 +176,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			$scope.currentPin.meals = [];
 
 			if(place.photos){				
-				$scope.currentPin.placeImgUrl = place.photos[0].getUrl({'maxwidth': 350, 'maxHeight': 350});
+				$scope.currentPin.placeImgUrl = place.photos[0].getUrl({'maxwidth': 480, 'maxHeight': 480});
 			}
 			else{
 				$scope.currentPin.placeImgUrl = "/img/logo-banner.png";
