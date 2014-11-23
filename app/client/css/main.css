@@ -149,7 +149,7 @@ hr
 
 .recomMeal
 {
-	height: 30px;
+	min-height: 30px;
 	font-family: "Roboto", sans-serif;
 	font-size: 16px;
 	background-color: #CCCCCC;
@@ -159,7 +159,7 @@ hr
 .recomMealImageDiv
 {
 	width: 30px;
-	height: 100%;
+	height: 30px;
 	overflow: hidden;
 }
 
@@ -264,6 +264,7 @@ hr
 {
 	width:100%;
 	height:auto;
+	min-height: 200px;
 }
 
 #mapContainer

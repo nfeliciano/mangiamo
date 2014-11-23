@@ -16,7 +16,7 @@
 		<!-- Recommended Meals -->
 		<div id="recomContainer" ng-init="initRecomMeals()" ng-show="recomVisible">
 			<div class="sidebarTitle">
-				Recommended
+				Suggested
 			</div>
 			<hr>
 			<div ng-repeat="mealSuggestion in dataBase | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion.key)">
