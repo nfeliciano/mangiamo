@@ -212,6 +212,12 @@ hr
 	font-size: 18px;
 }
 
+.noSuggestedMessage
+{
+	margin-top: 20px;
+	text-align: center;
+}
+
 /*RECOM END*/
 
 /* MEAL INFORMATION START */

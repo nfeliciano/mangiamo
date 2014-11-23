@@ -22,7 +22,7 @@
 			<div class="contentInstructions">
 				Indecisive? Check out one of these places:
 			</div>
-			<div ng-repeat="mealSuggestion in dataBase | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion)">
+			<div ng-repeat="mealSuggestion in dataBase | limitTo: 10 | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion)">
 				<div class="pull-left recomMealImageDiv">
 					<img src="{{mealSuggestion.imgURL}}" class="recomMealImage">
 				</div>
@@ -32,17 +32,9 @@
 					<span> {{mealSuggestion.numPeople}} attending at {{mealSuggestion.time}} <span ng-hide="isToday(mealSuggestion.timeObj)">(tomorrow)</span></span>
 				</div>
 			</div>
-			<!-- This doesn't work yet since staffPicks is just coordinate data -->
-<!-- 			<div ng-repeat="staffMeal in staffPicks | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(staffMeal)">
-				<div class="pull-left recomMealImageDiv">
-					<img src="{{staffMeal.imgURL}}">
-				</div>
-				<div class="recomMealInfo">
-					<span class="recomMealTitle">{{staffMeal.name}}</span>
-					<br>
-					<span> {{staffMeal.numPeople}} attending at {{staffMeal.time}} <span ng-hide="isToday(staffMeal.timeObj)">(tomorrow)</span></span>
-				</div>
-			</div> -->
+			<div ng-show="dataBase.length == 0" class="noSuggestedMessage padding20">
+				It doesn't look like anyone is grabbing lunch - but you can be the first to say you are! Start by searching for your favourite spot, or clicking on one of our staff picks (the stars)!
+			</div>
 		</div>
 
 		<!-- User Instructions -->
