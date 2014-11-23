@@ -28,6 +28,12 @@
 	text-align: center;
 }
 
+.back-to-map
+{
+	font-size: 14px;
+	margin-bottom: 4px;
+}
+
 	/* INTRO */
 	#introContainer
 	{
