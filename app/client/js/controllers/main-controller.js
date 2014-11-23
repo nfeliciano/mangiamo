@@ -134,7 +134,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.updateMealInfo = function(place, marker) {
-			console.log("update Meal info");
+			// console.log("update Meal info");
 			$scope.currentPin.name = place.name;
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
@@ -384,7 +384,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					return;
 				}
 				//$scope.currentPin.position
-				mealService.addNewMeal($scope.currentPin.place.place_id, 0, $scope.currentPin.marker.position.lat(), $scope.currentPin.marker.position.lng(), date, [], true).success(function(data) {
+
+				mealService.addNewMeal($scope.currentPin.place.place_id, 0, $scope.currentPin.marker.position.lat(), $scope.currentPin.marker.position.lng(), date, $scope.currentPin.place.photos[0].getUrl({'maxwidth': 150, 'maxHeight': 150}), $scope.currentPin.place.name, [], true).success(function(data) {
 					var key = angular.fromJson($scope.user).key;
 
 					mealService.addUserToMeal(data.key, key).success(function(meal) {
@@ -706,9 +707,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		placeStaffPicks = function(){
 			mealService.getAllMeals().success(function(data){
 				$scope.dataBase = null;
-				$scope.dataBase =data;
-				
-				console.log($scope.dataBase);
+				$scope.dataBase = data;
 				
 				var hasMeal = false;
 				//console.log($scope.staffPicks);
@@ -749,9 +748,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			for( var i = 0; i < $scope.dataBase.length; i++){
 				key = $scope.dataBase[i].placeID;
 				
-					console.log("key = ", key);
+					// console.log("key = ", key);
 					if( checkNewKey(key)){
-						console.log("check check");
+						// console.log("check check");
 						var number = getNumberOfPeople(key);
 						placeMealMarker(i,number);
 						//createMealMarker(
@@ -829,7 +828,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		
 		
 		placeMealMarker= function(i,numPeople){
-			console.log("meal marker  i = ", i, "  people = ", numPeople);
+			// console.log("meal marker  i = ", i, "  people = ", numPeople);
 		/*
 			var userIsGoing = false;
 			for( var i = 0; i < $scope.usersMealsAttending.length; i++){
@@ -895,7 +894,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					hasMeal: true,
 				});
 
-				console.log(marker.position);
+				// console.log(marker.position);
 				$scope.placedMarkers.push(marker); // Array marker
 				google.maps.event.addListener(marker, 'click', function() {
 					updateMarkerIcon(marker);
@@ -909,7 +908,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					// Returns ALL the place details and information
 					function getPlaceDetails(place, status) {
 						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							console.log(place);
+							// console.log(place);
 							$scope.updateMealInfo(place, marker);
 						}
 					}
