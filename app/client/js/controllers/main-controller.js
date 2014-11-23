@@ -519,42 +519,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var service = new google.maps.places.PlacesService($scope.map);
 			setStaffPickData();
 			placeAllMarkers();
-		
 			$scope.mapUpdater = setInterval(function(){updateMap()}, 30000); //Every 30 seconds, delete all markers, download whole database, create new markers
-			// refreshes the map with new food places when the map is moved a certain amount
-		/*	google.maps.event.addListener($scope.map, 'bounds_changed', function() {
-				if(google.maps.geometry.spherical.computeDistanceBetween($scope.lastPosition, $scope.map.getCenter()) > radius/3){
-					request.bounds = $scope.map.getBounds();
-					$scope.populateMealBuddies();
-					$scope.lastPosition = $scope.map.getCenter();
-					request.location=offsetCenter($scope.map.getCenter(),-radius/10,-radius/10);
-					service.radarSearch(request, fastCallback);
-					//service.radarSearch(request, smoothUpdateCallback);  //smooth update wont work anymore without some special consideration of the aysc ness
-				}
-			});
-*/
-			// Limit the zoom level
-		/*	google.maps.event.addListener($scope.map, 'zoom_changed', function() {
-
-				if ($scope.map.getZoom() < minZoomLevel){
-					$scope.map.setZoom(minZoomLevel);
-					return;
-				}
-				var bounds = $scope.map.getBounds();
-				var sw = bounds.getSouthWest();
-				var ne = bounds.getNorthEast();
-
-				var screenWidthMeters = google.maps.geometry.spherical.computeDistanceBetween (sw, ne);
-				request.bounds = $scope.map.getBounds();
-
-					request.radius = radius;
-					$scope.lastPosition = $scope.map.getCenter();
-
-					request.location=offsetCenter($scope.map.getCenter(),radius/4,radius/4);
-					//service.radarSearch(request, fastCallback);
-					
-				});*/
-
 			initializeSearchBar();
 		}
 
@@ -766,8 +731,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				//If no meal was found, create the star marker
 				if( !hasMeal){
 					createStarMarker(i);
+				
 					//programmatically click it
-					if(($scope.currentPin.marker != null) &&( $scope.currentPin.marker.markerId == $scope.placedMarkers[$scope.placedMarkers.length -1].markerID)){
+					if(($scope.currentPin.marker != null) &&( $scope.currentPin.marker.markerId == $scope.placedMarkers[$scope.placedMarkers.length -1].markerId)){
 						google.maps.event.trigger($scope.placedMarkers[$scope.placedMarkers.length -1], 'click');	
 					}					
 				}
@@ -780,7 +746,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//Then place a new marker
 		placeMeals = function(){
 			
-			//console.log("current pin id ", $scope.currentPin.marker.markerId);
 			var placeID;
 			for( var i = 0; i < $scope.dataBase.length; i++){
 				placeID = $scope.dataBase[i].placeID;
@@ -833,28 +798,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		updateMap =function(){
 			nukeAllMarkers();
 			placeAllMarkers();
-			checkSelectedMarker();
 		}
-		
-		checkSelectedMarker = function(){
-			var found = false;
-			if($scope.currentPin.marker != null){
-				for( var i=0; i<$scope.placedMarkers.length; i++){
-				
-					if( $scope.currentPin.markerId == $scope.placedMarkers[i].markerId){
-						found = true;
-					}
-				}
-				
-				if(!found){
-					
-					$scope.currentPin.marker.setMap($scope.map);
-					
-					$scope.placedMarkers.push($scope.currentPin.marker);
-				}
-			}
-		}
-		
 		
 		
 		createStarMarker =function(i){
@@ -907,8 +851,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			
 			//see if user has friends
 			if(  $scope.mealBuddies.length == 0 ){
-				
-				console.log("Problem asyc mealbuddies happens to slow ",$scope.mealBuddies);
+				//console.log("Problem asyc mealbuddies happens to slow ",$scope.mealBuddies);
 				searchingForBuddy = false;
 			}
 			
@@ -1073,7 +1016,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//paramater is the new selected marker,
 		// function updates old marker to its old image, and update new to new image
 		updateMarkerIcon = function(marker) {
-			console.log("update marker");
 		  	// At this point, currentPin is still the old marker, so check icons
 			// if the old one exists, return it to normal
 			if($scope.currentPin.marker != null){
