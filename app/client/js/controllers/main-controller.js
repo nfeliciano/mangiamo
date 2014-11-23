@@ -412,6 +412,21 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			});
 		}
 
+		$scope.goToMeal = function(meal) {
+			// Set map center to the coordinates of the meal
+			var pos = new google.maps.LatLng(meal.lat, meal.lng);
+			$scope.map.setCenter(pos);
+
+			// Find and programatically click the marker
+			for(var i = 0; i < $scope.placedMarkers.length; i++) {
+				if(meal.placeID == $scope.placedMarkers[i].markerId){
+					console.log("YO");
+					google.maps.event.trigger($scope.placedMarkers[i], 'click');
+					break;
+				}
+			}
+		}
+
 		$scope.removeMealBuddy = function(mealBuddy) {
 			userService.deleteMealBuddy(mealBuddy[0].key, angular.fromJson($scope.user).key).success(function(data) {
 				$scope.populateMealBuddies();
