@@ -147,7 +147,7 @@
 								<div>
 									{{meal.attendees.length}}
 								</div>
-								{{meal.time}}<sup>{{meal.tomorrow}}</sup>
+								{{meal.time}} <span>{{meal.tomorrow}}</span>
 								<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 							</div>
 						</accordion-heading>
@@ -174,11 +174,11 @@
 								<i class="pull-right glyphicon glyphicon-plus"></i>
 							</div>
 						</accordion-heading>
+						<div id="timeDay">
+							{{timeDay}}
+						</div>
 						<div id="timeTicker">
 							<timepicker id="mealTimePicker" ng-model="mealTime.time" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
-						</div>
-						<div id="tomorrow" ng-show="isTomorrow">
-							<span>This meal will be created for tomorrow</span>
 						</div>
 						<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime.time)"> Create a New Meal </button>
 					</accordion-group>
@@ -187,11 +187,11 @@
 					<div id="sidebarContentHeader">
 						Be the First to Create a Meal Here!
 					</div>
-					<div id="timeTicker">
-						<timepicker id="mealTimePicker" ng-model="mealTime.time" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
+					<div id="timeDay">
+						{{timeDay}}
 					</div>
-					<div id="tomorrow" ng-show="isTomorrow">
-						<span>This meal will be created for tomorrow</span>
+					<div>
+						<timepicker id="mealTimePicker" ng-model="mealTime.time" hour-step="1" minute-step="15" show-meridian="true" readonly-input="true"></timepicker>
 					</div>
 					<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime.time)"> Create a New Meal </button>
 				</div>

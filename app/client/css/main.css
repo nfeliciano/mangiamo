@@ -147,9 +147,20 @@ hr
 	width: 90%;
 	text-align: center;
 }
+
+#mealInfoHeader > span
+{
+	font-size: .8em;
+	color: rgba(47, 95, 127, .5);
+}
 /* END FRIENDS */
 
 /* MEAL INFORMATION START */
+#timeDay
+{
+	color: rgb(47, 95, 127);
+}
+
 #mealPlace
 {
 	padding: 0px 0 60px 0;
@@ -182,11 +193,6 @@ hr
 .meal
 {
 	padding-bottom: 10px;
-}
-
-#timeTicker
-{
-	text-align: center;
 }
 
 .button

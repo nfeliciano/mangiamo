@@ -7,7 +7,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.dataBase = [];
 		$scope.usersMealsAttending = [];
 		$scope.selectedMarkerOldIcon = null;
-		$scope.isTomorrow = false;
+		$scope.isTomorrow = "Today at:";
 
 		$scope.mealTime = {time: new Date()};
 
@@ -194,9 +194,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					if (meridiem == 'pm') originalHour += 12;
 					var currentTime = new Date();
 					if (currentTime.getHours() > originalHour) {
-						$scope.currentPin.meals[i].tomorrow = 'tomorrow';
+						$scope.currentPin.meals[i].tomorrow = 'tmrw';
 					} else if (currentTime.getHours() == originalHour && currentTime.getMinutes() > minute) {
-						$scope.currentPin.meals[i].tomorrow = 'tomorrow';
+						$scope.currentPin.meals[i].tomorrow = 'tmrw';
 					}
 				}
 			});
@@ -352,9 +352,11 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.$watch('mealTime.time', function() {
 			var currentTime = new Date();
 			if (currentTime > $scope.mealTime.time) {
-				$scope.isTomorrow = true;
+				$scope.timeDay = "Tomorrow at:";
+				// $scope.isTomorrow = true;
 			} else {
-				$scope.isTomorrow = false;
+				$scope.timeDay = "Today at:";
+				// $scope.isTomorrow = false;
 			}
 		});
 
@@ -381,7 +383,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				}
 				var currentTime = new Date();
 				var day = currentTime.getDate();
-				if ($scope.isTomorrow) day = currentTime.getDate()+1;
+				if ($scope.timeDay == "Tomorrow at:") {
+					day = currentTime.getDate()+1;
+				}
 				var date = new Date(currentTime.getFullYear(),
 									currentTime.getMonth(),
 									day,
