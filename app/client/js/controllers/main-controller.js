@@ -346,6 +346,11 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		// 	}
 		// })
 
+		$scope.$watch('user', function() {
+			$scope.getUsersMealsAttending();
+			placeAllMarkers();
+		});
+
 		$scope.$watch('mealTime.time', function() {
 			var currentTime = new Date();
 			var mealTime = new Date($scope.mealTime.time);
@@ -607,16 +612,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.$on('reloadRecom', function(event) {
-			mealService.getAllMeals().success(function(data){
-				nukeAllMarkers();
-				$scope.dataBase = null;
-				$scope.dataBase =data;
-
-				placeStaffPicks();	 //places any staff pick with no meal
-				placeMeals();	// places ALL meals
-			});
+			placeAllMarkers();
 		});
-
 
 		setStaffPickData = function(){
 
@@ -770,6 +767,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		placeAllMarkers = function(){
 
 			mealService.getAllMeals().success(function(data){
+				nukeAllMarkers();
 
 				$scope.dataBase = null;
 				$scope.dataBase =data;
