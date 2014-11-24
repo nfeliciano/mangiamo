@@ -390,7 +390,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.$watch('mealTime.time', function() {
 			var currentTime = new Date();
-			var mealTime = $scope.mealTime.time;
+			var mealTime = new Date($scope.mealTime.time);
 			mealTime.setMinutes(mealTime.getMinutes()+15);
 			if (currentTime > mealTime) {
 				$scope.timeDay = "Tomorrow at:";
