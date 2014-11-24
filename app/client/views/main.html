@@ -32,8 +32,15 @@
 					<span> {{mealSuggestion.numPeople}} attending at {{mealSuggestion.time}} <span ng-hide="isToday(mealSuggestion.timeObj)">(tomorrow)</span></span>
 				</div>
 			</div>
-			<div ng-show="dataBase.length == 0" class="noSuggestedMessage padding20">
-				It doesn't look like anyone is grabbing lunch - but you can be the first to say you are! Start by searching for your favourite spot, or clicking on one of our staff picks (the stars)!
+			<div ng-repeat="pick in staffPicks | limitTo: 5" class="recomMeal" ng-click="goToStaffPick(pick)">
+				<div class="pull-left recomMealImageDiv">
+					<img src="{{pick[4]}}" class="recomMealImage">
+				</div>
+				<div class="recomMealInfo">
+					<span class="recomMealTitle">{{pick[3]}}</span>
+					<br>
+					<span>  </span>
+				</div>
 			</div>
 		</div>
 
