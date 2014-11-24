@@ -51,23 +51,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.setSidebarContent('staff');
 		/* MAIN.HTML REFRESH CODE END */
 
-		// initForm populates local variables from local JSON files.  This speparates
-		// a lot of data from html and Angular into appropriate JSON files.  The
-		// following "gets" allow angular to access these local JSON files
-		$scope.initLoginForm = function() {
-			$http.get('/json/occupations.json').success( function(data) {
-				$scope.occupations = data.occupations;
-			});
-			$http.get('/json/dateRanges.json').success( function(data) {
-				$scope.dateRanges = data.dateRanges;
-			});
-			$http.get('/json/meFactors.json').success( function(data) {
-				$scope.meFactorAdjs = data.meFactorAdjs;
-				$scope.meFactorVerbs = data.meFactorVerbs;
-				$scope.meFactorNouns = data.meFactorNouns;
-			});
-		};
-
 		$scope.initRecomMeals = function() {
 			// $scope.dataBase = [];
 			// setStaffPickData();
@@ -76,7 +59,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.isToday = function(time) {
 			var currentDate = new Date();
-			var mealDate = new Date(time.getTime());
+			var mealDate = new Date(time);
 
 			var timeOffset = currentDate.getTimezoneOffset();
 			var hourOffset = Math.floor(timeOffset / 60);
@@ -91,42 +74,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			mealDate.setMinutes(mealDate.getMinutes()+15);
 
 			return (mealDate > currentDate);
-		}
-
-		// This function submits the user data to the database, and redirects the user
-		$scope.submitUserData = function() {
-			// $scope.submittingUser = true;
-			var name = null;
-			var facebookKey = null;
-			var email = null;
-			if (sessionStorage.name) {
-				name = sessionStorage.name;
-				if (sessionStorage.facebookID) {
-					facebookKey = sessionStorage.facebookID;
-					if (sessionStorage.email) {
-						email = sessionStorage.email;
-					}
-				}
-			}
-			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
-			if ( description == 'badUserForm' ) {
-				$scope.tellUser('You need to Describe Yourself!', 'Incomplete Form');
-			}
-			else if (!$scope.dateRange) {
-				$scope.tellUser('Don\'t worry about it, we\'ll keep your age a secret!', 'Incomplete Form');
-			}
-			else if (!$scope.occupation) {
-				$scope.tellUser('Sorry we didn\'t supply "Neglectful Form Filler" as an option, please select one of the supplied options', 'Incomplete Form');
-			}
-			else {
-				userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, email, 0).success( function(data) {
-					$scope.declareUser(data);
-					$scope.toggleLogoutButton(true);
-					$scope.toggleLoginButton(false);
-					$('#userInformationModal').modal('hide');
-					$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
-				});
-			}
 		}
 
 		var mapOptions = {
@@ -579,7 +526,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var service = new google.maps.places.PlacesService($scope.map);
 			setStaffPickData();
 			placeAllMarkers();
-			$scope.mapUpdater = setInterval(function(){updateMap()}, 30000); //Every 30 seconds, delete all markers, download whole database, create new markers
+			$scope.mapUpdater = setInterval(function(){updateMap()}, 60000); //Every 30 seconds, delete all markers, download whole database, create new markers
 			initializeSearchBar();
 		}
 
@@ -658,6 +605,16 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		    	searchBox.setBounds(bounds);
 			});
 		}
+
+		$scope.$on('reloadRecom', function(event) {
+			mealService.getAllMeals().success(function(data){
+				$scope.dataBase = null;
+				$scope.dataBase =data;
+
+				placeStaffPicks();	 //places any staff pick with no meal
+				placeMeals();	// places ALL meals
+			});
+		});
 
 
 	setStaffPickData = function(){
