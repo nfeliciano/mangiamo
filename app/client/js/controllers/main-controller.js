@@ -394,10 +394,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			mealTime.setMinutes(mealTime.getMinutes()+15);
 			if (currentTime > mealTime) {
 				$scope.timeDay = "Tomorrow at:";
-				// $scope.isTomorrow = true;
 			} else {
 				$scope.timeDay = "Today at:";
-				// $scope.isTomorrow = false;
 			}
 		});
 
