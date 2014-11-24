@@ -204,6 +204,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.getUsersMealsAttending = function(){
+			if (!$scope.user) {
+				return;
+			}
 			userService.getUserWithID(angular.fromJson($scope.user).key).success(function(data) {
 				$scope.usersMealsAttending = data[0].mealsAttending;
 			});

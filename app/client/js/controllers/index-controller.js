@@ -191,7 +191,6 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		// a lot of data from html and Angular into appropriate JSON files.  The
 		// following "gets" allow angular to access these local JSON files
 		$scope.initLoginForm = function() {
-			console.log('init login');
 			$http.get('/json/occupations.json').success( function(data) {
 				$scope.occupations = data.occupations;
 			});
