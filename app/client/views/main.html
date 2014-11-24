@@ -32,8 +32,15 @@
 					<span> {{mealSuggestion.numPeople}} attending at {{mealSuggestion.time}} <span ng-hide="isToday(mealSuggestion.timeObj)">(tomorrow)</span></span>
 				</div>
 			</div>
-			<div ng-show="dataBase.length == 0" class="noSuggestedMessage padding20">
-				It doesn't look like anyone is grabbing lunch - but you can be the first to say you are! Start by searching for your favourite spot, or clicking on one of our staff picks (the stars)!
+			<div ng-repeat="pick in staffPicks | limitTo: 5" class="recomMeal" ng-click="goToStaffPick(pick)">
+				<div class="pull-left recomMealImageDiv">
+					<img src="{{pick[4]}}" class="recomMealImage">
+				</div>
+				<div id="staffPick">
+					<span class="recomMealTitle">{{pick[3]}}</span>
+					<br>
+					<span>  </span>
+				</div>
 			</div>
 		</div>
 
@@ -69,7 +76,6 @@
 
 		<!-- Links -->
 		<div id="linksContainer"  ng-show="linksVisible">
-
 			<div ng-hide="isUserInDatabase()">
 				<div class="sidebarTitle"> Links </div>
 				<hr>
@@ -107,7 +113,7 @@
 								<br>
 							</span>
 						<form>
-							<input type="text" placeholder="Enter a friend's ID" ng-model="newMealBuddy"><br>
+							<input placeholder="Enter a friend's ID" ng-model="newMealBuddy"> <br>
 							<button id="friendAdder" class="btn btn-primary" ng-click="addFriend(newMealBuddy)"> Click to add a Friend! </button>
 						</form>
 					</accordion-group>
@@ -132,9 +138,11 @@
 							{{mealBuddyRequest[0].name}}
 							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 						</accordion-heading>
-						I am a <strong>{{mealBuddyRequest[0].description}}</strong> with a profession in
-						<strong>{{mealBuddyRequest[0].profession}}</strong> and I am between
-						<strong>{{mealBuddyRequest[0].ageRange}}</strong>.
+						<div class="mealAttendee">
+							I am a <strong>{{mealBuddyRequest[0].description}}</strong> with a profession in
+							<strong>{{mealBuddyRequest[0].profession}}</strong> and I am between
+							<strong>{{mealBuddyRequest[0].ageRange}}</strong>.
+						</div>
 						<button class="btn btn-default btn-sm" ng-click="confirmMealBuddy(mealBuddyRequest)"> Accept </button>
 						<button class="btn btn-default btn-sm" ng-click="removeMealBuddy(mealBuddyRequest)"> Decline </button>
 
@@ -149,9 +157,11 @@
 							{{mealBuddySuggestion[0].name}}
 							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 						</accordion-heading>
-						Age Range: {{mealBuddySuggestion[0].ageRange}}<br>
-						Profession: {{mealBuddySuggestion[0].profession}}<br>
-						Me-Factor: {{mealBuddySuggestion[0].description}}<br>
+						<div class="mealAttendee">
+							I am a <strong>{{mealBuddySuggestion[0].description}}</strong> with a profession in
+							<strong>{{mealBuddySuggestion[0].profession}}</strong> and I am between
+							<strong>{{mealBuddySuggestion[0].ageRange}}</strong>.
+						</div>
 						<button class="btn btn-default btn-sm" ng-click="addFriendFromFacebookID(mealBuddySuggestion[0].facebookID)"> Add </button>
 					</accordion-group>
 				</accordion>

@@ -167,7 +167,6 @@ hr
 /* END FRIENDS */
 
 /*RECOM START*/
-
 .recomMeal
 {
 	margin: 2px 20px 10px 20px;
@@ -224,14 +223,19 @@ hr
 	text-align: center;
 }
 
+#staffPick
+{
+	padding: 0px 5px 5px 40px;
+}
+/*RECOM END*/
+
+
 .linksInstructions
 {
 	margin: 20px 0px 10px 0px;
 	padding-bottom: 20px;
 	text-align: center;
 }
-
-/*RECOM END*/
 
 /* MEAL INFORMATION START */
 #timeDay
