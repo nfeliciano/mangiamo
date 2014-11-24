@@ -347,7 +347,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		// })
 
 		$scope.$watch('user', function() {
-			$scope.getUsersMealsAttending();
 			placeAllMarkers();
 		});
 
@@ -765,7 +764,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		//Places all markers
 		placeAllMarkers = function(){
-
+			$scope.getUsersMealsAttending();
 			mealService.getAllMeals().success(function(data){
 				nukeAllMarkers();
 
