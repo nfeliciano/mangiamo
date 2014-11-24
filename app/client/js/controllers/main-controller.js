@@ -78,15 +78,15 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var mealDate = new Date(time.getTime());
 
 			var timeOffset = currentDate.getTimezoneOffset();
-
 			var hourOffset = Math.floor(timeOffset / 60);
 			var minuteOffset = timeOffset % 60;
 
-			currentDate.setDate(mealDate.getDate());
-			currentDate.setMonth(mealDate.getMonth());
-
 			mealDate.setHours(mealDate.getHours() - hourOffset);
 			mealDate.setMinutes(mealDate.getMinutes() - minuteOffset);
+
+			// Still displays (tomorrow) if meal is currently decaying.
+			currentDate.setDate(mealDate.getDate());
+			currentDate.setMonth(mealDate.getMonth());
 
 			return (mealDate > currentDate);
 		}
