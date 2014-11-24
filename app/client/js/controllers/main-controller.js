@@ -51,23 +51,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.setSidebarContent('staff');
 		/* MAIN.HTML REFRESH CODE END */
 
-		// initForm populates local variables from local JSON files.  This speparates
-		// a lot of data from html and Angular into appropriate JSON files.  The
-		// following "gets" allow angular to access these local JSON files
-		$scope.initLoginForm = function() {
-			$http.get('/json/occupations.json').success( function(data) {
-				$scope.occupations = data.occupations;
-			});
-			$http.get('/json/dateRanges.json').success( function(data) {
-				$scope.dateRanges = data.dateRanges;
-			});
-			$http.get('/json/meFactors.json').success( function(data) {
-				$scope.meFactorAdjs = data.meFactorAdjs;
-				$scope.meFactorVerbs = data.meFactorVerbs;
-				$scope.meFactorNouns = data.meFactorNouns;
-			});
-		};
-
 		$scope.initRecomMeals = function() {
 			// $scope.dataBase = [];
 			// setStaffPickData();
@@ -76,7 +59,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.isToday = function(time) {
 			var currentDate = new Date();
-			var mealDate = new Date(time.getTime());
+			var mealDate = new Date(time);
 
 			var timeOffset = currentDate.getTimezoneOffset();
 			var hourOffset = Math.floor(timeOffset / 60);
@@ -91,42 +74,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			mealDate.setMinutes(mealDate.getMinutes()+15);
 
 			return (mealDate > currentDate);
-		}
-
-		// This function submits the user data to the database, and redirects the user
-		$scope.submitUserData = function() {
-			// $scope.submittingUser = true;
-			var name = null;
-			var facebookKey = null;
-			var email = null;
-			if (sessionStorage.name) {
-				name = sessionStorage.name;
-				if (sessionStorage.facebookID) {
-					facebookKey = sessionStorage.facebookID;
-					if (sessionStorage.email) {
-						email = sessionStorage.email;
-					}
-				}
-			}
-			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
-			if ( description == 'badUserForm' ) {
-				$scope.tellUser('You need to Describe Yourself!', 'Incomplete Form');
-			}
-			else if (!$scope.dateRange) {
-				$scope.tellUser('Don\'t worry about it, we\'ll keep your age a secret!', 'Incomplete Form');
-			}
-			else if (!$scope.occupation) {
-				$scope.tellUser('Sorry we didn\'t supply "Neglectful Form Filler" as an option, please select one of the supplied options', 'Incomplete Form');
-			}
-			else {
-				userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, email, 0).success( function(data) {
-					$scope.declareUser(data);
-					$scope.toggleLogoutButton(true);
-					$scope.toggleLoginButton(false);
-					$('#userInformationModal').modal('hide');
-					$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
-				});
-			}
 		}
 
 		var mapOptions = {
@@ -579,7 +526,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var service = new google.maps.places.PlacesService($scope.map);
 			setStaffPickData();
 			placeAllMarkers();
-			$scope.mapUpdater = setInterval(function(){updateMap()}, 30000); //Every 30 seconds, delete all markers, download whole database, create new markers
+			$scope.mapUpdater = setInterval(function(){updateMap()}, 60000); //Every 30 seconds, delete all markers, download whole database, create new markers
 			initializeSearchBar();
 		}
 
@@ -659,151 +606,162 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			});
 		}
 
+		$scope.$on('reloadRecom', function(event) {
+			mealService.getAllMeals().success(function(data){
+				nukeAllMarkers();
+				$scope.dataBase = null;
+				$scope.dataBase =data;
 
-	setStaffPickData = function(){
+				placeStaffPicks();	 //places any staff pick with no meal
+				placeMeals();	// places ALL meals
+			});
+		});
 
-		//PLACE ID:
-		// Lat
-		// LNG
-		$scope.staffPicks = [
 
-			//Felicita's Pub,
-			[
-			"ChIJ0V0mUoV0j1QRzTZ7n46_lVU",
-			48.465034,
-			-123.30817300000001,
-			"Felicita's Pub",
-			"https://lh6.googleusercontent.com/-kDJ89UsUtvg/VEMv9r98s7I/AAAAAAAAAA0/j1_FZ16r2G0/h480-s0/Logo.jpg",
-			],
+		setStaffPickData = function(){
 
-			//Bin 4 Burger Lounge,
-			[
-			"ChIJo84EMY90j1QRc1_M3vZH008",
-			48.425204,
-			-123.356989,
-			"Bin 4 Burger Lounge",
-			"https://lh6.googleusercontent.com/-oss4nAEQKy4/UjzYENrl6AI/AAAAAAAAGS4/XFhRN3uJiZA/h480-s0/photo.jpg",
-			],
+			//PLACE ID:
+			// Lat
+			// LNG
+			$scope.staffPicks = [
 
-			//Pig BBQ Joint (Downtown),
-			[ "ChIJ71eiX4V0j1QR5eilmkVgoGA",
-			48.426808,
-			-123.36186499999997,
-			"Pig BBQ Joint",
-			"https://lh3.googleusercontent.com/-qzxfKNE93T8/UPYn_4yFkJI/AAAAAAAABIs/S4gkwNm6npI/h480-s0/DSCF6171.JPG",
-			],
+				//Felicita's Pub,
+				[
+				"ChIJ0V0mUoV0j1QRzTZ7n46_lVU",
+				48.465034,
+				-123.30817300000001,
+				"Felicita's Pub",
+				"https://lh6.googleusercontent.com/-kDJ89UsUtvg/VEMv9r98s7I/AAAAAAAAAA0/j1_FZ16r2G0/h480-s0/Logo.jpg",
+				],
 
-			//Famoso Neopolitan Pizzeria,
-			[ "ChIJG3x3Upt0j1QRDCTKxRHT9xg",
-			48.427763,
-			-123.36904199999998,
-			"Famoso Neopolitan Pizzeria",
-			"https://lh4.googleusercontent.com/-KkxRwXru4oc/VDRHAfPuAcI/AAAAAAABCA4/6g2w0mKe-yQ/h480-s0/photo.jpg",
-			],
+				//Bin 4 Burger Lounge,
+				[
+				"ChIJo84EMY90j1QRc1_M3vZH008",
+				48.425204,
+				-123.356989,
+				"Bin 4 Burger Lounge",
+				"https://lh6.googleusercontent.com/-oss4nAEQKy4/UjzYENrl6AI/AAAAAAAAGS4/XFhRN3uJiZA/h480-s0/photo.jpg",
+				],
 
-			//Spinnakers Gastro Brewpub,
-			[ "ChIJ8UwCKJ50j1QRykJnBrbQRM0",
-			48.429282,
-			-123.38452799999999,
-			"Spinnakers Gastro Brewpub",
-			"https://lh4.googleusercontent.com/-O8SIW7VD-h4/Uss2BdDPbhI/AAAAAAAAZaM/luvdDBpUlU8/h480-s0/photo.jpg",
-			],
+				//Pig BBQ Joint (Downtown),
+				[ "ChIJ71eiX4V0j1QR5eilmkVgoGA",
+				48.426808,
+				-123.36186499999997,
+				"Pig BBQ Joint",
+				"https://lh3.googleusercontent.com/-qzxfKNE93T8/UPYn_4yFkJI/AAAAAAAABIs/S4gkwNm6npI/h480-s0/DSCF6171.JPG",
+				],
 
-			//Prima Strada Pizzeria(Cook Street),
-			[ "ChIJ_dqgaXlzj1QRcCuocUFfOYo",
-			48.414001,
-			-123.35702700000002,
-			"Prima Strada Pizzeria",
-			"https://lh4.googleusercontent.com/-EoX-_PwA7g4/Uh-u89lRtWI/AAAAAAAC6Og/GHRYNL2guVw/h480-s0/photo.jpg",
-			],
+				//Famoso Neopolitan Pizzeria,
+				[ "ChIJG3x3Upt0j1QRDCTKxRHT9xg",
+				48.427763,
+				-123.36904199999998,
+				"Famoso Neopolitan Pizzeria",
+				"https://lh4.googleusercontent.com/-KkxRwXru4oc/VDRHAfPuAcI/AAAAAAABCA4/6g2w0mKe-yQ/h480-s0/photo.jpg",
+				],
 
-			//Maude Hunter's Pub,
-			[ "ChIJddqw3eVzj1QRU6olvYEGQ0U",
-			48.462462,
-			-123.33311800000001,
-			"Maude Hunter's Pub",
-			"https://lh4.googleusercontent.com/-J7uOD11cAIo/USlZVdutQYI/AAAAAAAAABU/dGyOvkpPt0g/h480-s0/2013-02-23",
-			],
+				//Spinnakers Gastro Brewpub,
+				[ "ChIJ8UwCKJ50j1QRykJnBrbQRM0",
+				48.429282,
+				-123.38452799999999,
+				"Spinnakers Gastro Brewpub",
+				"https://lh4.googleusercontent.com/-O8SIW7VD-h4/Uss2BdDPbhI/AAAAAAAAZaM/luvdDBpUlU8/h480-s0/photo.jpg",
+				],
 
-			//Pho Boi (Fort Street),
-			[ "ChIJ1VgF-490j1QRzCl97_xiRwE",
-			48.424287,
-			-123.36355400000002,
-			"Pho Boi",
-			"/img/logo-banner2.png",
-			],
+				//Prima Strada Pizzeria(Cook Street),
+				[ "ChIJ_dqgaXlzj1QRcCuocUFfOYo",
+				48.414001,
+				-123.35702700000002,
+				"Prima Strada Pizzeria",
+				"https://lh4.googleusercontent.com/-EoX-_PwA7g4/Uh-u89lRtWI/AAAAAAAC6Og/GHRYNL2guVw/h480-s0/photo.jpg",
+				],
 
-			//Foo Asian Street Food,
-			[ "ChIJEQZYd4V0j1QRItiWO8aOx5o",
-			48.42571,
-			-123.36255499999999,
-			"Foo Asian Street Food",
-			"https://lh4.googleusercontent.com/-9GQWW1_nbBc/U7Gc1ddV7UI/AAAAAAAA4BM/Lu8EDL_dINY/h480-s0/photo.jpg",
-			],
+				//Maude Hunter's Pub,
+				[ "ChIJddqw3eVzj1QRU6olvYEGQ0U",
+				48.462462,
+				-123.33311800000001,
+				"Maude Hunter's Pub",
+				"https://lh4.googleusercontent.com/-J7uOD11cAIo/USlZVdutQYI/AAAAAAAAABU/dGyOvkpPt0g/h480-s0/2013-02-23",
+				],
 
-			//Noodle Box (Uptown),
-			[ "ChIJexReD6Jzj1QRl3OXqtP60LA",
-			48.454071,
-			-123.37576899999999,
-			"Noodle Box",
-			"https://lh6.googleusercontent.com/-_8KhrMc4fV0/T8kcha_H3YI/AAAAAAAAV2s/m56R5CIVnqw/h480-s0/The%2BNoodle%2BBox%2B-%2BRestaurant%2BVictoria%2BBC",
-			],
+				//Pho Boi (Fort Street),
+				[ "ChIJ1VgF-490j1QRzCl97_xiRwE",
+				48.424287,
+				-123.36355400000002,
+				"Pho Boi",
+				"/img/logo-banner2.png",
+				],
 
-			//Vis-a-Vis,
-			[ "ChIJkwa9BEF0j1QRuyLcZZ-vKkg",
-			48.426599,
-			-123.314975,
-			"Vis-a-Vis",
-			"/img/logo-banner2.png",
-			],
+				//Foo Asian Street Food,
+				[ "ChIJEQZYd4V0j1QRItiWO8aOx5o",
+				48.42571,
+				-123.36255499999999,
+				"Foo Asian Street Food",
+				"https://lh4.googleusercontent.com/-9GQWW1_nbBc/U7Gc1ddV7UI/AAAAAAAA4BM/Lu8EDL_dINY/h480-s0/photo.jpg",
+				],
 
-			//Hillside Coffee and Tea,
-			[ "ChIJN2zJW3V0j1QRARHjmDjMq9g",
-			48.445027,
-			-123.33439699999997,
-			"Hillside Coffee and Tea",
-			"https://lh6.googleusercontent.com/-4WaKx7slV2M/U1Q78h97xtI/AAAAAAAAAAs/a5H6W5xnnIY/h480-s0/logo.jpg",
-			],
+				//Noodle Box (Uptown),
+				[ "ChIJexReD6Jzj1QRl3OXqtP60LA",
+				48.454071,
+				-123.37576899999999,
+				"Noodle Box",
+				"https://lh6.googleusercontent.com/-_8KhrMc4fV0/T8kcha_H3YI/AAAAAAAAV2s/m56R5CIVnqw/h480-s0/The%2BNoodle%2BBox%2B-%2BRestaurant%2BVictoria%2BBC",
+				],
 
-			//La Taquisa (Esquimalt),
-			[ "ChIJJwDDUGJzj1QR7J26pcSNzoo",
-			48.432653,
-			-123.381057,
-			"La Taquisa",
-			"/img/logo-banner2.png",
-			],
+				//Vis-a-Vis,
+				[ "ChIJkwa9BEF0j1QRuyLcZZ-vKkg",
+				48.426599,
+				-123.314975,
+				"Vis-a-Vis",
+				"/img/logo-banner2.png",
+				],
 
-			//Hecklers Bar and Grill,
-			[ "ChIJ42-Zs3Fzj1QRSkHXIpw_uDs",
-			48.443056,
-			-123.385962,
-			"Heckler's Bar and Grill",
-			"/img/logo-banner2.png",
-			],
+				//Hillside Coffee and Tea,
+				[ "ChIJN2zJW3V0j1QRARHjmDjMq9g",
+				48.445027,
+				-123.33439699999997,
+				"Hillside Coffee and Tea",
+				"https://lh6.googleusercontent.com/-4WaKx7slV2M/U1Q78h97xtI/AAAAAAAAAAs/a5H6W5xnnIY/h480-s0/logo.jpg",
+				],
 
-			//Beacon Drive In Ltd,
-			[ "ChIJTTkdD8B0j1QRWqg-MLRfPUE",
-			48.411565,
-			-123.368673,
-			"Beacon Drive In Ltd",
-			"https://lh6.googleusercontent.com/-xj11a1NPAWc/VGPban2MfdI/AAAAAAAAAAc/DqZKrgh0nF8/h480-s0/Copy%2Bof%2B17995_415391278530600_1551058548_n.jpg",
-			],
+				//La Taquisa (Esquimalt),
+				[ "ChIJJwDDUGJzj1QR7J26pcSNzoo",
+				48.432653,
+				-123.381057,
+				"La Taquisa",
+				"/img/logo-banner2.png",
+				],
 
-			//Bon Sushi (Oak Bay),
-			[ "ChIJ22cgcUF0j1QRo--FDGoEkKg",
-			48.426098,
-			-123.31575399999997,
-			"Bon Sushi",
-			"/img/logo-banner2.png",
-			],
+				//Hecklers Bar and Grill,
+				[ "ChIJ42-Zs3Fzj1QRSkHXIpw_uDs",
+				48.443056,
+				-123.385962,
+				"Heckler's Bar and Grill",
+				"/img/logo-banner2.png",
+				],
 
-			//Macchiatto Caffe (Johnson Street),
-			[ "ChIJGdAln5p0j1QRH-saH2_mMJo",
-			48.426888,
-			-123.361718,
-			"Macchiatto Caffe",
-			"https://lh3.googleusercontent.com/-gMNP7gtlWzM/U1itMDHiFzI/AAAAAAAAtfc/3dyQRmoEMak/h480-s0/photo.jpg",
-			],
+				//Beacon Drive In Ltd,
+				[ "ChIJTTkdD8B0j1QRWqg-MLRfPUE",
+				48.411565,
+				-123.368673,
+				"Beacon Drive In Ltd",
+				"https://lh6.googleusercontent.com/-xj11a1NPAWc/VGPban2MfdI/AAAAAAAAAAc/DqZKrgh0nF8/h480-s0/Copy%2Bof%2B17995_415391278530600_1551058548_n.jpg",
+				],
+
+				//Bon Sushi (Oak Bay),
+				[ "ChIJ22cgcUF0j1QRo--FDGoEkKg",
+				48.426098,
+				-123.31575399999997,
+				"Bon Sushi",
+				"/img/logo-banner2.png",
+				],
+
+				//Macchiatto Caffe (Johnson Street),
+				[ "ChIJGdAln5p0j1QRH-saH2_mMJo",
+				48.426888,
+				-123.361718,
+				"Macchiatto Caffe",
+				"https://lh3.googleusercontent.com/-gMNP7gtlWzM/U1itMDHiFzI/AAAAAAAAtfc/3dyQRmoEMak/h480-s0/photo.jpg",
+				],
 
 			]
 		}
