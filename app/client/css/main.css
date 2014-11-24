@@ -169,11 +169,11 @@ hr
 /*RECOM START*/
 .recomMeal
 {
-	margin: 2px 20px 10px 20px;
+	margin: 2px 20px 8px 20px;
 	font-family: "Roboto", sans-serif;
 	font-size: 16px;
-	background-color: #DDDDDD;
-	border: 1px solid #AAAAAA; 
+	background-color: #E8E8CC;
+	border: 1px solid #CFCB97; 
 	border-radius: 5px;
 	padding: 5px;
 
@@ -184,12 +184,12 @@ hr
 
 .recomMeal:hover
 {
-	background-color: #AAAAAA;
+	background-color: #CFCB97;
 }
 
 .recomMeal:focus
 {
-	background-color: #BBBBBB;
+	background-color: #CFCB97;
 }
 
 .recomMealImageDiv
@@ -197,8 +197,7 @@ hr
 	width: 30px;
 	height: 30px;
 	overflow: hidden;
-	border: 1px solid #AAAAAA;
-
+	border: 1px solid #CFCB97;
 }
 
 .recomMealImage
