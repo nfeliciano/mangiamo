@@ -12,6 +12,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.isTomorrow = "Today at:";
 
 		$scope.mealTime = {time: new Date()};
+		$scope.newMealBuddy = "";
 
 
 		var radius = 3000;
@@ -141,12 +142,22 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
         }
 
 		// Adds a Friend
-		$scope.addFriend = function(newMealBuddy) {
-			$scope.newMealBuddy = "";
+		$scope.addFriend = function(id) {
+			$scope.newMealBuddy = "";  // Doesn't currently do anything
+			if (id.length < 5 || id.length > 5) {
+				$scope.tellUser("The ID: '" + id + "'' is not a valid ID, please try again.");
+				return;
+			}
 			var userKey = angular.fromJson($scope.user).key;
 			userService.getMealBuddies(userKey).success(function(mealBuddies) {
-				userService.addMealBuddy(newMealBuddy, mealBuddies, userKey).success(function() {
-					$scope.populateMealBuddies();
+				userService.addMealBuddy(id, mealBuddies, userKey).success(function(data) {
+					if (data.length) {
+						$scope.populateMealBuddies();
+						$scope.tellUser("You have just added " + data[0].name + " as a Link", "Network Expanded!");
+					}
+					else {
+						$scope.tellUser("The ID: '" + id + "' does not belong to anyone in the database, please try again.");
+					}
 				});
 			});
 		}
