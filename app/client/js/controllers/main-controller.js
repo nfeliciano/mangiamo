@@ -229,12 +229,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					$scope.currentPin.meals[i].attendingMeal = false;
 					$scope.populateAttendees(mealData, i);
 
-					var originalHour = parseInt(hour);
-					if (meridiem == 'pm') originalHour += 12;
-					var currentTime = new Date();
-					if (currentTime.getHours() > originalHour) {
-						$scope.currentPin.meals[i].tomorrow = 'tmrw';
-					} else if (currentTime.getHours() == originalHour && currentTime.getMinutes() > minute) {
+					if (!$scope.isToday(mealDate)) {
 						$scope.currentPin.meals[i].tomorrow = 'tmrw';
 					}
 				}
@@ -395,7 +390,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.$watch('mealTime.time', function() {
 			var currentTime = new Date();
-			if (currentTime > $scope.mealTime.time) {
+			var mealTime = $scope.mealTime.time;
+			mealTime.setMinutes(mealTime.getMinutes()+15);
+			if (currentTime > mealTime) {
 				$scope.timeDay = "Tomorrow at:";
 				// $scope.isTomorrow = true;
 			} else {
