@@ -27,8 +27,12 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 
 		var socket = io.connect();
 
-		socket.on('message', function(data) {
-			console.log(data.message);
+		socket.on('dataChanged', function(data) {
+			if (data.changed == 'links') {
+				$scope.populateMealBuddies();
+			} else if (data.changed == 'meals') {
+				$scope.$broadcast('reloadRecom');
+			}
 		});
 
 		/* GLOBAL ACCESS FUNCTIONS START */
@@ -52,6 +56,15 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		// if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 
 		// }
+
+		$scope.pingSockets = function(message) {
+			if (message == 'links') {
+				socket.emit('databaseChange', {'changed': 'links'});
+			}
+			else if (message == 'meals') {
+				socket.emit('databaseChange', {'changed': 'meals'});
+			}
+		}
 
 		$scope.setSidebarContent = function(content) {
 			if (content == "links" && $scope.linksVisible == false) {
@@ -126,7 +139,6 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		}
 
 		$scope.contact = function() {
-			socket.emit('msg', {'message': 'hi there'});
 			$scope.contactMessage = "";
 			$scope.contactEmail = "";
 			$('#contactModal').modal();

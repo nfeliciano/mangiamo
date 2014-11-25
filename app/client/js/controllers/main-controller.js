@@ -100,8 +100,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			userService.getMealBuddies(userKey).success(function(mealBuddies) {
 				userService.addMealBuddy(id, mealBuddies, userKey).success(function(data) {
 					if (data.length) {
-						$scope.populateMealBuddies();
 						$scope.tellUser("You have just added " + data[0].name + " as a Link", "Network Expanded!");
+						$scope.pingSockets('links');
 					}
 					else {
 						$scope.tellUser("The ID: '" + id + "' does not belong to anyone in the database, please try again.");
@@ -278,6 +278,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 							$scope.currentPin.marker.label.setContent();
 							userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
 							meal.attendees.push(angular.fromJson($scope.user));
+							$scope.pingSockets('meals');
 						});
 					} else {
 						$scope.tellUser("Sorry, someone must have left this meal before you joined", "This meal doesn't exist!");
@@ -333,6 +334,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						userService.deleteMealFromUser(meal.key, key).success( function(data) {
 							$scope.tellUser('You have left the ' + meal.time +  ' meal at ' + $scope.currentPin.name + '.',
 								'We are sad to see you go!');
+							$scope.pingSockets('meals');
 							$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
 						});
 					});
@@ -412,6 +414,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						$scope.currentPin.marker.label.setContent();
 						userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
 						$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
+						$scope.pingSockets('meals');
 					})
 				});
 			});
@@ -446,19 +449,18 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.removeMealBuddy = function(mealBuddy) {
 			userService.deleteMealBuddy(mealBuddy[0].key, angular.fromJson($scope.user).key).success(function(data) {
-				$scope.populateMealBuddies();
+				$scope.pingSockets('links');
 			});
 		}
 
 		$scope.confirmMealBuddy = function(mealBuddyRequest) {
 			userService.confirmMealBuddy(mealBuddyRequest[0].key, angular.fromJson($scope.user).key).success(function(data) {
-				$scope.populateMealBuddies();
+				$scope.pingSockets('links');
 			});
 		}
 
 		$scope.addFriendFromFacebookID = function(facebookID){
 			userService.findByFacebook(facebookID).success(function(data) {
-				$scope.socket.emit('refresh buddies');
 				$scope.addFriend(data[0].key);
 			});
 		}

@@ -74,9 +74,7 @@ server.listen(3000, function() {
 io = io.listen(server);
 
 io.sockets.on('connection', function(socket) {
-	socket.emit('message', {'message': 'hello world'});
-
-	socket.on('msg', function(data) {
-		console.log(data.message);
-	})
+	socket.on('databaseChange', function(data) {
+		io.sockets.emit('dataChanged', data);
+	});
 });
