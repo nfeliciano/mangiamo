@@ -1,5 +1,5 @@
-angular.module('linksupp').controller('indexController', ['$scope', '$location', 'userService',
-	function ($scope, $location, userService) {
+angular.module('linksupp').controller('indexController', ['$scope', '$location', '$http', 'userService', '$rootScope',
+	function ($scope, $location, $http, userService, $rootScope) {
 		/* GLOBAL DATA START */
 
 		$scope.mealBuddyRequests = [];
@@ -11,7 +11,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		$scope.logoutButtonVisible;
 
 		$scope.sidebarVisible = false;
-		$scope.staffVisible = false;
+		$scope.recomVisible = true;
 		$scope.linksVisible = false;
 		$scope.mealsVisible = false;
 		$scope.introVisible = false;
@@ -34,15 +34,15 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		/* GLOBAL ACCESS FUNCTIONS START */
 		$scope.toggleSidebar = function(show) {
 			if (show == true) {
-				$scope.sidebarVisible = false;
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
-				$scope.staffVisible = true;
+				$scope.recomVisible = true;
+				$scope.sidebarVisible = true;
 			}
 			else { // (show == false)
 				$scope.sidebarVisible = false;
-				$scope.staffVisible = true;
+				$scope.recomVisible = false;
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
@@ -58,29 +58,30 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				$scope.populateMealBuddies();
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
-				$scope.staffVisible = false;
+				$scope.recomVisible = false;
 				$scope.linksVisible = true;
 				$scope.sidebarVisible = true;
 			}
 			else if (content == "intro" && $scope.introVisible == false) {
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
-				$scope.staffVisible = false;
+				$scope.recomVisible = false;
 				$scope.introVisible = true;
 				$scope.sidebarVisible = true;
 			}
 			else if (content == "meals") {
 				$scope.linksVisible = false;
 				$scope.introVisible = false;
-				$scope.staffVisible = false;
+				$scope.recomVisible = false;
 				$scope.mealsVisible = true;
 				$scope.sidebarVisible = true;
 			}
-			else {  // (content == "staff")
+			else {  // (content == "recom")
+				$scope.$broadcast('reloadRecom');
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;
-				$scope.staffVisible = true;
+				$scope.recomVisible = true;
 				$scope.sidebarVisible = true;
 			}
 		}
@@ -100,12 +101,14 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		// This allows the initial redirect when they come to the
 		// page based on whether or not they are logged in
 		$scope.init = function() {
-			if ($scope.user == null) {
-				$location.path('login').replace();
-			}
-			else {
-				$location.path('main').replace();
-			}
+			setTimeout(function() {
+				if ($location.path() == '/login' || $location.path() == '/main') {
+					return;
+				}
+				$rootScope.$apply(function() {
+					$location.path('login').replace();
+				});
+			}, 2500);
 		}
 		$scope.init();
 
@@ -168,6 +171,8 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				$scope.mealBuddyRequests = [];
 				$scope.mealBuddies = [];
 				$scope.mealBuddySuggestions = [];
+
+
 				for (var i = 0; i < data1.accepted.length; i++) {
 					var mealBuddy = data1.accepted[i];
 					userService.getUserWithID(mealBuddy.key).success(function(data2) {
@@ -189,6 +194,62 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 			});
 		}
 
+		// initForm populates local variables from local JSON files.  This speparates
+		// a lot of data from html and Angular into appropriate JSON files.  The
+		// following "gets" allow angular to access these local JSON files
+		$scope.initLoginForm = function() {
+			$http.get('/json/occupations.json').success( function(data) {
+				$scope.occupations = data.occupations;
+			});
+			$http.get('/json/dateRanges.json').success( function(data) {
+				$scope.dateRanges = data.dateRanges;
+			});
+			$http.get('/json/meFactors.json').success( function(data) {
+				$scope.meFactorAdjs = data.meFactorAdjs;
+				$scope.meFactorVerbs = data.meFactorVerbs;
+				$scope.meFactorNouns = data.meFactorNouns;
+			});
+		};
+
+		// This function submits the user data to the database, and redirects the user
+		$scope.submitUserData = function() {
+			// $scope.submittingUser = true;
+			var name = null;
+			var facebookKey = null;
+			var email = null;
+			if (sessionStorage.name) {
+				name = sessionStorage.name;
+				if (sessionStorage.facebookID) {
+					facebookKey = sessionStorage.facebookID;
+					if (sessionStorage.email) {
+						email = sessionStorage.email;
+					}
+				}
+			}
+			var description = getDescriptionFromStrings($scope.description1, $scope.description2, $scope.description3);
+			if ( description == 'badUserForm' ) {
+				$scope.tellUser('You need to Describe Yourself!', 'Incomplete Form');
+			}
+			else if (!$scope.dateRange) {
+				$scope.tellUser('Don\'t worry about it, we\'ll keep your age a secret!', 'Incomplete Form');
+			}
+			else if (!$scope.occupation) {
+				$scope.tellUser('Sorry we didn\'t supply "Neglectful Form Filler" as an option, please select one of the supplied options', 'Incomplete Form');
+			}
+			else {
+				userService.addNewUser(name, facebookKey, $scope.dateRange, description, $scope.occupation, email, 0).success( function(data) {
+					$scope.declareUser(data);
+					$scope.toggleLogoutButton(true);
+					$scope.toggleLoginButton(false);
+					$('#userInformationModal').modal('hide');
+					$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
+					if ($location.path() == '/login') {
+						$location.path('main').replace();
+					}
+				});
+			}
+		}
+
 		/* Facebook Integration Stuff */
 		// This is called with the results from from FB.getLoginStatus().
 		statusChangeCallback = function(response) {
@@ -207,6 +268,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 							var userData = data[0];
 							$scope.user = angular.toJson(userData);
 
+							$location.path('main').replace();
 						}
 						else {  // User is logging in to facebook for the first time
 							// MODAL CALL
@@ -217,6 +279,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 						}
 						$scope.toggleLogoutButton(true);
 						$scope.toggleLoginButton(false);
+						$scope.populateMealBuddies();
 					});
 				});
 
@@ -225,11 +288,17 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				// ie. change the page to the map.
 			}
 			else if (response.status === 'not_authorized') {
-				// The person is logged into Facebook, but not your app.
+				// The person is logged into Facebook, but not your app
+				$rootScope.$apply(function() {
+					$location.path('login').replace();
+				});
 			}
 			else {
 				// The person is not logged into Facebook, so we're not sure if
 				// they are logged into this app or not.
+				$rootScope.$apply(function() {
+					$location.path('login').replace();
+				});
 			}
 		}
 

@@ -7,6 +7,8 @@ var MealSchema = new Schema({
 	lat: Number,
 	lng: Number,
 	time: Date,
+	imgURL: String,
+	name: String,
 	people: [{ key: String }],
 	active: { type: Boolean, default: true }
 });
