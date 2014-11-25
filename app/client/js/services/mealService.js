@@ -2,8 +2,10 @@
 //	app.controller('mealsController', ['$scope', 'mealService', function ($scope, mealService)
 //This service will provide anything necessary when interacting with the backend for meals. Viewing meals, adding meals, committing to meals, etc.
 
-app.factory('mealService', ['$http', function($http) {
-	var meal = '/api/meals';
+angular.module('linksupp').factory('mealService', ['$http', function($http) {
+	var mealUpdate = '/api/meals/update';
+	var mealCreate = '/api/meals/create';
+	var mealGet = '/api/meals/get';
 	var people = '/api/meals/people';
 	var delMeal = '/api/meals/delete';
 
@@ -11,27 +13,30 @@ app.factory('mealService', ['$http', function($http) {
 
 	// Gets ALL the meals from the database with no filtering as an array
 	mealService.getAllMeals = function() {
-		return $http.get(meal);
+		return $http.post(mealGet, { });
 	}
 
 	mealService.getMealDetails = function(mealKey) {
-		return $http.get(meal + '?key=' + mealKey);
+		var request = { 'key' : mealKey };
+		return $http.post(mealGet, request);
 	}
 
 	// Returns an array of the people
 	mealService.getPeopleFromMeal = function(mealKey) {
-		return $http.get(people + '?key=' + mealKey);
+		var request = { 'key' : mealKey };
+		return $http.post(people, request);
 	}
 
 	// Gets all meals from the backend with the specific place ID.
 	mealService.getMealsAtPlaceID =  function(placeID) {
-		return $http.get(meal + '?placeID=' + placeID);
+		var request = { 'placeID' : placeID };
+		return $http.post(mealGet, request);
 	}
 
 	//
 	mealService.addUserToMeal = function(mealKey, ID) {
 		var request = {"key":mealKey, "ID":ID};
-		return $http.put(meal, request);
+		return $http.put(mealUpdate, request);
 	}
 
 	mealService.deleteUserFromMeal = function(mealKey, ID) {
@@ -40,9 +45,9 @@ app.factory('mealService', ['$http', function($http) {
 	}
 
 	// Adds a new meal to the database with the key placeID-time
-	mealService.addNewMeal = function(placeID, numPeople, time, people, active) {
-		var request = {"key":placeID + "-" + time, "time":time, "numPeople":numPeople, "placeID":placeID, "people":people, "active":active};
-		return $http.post(meal, request);
+	mealService.addNewMeal = function(placeID, numPeople, lat, lng, time, imgURL, name, people, active) {
+		var request = {"key":placeID + "-" + time, "time":time, "imgURL":imgURL, "name":name, "numPeople":numPeople, "lat":lat, "lng":lng, "placeID":placeID, "people":people, "active":active};
+		return $http.post(mealCreate, request);
 	}
 
 	mealService.deleteMeal = function(mealKey) {

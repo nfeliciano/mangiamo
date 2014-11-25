@@ -5,7 +5,7 @@
 	background-color: #FAFAEE;
 	height: 100vh;
 	/* First 51px on the top is for the navbar */
-	padding: 51px 10px 0px 10px;
+	padding: 51px 0px 0px 0px;
 
 	-webkit-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
 	-moz-box-shadow: 1px 0px 1px rgba(0,0,0,0.5);
@@ -17,7 +17,21 @@
 #closeSidebar
 {
 	width: 100%;
-	padding: 10px;
+	padding: 10px 10px 0 10px;
+}
+
+#sidebarContentHeader
+{
+	color: #2F5F7F;
+	font-size: 1.6em;
+	padding: 20px;
+	text-align: center;
+}
+
+.back-to-map
+{
+	font-size: 14px;
+	margin-bottom: 4px;
 }
 
 	/* INTRO */
@@ -26,12 +40,13 @@
 		/*text-align: center;*/
 		font-family: "Roboto", sans-serif;
 		color: #2F5F7F;
+		/*padding-top: 25px;*/
 	}
 
-	#introContainer > hr ~ div
-	{
-		padding: 0px 20px 20px 20px;
-	}
+		#introContainer > hr ~ div
+		{
+			padding: 0px 20px 20px 20px;
+		}
 
 	/* INTRO END */
 
@@ -39,13 +54,14 @@
 	#linksContainer
 	{
 		text-align: center;
+		
 	}
 	/* LINKS END */
 
 	/* MEALS */
 	#mealsContainer
 	{
-
+		
 	}
 
 
@@ -56,6 +72,12 @@
 
 /* EVERYTHING BELOW THIS COMMENT NEEDS TO BE CATEGORIZED AND VALIDATED AS VALID AND NECESSARY CODE */
 
+hr
+{
+	border-color: #2F5F7F;
+	margin-top: 0px;
+}
+
 .linkHeader
 {
 	color: #2F5F7F;
@@ -63,11 +85,6 @@
 	font-family: "Roboto", sans-serif;
 	font-size: 1.2em;
 }
-
-/*.mealAttendee > span
-{
-	font-weight: bold;
-}*/
 
 #mapCanvas
 {
@@ -112,6 +129,15 @@
 {
 	text-align: center;
 	font-size: 0.8em;
+	margin-bottom: 4px;
+}
+
+.specialAttendee
+{
+	background-color: rgba(255,255,255, 0.7);
+	border: 1px solid grey;
+	border-radius: 50%;
+	padding: 4px;
 }
 
 #mealsHeader
@@ -132,9 +158,100 @@
 	width: 90%;
 	text-align: center;
 }
+
+#mealInfoHeader > span
+{
+	font-size: .8em;
+	color: rgba(47, 95, 127, .5);
+}
 /* END FRIENDS */
 
+/*RECOM START*/
+.recomMeal
+{
+	margin: 2px 20px 8px 20px;
+	font-family: "Roboto", sans-serif;
+	font-size: 16px;
+	background-color: #E8E8CC;
+	border: 1px solid #CFCB97; 
+	border-radius: 5px;
+	padding: 5px;
+
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
+	box-shadow: 0 1px 1px rgba(0,0,0, .5);
+}
+
+.recomMeal:hover
+{
+	background-color: #CFCB97;
+}
+
+.recomMeal:focus
+{
+	background-color: #CFCB97;
+}
+
+.recomMealImageDiv
+{
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	border: 1px solid #CFCB97;
+}
+
+.recomMealImage
+{
+	width: 100%;
+	height: auto;
+}
+
+.recomMealInfo
+{
+	padding: 0px 5px 1px 40px;
+}
+
+.recomMealTitle
+{
+	font-size: 18px;
+}
+
+.noSuggestedMessage
+{
+	margin-top: 20px;
+	text-align: center;
+}
+
+#staffPick
+{
+	padding: 0px 5px 5px 40px;
+}
+/*RECOM END*/
+
+
+.linksInstructions
+{
+	margin: 20px 0px 10px 0px;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
 /* MEAL INFORMATION START */
+#timeDay
+{
+	text-align: center;
+	color: rgb(47, 95, 127);
+}
+
+.contentInstructions
+{
+	text-align: center;
+	font-family: "PT Sans", sans-serif;
+	font-size: 18px;
+	padding-bottom: 10px;
+	/*background-color: red;*/
+}
+
 #mealPlace
 {
 	padding: 0px 0 60px 0;
@@ -158,6 +275,8 @@
 
 .accordionInfo
 {
+	margin: 0px 20px 0px 20px;
+	/*background-color: #EEEEEE;*/
 	text-align: left;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
 	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
@@ -169,15 +288,15 @@
 	padding-bottom: 10px;
 }
 
-#timeTicker
-{
-	text-align: center;
-}
-
 .button
 {
 	background-color: #2F5F7F;
 	color: white;
+}
+
+.padding20
+{
+	padding: 0px 20px 0px 20px;
 }
 /* MEAL INFORMATION END */
 
@@ -189,13 +308,40 @@
 {
 	color: #2F5F7F;
 	text-align: center;
-	font-size: 1.8em;
+	font-size: 24px;
 	font-family: "Roboto", sans-serif;
+	padding: 24px 0 20px 0;
+}
+
+#mealsFullTop
+{
+	overflow: hidden;
+	max-height: 200px;
+	width: 100%;
+}
+
+.sidebarMealsTitle
+{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	font-size: 24px;
+	font-family: "Roboto", sans-serif;
+	padding: 24px 0 20px 0;
+
+	background-color: rgba(0,0,0,0.8);
+	color: white;
+}
+
+.mealImage
+{
+	width:100%;
+	height:auto;
+	min-height: 200px;
 }
 
 #mapContainer
 {
-	/*transition:all linear 0.5s;*/
 	height: 100vh;
 	position: relative;
 	padding: 51px 0px 0px 0px;
@@ -203,7 +349,7 @@
 
 .controls 
 {	
-	text-align: center
+	text-align: center;
 	margin-top: 16px;
 	border: 1px solid transparent;
 	border-radius: 2px 0 0 2px;

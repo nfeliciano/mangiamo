@@ -1,4 +1,4 @@
-<div>
+<div id="loginPageDiv">
 	
 	<section id="whiteBlock" data-type="background">
 		<!-- START ROW 1 -->
@@ -13,20 +13,31 @@
 			</div>
 		</div>
 		<!-- App description -->
-		<div class="col-xs-12 col-sm-6" ng-hide="startEating">
+		<div class="col-xs-12 col-sm-6">
 		</div>
-		<div class="col-xs-12 col-sm-7 col-md-6" ng-show="startEating">
+		<div class="col-xs-12 col-sm-7 col-md-6">
 			<div id="appDescription">
 				Expand your network by connecting with people who are looking to share a meal.
-				<ul id="appDescriptionList" class="hidden-">
+				<ul id="appDescriptionList">
 					<li> 
-						Where are <em>you</em> grabbing lunch today? Tell the Linksupp community by marking it on the map.
+						<strong>Where are you grabbing lunch?</strong>
+						<br>
+						<p class="describeSub hidden-xs">
+							Tell the Linksupp community by marking it on the map.
+						</p>
 					</li>
 					<li> 
-						Meet someone new! Join a meal time that someone else has already created and meet them there!
+						<strong>Meet someone new! </strong>
+						<br>
+						<p class="describeSub hidden-xs">
+							Join a meal time that someone else has already created and meet them there!
+						</p>
 					</li>
 					<li>
-						Add new friends (and import your Facebook friends) so you can see where they are planning on going for lunch - and then join them!
+						<strong>Link up with friends</strong>
+						<p class="describeSub hidden-xs">
+							Import your Facebook friends and add new friends that you meet. See where your friends are grabbing lunch, and join them.
+						</p>
 					</li>
 				</ul>
 			</div>
@@ -44,66 +55,12 @@
 		<!-- Main Login Content -->
 		<div class="col-xs-12 col-sm-7 col-md-6">
 			<!-- Try It Out! -->
-			<div id="startEating" ng-show="startEating">
+			<div id="startEating">
 				<button ng-click="tryApp()" type="submit" class="btn btn-primary">
-					<h4> Explore linksupp <span class="underlined"> without an account! </span></h4>
+					<h4>
+						Grab Lunch!
+					</h4>
 				</button>
-			</div>
-			<!-- Login Form -->
-			<div id="inputContainer" ng-hide="startEating">
-				<!-- Request user information -->
-				<div id="userInfo">
-					<div id="info-exit">
-						<span ng-click="startEating = !startEating" class="glyphicon glyphicon-remove"></span>
-					</div>	
-					<form ng-init="initLoginForm()" ng-submit="submitUserData()" >
-
-						<div id="userInfoTitle"> Some Basic Information </div>
-						<span>Age Range</span>
-						<div id="dob">
-							<div class="col-sm-12">
-								<select ng-model="dateRange" ng-init="somethingHere = options[0]">
-									<option value="" disabled selected> Age Range </option>
-									<option ng-repeat="dateRange in dateRanges"> {{dateRange.value}} </option>
-								</select>
-							</div>
-						</div>
-						<span>Occupation</span>
-						<div id="occupation">
-							<div class="col-sm-12">
-								<select ng-model="occupation">
-									<option value="" disabled selected class="firstOption"> Occupation </option>
-									<option ng-repeat="occupation in occupations"> {{occupation.value}} </option>
-								</select>
-							</div>
-						</div>
-						<span>Describe Yourself!</span>
-						<div id="description">
-							<div class="col-sm-4">
-								<select ng-model="description1">
-									<option value="" disabled selected> Adjective </option>
-									<option ng-repeat="adj in meFactorAdjs"> {{adj.value}} </option>
-								</select>
-							</div>
-							<div class="col-sm-4">
-								<select ng-model="description2">
-									<option value="" disabled selected> Verb </option>
-									<option ng-repeat="verb in meFactorVerbs"> {{verb.value}} </option>
-								</select>
-							</div>
-							<div class="col-sm-4">
-								<select ng-model="description3">
-									<option value="" disabled selected> Noun </option>
-									<option ng-repeat="noun in meFactorNouns"> {{noun.value}} </option>
-								</select>
-							</div>
-						</div>
-						<div class="col-xs-3"></div>
-
-						<!-- fix float: left -->
-						<button type="submit" id="submitButton" class="btn btn-primary btn-block col-xs-6"> Submit </button>
-					</form>
-				</div>
 			</div>
 		</div>
 		<!-- Formatting Div ; Adds right-side padding -->
@@ -111,9 +68,11 @@
 		</div>
 		<!-- END ROW 2 -->
 	</section>
-
-	<section id="loginFooterSection" data-type="background">
-		<div id="footerFiller">
+	<footer class="footer hidden-xs">
+		<div class="footerFiller">
+			<p class="footerText">
+				Linksupp © 2014
+			</p>
 		</div>
-	</section>
+	</footer>
 </div>

@@ -4,10 +4,10 @@ var express 				= require('express'),
 	bodyParser 				= require('body-parser'),
 	mongoose 				= require('mongoose'),
 	config 					= require('./config'),
-	mealsController 		= require('./server/controllers/meals-controller'),
-	userController			= require('./server/controllers/user-controller'),
-	contactController		= require('./server/controllers/contact-controller'),
-	scheduler				= require('./server/controllers/scheduler.js'),
+	mealsController 		= require('./server/controllers/meals-controller');
+	userController			= require('./server/controllers/user-controller');
+	contactController		= require('./server/controllers/contact-controller');
+	scheduler				= require('./server/controllers/scheduler.js');
 	options 				= { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 10000 } },
                 				replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 10000 } } };
 
@@ -38,18 +38,18 @@ app.use('/json', express.static(__dirname + '/client/json'));
 //REST API
 //Meals
 app.put('/api/meals/delete', mealsController.deleteMeal);
-app.put('/api/meals', mealsController.update);
-app.get('/api/meals', mealsController.list);
-app.get('/api/meals/people', mealsController.getPeople);
+app.put('/api/meals/update', mealsController.update);
+app.post('/api/meals/get', mealsController.get);
+app.post('/api/meals/people', mealsController.getPeople);
 app.put('/api/meals/people', mealsController.deletePeople);
-app.post('/api/meals', mealsController.create);
+app.post('/api/meals/create', mealsController.create);
 
 //Users
-app.get('/api/users', userController.list);
-app.post('/api/users', userController.create);
+app.post('/api/users/get', userController.list);
+app.post('/api/users/create', userController.create);
 app.put('/api/users', userController.update);
-app.get('/api/users/buddies', userController.getMealBuddies);
-app.get('/api/users/facebook', userController.findByFacebook);
+app.post('/api/users/buddies', userController.getMealBuddies);
+app.post('/api/users/facebook', userController.findByFacebook);
 app.put('/api/users/meals', userController.addMealToUser);
 app.put('/api/users/deleteMeals', userController.deleteMealFromUser);
 

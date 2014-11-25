@@ -1,5 +1,5 @@
 describe('Unit: indexController', function() {
-    beforeEach(module('mangiamo'));
+    beforeEach(module('linksupp'));
 
     var ctrl, scope, location;
     beforeEach(inject(function($controller, $rootScope, $location) {

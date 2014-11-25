@@ -1,4 +1,4 @@
-var app = angular.module('mangiamo', ['ui.router', 'ui.bootstrap', 'ngAnimate'])
+var app = angular.module('linksupp', ['ui.router', 'ui.bootstrap', 'ngAnimate']);
 //here we need to inject ui.router as we using it for routing
 
 //$stateprovider is the service procided by ui.router

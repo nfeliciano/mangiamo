@@ -4,7 +4,11 @@ var MealSchema = new Schema({
 	key: { type: "string", unique: true },
 	placeID: String,
 	numPeople: Number,
+	lat: Number,
+	lng: Number,
 	time: Date,
+	imgURL: String,
+	name: String,
 	people: [{ key: String }],
 	active: { type: Boolean, default: true }
 });

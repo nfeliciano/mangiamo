@@ -9,15 +9,16 @@ module.exports.create = function (req,res) {
 		ageRange: req.body.ageRange,
 		description: req.body.description,
 		profession: req.body.profession,
+		email: req.body.email,
 		mealBuddies: req.body.mealBuddies,
 	});
-	
+
 	user.save(function (err, result) {
 		if (!err) {
 			res.json(result);
 		} else
 		{
-			res.format({ 
+			res.format({
 				text:function() {
 					res.send('error');
 				}
@@ -29,10 +30,11 @@ module.exports.create = function (req,res) {
 module.exports.update = function(req,res) {
 	var query = { key: req.body.key };
 	var update = { 	name: req.body.name,
-					facebookID: req.body.facebookID, 
+					facebookID: req.body.facebookID,
 					ageRange: req.body.ageRange,
 					description: req.body.description,
 					profession: req.body.profession,
+					email: req.body.email,
 					mealBuddies: req.body.mealBuddies,
 				};
 	User.findOneAndUpdate(query, { $set : update }, function(err, results) {
@@ -41,15 +43,15 @@ module.exports.update = function(req,res) {
 }
 
 module.exports.findByFacebook = function (req,res) {
-	User.find({facebookID:req.query.facebookID}, function (err, results) {
+	User.find({facebookID:req.body.facebookID}, function (err, results) {
 		res.json(results);
 	});
 }
 
 // Returns an array of meal buddies. Empty array if no meal buddies.
 module.exports.getMealBuddies = function (req,res) {
-	if (req.query.key != null) {
-		User.find({ key:req.query.key}, function(err, results) {
+	if (req.body.key != null) {
+		User.find({ key:req.body.key}, function(err, results) {
 			if (results.length == 0) {
 				res.json(results);
 			}
@@ -62,15 +64,13 @@ module.exports.getMealBuddies = function (req,res) {
 
 // Returns an array of users. Either all users, or users with a specific userID.
 module.exports.list = function (req,res) {
-	if(req.query.key != null){
-		User.find({key:req.query.key}, function (err, results) {
+	if(req.body.key != null){
+		User.find({key:req.body.key}, function (err, results) {
 			res.json(results);
 		});
 	}
 	else {
-		User.find({}, function (err, results) {
-			res.json(results);
-		});
+		res.end();
 	}
 }
 
