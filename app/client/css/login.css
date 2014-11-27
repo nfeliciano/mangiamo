@@ -1,3 +1,11 @@
+#tagline
+{
+	margin-top: 20px;
+	text-align: center;
+	font-size: 1em;
+	color: #2F5F7F;
+}
+
 #loginPageDiv
 {
 	height: 100%;
@@ -38,11 +46,18 @@
 
 #appDescription
 {
-	text-align: center;
+	margin-top: 51px;
+/*	text-align: center;
 	font-size: 1.4em;
 	padding: 0 20px 0 20px;
 	margin-top: 5em;
-	color: #2F5F7F;
+	color: #2F5F7F;*/
+}
+
+#appDescription > div > strong
+{
+	text-decoration: underline;
+	text-decoration: blink;
 }
 
 #appDescriptionList
