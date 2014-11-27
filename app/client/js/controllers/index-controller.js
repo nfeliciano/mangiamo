@@ -25,6 +25,16 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		// REMOVE THIS
 		$scope.UID = '';
 
+		var socket = io.connect();
+
+		socket.on('dataChanged', function(data) {
+			if (data.changed == 'links') {
+				$scope.populateMealBuddies();
+			} else if (data.changed == 'meals') {
+				$scope.$broadcast('reloadRecom');
+			}
+		});
+
 		/* GLOBAL ACCESS FUNCTIONS START */
 		$scope.toggleSidebar = function(show) {
 			if (show == true) {
@@ -46,6 +56,15 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		// if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 
 		// }
+
+		$scope.pingSockets = function(message) {
+			if (message == 'links') {
+				socket.emit('databaseChange', {'changed': 'links'});
+			}
+			else if (message == 'meals') {
+				socket.emit('databaseChange', {'changed': 'meals'});
+			}
+		}
 
 		$scope.setSidebarContent = function(content) {
 			if (content == "links" && $scope.linksVisible == false) {
@@ -164,11 +183,11 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				$scope.mealBuddyRequests = [];
 				$scope.mealBuddies = [];
 				$scope.mealBuddySuggestions = [];
-				
-		
+
+
 				for (var i = 0; i < data1.accepted.length; i++) {
 					var mealBuddy = data1.accepted[i];
-					userService.getUserWithID(mealBuddy.key).success(function(data2) {			
+					userService.getUserWithID(mealBuddy.key).success(function(data2) {
 						$scope.mealBuddies.push(data2);
 					});
 				}
@@ -238,7 +257,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 					$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
 					if ($location.path() == '/login') {
 						$location.path('main').replace();
-					} 
+					}
 				});
 			}
 		}
@@ -260,6 +279,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 						if (data.length > 0) {  // Returning user who has already logged in with facebook
 							var userData = data[0];
 							$scope.user = angular.toJson(userData);
+
 							$location.path('main').replace();
 						}
 						else {  // User is logging in to facebook for the first time
