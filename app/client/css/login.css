@@ -3,6 +3,7 @@
 	margin-top: 40px;
 	color: #2F5F7F;
 	font-size: 16px;
+	text-align: center;
 }
 
 #loginPageDiv
@@ -58,6 +59,16 @@
 	padding: 30px 30px 0px 30px;
 	text-align: justify;
 }
+#appDescriptionList #nea
+{
+	font-family: "PT Sans";
+	text-align: center;
+	margin-bottom: 20px;
+}
+#appDescriptionList #nea > strong
+{
+	font-size: 36px;
+}
 #appDescriptionList > div > div
 {
 	text-align: center;
@@ -97,6 +108,7 @@
 
 #startEating
 {
+	margin-top: 10px;
 	text-align: center;
 	opacity: 1;
 }
