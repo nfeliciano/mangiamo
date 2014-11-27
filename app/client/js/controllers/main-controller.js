@@ -533,7 +533,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var service = new google.maps.places.PlacesService($scope.map);
 			setStaffPickData();
 			placeAllMarkers();
-			$scope.mapUpdater = setInterval(function(){updateMap()}, 600000); //Every 30 seconds, delete all markers, download whole database, create new markers
+			// $scope.mapUpdater = setInterval(function(){updateMap()}, 600000); //Every 30 seconds, delete all markers, download whole database, create new markers
 			initializeSearchBar();
 		}
 

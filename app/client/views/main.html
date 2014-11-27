@@ -34,7 +34,7 @@
 					<span> {{mealSuggestion.numPeople}} attending at {{mealSuggestion.time}} <span ng-hide="isToday(mealSuggestion.timeObj)">(tomorrow)</span></span>
 				</div>
 			</div>
-			<div ng-repeat="pick in staffPicks | limitTo: 5" class="recomMeal" ng-click="goToStaffPick(pick)">
+			<div ng-repeat="pick in staffPicks | limitTo: 10" class="recomMeal" ng-click="goToStaffPick(pick)">
 				<div class="pull-left recomMealImageDiv">
 					<img src="{{pick[4]}}" class="recomMealImage">
 				</div>
@@ -96,7 +96,7 @@
 				<div class="sidebarTitle"> Links </div>
 				<hr>
 				<div class="linksInstructions padding20">
-					Meet someone new at lunch? Add them as a Link! 
+					Meet someone new at lunch? Add them as a Link!
 					<br>
 					Use 'Find Facebook Friends' to see if your friends are using Linksupp.
 				</div>
@@ -107,10 +107,10 @@
 						<em> Add a New Link! </em>
 						<i class="pull-right glyphicon glyphicon-plus"></i>
 						</accordion-heading>
-							<span> 
+							<span>
 								Your ID is: <strong>{{UID}}</strong>
 								<br>
-								Give your ID to a friend so they can add you! 
+								Give your ID to a friend so they can add you!
 								<br>
 								<br>
 							</span>
