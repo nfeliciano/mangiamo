@@ -47,6 +47,10 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			$scope.toggleLoginButton(false);
 		}
 
+		setTimeout(function() {
+			placeAllMarkers();
+		}, 2500);
+
 		// Hide the sidebar on page load, then load the "intro" sidebar content
 		$scope.setSidebarContent('staff');
 		/* MAIN.HTML REFRESH CODE END */
@@ -348,10 +352,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		// 		$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
 		// 	}
 		// })
-
-		$scope.$watch('user', function() {
-			placeAllMarkers();
-		});
 
 		$scope.$watch('mealTime.time', function() {
 			var currentTime = new Date();
