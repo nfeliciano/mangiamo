@@ -277,7 +277,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 							$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1;
 							$scope.currentPin.marker.label.setContent();
 							userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
-							meal.attendees.push(angular.fromJson($scope.user));
 							$scope.pingSockets('meals');
 						});
 					} else {
@@ -335,7 +334,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 							$scope.tellUser('You have left the ' + meal.time +  ' meal at ' + $scope.currentPin.name + '.',
 								'We are sad to see you go!');
 							$scope.pingSockets('meals');
-							$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
 						});
 					});
 				});
@@ -413,7 +411,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						}
 						$scope.currentPin.marker.label.setContent();
 						userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
-						$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
 						$scope.pingSockets('meals');
 					})
 				});
@@ -536,7 +533,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var service = new google.maps.places.PlacesService($scope.map);
 			setStaffPickData();
 			placeAllMarkers();
-			$scope.mapUpdater = setInterval(function(){updateMap()}, 60000); //Every 30 seconds, delete all markers, download whole database, create new markers
+			$scope.mapUpdater = setInterval(function(){updateMap()}, 600000); //Every 30 seconds, delete all markers, download whole database, create new markers
 			initializeSearchBar();
 		}
 
@@ -879,7 +876,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//else return true
 		checkNewPlaceID = function(placeID){
 			for( var i = 0; i < $scope.placedMarkers.length; i++){
-				if( placeID == $scope.placedMarkers.markerId){
+				if( placeID == $scope.placedMarkers[i].markerId){
 					return false;	//meal at this place has been placed
 				}
 			}
