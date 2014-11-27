@@ -1,9 +1,8 @@
 #tagline
 {
-	margin-top: 20px;
-	text-align: center;
-	font-size: 1em;
+	margin-top: 40px;
 	color: #2F5F7F;
+	font-size: 16px;
 }
 
 #loginPageDiv
@@ -46,35 +45,40 @@
 
 #appDescription
 {
-	margin-top: 51px;
-/*	text-align: center;
+	text-align: center;
 	font-size: 1.4em;
 	padding: 0 20px 0 20px;
 	margin-top: 5em;
-	color: #2F5F7F;*/
-}
-
-#appDescription > div > strong
-{
-	text-decoration: underline;
-	text-decoration: blink;
+	color: #2F5F7F;
 }
 
 #appDescriptionList
 {
 	font-size: 1em;
 	padding: 30px 30px 0px 30px;
-	text-align: left;
+	text-align: justify;
 }
-
-#appDescriptionList > li
+#appDescriptionList > div > div
 {
-	margin-bottom: 10px;
+	text-align: center;
+}
+#appDescriptionList > div > div > strong
+{
+	font-size: 26px;
+}
+#appDescriptionList .col-xs-5
+{
+	padding: 0;
+}
+#appDescriptionList .col-xs-2
+{
+	padding-top: 20px;
+	text-align: center;
 }
 
 .describeSub
 {
-	font-size: 0.8em;
+	font-size: 16px;
 	padding: 2px 10px 10px 0px;
 
 }
@@ -116,4 +120,9 @@
 {
 	margin-top: 20px;
 	float: none;
+}
+
+.underlined
+{
+	text-decoration: 
 }
