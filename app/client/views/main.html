@@ -37,8 +37,10 @@
 				</div>
 			</div>
 			<div ng-repeat="pick in staffPicks | limitTo: 10" class="recomMeal" ng-click="goToStaffPick(pick)">
-				<div class="pull-left recomMealImageDiv">
-					<img src="{{pick[4]}}" class="recomMealImage">
+				<div id="recomImageDivDiv">
+					<div class="pull-left recomMealImageDiv">
+						<img src="{{pick[4]}}" class="recomMealImage">
+					</div>
 				</div>
 				<div id="staffPick">
 					<span class="recomMealTitle">{{pick[3]}}</span>
