@@ -47,6 +47,10 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			$scope.toggleLoginButton(false);
 		}
 
+		setTimeout(function() {
+			placeAllMarkers();
+		}, 2500);
+
 		// Hide the sidebar on page load, then load the "intro" sidebar content
 		$scope.setSidebarContent('staff');
 		/* MAIN.HTML REFRESH CODE END */
@@ -100,8 +104,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			userService.getMealBuddies(userKey).success(function(mealBuddies) {
 				userService.addMealBuddy(id, mealBuddies, userKey).success(function(data) {
 					if (data.length) {
-						$scope.populateMealBuddies();
 						$scope.tellUser("You have just added " + data[0].name + " as a Link", "Network Expanded!");
+						$scope.pingSockets('links');
 					}
 					else {
 						$scope.tellUser("The ID: '" + id + "' does not belong to anyone in the database, please try again.");
@@ -135,6 +139,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var d = new Date();
 			d.setMinutes(0);
 			d.setHours(d.getHours() + 1);
+			if (d.getHours() > 21) {
+				d.setHours(9);
+			}
 			$scope.mealTime.time = d;
 
 			// Populate $scope.currentPin.meals
@@ -277,7 +284,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 							$scope.currentPin.marker.labelContent = parseInt($scope.currentPin.marker.labelContent) + 1;
 							$scope.currentPin.marker.label.setContent();
 							userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
-							meal.attendees.push(angular.fromJson($scope.user));
+							$scope.pingSockets('meals');
 						});
 					} else {
 						$scope.tellUser("Sorry, someone must have left this meal before you joined", "This meal doesn't exist!");
@@ -333,7 +340,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						userService.deleteMealFromUser(meal.key, key).success( function(data) {
 							$scope.tellUser('You have left the ' + meal.time +  ' meal at ' + $scope.currentPin.name + '.',
 								'We are sad to see you go!');
-							$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
+							$scope.pingSockets('meals');
 						});
 					});
 				});
@@ -348,10 +355,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		// 		$scope.tellUser('You can now Create and Join meals!', 'Your Information Has Been Saved');
 		// 	}
 		// })
-
-		$scope.$watch('user', function() {
-			placeAllMarkers();
-		});
 
 		$scope.$watch('mealTime.time', function() {
 			var currentTime = new Date();
@@ -411,7 +414,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						}
 						$scope.currentPin.marker.label.setContent();
 						userService.addMealToUser(meal.key, angular.fromJson($scope.user).key);
-						$scope.updateMealInfo($scope.currentPin.place, $scope.currentPin.marker);
+						$scope.pingSockets('meals');
 					})
 				});
 			});
@@ -446,13 +449,13 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		$scope.removeMealBuddy = function(mealBuddy) {
 			userService.deleteMealBuddy(mealBuddy[0].key, angular.fromJson($scope.user).key).success(function(data) {
-				$scope.populateMealBuddies();
+				$scope.pingSockets('links');
 			});
 		}
 
 		$scope.confirmMealBuddy = function(mealBuddyRequest) {
 			userService.confirmMealBuddy(mealBuddyRequest[0].key, angular.fromJson($scope.user).key).success(function(data) {
-				$scope.populateMealBuddies();
+				$scope.pingSockets('links');
 			});
 		}
 
@@ -533,7 +536,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var service = new google.maps.places.PlacesService($scope.map);
 			setStaffPickData();
 			placeAllMarkers();
-			$scope.mapUpdater = setInterval(function(){updateMap()}, 60000); //Every 30 seconds, delete all markers, download whole database, create new markers
+			// $scope.mapUpdater = setInterval(function(){updateMap()}, 600000); //Every 30 seconds, delete all markers, download whole database, create new markers
 			initializeSearchBar();
 		}
 
@@ -876,7 +879,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//else return true
 		checkNewPlaceID = function(placeID){
 			for( var i = 0; i < $scope.placedMarkers.length; i++){
-				if( placeID == $scope.placedMarkers.markerId){
+				if( placeID == $scope.placedMarkers[i].markerId){
 					return false;	//meal at this place has been placed
 				}
 			}
