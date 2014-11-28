@@ -55,12 +55,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.setSidebarContent('staff');
 		/* MAIN.HTML REFRESH CODE END */
 
-		$scope.initRecomMeals = function() {
-			// $scope.dataBase = [];
-			// setStaffPickData();
-			// placeAllMarkers();
-		}
-
 		$scope.isToday = function(time) {
 			var currentDate = new Date();
 			var mealDate = new Date(time);

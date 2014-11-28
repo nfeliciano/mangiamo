@@ -20,13 +20,14 @@
 			</div>
 			<hr>
 			<div class="contentInstructions">
-				Use the search bar to find your favourite lunch spots.
-				<br>
-				Indecisive? Check out one of these places:
+				Use the search bar to find your favourite lunch spots or check out one of these places:
 			</div>
 			<div ng-repeat="mealSuggestion in dataBase | limitTo: 10 | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion)">
 				<div class="pull-left recomMealImageDiv">
 					<img src="{{mealSuggestion.imgURL}}" class="recomMealImage">
+				</div>
+				<div class="pinImageDiv">
+					<img src="/img/restaurant.png" class="pinImage">
 				</div>
 				<div class="recomMealInfo">
 					<span class="recomMealTitle">{{mealSuggestion.name}}</span>
@@ -37,6 +38,9 @@
 			<div ng-repeat="pick in staffPicks | limitTo: 10" class="recomMeal" ng-click="goToStaffPick(pick)">
 				<div class="pull-left recomMealImageDiv">
 					<img src="{{pick[4]}}" class="recomMealImage">
+				</div>
+				<div class="staffImageDiv">
+					<img src="/img/staffPick.png" class="staffImage">
 				</div>
 				<div id="staffPick">
 					<span class="recomMealTitle">{{pick[3]}}</span>
