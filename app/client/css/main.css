@@ -169,13 +169,14 @@ hr
 /*RECOM START*/
 .recomMeal
 {
+	min-height: 56px;
 	margin: 2px 20px 8px 20px;
 	font-family: "Roboto", sans-serif;
 	font-size: 16px;
 	background-color: #E8E8CC;
 	border: 1px solid #CFCB97; 
 	border-radius: 5px;
-	padding: 5px;
+	padding: 0px;
 
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, .5);
 	-moz-box-shadow: 0 1px 1px rgba(0,0,0, .5);
@@ -190,20 +191,24 @@ hr
 .recomMeal:focus
 {
 	background-color: #CFCB97;
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0, 0);
+	-moz-box-shadow: 0 1px 1px rgba(0,0,0, 0);
+	box-shadow: 0 1px 1px rgba(0,0,0, 0);
 }
 
 .recomMealImageDiv
 {
-	width: 30px;
-	height: 30px;
+	width: 50px;
+	height: 50px;
 	overflow: hidden;
 	border: 1px solid #CFCB97;
+	margin: 2px 10px 2px 0px;
 }
 
 .recomMealImage
 {
 	width: 100%;
-	height: auto;
+	height: 100%;
 }
 
 .recomMealInfo
@@ -213,7 +218,14 @@ hr
 
 .recomMealTitle
 {
-	font-size: 18px;
+	font-size: 16px;
+	margin-top: 4px;
+}
+
+#recomImageDivDiv
+{
+	height: 100%;
+	width: 100%;
 }
 
 .pinImageDiv
@@ -278,7 +290,7 @@ hr
 
 #mealPlace
 {
-	padding: 0px 0 60px 0;
+	padding: 0px 0 30px 0;
 }
 
 #friendAdder

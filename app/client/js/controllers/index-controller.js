@@ -15,6 +15,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		$scope.linksVisible = false;
 		$scope.mealsVisible = false;
 		$scope.introVisible = false;
+		$scope.imHere = false;
 
 		$scope.tellUserTitle = "";
 		$scope.tellUserMessage = "";
@@ -56,6 +57,10 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		// if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 
 		// }
+
+		$scope.toggleImHere = function(show) {
+			$scope.imHere = show;
+		}
 
 		$scope.pingSockets = function(message) {
 			if (message == 'links') {

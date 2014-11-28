@@ -44,6 +44,21 @@
 	<body ng-controller="indexController">
 		<!-- MODALS -->
 
+		<div id="imHere" ng-show="imHere" ng-click="toggleImHere(false)">
+			<div class="col-xs-2"></div>
+			<div id="imHereText" class="col-xs-8">
+				<img src="/img/logo_final_white.png" id="imHereLogo">
+				<br>
+				<br>
+				Put this face-up on the table to let others know you're here! 
+				<br>
+				<span id="clickAnywhere">
+					(Click or tap anywhere to go back to the map.)
+				</span>
+			</div>
+			<div class="col-xs-2"></div>
+		</div>
+
 		<!-- Further Information -->
 		<div id="userInformationModal" class="modal fade" tabindex="-1">
 			<div class="modal-dialog modal-md">
