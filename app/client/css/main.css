@@ -216,6 +216,30 @@ hr
 	font-size: 18px;
 }
 
+.pinImageDiv
+{
+	margin-top: -6px;
+	float: right;
+}
+
+.pinImage
+{
+	width:15px;
+	height:20px;
+}
+
+.staffImageDiv
+{
+	margin-top: -10px;
+	float: right;
+}
+
+.staffImage
+{
+	width:20px;
+	height:20px;
+}
+
 .noSuggestedMessage
 {
 	margin-top: 20px;

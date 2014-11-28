@@ -55,12 +55,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.setSidebarContent('staff');
 		/* MAIN.HTML REFRESH CODE END */
 
-		$scope.initRecomMeals = function() {
-			// $scope.dataBase = [];
-			// setStaffPickData();
-			// placeAllMarkers();
-		}
-
 		$scope.isToday = function(time) {
 			var currentDate = new Date();
 			var mealDate = new Date(time);
@@ -480,6 +474,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 									userService.suggestMealBuddy(data[0].key, mealBuddies, userKey);
 								});
 							}
+							$scope.tellUser('We\'ve imported all your Facebook friends who use the app. Be sure to tell the rest about it!','Facebook friends imported');
 						});
   					}
 				}
