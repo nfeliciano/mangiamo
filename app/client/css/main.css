@@ -28,6 +28,16 @@
 	text-align: center;
 }
 
+#sidebarBeTheFirstHeader
+{
+	color: #2F5F7F;
+	font-size: 1.6em;
+	padding-top: -10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: center;
+}
+
 .back-to-map
 {
 	font-size: 14px;
@@ -164,6 +174,12 @@ hr
 	font-size: .8em;
 	color: rgba(47, 95, 127, .5);
 }
+
+.backToSuggested
+{
+	width: 100%;
+	height: auto;
+}
 /* END FRIENDS */
 
 /*RECOM START*/
@@ -260,6 +276,14 @@ hr
 	text-align: center;
 }
 
+.back
+{
+	cursor: pointer;
+	position: relative;
+	width: 100px;
+	font-family: "Roboto", sans-serif;	
+}
+
 #staffPick
 {
 	padding: 0px 5px 5px 40px;
@@ -286,7 +310,7 @@ hr
 	text-align: center;
 	font-family: "PT Sans", sans-serif;
 	font-size: 18px;
-	padding-bottom: 10px;
+	padding: 10px 30px 20px 30px;
 	/*background-color: red;*/
 }
 

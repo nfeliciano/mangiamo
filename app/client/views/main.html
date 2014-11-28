@@ -196,6 +196,12 @@
 				</div>
 				<hr>
 				<!-- Existing Meals -->
+				<div class="back" ng-click="setSidebarContent('staff')">
+					<div class="backToSuggested">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+						We Suggest
+					</div>
+				</div>
 				<div class="contentInstructions" ng-hide="noMeals">
 					Pick a time below to see who's going:
 				</div>
@@ -254,7 +260,7 @@
 					</accordion-group>
 				</accordion>
 				<div id="createMealContainer" ng-show="noMeals">
-					<div id="sidebarContentHeader">
+					<div id="sidebarBeTheFirstHeader">
 						Be the First to Create a Meal Here!
 					</div>
 					<div id="timeDay">
