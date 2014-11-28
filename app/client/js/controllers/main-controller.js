@@ -51,6 +51,15 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			placeAllMarkers();
 		}, 2500);
 
+		$scope.amIAttendingThisPlace = function(pin) {
+			for (var i = 0; i < pin.meals.length; i++) {
+				if (pin.meals[i].attendingMeal) {
+					return true;
+				};
+			}
+			return false;
+		}
+
 		// Hide the sidebar on page load, then load the "intro" sidebar content
 		$scope.setSidebarContent('staff');
 		/* MAIN.HTML REFRESH CODE END */

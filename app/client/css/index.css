@@ -78,6 +78,7 @@ body
 	position: absolute;
 	top: 40px;
 	z-index: 99;
+	overflow-y: hidden;
 }
 
 #imHereText
