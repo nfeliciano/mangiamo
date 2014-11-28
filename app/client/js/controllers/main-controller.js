@@ -894,7 +894,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 
-		updateMap =function(){
+		$scope.updateMap =function(){
 			nukeAllMarkers();
 			placeAllMarkers();
 		}
