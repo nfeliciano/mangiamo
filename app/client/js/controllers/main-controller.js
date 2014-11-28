@@ -139,6 +139,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var d = new Date();
 			d.setMinutes(0);
 			d.setHours(d.getHours() + 1);
+			if (d.getHours() > 21) {
+				d.setHours(9);
+			}
 			$scope.mealTime.time = d;
 
 			// Populate $scope.currentPin.meals
