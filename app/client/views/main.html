@@ -1,8 +1,10 @@
 <div ng-init="initialize()">
+
 	<!-- Map -->
 	<div id="mapContainer" class="col-xs-12">
 		<input id="pac-input" class="controls" type="text" placeholder="Where do you want to grab lunch?">
-		<div id="mapCanvas"></div>
+		<div id="mapCanvas">
+		</div>
 	</div>
 
 	<!-- Sidebar -->
@@ -259,6 +261,12 @@
 						<button id="createMealButton" class="btn btn-block btn-default button" ng-click="createMeal(mealTime.time)"> Create a New Meal </button>
 					</div>
 				</div>
+			</div>
+
+			<div class="padding20">
+				<button type="button" class="btn btn-block btn-primary button" ng-click="toggleImHere(true)">
+					I'M HERE!
+				</button>
 			</div>
 		</div>
 	</div>
