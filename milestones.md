@@ -314,23 +314,37 @@ Time Spent: 2 Hours
 
 
 
-#### Milestone 3 - Live Beta ####
+#### Milestone 3 - Live Beta #### ~230
 ~~~~
 Feature Name: UI Overhaul 
 Description: Fine tune the UI to make it as usable and easy to use as possible 
 Requires: Front end work 
 Developers:
 Status: Not Started 
-Time Estimation:
+Time Spent: 0 Hours
+~~~~
+~~~~
+Feature Name: Meals at time
+Description: Be able to create meals at specific times for each place (and not allow multiple meals at a certain time)
+Requires: Server-side logic
+Developers:
+Status: Not Started 
+Time Spent: 10 Hours
+~~~~
+~~~~
+Feature Name: UI Overhaul 
+Description: Fine tune the UI to make it as usable and easy to use as possible 
+Requires: Front end work 
+Developers:
+Status: Not Started 
 Time Spent: 0 Hours
 ~~~~
 ~~~~
 Feature Name: Mobile 
-Description: Have it working on mobile 
-Requires: Either native development (objc and such) or PhoneGap or something similar
+Description: Have it working on mobile
+Requires: Either native development (objc and such) or PhoneGap or responsive UI to work on mobile screens
 Developers:
 Status: Not Started 
-Time Estimation:
 Time Spent: 0 Hours
 ~~~~
 ~~~~
