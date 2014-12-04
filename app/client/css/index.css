@@ -70,6 +70,39 @@ body
 	color: darkgrey;
 }
 
+#imHere
+{
+	background-color: #2F5F7F;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 40px;
+	z-index: 99;
+	overflow-y: hidden;
+}
+
+#imHereText
+{
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	margin-top: 100px;
+	margin-bottom: auto;
+	color: white;
+	font-size: 18px;
+}
+
+#imHereLogo
+{
+	max-width: 100vw;
+	height:auto;
+}
+
+#clickAnywhere
+{
+	font-size: 12px;
+}
+
 #navbarLogoImage
 {
 	width: auto;

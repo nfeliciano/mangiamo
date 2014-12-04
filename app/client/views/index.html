@@ -35,6 +35,7 @@
 		<link rel="stylesheet" type='text/css' href="/css/login.css">
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
 		<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
 		<!-- Google Map API -->
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-fcT0CmaK1LIRzGpis-y2moQSp10ajNM&v=3.exp&libraries=geometry,places"></script>
@@ -43,6 +44,21 @@
 
 	<body ng-controller="indexController">
 		<!-- MODALS -->
+
+		<div id="imHere" ng-show="imHere" ng-click="toggleImHere(false)">
+			<div class="col-xs-2"></div>
+			<div id="imHereText" class="col-xs-8">
+				<img src="/img/logo_final_white.png" id="imHereLogo">
+				<br>
+				<br>
+				Put this face-up on the table to let others know you're here! 
+				<br>
+				<span id="clickAnywhere">
+					(Click or tap anywhere to go back to the map.)
+				</span>
+			</div>
+			<div class="col-xs-2"></div>
+		</div>
 
 		<!-- Further Information -->
 		<div id="userInformationModal" class="modal fade" tabindex="-1">

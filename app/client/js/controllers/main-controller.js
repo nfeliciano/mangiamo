@@ -51,15 +51,18 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			placeAllMarkers();
 		}, 2500);
 
+		$scope.amIAttendingThisPlace = function(pin) {
+			for (var i = 0; i < pin.meals.length; i++) {
+				if (pin.meals[i].attendingMeal) {
+					return true;
+				};
+			}
+			return false;
+		}
+
 		// Hide the sidebar on page load, then load the "intro" sidebar content
 		$scope.setSidebarContent('staff');
 		/* MAIN.HTML REFRESH CODE END */
-
-		$scope.initRecomMeals = function() {
-			// $scope.dataBase = [];
-			// setStaffPickData();
-			// placeAllMarkers();
-		}
 
 		$scope.isToday = function(time) {
 			var currentDate = new Date();
@@ -139,6 +142,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			var d = new Date();
 			d.setMinutes(0);
 			d.setHours(d.getHours() + 1);
+			if (d.getHours() > 21) {
+				d.setHours(9);
+			}
 			$scope.mealTime.time = d;
 
 			// Populate $scope.currentPin.meals
@@ -477,6 +483,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 									userService.suggestMealBuddy(data[0].key, mealBuddies, userKey);
 								});
 							}
+							$scope.tellUser('We\'ve imported all your Facebook friends who use the app. Be sure to tell the rest about it!','Facebook friends imported');
 						});
   					}
 				}
@@ -918,7 +925,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 
-		updateMap =function(){
+		$scope.updateMap =function(){
 			nukeAllMarkers();
 			placeAllMarkers();
 		}

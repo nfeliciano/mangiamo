@@ -61,7 +61,7 @@
 }
 #appDescriptionList #nea
 {
-	font-family: "PT Sans";
+	/*font-family: "PT Sans";*/
 	text-align: center;
 	margin-bottom: 20px;
 }
@@ -91,7 +91,12 @@
 {
 	font-size: 16px;
 	padding: 2px 10px 10px 0px;
+}
 
+.describeFirstSub
+{
+	padding: 2px 10px 25px 0px;
+	margin-top: -25px;
 }
 
 #authentication
