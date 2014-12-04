@@ -871,7 +871,29 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			return false;	//placeID not in staff picks
 		}
 
-
+		
+		//check placeID is one of the search markers, returns the index, else -1
+		checkIsSearchBoxMarker = function(placeID){
+			for (var i = 0; i < $scope.placedSearchMarkers.length; i++) {
+					if(!(placeID !=  $scope.placedSearchMarkers[i].markerId)){
+						return i; 						//placeID is in search markers
+					}
+				}
+				return -1;	//placeID is not a search marker
+			}
+		}
+		
+		//placeID is placed marker. If placeID is placed return its position else -1
+		getPlacedIndex = function(placeID){
+			for (var i = 0; i < $scope.placedMarkers.length; i++) {
+				if(!(placeID !=  $scope.placedMarkers[i].markerId)){
+					return i; 						//placeID is in it
+				}
+			}
+			return -1;	//placeID not in staff picks
+		}
+		
+		
 		//If placeID has been placed, return false
 		//else return true
 		checkNewPlaceID = function(placeID){
@@ -1054,6 +1076,14 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				});
 
 				google.maps.event.addListener(marker, 'click', function() {
+					
+					//find search marker index, remove it,add it to placed markers,
+					var index = checkIsSearchBoxMarker(marker.markerId);
+					console.log($scope.placedMarkers);
+					$scope.placedSearchMarkers.splice(index,index);
+					$scope.placedMarkers.push(marker);
+					
+					console.log($scope.placedMarkers);
 					updateMarkerIcon(marker);
 
 					var request = {
@@ -1116,7 +1146,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//paramater is the new selected marker,
 		// function updates old marker to its old image, and update new to new image
 		updateMarkerIcon = function(marker) {
-		  	// At this point, currentPin is still the old marker, so check icons
+			// At this point, currentPin is still the old marker, so check icons
 			// if the old one exists, return it to normal
 			if($scope.currentPin.marker != null){
 				$scope.currentPin.marker.setIcon($scope.selectedMarkerOldIcon);
