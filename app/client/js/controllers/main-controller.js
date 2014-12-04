@@ -880,15 +880,15 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		
 		//check placeID is one of the search markers, returns the index, else -1
-		checkIsSearchBoxMarker = function(placeID){
+		getSearchBoxMarkerIndex = function(placeID){
 			for (var i = 0; i < $scope.placedSearchMarkers.length; i++) {
 					if(!(placeID !=  $scope.placedSearchMarkers[i].markerId)){
 						return i; 						//placeID is in search markers
 					}
 				}
 				return -1;	//placeID is not a search marker
-			}
 		}
+		
 		
 		//placeID is placed marker. If placeID is placed return its position else -1
 		getPlacedIndex = function(placeID){
@@ -1085,12 +1085,11 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				google.maps.event.addListener(marker, 'click', function() {
 					
 					//find search marker index, remove it,add it to placed markers,
-					var index = checkIsSearchBoxMarker(marker.markerId);
-					console.log($scope.placedMarkers);
-					$scope.placedSearchMarkers.splice(index,index);
-					$scope.placedMarkers.push(marker);
+					var index = getSearchBoxMarkerIndex(marker.markerId);
+				
+					$scope.placedSearchMarkers.splice(index,index); // Remove marker from search Markers
+					$scope.placedMarkers.push(marker);	// push to placedMarkers 
 					
-					console.log($scope.placedMarkers);
 					updateMarkerIcon(marker);
 
 					var request = {
