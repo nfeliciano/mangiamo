@@ -1037,6 +1037,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				hasMeal: true,
 			});
 
+			
+			
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
 				updateMarkerIcon(marker);
@@ -1086,24 +1088,43 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					
 					//find search marker index, remove it,add it to placed markers,
 					var index = getSearchBoxMarkerIndex(marker.markerId);
-				
 					$scope.placedSearchMarkers.splice(index,index); // Remove marker from search Markers
-					$scope.placedMarkers.push(marker);	// push to placedMarkers 
+					var placedIndex = getPlacedIndex(marker.markerId);
 					
-					updateMarkerIcon(marker);
-
-					var request = {
-						placeId:marker.markerId,
-					};
-					var service = new google.maps.places.PlacesService($scope.map);
-					service.getDetails(request,getPlaceDetails);
-
-					// Returns ALL the place details and information
-					function getPlaceDetails(place, status) {
-						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.updateMealInfo(place, marker);
-						}
+					if(placedIndex != -1){
+						//remove the search marker from map
+						marker.setMap(null);
+						
+						//click the marker that already is placed 
+						google.maps.event.trigger($scope.placedMarkers[placedIndex], 'click');
+						return;
 					}
+					
+					google.maps.event.clearListeners(marker); // remove the very function we are currently in?
+					
+					
+					
+					
+					//set new one
+					google.maps.event.addListener(marker, 'click', function() {
+						updateMarkerIcon(marker);
+
+						var request = {
+							placeId:marker.markerId,
+						};
+						var service = new google.maps.places.PlacesService($scope.map);
+						service.getDetails(request,getPlaceDetails);
+
+						// Returns ALL the place details and information
+						function getPlaceDetails(place, status) {
+							if (status == google.maps.places.PlacesServiceStatus.OK) {
+								$scope.updateMealInfo(place, marker);
+							}
+						}
+					});
+					
+					$scope.placedMarkers.push(marker);
+					
 				});
 
 				$scope.placedSearchMarkers.push(marker);
