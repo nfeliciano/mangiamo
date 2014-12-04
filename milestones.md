@@ -229,7 +229,6 @@ Status: Finished
 Time Estimation: 5
 Time Spent: 3 Hours
 ~~~~
-
 ~~~~
 Feature Name: Map Icon logic
 Description: different icons for cases: no meal, meal, meal with buddy, meal user going to, meal user and buddy going to, currently selected restaurant icon
@@ -239,9 +238,6 @@ Status: Finished
 Time Estimation: 5
 Time Spent: 3 Hours
 ~~~~
-
-
-
 ~~~~
 Feature Name: Research other place frameworks
 Description: See if anything other than google maps can be use full
@@ -251,7 +247,6 @@ Developers: Jesper
 Time Estimation: 2 Hours
 Time Spent: 3 Hours
 ~~~~
-
 ~~~~
 Feature Name: Yelp Research / setup
 Description: Get yelp api working
@@ -261,7 +256,6 @@ Developers: Jesper
 Time Estimation: 6 Hours
 Time Spent: 6 Hours
 ~~~~
-
 ~~~~
 Feature Name: Searching related to google place
 Description: using yelp api
@@ -271,7 +265,6 @@ Developers: Jesper
 Time Estimation: 2 Hours
 Time Spent: 6 Hours
 ~~~~
-
 ~~~~
 Feature Name: Using Google Rating
 Description:  using googles rating instead of yelps
@@ -281,8 +274,6 @@ Developers: Jesper
 Time Estimation: 1 Hours
 Time Spent: 1 Hours
 ~~~~
-
-
 ~~~~
 Feature Name: Faster Loading of Map
 Description: faster map loading... faster updating
@@ -292,7 +283,6 @@ Developers: Jesper
 Time Estimation: 8 Hours
 Time Spent: 6 Hours
 ~~~~
-
 ~~~~
 Feature Name: Remove Map Geolocation reliance 
 Description: Enable the map to work regardless of geolocaion is allowed or not
@@ -302,7 +292,6 @@ Developers: Jesper
 Time Estimation: 2 Hours
 Time Spent: 1.5 Hours
 ~~~~
-
 ~~~~
 Feature Name: Map zoom limit fiddleings
 Description:  limits zoom
@@ -312,8 +301,6 @@ Developers: Jesper
 Time Estimation: 0.1 Hours
 Time Spent: 0.2 Hours
 ~~~~
-
-
 ~~~~
 Feature Name: Finding Leaks
 Description:  finding leaks
