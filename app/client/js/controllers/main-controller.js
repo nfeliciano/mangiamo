@@ -298,6 +298,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		// Add a check for if user is attending meal
 		$scope.leaveMeal = function(meal) {
+			console.log(meal);
+			console.log($scope.currentPin);
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson($scope.user).key;
 				mealService.deleteUserFromMeal(meal.key, key).success( function(data) {
