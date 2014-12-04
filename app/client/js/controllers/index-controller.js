@@ -54,9 +54,6 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 			}
 		}
 
-		// if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-
-		// }
 
 		$scope.toggleImHere = function(show) {
 			$scope.imHere = show;
@@ -131,6 +128,37 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		$scope.init();
 
 		/* GLOBAL ACESS FUNCTIONS END */
+
+		// Instance the tour
+		var tour = new Tour({
+			name: "myTour",
+			steps: [
+			{
+				element: "#recomMealTour",
+				title: "Step 1 - Join / Create a Meal",
+				content: "Looking for a place to eat?  Check out one of these recommended meals / locations listed here."
+			},
+			{
+				element: "",
+				title: "Step 2 - Join a Meal",
+				content: "Join a meal listed on the map."
+			},
+			{
+				element: "#pac-input",
+				title: "Step 3 - Search for a Location",
+				content: "Search for a meal location using the search bar."
+			}],
+			orphan: true,
+			backdrop: true,
+			storage: false
+		});
+
+		$scope.startTour = function() {
+			// Initialize the tour
+			tour.init();
+			// Start the tour
+			tour.restart();
+		}
 
 		$scope.declareUser = function(userData) {
 			$scope.user = angular.toJson(userData);

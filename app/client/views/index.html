@@ -18,6 +18,7 @@
 		<!-- External JS -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap-tour-standalone.js"></script>
 		<script type="text/javascript" src="js/ui-bootstrap-tpls-0.11.2.js"></script>
 
 		<!-- Custom JS files -->
@@ -30,7 +31,7 @@
 
 		<!-- CSS -->
 		<link rel="stylesheet" type='text/css' href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" /> -->
+		<link rel="stylesheet" type='text/css' href="/css/bootstrap-tour-standalone.css">
 		<link rel="stylesheet" type="text/css" href="/css/index.css">
 		<link rel="stylesheet" type='text/css' href="/css/login.css">
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -200,6 +201,12 @@
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a id="tourButton" href="" ng-show="utilityButtonsVisible" ng-click="startTour()">
+								<span class="glyphicon glyphicon-star"></span>
+								Tour
+							</a>
+						</li>
 						<li>
 							<a href="" ng-show="utilityButtonsVisible" ng-click="setSidebarContent('staff')">
 								<span class="glyphicon glyphicon-star"></span>
