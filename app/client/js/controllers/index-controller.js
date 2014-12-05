@@ -131,26 +131,65 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 
 		// Instance the tour
 		var tour = new Tour({
-			name: "myTour",
+			name: 'myTour',
 			steps: [
 			{
-				element: "#recomMealTour",
-				title: "Step 1 - Join / Create a Meal",
-				content: "Looking for a place to eat?  Check out one of these recommended meals / locations listed here."
+				element: '',
+				title: 'Time for a Tour!',
+				content: 'Follow the tour to get an indepth understanding of how to use the app.  Click "End tour" at any point to exit the tour.'
 			},
 			{
-				element: "",
-				title: "Step 2 - Join a Meal",
-				content: "Join a meal listed on the map."
+				element: '#weSuggestTour',
+				title: 'Step 1 - NavBar Familiarity',
+				content: 'Don\'t know where to start?  Try the "We Suggest" option.',
+				placement: 'bottom'
 			},
 			{
-				element: "#pac-input",
-				title: "Step 3 - Search for a Location",
-				content: "Search for a meal location using the search bar."
+				element: '#recomContainer',
+				title: 'Step 2 - Suggested Meal Locations',
+				content: 'Looking for a place to eat?  Check out one of these recommended meals / locations listed here.  These are some personal favourites from the Linksupp Developers.'
+			},
+			{
+				element: '',
+				title: 'Step 3 - Utilizing the Map',
+				content: 'Use the map as a way of browsing meals created in your area.'
+			},
+			{
+				element: '#pac-input',
+				title: 'Step 4 - Searching',
+				content: 'You can search for a meal location using the search bar.'
+			},
+			{
+				element: '#linksTour',
+				title: 'Step 5 - Making Friends',
+				content: 'As you attend Linksupp meals, you are bound to make friends!  Access those here.'
+			},
+			{
+				element: '#loginTour',
+				title: 'Step 6 - Log In / Log Out',
+				content: 'Still a temporary user?  Log in here!  Already have an account?  Good work!'
 			}],
 			orphan: true,
-			backdrop: true,
-			storage: false
+			backdrop: false,
+			storage: false,
+			onStart: function (myTour) {
+			},
+			onNext: function (myTour) {
+				switch(myTour.getCurrentStep()) {
+					case 0:  // We Suggest NavBar element
+						$scope.setSidebarContent('recom'); 
+						console.log("Step 1");
+						break;
+					case 1:
+						console.log("Step 2");
+						break;
+					case 2:
+						console.log("Step 3");
+						break;
+					default:
+						console.log("Default");
+				}
+			}
 		});
 
 		$scope.startTour = function() {

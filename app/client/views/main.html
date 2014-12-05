@@ -24,7 +24,7 @@
 			<div class="contentInstructions">
 				Use the search bar to find your favourite lunch spots or check out one of these places:
 			</div>
-			<div id="recomMealTour" ng-repeat="mealSuggestion in dataBase | limitTo: 10 | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion)">
+			<div ng-repeat="mealSuggestion in dataBase | limitTo: 10 | orderBy:'numPeople'" class="recomMeal" ng-click="goToMeal(mealSuggestion)">
 				<div class="pull-left recomMealImageDiv">
 					<img src="{{mealSuggestion.imgURL}}" class="recomMealImage">
 				</div>
@@ -37,7 +37,7 @@
 					<span> {{mealSuggestion.numPeople}} attending at {{mealSuggestion.time}} <span ng-hide="isToday(mealSuggestion.timeObj)">(tomorrow)</span></span>
 				</div>
 			</div>
-			<div ng-repeat="pick in staffPicks | limitTo: 10" class="recomMeal" ng-click="goToStaffPick(pick)">
+			<div id="recomTour" ng-repeat="pick in staffPicks | limitTo: 10" class="recomMeal" ng-click="goToStaffPick(pick)">
 				<div id="recomImageDivDiv">
 					<div class="pull-left recomMealImageDiv">
 						<img src="{{pick[4]}}" class="recomMealImage">
