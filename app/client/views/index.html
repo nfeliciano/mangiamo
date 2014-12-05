@@ -18,6 +18,7 @@
 		<!-- External JS -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap-tour-standalone.js"></script>
 		<script type="text/javascript" src="js/ui-bootstrap-tpls-0.11.2.js"></script>
 
 		<!-- Custom JS files -->
@@ -30,7 +31,7 @@
 
 		<!-- CSS -->
 		<link rel="stylesheet" type='text/css' href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" /> -->
+		<link rel="stylesheet" type='text/css' href="/css/bootstrap-tour-standalone.css">
 		<link rel="stylesheet" type="text/css" href="/css/index.css">
 		<link rel="stylesheet" type='text/css' href="/css/login.css">
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -201,14 +202,20 @@
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="" ng-show="utilityButtonsVisible" ng-click="setSidebarContent('staff')">
+							<a id="tourButton" href="" ng-show="utilityButtonsVisible" ng-click="startTour()">
+								<span class="glyphicon glyphicon-star"></span>
+								Tour
+							</a>
+						</li>
+						<li>
+							<a id="weSuggestTour" href="" ng-show="utilityButtonsVisible" ng-click="setSidebarContent('staff')">
 								<span class="glyphicon glyphicon-star"></span>
 								We Suggest
 							</a>
 						</li>
 
 						<li>
-							<a href="" ng-show="utilityButtonsVisible" ng-click="setSidebarContent('links')">
+							<a id="linksTour" href="" ng-show="utilityButtonsVisible" ng-click="setSidebarContent('links')">
 								<span class="glyphicon glyphicon-user"></span>
 								Links
 							</a>
@@ -229,7 +236,7 @@
 						</li>
 
 						<li class="dropdown" ng-show="loginButtonVisible">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown">
+							<a id="loginTour" href="" class="dropdown-toggle" data-toggle="dropdown">
 								<span class="glyphicon glyphicon-log-in"></span>
 								Log In
 								<span class="caret"></span>
@@ -248,7 +255,7 @@
 						</li>
 
 						<li ng-show="logoutButtonVisible">
-							<a href="" ng-click="logout()">
+							<a id="loginTour" href="" ng-click="logout()">
 								<span class="glyphicon glyphicon-log-out"></span>
 								Log Out
 							</a>
