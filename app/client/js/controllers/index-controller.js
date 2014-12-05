@@ -167,27 +167,17 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 			{
 				element: '#loginTour',
 				title: 'Step 6 - Log In / Log Out',
-				content: 'Still a temporary user?  Log in here!  Already have an account?  Good work!'
+				content: 'Still a temporary user?  Log in!  Already have an account?  Good work!'
 			}],
 			orphan: true,
 			backdrop: false,
 			storage: false,
-			onStart: function (myTour) {
-			},
 			onNext: function (myTour) {
 				switch(myTour.getCurrentStep()) {
 					case 0:  // We Suggest NavBar element
 						$scope.setSidebarContent('recom'); 
-						console.log("Step 1");
-						break;
-					case 1:
-						console.log("Step 2");
-						break;
-					case 2:
-						console.log("Step 3");
 						break;
 					default:
-						console.log("Default");
 				}
 			}
 		});
