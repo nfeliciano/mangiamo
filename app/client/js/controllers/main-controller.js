@@ -790,7 +790,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 				placeStaffPicks();	 //places any staff pick with no meal
 				placeMeals();	// places ALL meals
-				updateSearchMarkers();
+				setTimeout(function() {
+					updateSearchMarkers();
+				}, 300);
 				// fixthing();
 			});
 		}
