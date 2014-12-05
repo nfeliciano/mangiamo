@@ -777,6 +777,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		//Places all markers
 		placeAllMarkers = function(){
+			console.log("place all markers");
 			$scope.getUsersMealsAttending();
 			
 			mealService.getAllMeals().success(function(data){
@@ -887,7 +888,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		
 			for (var i = 0; i < $scope.placedSearchMarkers.length; i++) {	
 				if(($scope.currentPin.marker != null) &&( $scope.currentPin.marker.markerId == $scope.placedSearchMarkers[i].markerId)){
-					google.maps.event.trigger($scope.placedSearchMarkers[i], 'click');
+					//google.maps.event.trigger($scope.placedSearchMarkers[i], 'click');
 				}	
 			}	
 		}
@@ -923,6 +924,11 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				}
 			}
 			return -1;	//placeID not in staff picks
+		}
+		
+		
+		createMealSearchBox(placeId){
+		
 		}
 		
 		
