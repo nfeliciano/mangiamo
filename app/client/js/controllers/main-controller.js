@@ -8,7 +8,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		$scope.dataBase = [];
 		$scope.usersMealsAttending = [];
 		$scope.selectedMarkerOldIcon = null;
-
+		$scope.searchBox;
 		$scope.isTomorrow = "Today at:";
 
 		$scope.mealTime = {time: new Date()};
@@ -126,6 +126,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.updateMealInfo = function(place, marker) {
+
 			$scope.currentPin.name = place.name;
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
@@ -580,13 +581,13 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 			$scope.map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
-			var searchBox = new google.maps.places.SearchBox(
+			$scope.searchBox = new google.maps.places.SearchBox(
     		/** @type {HTMLInputElement} */(input));
 
     		// Listen for the event fired when the user selects an item from the
 			// pick list. Retrieve the matching places for that item.
-			google.maps.event.addListener(searchBox, 'places_changed', function() {
-				var places = searchBox.getPlaces();
+			google.maps.event.addListener($scope.searchBox, 'places_changed', function() {
+				var places = $scope.searchBox.getPlaces();
 
 				if (places.length == 0) {
 				  return;
@@ -616,9 +617,14 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			// current map's viewport.
 			google.maps.event.addListener($scope.map, 'bounds_changed', function() {
 		    	var bounds = $scope.map.getBounds();
-		    	searchBox.setBounds(bounds);
+		    	$scope.searchBox.setBounds(bounds);
 			});
 		}
+
+		$scope.$on('setStaff', function(event) {
+			clearSearchMarkers();
+			placeAllMarkers();
+		});
 
 		$scope.$on('reloadRecom', function(event) {
 			placeAllMarkers();
@@ -775,6 +781,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//Places all markers
 		placeAllMarkers = function(){
 			$scope.getUsersMealsAttending();
+
 			mealService.getAllMeals().success(function(data){
 				nukeAllMarkers();
 
@@ -783,9 +790,22 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 				placeStaffPicks();	 //places any staff pick with no meal
 				placeMeals();	// places ALL meals
+				
+				setTimeout(function() {
+					updateSearchMarkers();
+				}, 300);
+				fixSearchMarkerRefresh();
 			});
 		}
+	
+		//this fixes the specific case, where you search for a location, create a meal, then refesh and leave it (and the meal info stays up)
+		fixSearchMarkerRefresh = function(){
+			if ($scope.mealsVisible && ($scope.currentPin.marker.map ==null)){
+				$scope.setSidebarContent('recom');
+			}
+		}
 
+		
 		//places all staff picks with no meals
 		placeStaffPicks = function(){
 
@@ -853,7 +873,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//Then if its unique getNumber of People
 		//Then place a new marker
 		placeMeals = function(){
-
 			var placeID;
 			for( var i = 0; i < $scope.dataBase.length; i++){
 				placeID = $scope.dataBase[i].placeID;
@@ -868,6 +887,18 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			}
 		}
 
+
+
+		updateSearchMarkers = function(){
+			for (var i = 0; i < $scope.placedSearchMarkers.length; i++) {
+				if(($scope.currentPin.marker != null) &&( $scope.currentPin.marker.markerId == $scope.placedSearchMarkers[i].markerId)){
+					google.maps.event.trigger($scope.placedSearchMarkers[i], 'click');
+				}	
+			}	
+		}
+
+
+
 		//placeID is staff pick. If placeID is in staff picks returns true
 		checkIsStaffPick = function(placeID){
 			for (var i = 0; i < $scope.staffPicks.length; i++) {
@@ -879,6 +910,28 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 
+		//check placeID is one of the search markers, returns the index, else -1
+		getSearchBoxMarkerIndex = function(placeID){
+			for (var i = 0; i < $scope.placedSearchMarkers.length; i++) {
+					if(!(placeID !=  $scope.placedSearchMarkers[i].markerId)){
+						return i; 						//placeID is in search markers
+					}
+				}
+				return -1;	//placeID is not a search marker
+		}
+
+
+		//placeID is placed marker. If placeID is placed return its position else -1
+		getPlacedIndex = function(placeID){
+			for (var i = 0; i < $scope.placedMarkers.length; i++) {
+				if(!(placeID !=  $scope.placedMarkers[i].markerId)){
+					return i; 						//placeID is in it
+				}
+			}
+			return -1;	//placeID not in staff picks
+		}
+		
+		
 		//If placeID has been placed, return false
 		//else return true
 		checkNewPlaceID = function(placeID){
@@ -1015,6 +1068,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				hasMeal: true,
 			});
 
+
+
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
 				updateMarkerIcon(marker);
@@ -1059,24 +1114,21 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					markerId : place.place_id,
 					hasMeal: false,
 				});
-
 				google.maps.event.addListener(marker, 'click', function() {
-					updateMarkerIcon(marker);
-
-					var request = {
-						placeId:marker.markerId,
-					};
-					var service = new google.maps.places.PlacesService($scope.map);
-					service.getDetails(request,getPlaceDetails);
-
-					// Returns ALL the place details and information
-					function getPlaceDetails(place, status) {
-						if (status == google.maps.places.PlacesServiceStatus.OK) {
-							$scope.updateMealInfo(place, marker);
+						updateMarkerIcon(marker);
+	
+						var request = {
+							placeId:marker.markerId,
+						};
+						var service = new google.maps.places.PlacesService($scope.map);
+						service.getDetails(request,getPlaceDetails);
+						// Returns ALL the place details and information
+						function getPlaceDetails(place, status) {
+							if (status == google.maps.places.PlacesServiceStatus.OK) {
+								$scope.updateMealInfo(place, marker);
+							}
 						}
-					}
 				});
-
 				$scope.placedSearchMarkers.push(marker);
 		}
 
@@ -1119,11 +1171,11 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 
-
 		//paramater is the new selected marker,
 		// function updates old marker to its old image, and update new to new image
 		updateMarkerIcon = function(marker) {
-		  	// At this point, currentPin is still the old marker, so check icons
+
+			// At this point, currentPin is still the old marker, so check icons
 			// if the old one exists, return it to normal
 			if($scope.currentPin.marker != null){
 				$scope.currentPin.marker.setIcon($scope.selectedMarkerOldIcon);
@@ -1131,6 +1183,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 			// Update the marker to the new marker
 			$scope.currentPin.marker = marker;
+
 			$scope.selectedMarkerOldIcon = marker.icon; // saves the current image so it can be updated next time we enter here
 
 			switch(marker.icon){
