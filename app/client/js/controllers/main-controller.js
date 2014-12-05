@@ -373,6 +373,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		});
 
 		$scope.createMeal = function(mealTime) {
+			console.log("create a meal");
 			// Check if user has given us "Basic Information"
 			if ($scope.user == null) {
 				// Check if user has logged in with facebook
@@ -787,11 +788,12 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				placeStaffPicks();	 //places any staff pick with no meal
 				placeMeals();	// places ALL meals
 				updateSearchMarkers();
-				fixthing();
+				fixSearchMarkerRefresh();
 			});
 		}
 	
-		fixthing = function(){
+		//this fixes the specific case, where you search for a location, create a meal, then refesh and leave it (and the meal info stays up)
+		fixSearchMarkerRefresh = function(){
 			if ($scope.mealsVisible && ($scope.currentPin.marker.map ==null)){
 				$scope.setSidebarContent('recom');
 			}
@@ -887,36 +889,10 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				if(($scope.currentPin.marker != null) &&( $scope.currentPin.marker.markerId == $scope.placedSearchMarkers[i].markerId)){
 					google.maps.event.trigger($scope.placedSearchMarkers[i], 'click');
 				}	
-			}
-		
-		
-		
-		
-		
-		
-		
-			/*var placess = [];
-			placess = $scope.searchBox.getPlaces();
-			clearSearchMarkers(); //Clear search markers
-				if (placess.length == 0) {
-				  return;
-				}
-
-				
-				
-				for (var i = 0, place; place = placess[i]; i++) {
-					createSearchMarker(place);
-					
-					if(($scope.currentPin.marker != null) &&( $scope.currentPin.marker.markerId == place.place_id) && ($scope.mealsVisible)){
-						google.maps.event.trigger($scope.placedSearchMarkers[$scope.placedSearchMarkers.length -1], 'click');
-					}
-				
-				}*/
+			}	
 		}
 
-			
-		
-		
+
 		//placeID is staff pick. If placeID is in staff picks returns true
 		checkIsStaffPick = function(placeID){
 			for (var i = 0; i < $scope.staffPicks.length; i++) {
@@ -1133,8 +1109,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 					hasMeal: false,
 				});
 				google.maps.event.addListener(marker, 'click', function() {
+						console.log("the click functions");
 						updateMarkerIcon(marker);
-
+	
 						var request = {
 							placeId:marker.markerId,
 						};
@@ -1143,6 +1120,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 						// Returns ALL the place details and information
 						function getPlaceDetails(place, status) {
 							if (status == google.maps.places.PlacesServiceStatus.OK) {
+								console.log("the click functions place details");
 								$scope.updateMealInfo(place, marker);
 							}
 						}
