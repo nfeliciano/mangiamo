@@ -95,7 +95,7 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 				$scope.sidebarVisible = true;
 			}
 			else {  // (content == "recom")
-				$scope.$broadcast('reloadRecom');
+				$scope.$broadcast('setStaff');
 				$scope.linksVisible = false;
 				$scope.mealsVisible = false;
 				$scope.introVisible = false;

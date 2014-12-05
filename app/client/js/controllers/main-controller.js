@@ -126,6 +126,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		}
 
 		$scope.updateMealInfo = function(place, marker) {
+
 			$scope.currentPin.name = place.name;
 			$scope.currentPin.place = place;
 			$scope.currentPin.marker = marker;
@@ -298,7 +299,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 		// Add a check for if user is attending meal
 		$scope.leaveMeal = function(meal) {
-		
 			if ($scope.currentPin.marker.hasMeal) {
 				var key = angular.fromJson($scope.user).key;
 				mealService.deleteUserFromMeal(meal.key, key).success( function(data) {
@@ -621,6 +621,11 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			});
 		}
 
+		$scope.$on('setStaff', function(event) {
+			clearSearchMarkers();
+			placeAllMarkers();
+		});
+
 		$scope.$on('reloadRecom', function(event) {
 			placeAllMarkers();
 		});
@@ -776,7 +781,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//Places all markers
 		placeAllMarkers = function(){
 			$scope.getUsersMealsAttending();
-			
+
 			mealService.getAllMeals().success(function(data){
 				nukeAllMarkers();
 
@@ -799,7 +804,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				$scope.setSidebarContent('recom');
 			}
 		}
-	
+
+		
 		//places all staff picks with no meals
 		placeStaffPicks = function(){
 
@@ -867,7 +873,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//Then if its unique getNumber of People
 		//Then place a new marker
 		placeMeals = function(){
-
 			var placeID;
 			for( var i = 0; i < $scope.dataBase.length; i++){
 				placeID = $scope.dataBase[i].placeID;
@@ -882,16 +887,16 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			}
 		}
 
-		
-		
+
+
 		updateSearchMarkers = function(){
-		
-			for (var i = 0; i < $scope.placedSearchMarkers.length; i++) {	
+			for (var i = 0; i < $scope.placedSearchMarkers.length; i++) {
 				if(($scope.currentPin.marker != null) &&( $scope.currentPin.marker.markerId == $scope.placedSearchMarkers[i].markerId)){
 					google.maps.event.trigger($scope.placedSearchMarkers[i], 'click');
 				}	
 			}	
 		}
+
 
 
 		//placeID is staff pick. If placeID is in staff picks returns true
@@ -904,7 +909,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			return false;	//placeID not in staff picks
 		}
 
-		
+
 		//check placeID is one of the search markers, returns the index, else -1
 		getSearchBoxMarkerIndex = function(placeID){
 			for (var i = 0; i < $scope.placedSearchMarkers.length; i++) {
@@ -914,8 +919,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				}
 				return -1;	//placeID is not a search marker
 		}
-		
-		
+
+
 		//placeID is placed marker. If placeID is placed return its position else -1
 		getPlacedIndex = function(placeID){
 			for (var i = 0; i < $scope.placedMarkers.length; i++) {
@@ -925,8 +930,6 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 			}
 			return -1;	//placeID not in staff picks
 		}
-		
-		
 		
 		
 		//If placeID has been placed, return false
@@ -1065,8 +1068,8 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 				hasMeal: true,
 			});
 
-			
-			
+
+
 			$scope.placedMarkers.push(marker); // Array marker
 			google.maps.event.addListener(marker, 'click', function() {
 				updateMarkerIcon(marker);
@@ -1171,7 +1174,7 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 		//paramater is the new selected marker,
 		// function updates old marker to its old image, and update new to new image
 		updateMarkerIcon = function(marker) {
-			
+
 			// At this point, currentPin is still the old marker, so check icons
 			// if the old one exists, return it to normal
 			if($scope.currentPin.marker != null){
@@ -1180,9 +1183,9 @@ angular.module('linksupp').controller('mainController', ['$scope', '$location', 
 
 			// Update the marker to the new marker
 			$scope.currentPin.marker = marker;
-			
+
 			$scope.selectedMarkerOldIcon = marker.icon; // saves the current image so it can be updated next time we enter here
-			
+
 			switch(marker.icon){
 
 			case '/img/staffPick.png': //staff pick
