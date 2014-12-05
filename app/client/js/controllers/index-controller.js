@@ -54,9 +54,6 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 			}
 		}
 
-		// if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-
-		// }
 
 		$scope.toggleImHere = function(show) {
 			$scope.imHere = show;
@@ -131,6 +128,66 @@ angular.module('linksupp').controller('indexController', ['$scope', '$location',
 		$scope.init();
 
 		/* GLOBAL ACESS FUNCTIONS END */
+
+		// Instance the tour
+		var tour = new Tour({
+			name: 'myTour',
+			steps: [
+			{
+				element: '',
+				title: 'Time for a Tour!',
+				content: 'Follow the tour to get an indepth understanding of how to use the app.  Click "End tour" at any point to exit the tour.'
+			},
+			{
+				element: '#weSuggestTour',
+				title: 'Step 1 - NavBar Familiarity',
+				content: 'Don\'t know where to start?  Try the "We Suggest" option.',
+				placement: 'bottom'
+			},
+			{
+				element: '#recomContainer',
+				title: 'Step 2 - Suggested Meal Locations',
+				content: 'Looking for a place to eat?  Check out one of these recommended meals / locations listed here.  These are some personal favourites from the Linksupp Developers.'
+			},
+			{
+				element: '',
+				title: 'Step 3 - Utilizing the Map',
+				content: 'Use the map as a way of browsing meals created in your area.'
+			},
+			{
+				element: '#pac-input',
+				title: 'Step 4 - Searching',
+				content: 'You can search for a meal location using the search bar.'
+			},
+			{
+				element: '#linksTour',
+				title: 'Step 5 - Making Friends',
+				content: 'As you attend Linksupp meals, you are bound to make friends!  Access those here.'
+			},
+			{
+				element: '#loginTour',
+				title: 'Step 6 - Log In / Log Out',
+				content: 'Still a temporary user?  Log in!  Already have an account?  Good work!'
+			}],
+			orphan: true,
+			backdrop: false,
+			storage: false,
+			onNext: function (myTour) {
+				switch(myTour.getCurrentStep()) {
+					case 0:  // We Suggest NavBar element
+						$scope.setSidebarContent('recom'); 
+						break;
+					default:
+				}
+			}
+		});
+
+		$scope.startTour = function() {
+			// Initialize the tour
+			tour.init();
+			// Start the tour
+			tour.restart();
+		}
 
 		$scope.declareUser = function(userData) {
 			$scope.user = angular.toJson(userData);

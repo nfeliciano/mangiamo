@@ -37,7 +37,7 @@
 					<span> {{mealSuggestion.numPeople}} attending at {{mealSuggestion.time}} <span ng-hide="isToday(mealSuggestion.timeObj)">(tomorrow)</span></span>
 				</div>
 			</div>
-			<div ng-repeat="pick in staffPicks | limitTo: 10" class="recomMeal" ng-click="goToStaffPick(pick)">
+			<div id="recomTour" ng-repeat="pick in staffPicks | limitTo: 10" class="recomMeal" ng-click="goToStaffPick(pick)">
 				<div id="recomImageDivDiv">
 					<div class="pull-left recomMealImageDiv">
 						<img src="{{pick[4]}}" class="recomMealImage">
