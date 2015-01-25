@@ -9,6 +9,7 @@ body
 	height: 100%;
 	width: 100%;
 	background: url("../img/restaurant_icons.png") 100% 0 fixed;
+	-webkit-font-smoothing: antialiased;
 }
 
 /* USER CONTACT FORM */
