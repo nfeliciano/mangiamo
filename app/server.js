@@ -34,6 +34,7 @@ app.get('/', function(req,res) {
 app.use('/js', express.static(__dirname + '/client/js'));
 app.use('/css', express.static(__dirname + '/client/css'));
 app.use('/img', express.static(__dirname + '/client/img'));
+app.use('/vid', express.static(__dirname + '/client/vid'));
 app.use('/views', express.static(__dirname + '/client/views'));
 app.use('/json', express.static(__dirname + '/client/json'));
 
