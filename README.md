@@ -4,7 +4,7 @@ linksupp
 ![Banner](mockups/logo-banner.png)
 ====
 
-![Login](screenshots/LoginScreen.png)
+![Login](screenshots/SplashScreen.png)
 
 ##Description
 A web application that is aimed for business savvy, outgoing groups of people who are looking for opportunities to meet new contacts, and expand their friend base by meeting people informally for a meal.
